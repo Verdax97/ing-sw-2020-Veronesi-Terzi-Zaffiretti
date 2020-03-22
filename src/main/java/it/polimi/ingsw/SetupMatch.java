@@ -8,11 +8,15 @@ public class SetupMatch {
     public List<God> godPicked;
     public List<Player> players;
 
-    public void PickGod() { };
+    public void PickGod() { }
 
-    public void CreateTable() { };
+    public void CreateTable() { }
 
-    public void addGod(God) { };
+    public void addGod(God) {
+        godList.add((God) God);
+    }
 
-    public void addGodPicked(God) { };
+    public void addGodPicked(God) {
+        godPicked.add((God) God);
+    }
 }
