@@ -13,10 +13,10 @@ public class SetupMatch {
     public void CreateTable() { }
 
     public void addGod(God) {
-        godList.add((God) God);
+        this.godList.add((God);
     }
 
     public void addGodPicked(God) {
-        godPicked.add((God) God);
+        this.godPicked.add((God);
     }
 }
