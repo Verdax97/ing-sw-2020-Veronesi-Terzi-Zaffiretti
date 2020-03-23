@@ -12,11 +12,11 @@ public class SetupMatch {
 
     public void CreateTable() { }
 
-    public void addGod(God) {
-        this.godList.add((God);
+    public void addGod(God god) {
+        this.godList.add((god);
     }
 
-    public void addGodPicked(God) {
-        this.godPicked.add((God);
+    public void addGodPicked(God god) {
+        this.godPicked.add((od);
     }
 }
