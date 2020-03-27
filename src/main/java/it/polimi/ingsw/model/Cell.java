@@ -1,5 +1,5 @@
-package it.polimi.ingsw;
-import java.util.Arrays;
+package it.polimi.ingsw.model;
+
 public class Cell
 {
     private Worker worker;
