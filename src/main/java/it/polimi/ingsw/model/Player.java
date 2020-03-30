@@ -5,6 +5,11 @@ public class Player {
     private God godPower;
     private boolean Active;
 
+    public Player(String nick)
+    {
+        this.nickname = nick;
+        this.Active = true;
+    }
     public God getGodPower() { return godPower; }
 
     public void setGodPower(God godPower) { this.godPower = godPower; }

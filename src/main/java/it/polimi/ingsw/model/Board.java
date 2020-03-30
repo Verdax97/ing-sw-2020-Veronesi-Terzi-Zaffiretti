@@ -11,4 +11,18 @@ public class Board implements Cloneable
     public void SetBoard(Cell[][] board) {
         this.board = board;
     }
+
+    public Cell GetCell(int x, int y)
+    {
+        return board[x][y];
+    }
+
+    @Override
+    protected final Board clone() {
+        final Board result = new Board();
+        for(int i = 0; i < 5; i++){
+            result.board[i] = board[i].clone();
+        }
+        return result;
+    }
 }
