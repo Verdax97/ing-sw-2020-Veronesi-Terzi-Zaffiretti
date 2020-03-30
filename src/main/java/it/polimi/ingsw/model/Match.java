@@ -10,7 +10,7 @@ public class Match
         this.table = new Board();
         this.setup = new SetupMatch();
         this.turn = new Turn();
-    }
+        }
     public void NextTurn() {
         turn.SetTurn(turn.GetTurn() + 1);
     }
