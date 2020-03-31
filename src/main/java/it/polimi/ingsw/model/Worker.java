@@ -4,12 +4,12 @@ public class Worker {
     private Player player;
     private int lastMovement;
 
-    public void SetPlayer(Player player)
+    public void setPlayer(Player player)
     {
         this.player = player;
     }
 
-    public Player GetPlayer()
+    public Player getPlayer()
     {
         return this.player;
     }
