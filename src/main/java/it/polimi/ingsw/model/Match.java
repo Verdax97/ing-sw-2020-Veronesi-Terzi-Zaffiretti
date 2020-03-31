@@ -14,7 +14,7 @@ public class Match
         this.board = new Board();
         this.turn = new Turn();
         this.setup = new SetupMatch();
-        this.setup.SetPlayers(nicks);
+        this.setup.setPlayers(nicks);
         this.winner = new Player("");
     }
 
