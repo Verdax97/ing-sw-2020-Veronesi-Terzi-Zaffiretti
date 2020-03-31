@@ -10,6 +10,7 @@ public class Player {
         this.nickname = nick;
         this.Active = true;
     }
+
     public God getGodPower() { return godPower; }
 
     public void setGodPower(God godPower) { this.godPower = godPower; }
