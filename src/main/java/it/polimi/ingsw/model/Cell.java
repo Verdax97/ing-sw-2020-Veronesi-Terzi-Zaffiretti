@@ -10,64 +10,64 @@ public class Cell
     private Player builtBy;
     private int builtTurn;
 
-    public Worker GetWorker()
+    public Worker getWorker()
     {
         return this.worker;
     }
 
-    public void SetWorker(Worker worker)
+    public void setWorker(Worker worker)
     {
         this.worker = worker;
     }
 
-    public int GetBuilding()
+    public int getBuilding()
     {
         return building;
     }
 
-    public void SetBuilding(int diff)
+    public void setBuilding(int diff)
     {
         this.building += diff;
     }
 
-    public boolean GetDome()
+    public boolean getDome()
     {
         return this.dome;
     }
 
-    public void SetDome(boolean dome)
+    public void setDome(boolean dome)
     {
         this.dome = dome;
     }
 
-    public int [] GetPos()
+    public int [] getPos()
     {
         int[] arr={this.coordX, this.coordY};
         return arr;
     }
 
-    public void SetPos(int x, int y)
+    public void setPos(int x, int y)
     {
         this.coordX = x;
         this.coordY = y;
     }
 
-    public int GetBuiltTurn()
+    public int getBuiltTurn()
     {
         return builtTurn;
     }
 
-    public void SetBuiltTurn(int turn)
+    public void setBuiltTurn(int turn)
     {
         this.builtTurn = turn;
     }
 
-    public Player GetBuiltBy()
+    public Player getBuiltBy()
     {
         return this.builtBy;
     }
 
-    public void SetBuiltBy(Player builder)
+    public void setBuiltBy(Player builder)
     {
         this.builtBy = builder;
     }
