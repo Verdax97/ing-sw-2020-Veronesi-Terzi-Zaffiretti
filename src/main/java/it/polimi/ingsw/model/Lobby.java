@@ -15,7 +15,7 @@ public class Lobby
         this.nPlayer = this.players.size();
     }
 
-    public List<String> GetPlayers() {
+    public List<String> getPlayers() {
         return players;
     }
 }

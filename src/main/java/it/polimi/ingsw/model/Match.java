@@ -22,7 +22,7 @@ public class Match
     {
 
     }
-    public Worker[] GetActiveWorker(Player player)
+    public Worker[] getActiveWorker(Player player)
     {
         Worker[] result = new Worker[2];
         int k = 0;
@@ -30,9 +30,9 @@ public class Match
         {
             for (int j = 0; j < 5; j++)
             {
-                if (board.GetCell(i, j).GetWorker().GetPlayer().getNickname().compareTo(player.getNickname()) == 0)
+                if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0)
                 {
-                    result[k] = board.GetCell(i, j).GetWorker();
+                    result[k] = board.getCell(i, j).getWorker();
                     k++;
                 }
                 if (k == 2)

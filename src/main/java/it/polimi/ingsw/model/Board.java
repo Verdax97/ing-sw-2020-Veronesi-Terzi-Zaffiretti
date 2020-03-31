@@ -4,15 +4,15 @@ public class Board implements Cloneable
 {
     private Cell[][] board = new Cell[5][5];
 
-    public Cell[][] GetBoard() {
+    public Cell[][] getBoard() {
         return board;
     }
 
-    public void SetBoard(Cell[][] board) {
+    public void setBoard(Cell[][] board) {
         this.board = board;
     }
 
-    public Cell GetCell(int x, int y)
+    public Cell getCell(int x, int y)
     {
         return board[x][y];
     }

@@ -22,7 +22,7 @@ public class SetupMatch {
         return players;
     }
 
-    public void SetPlayers(@org.jetbrains.annotations.NotNull List<String> players)
+    public void setPlayers(@org.jetbrains.annotations.NotNull List<String> players)
     {
         for (String player:players)
         {

@@ -8,27 +8,27 @@ public class Turn
     private List<Worker> workers;
     private int validMoves;
 
-    public int GetTurn() {
+    public int getTurn() {
         return turnNumber;
     }
 
-    public void SetTurn(int turn) {
+    public void setTurn(int turn) {
         this.turnNumber = turn;
     }
 
-    public int GetValidMoves() {
+    public int getValidMoves() {
         return validMoves;
     }
 
-    public void SetValidMoves(int validMoves) {
+    public void setValidMoves(int validMoves) {
         this.validMoves = validMoves;
     }
 
-    public List<Worker> GetWorkers() {
+    public List<Worker> getWorkers() {
         return workers;
     }
 
-    public void SetWorkers(List<Worker> workers) {
+    public void setWorkers(List<Worker> workers) {
         this.workers = workers;
     }
 
