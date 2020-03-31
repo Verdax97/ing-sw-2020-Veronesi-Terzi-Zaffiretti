@@ -6,7 +6,7 @@ import java.util.List;
 public class Lobby
 {
     private int nPlayer;
-    private ArrayList<String> players;
+    private ArrayList<String> players = new ArrayList<String>();
 
     public void AddPlayer(String toAdd)
     {
