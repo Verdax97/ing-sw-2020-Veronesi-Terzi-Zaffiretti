@@ -12,8 +12,7 @@ public class Board implements Cloneable
         this.board = board;
     }
 
-    public Cell getCell(int x, int y)
-    {
+    public Cell getCell(int x, int y) {
         return board[x][y];
     }
 
