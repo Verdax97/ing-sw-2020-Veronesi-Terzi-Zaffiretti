@@ -15,7 +15,7 @@ public class SetupMatchTest
         players.add("pino");
         players.add("pippo");
         setup.setPlayers(players);
-        assertEquals("player are wrong", players.toArray()[0], setup.getPlayers().get(0).getNickname());
-        assertEquals("player are wrong", players.toArray()[1], setup.getPlayers().get(1).getNickname());
+        assertEquals("player are wrong", players.get(0), setup.getPlayers().get(0).getNickname());
+        assertEquals("player are wrong", players.get(1), setup.getPlayers().get(1).getNickname());
     }
 }

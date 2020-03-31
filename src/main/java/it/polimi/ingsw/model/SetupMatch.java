@@ -7,7 +7,7 @@ public class SetupMatch {
 
     private List<God> godList;
     private List<God> godPicked;
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<Player>();
 
     public void PickGod() { }
 
@@ -23,11 +23,11 @@ public class SetupMatch {
         return players;
     }
 
-    public void setPlayers(@org.jetbrains.annotations.NotNull ArrayList<String> players)
+    public void setPlayers(ArrayList<String> player)
     {
-        for (String player:players)
+        for (String elem: player)
         {
-            this.players.add(new Player(player));
+            players.add(new Player(elem));
         }
     }
 }
