@@ -48,7 +48,7 @@ public class Turn
     {
 
     }
-    public void CheckWWinCondition()
+    public void CheckWinCondition()
     {
 
     }

@@ -10,7 +10,7 @@ public class WorkerTest
         Worker worker = new Worker();
         Player player = new Player("pino");
         worker.setPlayer(player);
-        assertEquals("Player is correct", player, worker.getPlayer());
+        assertEquals("Player is wrong", player, worker.getPlayer());
     }
 
     @Test
@@ -19,6 +19,6 @@ public class WorkerTest
         Worker worker = new Worker();
         int val = 10;
         worker.setLastMovement(val);
-        assertEquals("turn is correct", val, worker.getLastMovement());
+        assertEquals("turn is wrong", val, worker.getLastMovement());
     }
 }

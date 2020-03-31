@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SetupMatch {
 
     private List<God> godList;
     private List<God> godPicked;
-    private List<Player> players;
+    private ArrayList<Player> players;
 
     public void PickGod() { }
 
@@ -18,11 +19,11 @@ public class SetupMatch {
         this.godPicked.add(god);
     }
 
-    public List<Player> GetPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers(@org.jetbrains.annotations.NotNull List<String> players)
+    public void setPlayers(@org.jetbrains.annotations.NotNull ArrayList<String> players)
     {
         for (String player:players)
         {

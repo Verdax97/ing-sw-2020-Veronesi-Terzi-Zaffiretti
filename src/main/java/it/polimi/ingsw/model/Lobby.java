@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Lobby
 {
     private int nPlayer;
-    private List<String> players;
+    private ArrayList<String> players;
 
     public void AddPlayer(String toAdd)
     {
@@ -15,7 +16,7 @@ public class Lobby
         this.nPlayer = this.players.size();
     }
 
-    public List<String> getPlayers() {
+    public ArrayList<String> getPlayers() {
         return players;
     }
 }

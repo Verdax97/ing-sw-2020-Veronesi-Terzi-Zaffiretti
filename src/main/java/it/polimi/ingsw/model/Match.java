@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Match
@@ -9,7 +10,7 @@ public class Match
     private SetupMatch setup;
     private Player winner;
 
-    public void InitializeMatch(List<String> nicks)
+    public void InitializeMatch(ArrayList<String> nicks)
     {
         this.board = new Board();
         this.turn = new Turn();
