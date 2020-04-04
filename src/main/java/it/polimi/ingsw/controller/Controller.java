@@ -29,6 +29,9 @@ public class Controller implements Observer {
 
     public void killPlayer(Player player){}
 
+    public void ParseServerMsg (String msgView)
+    {}
+
     @Override
     public void update (Observable o, Object arg){}
 

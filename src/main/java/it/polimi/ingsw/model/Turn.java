@@ -36,11 +36,11 @@ public class Turn
     {
 
     }
-    public void Move()
+    public void Move(Worker worker, int x, int y)
     {
 
     }
-    public void Build()
+    public void Build(Worker worker, int x, int y)
     {
 
     }
