@@ -65,11 +65,11 @@ public class Cell
 
     public boolean isAdjacent(int x, int y)
     {
-        if (this.coordX == x || this.coordX == x+1 || this.coordX == x-1)
+        if (this.coordX - 1 <= x && this.coordX + 1 >= x)
         {
-            if (this.coordY == y || this.coordX == y+1 || this.coordY == y-1)
+            if (this.coordY == y || this.coordY == y+1 || this.coordY == y-1)
             {
-                return !(this.coordX == x & this.coordY == y);
+                return !(this.coordX == x && this.coordY == y);
             }
             else return false;
         }

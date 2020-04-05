@@ -17,7 +17,6 @@ public class ServerViewTest
         players.add("pippo");
         players.add("Magnifico Rettore Ferruccio Resta");
         Match match = new Match(players);
-        SetupMatch setupMatch = new SetupMatch();
         ServerView serverView = new ServerView();
         Board board = match.getBoard();
         board.getCell(4,4).setDome(true);

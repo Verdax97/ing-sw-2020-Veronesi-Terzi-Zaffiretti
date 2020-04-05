@@ -3,17 +3,18 @@ package it.polimi.ingsw.model;
 import java.awt.*;
 
 public class God {
-    private String name;
-    public String description;
-    public Image img;
+    protected String name;
+    protected String description;
+    protected Image img;
 
     public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public void PlayerTurn() { }
 
-    public void Move() { }
+    public int Move(Board board, Cell selectedCell, int x, int y) { return 0; }
 
-    public void Building() { }
+    public int Building(Board board, Cell selectedCell, int x, int y) { return 0; }
 
     public void EnemyTurn() { }
 
