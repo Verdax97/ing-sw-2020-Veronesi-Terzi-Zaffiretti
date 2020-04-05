@@ -16,7 +16,7 @@ public class Board implements Cloneable
         return board[x][y];
     }
 
-    public void Board()
+    public Board()
     {
         for (int x = 0; x < 5; x++)
         {
