@@ -53,9 +53,7 @@ public class Turn
                         this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
                     } else throw new RuntimeException("Target cell is occupied");
                 } else throw new RuntimeException("Target cell is too high/low");
-            } else {
-                throw new RuntimeException("Target cell is too far");
-            }
+            } else throw new RuntimeException("Target cell is too far");
         } else throw new RuntimeException("Target cell out of board");
     }
 
