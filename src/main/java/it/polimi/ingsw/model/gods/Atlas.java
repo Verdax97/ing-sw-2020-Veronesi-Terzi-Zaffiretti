@@ -14,9 +14,6 @@ public class Atlas extends God
     @Override
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber){
         /* typeBuild 0 normale costruzione, typebuild 1 cupola */
-        int a = selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
-        if (a != 0)
-            return a;//1 default return value, 2 need to repeat move
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
