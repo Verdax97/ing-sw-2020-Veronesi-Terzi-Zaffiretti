@@ -10,6 +10,17 @@ public class Cell
     private Player builtBy;
     private int builtTurn;
 
+    public Cell (int x, int y)
+    {
+        this.worker = null;
+        this.building = 0;
+        this.dome = false;
+        this.coordX = x;
+        this.coordY = y;
+        this.builtBy = null;
+        this.builtTurn = 0;
+    }
+
     public Worker getWorker()
     {
         return this.worker;
