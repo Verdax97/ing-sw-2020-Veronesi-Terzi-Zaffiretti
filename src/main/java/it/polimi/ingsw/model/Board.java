@@ -16,6 +16,17 @@ public class Board implements Cloneable
         return board[x][y];
     }
 
+    public void Board()
+    {
+        for (int x = 0; x < 5; x++)
+        {
+            for (int y = 0; y <5; y++)
+            {
+                board[x][y] = new Cell(x, y);
+            }
+        }
+    }
+
     @Override
     protected final Board clone() {
         final Board result = new Board();

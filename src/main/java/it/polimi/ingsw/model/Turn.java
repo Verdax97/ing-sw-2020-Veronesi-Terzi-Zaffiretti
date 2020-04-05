@@ -7,6 +7,7 @@ public class Turn
     private int turnNumber;
     private List<Worker> workers;
     private int validMoves;
+    private Cell selectedCell;
 
     public int getTurn() {
         return turnNumber;
@@ -51,5 +52,13 @@ public class Turn
     public void CheckWinCondition()
     {
 
+    }
+
+    public Cell getSelectedCell() {
+        return selectedCell;
+    }
+
+    public void setSelectedCell(Cell selectedCell) {
+        this.selectedCell = selectedCell;
     }
 }
