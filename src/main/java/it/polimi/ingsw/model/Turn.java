@@ -46,7 +46,7 @@ public class Turn
     {
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
         if (a != 0)
-            return a;//1 default return value, 2 need to repeat move
+            return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (this.selectedCell.isAdjacent(x, y)) {
                 if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
@@ -58,14 +58,14 @@ public class Turn
                 } else throw new RuntimeException("Target cell is too high/low");
             } else throw new RuntimeException("Target cell is too far");
         } else throw new RuntimeException("Target cell out of board");
-        return 1;//1 default return value, 2 need to repeat move
+        return 1;//1 default return value, 2 need to repeat action
     }
 
     public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException
     {
-        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild);
+        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild, turnNumber);
         if (a != 0)
-            return a;//1 default return value, 2 need to repeat move
+            return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (this.selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
@@ -81,7 +81,7 @@ public class Turn
                 } else { throw new RuntimeException("Target cell has a worker on it, Baka");}
             } else { throw new RuntimeException("Target cell is too far!");}
         } else {throw new RuntimeException("Target cell is out of the board!");}
-        return 1;//1 default return value, 2 need to repeat move
+        return 1;//1 default return value, 2 need to repeat action
     }
 
     public void CheckLostOthers()
