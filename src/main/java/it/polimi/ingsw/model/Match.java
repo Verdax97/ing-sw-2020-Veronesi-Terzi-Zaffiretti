@@ -2,15 +2,16 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class Match
+public class Match extends Observable
 {
     private Board board;
     private Turn turn;
     private SetupMatch setup;
     private Player winner;
 
-    public void InitializeMatch(ArrayList<String> nicks)
+    public Match(ArrayList<String> nicks)
     {
         this.board = new Board();
         this.turn = new Turn();
@@ -45,5 +46,10 @@ public class Match
 
     public void NextTurn(Player player) {
 
+    }
+
+    public ArrayList<Player> getPlayers()
+    {
+        return setup.getPlayers();
     }
 }

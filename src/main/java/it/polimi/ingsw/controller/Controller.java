@@ -23,8 +23,7 @@ public class Controller implements Observer {
 
     public void CreateMatch()
     {
-        this.match = new Match();
-        this.match.InitializeMatch(lobby.getPlayers());
+        this.match = new Match(lobby.getPlayers());
     }
 
     public void killPlayer(Player player){}
