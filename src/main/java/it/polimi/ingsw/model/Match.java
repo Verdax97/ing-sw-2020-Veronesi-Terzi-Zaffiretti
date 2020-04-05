@@ -52,4 +52,11 @@ public class Match extends Observable
     {
         return setup.getPlayers();
     }
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 }
