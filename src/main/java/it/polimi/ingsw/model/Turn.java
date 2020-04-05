@@ -43,17 +43,22 @@ public class Turn
     }
     public void Move(Board board, int x, int y) throws RuntimeException
     {
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0))
-        {
-            if (this.selectedCell.isAdjacent(x, y))
-            {
-                board.getCell(x,y).setWorker(this.selectedCell.getWorker());
-                this.selectedCell.setWorker(null);
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
+            if (this.selectedCell.isAdjacent(x, y)) {
+                if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
+                    if (!this.selectedCell.getDome() & this.selectedCell.getWorker() == null)
+                    {
+                        board.getCell(x, y).setWorker(this.selectedCell.getWorker());
+                        this.selectedCell.setWorker(null);
+                        this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
+                    } else throw new RuntimeException("Target cell is occupied");
+                } else throw new RuntimeException("Target cell is too high/low");
+            } else {
+                throw new RuntimeException("Target cell is too far");
             }
-            else { throw new RuntimeException("Target cell is too far");}
-        }
-        else { throw new RuntimeException("Target cell out of board");}
+        } else throw new RuntimeException("Target cell out of board");
     }
+
     public void Build(Worker worker, int x, int y)
     {
 
