@@ -14,7 +14,7 @@ public class God {
 
     public int Move(Board board, Cell selectedCell, int x, int y) { return 0; }
 
-    public int Building(Board board, Cell selectedCell, int x, int y) { return 0; }
+    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild) { return 0; }
 
     public void EnemyTurn() { }
 
