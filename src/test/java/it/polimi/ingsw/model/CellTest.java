@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CellTest {
     @Test
@@ -40,7 +41,7 @@ public class CellTest {
         assertEquals("Position is wrong", cell.getPos()[1], y);
     }
     @Test
-    public void GetBuiltTurn()
+    public void GetBuiltTurnTest()
     {
         Cell cell = new Cell();
         int turn = 5;
@@ -48,12 +49,22 @@ public class CellTest {
         assertEquals("BuiltTurn is wrong", cell.getBuiltTurn(), turn);
     }
     @Test
-    public void GetBuiltBy()
+    public void GetBuiltByTest()
     {
         Cell cell = new Cell();
         Player player = new Player("Pino");
         cell.setBuiltBy(player);
         assertEquals("BuiltBy is Wrong", cell.getBuiltBy(), player);
+    }
+    @Test
+    public void IsAdjacentTest ()
+    {
+        Cell cell = new Cell();
+        cell.setPos(3,3);
+        assertEquals("isAdjacent is wrong", cell.isAdjacent(4,4), true);
+        assertEquals("isAdjacent is wrong", cell.isAdjacent(4,5), false);
+        assertEquals("isAdjacent is wrong", cell.isAdjacent(3,3), false);
+
     }
 
 }

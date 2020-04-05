@@ -52,6 +52,19 @@ public class Cell
         this.coordY = y;
     }
 
+    public boolean isAdjacent(int x, int y)
+    {
+        if (this.coordX == x || this.coordX == x+1 || this.coordX == x-1)
+        {
+            if (this.coordY == y || this.coordX == y+1 || this.coordY == y-1)
+            {
+                return !(this.coordX == x & this.coordY == y);
+            }
+            else return false;
+        }
+        else return false;
+    }
+
     public int getBuiltTurn()
     {
         return builtTurn;
