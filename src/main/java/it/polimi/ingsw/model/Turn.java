@@ -41,40 +41,27 @@ public class Turn
     {
 
     }
-
-    public void Move(Board board, int x, int y) throws RuntimeException {
-
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0))
-        {
-            if (this.selectedCell.isAdjacent(x, y))
-            {
-                board.getCell(x,y).setWorker(this.selectedCell.getWorker());
-                this.selectedCell.setWorker(null);
+    public void Move(Board board, int x, int y) throws RuntimeException
+    {
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
+            if (this.selectedCell.isAdjacent(x, y)) {
+                if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
+                    if (!this.selectedCell.getDome() & this.selectedCell.getWorker() == null)
+                    {
+                        board.getCell(x, y).setWorker(this.selectedCell.getWorker());
+                        this.selectedCell.setWorker(null);
+                        this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
+                    } else throw new RuntimeException("Target cell is occupied");
+                } else throw new RuntimeException("Target cell is too high/low");
+            } else {
+                throw new RuntimeException("Target cell is too far");
             }
-            else { throw new RuntimeException("Target cell is too far!");}
-        }
-        else { throw new RuntimeException("Target cell out of the board");}
+        } else throw new RuntimeException("Target cell out of board");
     }
 
-    public void Build(Board board, int x, int y) throws RuntimeException {
+    public void Build(Worker worker, int x, int y)
+    {
 
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
-            if (this.selectedCell.isAdjacent(x, y)) {
-                if (board.getCell(x, y).getWorker() == null) {
-                    if (!selectedCell.getDome()) {
-                        int building = board.getCell(x, y).getBuilding();
-                        if (building < 3) {
-                            board.getCell(x, y).setBuilding(1);
-                        } else if (building == 3) {
-                            board.getCell(x, y).setDome(true);
-                        }
-                        board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
-                    } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                } else { throw new RuntimeException("Target cell has a worker on it, Baka");}
-            }
-            else { throw new RuntimeException("Target cell is too far!");}
-        }
-        else {throw new RuntimeException("Target cell is out of the board!");}
     }
     public void CheckLostOthers()
     {
