@@ -46,8 +46,7 @@ public class Turn
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (this.selectedCell.isAdjacent(x, y)) {
                 if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
-                    if (!this.selectedCell.getDome() & this.selectedCell.getWorker() == null)
-                    {
+                    if (!this.selectedCell.getDome() & this.selectedCell.getWorker() == null) {
                         board.getCell(x, y).setWorker(this.selectedCell.getWorker());
                         this.selectedCell.setWorker(null);
                         this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
