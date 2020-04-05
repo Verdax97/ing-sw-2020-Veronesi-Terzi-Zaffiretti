@@ -41,9 +41,18 @@ public class Turn
     {
 
     }
-    public void Move(Worker worker, int x, int y)
+    public void Move(Board board, int x, int y) throws RuntimeException
     {
-
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0))
+        {
+            if (this.selectedCell.isAdjacent(x, y))
+            {
+                board.getCell(x,y).setWorker(this.selectedCell.getWorker());
+                this.selectedCell.setWorker(null);
+            }
+            else { throw new RuntimeException("Target cell is too far");}
+        }
+        else { throw new RuntimeException("Target cell out of board");}
     }
     public void Build(Worker worker, int x, int y)
     {
