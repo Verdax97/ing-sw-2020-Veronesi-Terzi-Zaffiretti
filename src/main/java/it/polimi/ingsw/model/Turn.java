@@ -45,7 +45,7 @@ public class Turn
     public int Move(Board board, int x, int y) throws RuntimeException
     {
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
-        if (a != 0)
+        if (a != 0)//must update Selected cell to get the same reference to the builder
             return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (this.selectedCell.isAdjacent(x, y)) {
