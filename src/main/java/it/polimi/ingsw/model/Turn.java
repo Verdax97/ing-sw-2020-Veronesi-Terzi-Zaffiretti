@@ -33,6 +33,10 @@ public class Turn
         this.workers = workers;
     }
 
+    public Cell getSelectedCell() { return selectedCell; }
+
+    public void setSelectedCell(Cell selectedCell) { this.selectedCell = selectedCell; }
+
     public void StartTurn()
     {
 
@@ -54,11 +58,4 @@ public class Turn
 
     }
 
-    public Cell getSelectedCell() {
-        return selectedCell;
-    }
-
-    public void setSelectedCell(Cell selectedCell) {
-        this.selectedCell = selectedCell;
-    }
 }

@@ -18,7 +18,7 @@ public class BoardTest {
         Cell[][] board = new Cell[5][5];
         Board boardTest = new Board();
         int x = 3, y = 2;
-        Cell cellTest = new Cell();
+        Cell cellTest = new Cell(0,0);
         board[x][y] = cellTest;
         boardTest.setBoard(board);
         assertEquals("Cell is wrong", cellTest, boardTest.getCell(x, y));

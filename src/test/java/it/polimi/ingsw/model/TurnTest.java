@@ -36,4 +36,12 @@ public class TurnTest
         turn.setWorkers(workers);
         assertEquals("turn is wrong", workers, turn.getWorkers());
     }
+    @Test
+    public void GetSelectedCellTest()
+    {
+        Turn turn = new Turn();
+        Cell cell = new Cell(0,0);
+        turn.setSelectedCell(cell);
+        assertEquals("SelectedCell is wrong", turn.getSelectedCell(), cell);
+    }
 }
