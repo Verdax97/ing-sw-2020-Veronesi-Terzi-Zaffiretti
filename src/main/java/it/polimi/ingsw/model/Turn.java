@@ -78,7 +78,7 @@ public class Turn
                         board.getCell(x, y).setBuiltBy(this.selectedCell.getWorker().getPlayer());
                         board.getCell(x, y).setBuiltTurn(turnNumber);
                     } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                } else { throw new RuntimeException("Target cell has a worker on it, Baka");}
+                } else { throw new RuntimeException("Target cell has a worker on it");}
             } else { throw new RuntimeException("Target cell is too far!");}
         } else {throw new RuntimeException("Target cell is out of the board!");}
         return 1;//1 default return value, 2 need to repeat action
