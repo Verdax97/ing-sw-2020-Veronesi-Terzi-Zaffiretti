@@ -21,7 +21,11 @@ public class Atlas extends God
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
                     if (!selectedCell.getDome()) {
+                        int building = board.getCell(x, y).getBuilding();
                         if (typeBuild == 1) {
+                            board.getCell(x, y).setDome(true);
+                        }
+                        else if (building == 3){
                             board.getCell(x, y).setDome(true);
                         }
                         else { board.getCell(x, y).setBuilding(1);}
