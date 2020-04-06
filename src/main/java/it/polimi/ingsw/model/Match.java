@@ -10,6 +10,7 @@ public class Match extends Observable
     private Turn turn;
     private SetupMatch setup;
     private Player winner;
+    private int nPlayer = 0;
 
     public Match(ArrayList<String> nicks)
     {
@@ -24,28 +25,24 @@ public class Match extends Observable
     {
 
     }
-    public Worker[] getActiveWorker(Player player)
+
+    public void NextTurn(Player player)
     {
-        Worker[] result = new Worker[2];
-        int k = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0)
-                {
-                    result[k] = board.getCell(i, j).getWorker();
-                    k++;
-                }
-                if (k == 2)
-                    return result;
-            }
-        }
-        return result;
+
     }
 
-    public void NextTurn(Player player) {
+    public Player NextPlayer()
+    {
+        if (nPlayer == setup.getPlayers().size())
+            nPlayer = 0;
+        else
+            nPlayer++;
+        return setup.getPlayers().get(0);
+    }
 
+    public void CheckWinCondition(Player player)
+    {
+        turn.CheckWinCondition(board, player);
     }
 
     public ArrayList<Player> getPlayers()
