@@ -9,10 +9,11 @@ public class DebuffGod extends God
         {
             for (int j = 0; j < 5; j++)
             {
-                if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(player.getNickname()))
-                {
-                    board.getCell(i, j).getWorker().setDebuff(debuff);
-                }
+                if (board.getCell(i, j).getWorker() != null)
+                    if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+                    {
+                        board.getCell(i, j).getWorker().setDebuff(debuff);
+                    }
             }
         }
     }
