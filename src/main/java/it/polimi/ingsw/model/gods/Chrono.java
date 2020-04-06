@@ -13,6 +13,16 @@ public class Chrono extends God{
 
     @Override
     public Player WinCondition(Board board, Player player){
+        int fullTowers = 0;
+        for (int i=0; i<5; i++){
+            for (int j=0; j<5; j++){
+                if (board.getCell(i, j).getBuilding()==3 && board.getCell(i, j).getDome()==true){
+                    fullTowers++;
+                }
+            }
+        }
+        if (fullTowers>=5)
+            return player;
         return null;
     }
 }
