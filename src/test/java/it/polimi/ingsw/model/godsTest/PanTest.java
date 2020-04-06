@@ -18,7 +18,7 @@ public class PanTest {
         worker.setPlayer(player);
         board.getCell(3, 3).setWorker(worker);
         worker.setLastMovement(-2);
-        assertEquals("WinCondition negative Fail", player.getGodPower().WinCondition(board, player), player);
+        assertEquals("WinCondition Fail", player.getGodPower().WinCondition(board, player), player);
         worker.setLastMovement(0);
         assertNull("WinCondition negative Fail", player.getGodPower().WinCondition(board, player));
     }
