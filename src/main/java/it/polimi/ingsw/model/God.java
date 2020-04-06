@@ -22,5 +22,5 @@ public class God {
 
     public void EnemyBuilding() { }
 
-    public void WinCondition() { }
+    public Player WinCondition(Board board, Player player) { return null; }
 }
