@@ -5,6 +5,12 @@ import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
 
 public class Pan extends God {
+
+    public Pan(){
+        this.name = "Pan";
+        this.description = "Win Condition: you also win if your worker moves down two or more levels";
+    }
+
     @Override
     public Player WinCondition(Board board, Player player) {
         for (int i = 0; i < 5; i++) {
