@@ -26,6 +26,14 @@ public class Match extends Observable
 
     }
 
+    public boolean CheckSelectedCell(Player player, int x, int y)
+    {
+        if (board.getCell(x,y).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+            return true;
+        else
+            return false;
+    }
+
     public void NextTurn(Player player)
     {
 
