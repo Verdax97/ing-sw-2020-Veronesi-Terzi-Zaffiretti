@@ -23,6 +23,6 @@ public class Chrono extends God{
         }
         if (fullTowers>=5)
             return player;
-        return null;
+        else return null;
     }
 }
