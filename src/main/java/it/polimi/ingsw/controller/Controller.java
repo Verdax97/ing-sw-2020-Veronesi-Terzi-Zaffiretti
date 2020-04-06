@@ -24,6 +24,7 @@ public class Controller implements Observer {
     public void CreateMatch()
     {
         this.match = new Match(lobby.getPlayers());
+        this.playerTurn = match.getPlayers().get(0);
     }
 
     public void killPlayer(Player player){}

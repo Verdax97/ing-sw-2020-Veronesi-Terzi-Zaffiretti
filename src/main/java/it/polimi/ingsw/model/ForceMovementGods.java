@@ -27,6 +27,7 @@ public class ForceMovementGods extends God
                             board.getCell(x, y).setWorker(selectedCell.getWorker());
                             selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
                             selectedCell.setWorker(null);
+                            targetedWorker.setLastMovement(0);
                             board.getCell(targetPosX, targetPosY).setWorker(targetedWorker);
                         } else throw new RuntimeException("Can't move opponent worker to target position");
                     }else throw new RuntimeException("Target cell is occupied by a dome");
