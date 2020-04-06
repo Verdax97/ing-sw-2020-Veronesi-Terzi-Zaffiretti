@@ -50,7 +50,8 @@ public class Turn
             return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (this.selectedCell.isAdjacent(x, y)) {
-                if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
+                int debuff = (selectedCell.getWorker().isDebuff()) ? 0: 1;
+                if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
                     if (!board.getCell(x, y).getDome() && board.getCell(x, y).getWorker() == null) {
                         board.getCell(x, y).setWorker(this.selectedCell.getWorker());
                         this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());

@@ -11,7 +11,8 @@ public class ForceMovementGods extends God
         {
             if (selectedCell.isAdjacent(x, y))
             {
-                if (selectedCell.getBuilding() + 1 >= board.getCell(x, y).getBuilding())
+                int debuff = (selectedCell.getWorker().isDebuff()) ? 0: 1;
+                if (selectedCell.getBuilding() + debuff >= board.getCell(x, y).getBuilding())
                 {
                     if (!board.getCell(x, y).getDome())
                     {
