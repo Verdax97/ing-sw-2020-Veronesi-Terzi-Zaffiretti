@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Turn
 {
     private int turnNumber;
-    private List<Worker> workers;
+    private ArrayList<Worker> workers;
     private int validMoves;
     private Cell selectedCell;
 
@@ -29,7 +30,7 @@ public class Turn
         return workers;
     }
 
-    public void setWorkers(List<Worker> workers) {
+    public void setWorkers(ArrayList<Worker> workers) {
         this.workers = workers;
     }
 
@@ -88,9 +89,19 @@ public class Turn
     {
 
     }
-    public void CheckWinCondition()
+    public Player CheckWinCondition(Board board, Player player)
     {
-
+        Player playerExit = player;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
+                    if (board.getCell(i, j).getBuilding() == 3 & board.getCell(i, j).getWorker().getLastMovement() != 0) {
+                        return player;
+                    }
+                }
+            }
+        }
+        playerExit = player.getGodPower().WinCondition(board, player);
+        return playerExit;
     }
-
 }
