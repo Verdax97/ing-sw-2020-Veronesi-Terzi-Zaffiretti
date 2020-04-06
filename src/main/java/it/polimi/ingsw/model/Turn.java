@@ -91,7 +91,6 @@ public class Turn
     }
     public Player CheckWinCondition(Board board, Player player)
     {
-        Player playerExit = player;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board.getCell(i, j).getWorker() != null) {
@@ -105,7 +104,6 @@ public class Turn
                 }
             }
         }
-        playerExit = player.getGodPower().WinCondition(board, player);
-        return playerExit;
+        return player.getGodPower().WinCondition(board, player);
     }
 }
