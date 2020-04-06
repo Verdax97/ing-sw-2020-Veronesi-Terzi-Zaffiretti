@@ -63,8 +63,8 @@ public class Turn
         return 1;//1 default return value, 2 need to repeat action
     }
 
-    public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException
-    {
+    public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException{
+        //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild, turnNumber);
         if (a != 0)
             return a;//1 default return value, 2 need to repeat action
