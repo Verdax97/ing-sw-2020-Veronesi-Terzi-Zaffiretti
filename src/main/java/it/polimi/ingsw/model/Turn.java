@@ -41,25 +41,49 @@ public class Turn
     {
 
     }
-    public void Move(Board board, int x, int y) throws RuntimeException
+
+    public int Move(Board board, int x, int y) throws RuntimeException
     {
+        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
+        if (a != 0)//must update Selected cell to get the same reference to the builder
+            return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (this.selectedCell.isAdjacent(x, y)) {
                 if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + 1) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
-                    if (!this.selectedCell.getDome() & this.selectedCell.getWorker() == null) {
+                    if (!board.getCell(x, y).getDome() && board.getCell(x, y).getWorker() == null) {
                         board.getCell(x, y).setWorker(this.selectedCell.getWorker());
-                        this.selectedCell.setWorker(null);
                         this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
+                        this.selectedCell.setWorker(null);
                     } else throw new RuntimeException("Target cell is occupied");
                 } else throw new RuntimeException("Target cell is too high/low");
             } else throw new RuntimeException("Target cell is too far");
         } else throw new RuntimeException("Target cell out of board");
+        return 1;//1 default return value, 2 need to repeat action
     }
 
-    public void Build(Worker worker, int x, int y)
+    public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException
     {
-
+        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild, turnNumber);
+        if (a != 0)
+            return a;//1 default return value, 2 need to repeat action
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
+            if (this.selectedCell.isAdjacent(x, y)) {
+                if (board.getCell(x, y).getWorker() == null) {
+                    if (!this.selectedCell.getDome()) {
+                        int building = board.getCell(x, y).getBuilding();
+                        if (building < 3)
+                            board.getCell(x, y).setBuilding(1);
+                        else if (building == 3)
+                            board.getCell(x, y).setDome(true);
+                        board.getCell(x, y).setBuiltBy(this.selectedCell.getWorker().getPlayer());
+                        board.getCell(x, y).setBuiltTurn(turnNumber);
+                    } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
+                } else { throw new RuntimeException("Target cell has a worker on it");}
+            } else { throw new RuntimeException("Target cell is too far!");}
+        } else {throw new RuntimeException("Target cell is out of the board!");}
+        return 1;//1 default return value, 2 need to repeat action
     }
+
     public void CheckLostOthers()
     {
 

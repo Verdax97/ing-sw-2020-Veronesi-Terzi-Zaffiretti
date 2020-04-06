@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.gods.Artemis;
+import it.polimi.ingsw.model.gods.Hestia;
 import it.polimi.ingsw.view.ServerView;
 import org.junit.Test;
 
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class ArtemisTest
+public class HestiaTest
 {
     @Test
-    public void MoveTest()
+    public void BuildTest()
     {
         ArrayList<String> players = new ArrayList<>();
         players.add("pino");
@@ -33,13 +33,12 @@ public class ArtemisTest
         board.getCell(3, 1).setWorker(testWorker2);
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(0, 0).setWorker(testWorker3);
-        Artemis artemis = new Artemis();
+        Hestia hestia = new Hestia();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", 2, artemis.Move(board, selectedCell, 1, 1));
+        assertEquals("Return value is wrong", 2, hestia.Building(board, selectedCell, 1, 1, 0, 1));
         serverView.PrintBoard(board, match);
-        selectedCell = board.getCell(1, 1);
-        assertEquals("Return value is wrong", 1, artemis.Move(board, selectedCell, 0, 1));
+        assertEquals("Return value is wrong", 1, hestia.Building(board, selectedCell, 1, 1, 0, 1));
         serverView.PrintBoard(board, match);
     }
 }
