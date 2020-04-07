@@ -78,13 +78,13 @@ public class Turn
     */
     public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException{
         //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
-        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild, turnNumber);
+        int a = selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
         if (a != 0)
             return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
-            if (this.selectedCell.isAdjacent(x, y)) {
+            if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
-                    if (!this.selectedCell.getDome()) {
+                    if (!selectedCell.getDome()) {
                         int building = board.getCell(x, y).getBuilding();
                         if (building < 3)
                             board.getCell(x, y).setBuilding(1);
