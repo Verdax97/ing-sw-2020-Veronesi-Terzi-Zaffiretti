@@ -21,8 +21,8 @@ public class ForceMovementGods extends God
                             selectedCell.setWorker(null);
                             targetedWorker.setLastMovement(0);
                             board.getCell(targetPosX, targetPosY).setWorker(targetedWorker);
-                        }
-                    } else return -4;//cell is occupied by dome
+                        } else return -5;//no space to move enemy worker
+                    } else return -4;//cell is occupied
                 } else return -3;//cell is too high
             } else return-2;// throw new RuntimeException("Target cell is too far");
         } else return -1;//throw new RuntimeException("Target cell out of board");
