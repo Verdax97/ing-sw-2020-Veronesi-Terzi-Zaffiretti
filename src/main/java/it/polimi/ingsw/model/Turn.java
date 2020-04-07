@@ -43,26 +43,39 @@ public class Turn
 
     }
 
+    /*
+    -1 Target cell out of board
+    -2 Target cell is too far
+    -3 Cell is too high
+    -4 Cell is occupied by Dome/Worker
+    -5 Unable to move enemy Worker
+    -6 (Artemis) Same cell as the first one
+    */
     public int Move(Board board, int x, int y) throws RuntimeException
     {
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
         if (a != 0)//must update Selected cell to get the same reference to the builder
             return a;//1 default return value, 2 need to repeat action
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
-            if (this.selectedCell.isAdjacent(x, y)) {
-                int debuff = (selectedCell.getWorker().isDebuff()) ? 0: 1;
-                if ((this.selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (this.selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
-                    if (!board.getCell(x, y).getDome() && board.getCell(x, y).getWorker() == null) {
-                        board.getCell(x, y).setWorker(this.selectedCell.getWorker());
-                        this.selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - this.selectedCell.getBuilding());
-                        this.selectedCell.setWorker(null);
-                    } else throw new RuntimeException("Target cell is occupied");
-                } else throw new RuntimeException("Target cell is too high/low");
-            } else throw new RuntimeException("Target cell is too far");
-        } else throw new RuntimeException("Target cell out of board");
+            if (selectedCell.isAdjacent(x, y)) {
+                if (selectedCell.IsNotHigh(board, x, y)) {
+                    if (selectedCell.IsFreeDome(board, x, y)) {
+                        if (selectedCell.IsFreeWorker(board, x, y)) {
+                            board.getCell(x, y).setWorker(selectedCell.getWorker());
+                            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+                            selectedCell.setWorker(null);
+                        } else return -4;//cell is occupied
+                    } else return -4;//cell is occupied
+                } else return -3;//cell is too high
+            } else return-2;// throw new RuntimeException("Target cell is too far");
+        } else return -1;//throw new RuntimeException("Target cell out of board");
         return 1;//1 default return value, 2 need to repeat action
     }
 
+    /*
+    -5 (Hephaestus) Not same as last built cell
+    -6 (Hephaestus) Building is > 2
+    */
     public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException{
         //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Building(board, this.selectedCell, x, y, typeBuild, turnNumber);
@@ -79,10 +92,10 @@ public class Turn
                             board.getCell(x, y).setDome(true);
                         board.getCell(x, y).setBuiltBy(this.selectedCell.getWorker().getPlayer());
                         board.getCell(x, y).setBuiltTurn(turnNumber);
-                    } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                } else { throw new RuntimeException("Target cell has a worker on it");}
-            } else { throw new RuntimeException("Target cell is too far!");}
-        } else {throw new RuntimeException("Target cell is out of the board!");}
+                    }else return -4;//Cell occupied by a dome
+                } else return -3;//Worker on the cell
+            } else return -2; //Target cell is too far
+        } else return -1;//Target cell out of board
         return 1;//1 default return value, 2 need to repeat action
     }
 

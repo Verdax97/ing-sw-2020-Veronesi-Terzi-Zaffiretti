@@ -25,18 +25,19 @@ public class Artemis extends MultipleActionGod
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (x != lastX || y != lastY){
-                    int debuff = (selectedCell.getWorker().isDebuff()) ? 0: 1;
-                    if ((selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
-                        if (!board.getCell(x, y).getDome() && board.getCell(x, y).getWorker() == null) {
-                            board.getCell(x, y).setWorker(selectedCell.getWorker());
-                            selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
-                            selectedCell.setWorker(null);
-                            use++;
-                        } else throw new RuntimeException("Target cell is occupied");
-                    } else throw new RuntimeException("Target cell is too high/low");
-                } else throw new RuntimeException("Target cell is same as previous");
-            } else throw new RuntimeException("Target cell is too far");
-        } else throw new RuntimeException("Target cell out of board");
+                    if (selectedCell.IsNotHigh(board, x, y)) {
+                        if (selectedCell.IsFreeDome(board, x, y)) {
+                            if (selectedCell.IsFreeWorker(board, x, y)) {
+                                board.getCell(x, y).setWorker(selectedCell.getWorker());
+                                selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+                                selectedCell.setWorker(null);
+                                use++;
+                            } else return -4;//cell is occupied
+                        } else return -4;//cell is occupied
+                    } else return -3;//cell is too high
+                } else return -6;//same as last position
+            } else return-2;// throw new RuntimeException("Target cell is too far");
+        } else return -1;//throw new RuntimeException("Target cell out of board");
         return CheckUse();
     }
 

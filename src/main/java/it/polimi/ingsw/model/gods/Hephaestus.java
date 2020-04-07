@@ -21,24 +21,34 @@ public class Hephaestus extends MultipleActionGod {
         {
             lastX = x;
             lastY = y;
+
         }
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
-                if (x == lastX || y == lastY) {
-                    if (board.getCell(x, y).getWorker() == null) {
-                        if (!selectedCell.getDome()) {
+                if (board.getCell(x, y).getWorker() == null) {
+                    if (!selectedCell.getDome()) {
+                        if (use == 0) {
                             int building = board.getCell(x, y).getBuilding();
-                            if (building < 3){
+                            if (building < 3)
+                                board.getCell(x, y).setBuilding(1);
+                            else if (building == 3)
+                                board.getCell(x, y).setDome(true);
+                            board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
+                            board.getCell(x, y).setBuiltTurn(turnNumber);
+                            use++;
+                        } else if (x == lastX && y == lastY) {
+                            int building = board.getCell(x, y).getBuilding();
+                            if (building < 3) {
                                 board.getCell(x, y).setBuilding(1);
                                 board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
                                 board.getCell(x, y).setBuiltTurn(turnNumber);
                                 use++;
-                            } else {throw new RuntimeException("You may build one additional block but not a dome");}
-                        } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                    } else { throw new RuntimeException("Target cell has a worker on it"); }
-                } else {throw new RuntimeException("Target cell must be the same as previous");}
-            } else { throw new RuntimeException("Target cell is too far!");}
-        } else {throw new RuntimeException("Target cell is out of the board!");}
+                            } else return -6;//Building is > 2
+                        } else return -5;//Not same as last built cell
+                    } else return -4;//Cell occupied by a dome
+                } else return -3;//Worker on the cell
+            } else return -2; //Target cell is too far
+        } else return -1;//Target cell out of board
         return CheckUse();
     }
 }
