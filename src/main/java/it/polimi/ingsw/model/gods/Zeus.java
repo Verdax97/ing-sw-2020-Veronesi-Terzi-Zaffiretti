@@ -20,7 +20,6 @@ public class Zeus extends God{
                         if (building < 3) {
                             if (x == i && y == j) {
                                 board.getCell(x, y).setBuilding(1);
-                                //il worker deve salire di livello altrimenti perdo la sua posizione, ma non è win condition
                             } else if (x != i && y != j) {
                                 board.getCell(x, y).setBuilding(1);
                             }
@@ -35,6 +34,6 @@ public class Zeus extends God{
                 } else { throw new RuntimeException("Target cell has a worker on it");}
             } else { throw new RuntimeException("Target cell is too far!");}
         } else {throw new RuntimeException("Target cell is out of the board!");}
-        return 1;//1 default return value, 2 need to repeat action
+        return 1;
     }
 }
