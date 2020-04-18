@@ -26,7 +26,7 @@ public class Hephaestus extends MultipleActionGod {
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
-                    if (!selectedCell.getDome()) {
+                    if (!board.getCell(x, y).getDome()) {
                         if (use == 0) {
                             int building = board.getCell(x, y).getBuilding();
                             if (building < 3)
