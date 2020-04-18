@@ -19,7 +19,6 @@ public class Minotaur extends ForceMovementGods
         int dy = y - selectedCell.getPos()[1];
         targetPosX = x + dx;
         targetPosY = y + dy;
-        ForceMove(board, selectedCell, x, y);
-        return 1;
+        return ForceMove(board, selectedCell, x, y);
     }
 }
