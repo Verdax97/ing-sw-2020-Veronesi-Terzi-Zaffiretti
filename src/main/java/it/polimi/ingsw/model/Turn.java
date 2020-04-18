@@ -38,9 +38,43 @@ public class Turn
 
     public void setSelectedCell(Cell selectedCell) { this.selectedCell = selectedCell; }
 
-    public void StartTurn()
-    {
+    public boolean CheckLostMove(Player player, Board board) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board.getCell(i, j).getWorker() != null) {
+                    if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
+                        for (int k = -1; k < 2; k++){
+                            for (int l = -1; l < 2; l++){
+                                if (((i+k >= 0 & i+k <5) & (j+l >= 0 & j+l <5))
+                                & !board.getCell(i+k, j+l).getDome() & board.getCell(i+k, j+l).getWorker() != null  ){
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
+    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, int x, int y, boolean godPower)
+    /*
+    -1 Player lost
+    0 Player neither lost nor won
+    1 Player won
+     */
+    {
+        // if last, player won.
+        if (ActivePlayers.size() == 1){
+            return 1;
+        }
+        // Check if we have to kill him
+        if (this.CheckLostMove(player, board)) { return -1;}
+        // Check if we want to use the god power
+        if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
+
+        return 0;
     }
 
     /*
@@ -51,7 +85,7 @@ public class Turn
     -5 Unable to move enemy Worker
     -6 (Artemis) Same cell as the first one
     */
-    public int Move(Board board, int x, int y) throws RuntimeException
+    public int Move(Board board, int x, int y)
     {
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
         if (a != 0)//must update Selected cell to get the same reference to the builder
@@ -84,7 +118,7 @@ public class Turn
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
-                    if (!selectedCell.getDome()) {
+                    if (board.getCell(x, y).getDome()) {
                         int building = board.getCell(x, y).getBuilding();
                         if (building < 3)
                             board.getCell(x, y).setBuilding(1);
