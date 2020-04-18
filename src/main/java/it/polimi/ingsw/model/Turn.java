@@ -114,7 +114,7 @@ public class Turn
     -5 (Hephaestus) Not same as last built cell
     -6 (Hephaestus) Building is > 2
     */
-    public int Build(Board board, int x, int y, int typeBuild) throws RuntimeException{
+    public int Build(Board board, int x, int y, int typeBuild) {
         //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
         int a = selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
         if (a != 0)
@@ -137,10 +137,6 @@ public class Turn
         return 1;//1 default return value, 2 need to repeat action
     }
 
-    public void CheckLostOthers()
-    {
-
-    }
     public Player CheckWinCondition(Board board, Player player)
     {
         for (int i = 0; i < 5; i++) {

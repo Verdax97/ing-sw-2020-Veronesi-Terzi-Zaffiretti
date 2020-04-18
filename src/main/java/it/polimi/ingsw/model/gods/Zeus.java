@@ -15,7 +15,7 @@ public class Zeus extends God{
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y) || (x == i && y == j)) {
                 if (board.getCell(x, y).getWorker() == null || (x == i && y == j)) {
-                    if (!selectedCell.getDome()) {
+                    if (!board.getCell(x, y).getDome()) {
                         int building = board.getCell(x, y).getBuilding();
                         if (building < 3) {
                             if (x == i && y == j) {
