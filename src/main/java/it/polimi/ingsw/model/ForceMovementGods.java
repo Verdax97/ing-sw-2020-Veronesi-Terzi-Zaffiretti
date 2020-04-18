@@ -13,11 +13,11 @@ public class ForceMovementGods extends God
                 if (selectedCell.IsNotHigh(board, x, y)) {
                     if (selectedCell.IsFreeDome(board, x, y)) {
                         Worker targetedWorker = board.getCell(x, y).getWorker();
-                        if (board.getCell(x, y).getWorker() == null) {
+                        if (targetedWorker == null) {
                             board.getCell(x, y).setWorker(selectedCell.getWorker());
                             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
                             selectedCell.setWorker(null);
-                        } else if (board.getCell(targetPosX, targetPosY).getWorker() == null || !board.getCell(targetPosX, targetPosY).getDome() || board.getCell(targetPosX, targetPosY).getWorker() == selectedCell.getWorker()) {
+                        } else if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || board.getCell(targetPosX, targetPosY).getWorker() == selectedCell.getWorker()) {
                             board.getCell(x, y).setWorker(selectedCell.getWorker());
                             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
                             selectedCell.setWorker(null);
