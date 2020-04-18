@@ -48,5 +48,9 @@ public class MinotaurTest {
         selectedCell = board.getCell(1, 3);
         assertEquals("Return value is wrong", -5, minotaur.Move(board, selectedCell, 2, 2));
         serverView.PrintBoard(board, match);
+        board.getCell(0, 4).setDome(true);
+        selectedCell = board.getCell(2,2);
+        assertEquals("Return value is wrong", -5, minotaur.Move(board, selectedCell, 1, 3));
+        serverView.PrintBoard(board, match);
     }
 }
