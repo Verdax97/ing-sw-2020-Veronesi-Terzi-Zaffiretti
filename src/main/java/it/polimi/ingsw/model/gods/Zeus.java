@@ -27,13 +27,13 @@ public class Zeus extends God{
                         else if (building == 3 && x != i && y != j) {
                             board.getCell(x, y).setDome(true);
                         }
-                        else {throw new RuntimeException("You are at third level, you cannot build under yoursef");}
+                        else return -7;//third level build forbidden
                         board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
                         board.getCell(x, y).setBuiltTurn(turnNumber);
-                    } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                } else { throw new RuntimeException("Target cell has a worker on it");}
-            } else { throw new RuntimeException("Target cell is too far!");}
-        } else {throw new RuntimeException("Target cell is out of the board!");}
+                    } else return -4; //cell has a Dome
+                } else return -4; //cell has a worker on it
+            } else return -2; //cell is too far
+        } else return -1; //cell is out of the board
         return 1;
     }
 }
