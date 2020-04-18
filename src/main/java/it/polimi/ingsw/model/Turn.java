@@ -45,8 +45,11 @@ public class Turn
                     if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
                         for (int k = -1; k < 2; k++){
                             for (int l = -1; l < 2; l++){
-                                if (((i+k >= 0 & i+k <5) & (j+l >= 0 & j+l <5))
-                                & !board.getCell(i+k, j+l).getDome() & board.getCell(i+k, j+l).getWorker() != null  ){
+                                if (((i+k >= 0 & i+k <5)
+                                & (j+l >= 0 & j+l <5))
+                                & !board.getCell(i+k, j+l).getDome()
+                                & board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
+                                & board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
                                     return false;
                                 }
                             }
