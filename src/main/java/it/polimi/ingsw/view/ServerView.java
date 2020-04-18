@@ -39,6 +39,7 @@ public class ServerView extends Observable implements Observer, Runnable
     public void PrintBoard(Board board, Match match)
     {
         for(int j = 4; j >= 0; j--){
+            outputStream.print( j + "|");
             for(int i = 0; i < 5 ; i++){
                 if (board.getCell(i, j).getDome())
                 {
@@ -68,54 +69,13 @@ public class ServerView extends Observable implements Observer, Runnable
             }
             outputStream.println();
         }
-        outputStream.println();
+        outputStream.println("Y|---------");
+        outputStream.println("X 0 1 2 3 4");
     }
 
     public void ReceiveMsg()
     {
 
-    }
-
-
-    public void startServer() throws IOException
-    {
-        int port = 4567;
-        //open TCP port
-        ServerSocket serverSocket = new ServerSocket(port);
-        System.out.println("Server socket ready on port: " + port);
-        //wait for connection
-        Socket socket = serverSocket.accept();
-        System.out.println("Received client connection");
-        // open input and output streams to read and write
-        Scanner in = new Scanner(socket.getInputStream());
-        PrintWriter out = new PrintWriter(socket.getOutputStream());
-        //read from and write to the connection until I receive "quit"
-        while(true){
-            String line = in.nextLine();
-            if(line.equals("quit")){
-                break;
-            } else {
-                out.println("Received: " + line);
-                out.flush();
-            }
-        }
-        //close streams and socket
-        System.out.println("Closing sockets");
-        in.close();
-        out.close();
-        socket.close();
-        serverSocket.close();
-    }
-
-    public void main(String[] args)
-    {
-        try
-        {
-            startServer();
-        } catch(IOException e)
-        {
-            System.err.println(e.getMessage());
-        }
     }
 
     @Override
