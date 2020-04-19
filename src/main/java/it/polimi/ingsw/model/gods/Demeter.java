@@ -35,11 +35,11 @@ public class Demeter extends MultipleActionGod {
                             board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
                             board.getCell(x, y).setBuiltTurn(turnNumber);
                             use++;
-                        } else { throw new RuntimeException("Target cell has a Dome, you cannot build"); }
-                    } else { throw new RuntimeException("Target cell has a worker on it"); }
-                } else {throw new RuntimeException("Target cell is same as previous");}
-            } else { throw new RuntimeException("Target cell is too far!");}
-        } else {throw new RuntimeException("Target cell is out of the board!");}
+                        }else return -4;//Cell occupied by a dome
+                    } else return -3;//Worker on the cell
+                } else return -8;//same as last built
+            } else return -2; //Target cell is too far
+        } else return -1;//Target cell out of board
         return CheckUse();
     }
 }
