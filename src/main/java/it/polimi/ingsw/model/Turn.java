@@ -46,10 +46,10 @@ public class Turn
                         for (int k = -1; k < 2; k++){
                             for (int l = -1; l < 2; l++){
                                 if (((i+k >= 0 & i+k <5)
-                                & (j+l >= 0 & j+l <5))
-                                & !board.getCell(i+k, j+l).getDome()
-                                & board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
-                                & board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
+                                && (j+l >= 0 & j+l <5))
+                                && !board.getCell(i+k, j+l).getDome()
+                                && board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
+                                && board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
                                     return false;
                                 }
                             }
@@ -67,14 +67,14 @@ public class Turn
         for (int i = pos[0]-1; i < pos[0]+2; i++ ){
             for (int j = pos[1]-1; j < pos[1]+2; j++ ){
                 if (((i >= 0 & i < 5)
-                   & (j >= 0 & j < 5)
-                   & this.selectedCell.isAdjacent(i,j)
-                   & this.selectedCell.IsNotHigh(board, i, j)
-                   & this.selectedCell.IsFreeDome(board, i, j)
-                   & this.selectedCell.IsFreeWorker(board, i, j))
+                   && (j >= 0 & j < 5)
+                   && this.selectedCell.isAdjacent(i,j)
+                   && this.selectedCell.IsNotHigh(board, i, j)
+                   && this.selectedCell.IsFreeDome(board, i, j)
+                   && this.selectedCell.IsFreeWorker(board, i, j))
                    ||
                    (this.selectedCell.getWorker().getPlayer().getGodPower().name == "Zeus"
-                   & this.selectedCell.getBuilding() < 3)
+                   && this.selectedCell.getBuilding() < 3)
 
                 ){return false;}
             }
