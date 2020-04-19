@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+
 public class AtlasTest {
     @Test
     public void BuildingTest(){
@@ -32,8 +34,13 @@ public class AtlasTest {
         Atlas atlas = new Atlas();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 4);
-        atlas.Building(board, selectedCell, 1, 4, 0, 0);
-        atlas.Building(board, selectedCell, 0, 3, 1, 0);
+        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 1, 4, 0, 0));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -4, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 1, 4, 1, 0));
         serverView.PrintBoard(board, match);
     }
 }
