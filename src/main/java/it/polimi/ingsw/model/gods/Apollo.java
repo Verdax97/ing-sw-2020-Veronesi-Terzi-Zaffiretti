@@ -16,7 +16,6 @@ public class Apollo extends ForceMovementGods {
     {
         targetPosX = selectedCell.getPos()[0];
         targetPosY = selectedCell.getPos()[1];
-        ForceMove(board, selectedCell, x, y);
-        return 1;
+        return ForceMove(board, selectedCell, x, y);
     }
 }

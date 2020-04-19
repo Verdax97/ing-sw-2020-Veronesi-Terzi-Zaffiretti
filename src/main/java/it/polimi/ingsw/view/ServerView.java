@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.State;
 
@@ -28,7 +29,40 @@ public class ServerView extends Observable implements Observer, Runnable
     private Scanner scanner;
     private PrintStream outputStream;
     private boolean done = false;
+
+    private Lobby lobby;
     private State state;
+    private String msgIn;
+    private String msgOut;
+
+    public Lobby getLobby() { return lobby; }
+
+    public void setLobby(Lobby lobby) { this.lobby = lobby; }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public String getMsgIn() {
+        return msgIn;
+    }
+
+    public void setMsgIn(String msgIn) {
+        this.msgIn = msgIn;
+    }
+
+    public String getMsgOut() {
+        return msgOut;
+    }
+
+    public void setMsgOut(String msgOut) {
+        this.msgOut = msgOut;
+    }
+
 
     public ServerView ()
     {
@@ -70,7 +104,7 @@ public class ServerView extends Observable implements Observer, Runnable
             outputStream.println();
         }
         outputStream.println("Y|---------");
-        outputStream.println("X 0 1 2 3 4");
+        outputStream.println("X 0 1 2 3 4\n\n");
     }
 
     public void ReceiveMsg()

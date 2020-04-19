@@ -46,16 +46,37 @@ public class Turn
                         for (int k = -1; k < 2; k++){
                             for (int l = -1; l < 2; l++){
                                 if (((i+k >= 0 & i+k <5)
-                                & (j+l >= 0 & j+l <5))
-                                & !board.getCell(i+k, j+l).getDome()
-                                & board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
-                                & board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
+                                && (j+l >= 0 & j+l <5))
+                                && !board.getCell(i+k, j+l).getDome()
+                                && board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
+                                && board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
                                     return false;
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+        return true;
+    }
+
+    public boolean CheckLostBuild(Player player, Board board){
+        // Controlla che almeno una delle celle adiacenti sia costruibile o che lo sia la propria se hai Zeus
+        int[] pos = this.selectedCell.getPos();
+        for (int i = pos[0]-1; i < pos[0]+2; i++ ){
+            for (int j = pos[1]-1; j < pos[1]+2; j++ ){
+                if (((i >= 0 & i < 5)
+                   && (j >= 0 & j < 5)
+                   && this.selectedCell.isAdjacent(i,j)
+                   && this.selectedCell.IsNotHigh(board, i, j)
+                   && this.selectedCell.IsFreeDome(board, i, j)
+                   && this.selectedCell.IsFreeWorker(board, i, j))
+                   ||
+                   (this.selectedCell.getWorker().getPlayer().getGodPower().name == "Zeus"
+                   && this.selectedCell.getBuilding() < 3)
+
+                ){return false;}
             }
         }
         return true;
@@ -76,7 +97,10 @@ public class Turn
         if (this.CheckLostMove(player, board)) { return -1;}
         // Check if we want to use the god power
         if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
-
+        for (Player p:ActivePlayers)
+        {
+            p.getGodPower().EnemyTurn(board, player, p);
+        }
         return 0;
     }
 
@@ -113,6 +137,9 @@ public class Turn
     /*
     -5 (Hephaestus) Not same as last built cell
     -6 (Hephaestus) Building is > 2
+    -7 (Zeus) third level build forbidden
+    -8 (Demeter) same as last built
+    -9 (Hestia) cell is a perimeter space
     */
     public int Build(Board board, int x, int y, int typeBuild) {
         //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???

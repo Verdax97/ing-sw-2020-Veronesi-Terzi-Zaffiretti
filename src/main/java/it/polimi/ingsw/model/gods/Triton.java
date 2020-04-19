@@ -15,25 +15,31 @@ public class Triton extends MultipleActionGod
     @Override
     public int Move(Board board, Cell selectedCell, int x, int y)
     {
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
-            if (selectedCell.isAdjacent(x, y)) {
-                int debuff = (selectedCell.getWorker().isDebuff()) ? 1: 0;
-                if ((selectedCell.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (selectedCell.getBuilding() >= board.getCell(x, y).getBuilding())) {
-                    if (!board.getCell(x, y).getDome() && board.getCell(x, y).getWorker() == null) {
-                        board.getCell(x, y).setWorker(selectedCell.getWorker());
-                        selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
-                        selectedCell.setWorker(null);
-                        if (selectedCell.getPos()[0] < 4 && selectedCell.getPos()[0] > 0 && selectedCell.getPos()[1] < 4 && selectedCell.getPos()[1] > 0)
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0))
+        {
+            if (selectedCell.isAdjacent(x, y))
+            {
+                if (selectedCell.IsNotHigh(board, x, y))
+                {
+                    if (selectedCell.IsFreeDome(board, x, y))
+                    {
+                        if (selectedCell.IsFreeWorker(board, x, y))
                         {
-                            if (x == 4 || x == 0 || y == 4 || y == 0)
-                                use = 0;
-                            else
-                                use = 1;
-                        }
-                    } else throw new RuntimeException("Target cell is occupied");
-                } else throw new RuntimeException("Target cell is too high/low");
-            } else throw new RuntimeException("Target cell is too far");
-        } else throw new RuntimeException("Target cell out of board");
+                            board.getCell(x, y).setWorker(selectedCell.getWorker());
+                            selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
+                            selectedCell.setWorker(null);
+                            if (selectedCell.getPos()[0] < 4 && selectedCell.getPos()[0] > 0 && selectedCell.getPos()[1] < 4 && selectedCell.getPos()[1] > 0)
+                            {
+                                if (x == 4 || x == 0 || y == 4 || y == 0)
+                                    use = 0;
+                                else
+                                    use = 1;
+                            }
+                        } else return -4;//cell is occupied
+                    } else return -4;//cell is occupied
+                } else return -3;//cell is too high
+            } else return-2;// throw new RuntimeException("Target cell is too far");
+        } else return -1;//throw new RuntimeException("Target cell out of board");
         return CheckUse();
     }
 

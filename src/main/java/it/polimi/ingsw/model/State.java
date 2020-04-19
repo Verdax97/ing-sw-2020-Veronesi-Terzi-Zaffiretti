@@ -5,6 +5,7 @@ public enum State
     SETUP,
     SELECT,
     MOVE,
+    STARTTURN,
     BUILD,
     ENDMATCH,
     LOBBY
