@@ -76,7 +76,10 @@ public class Turn
         if (this.CheckLostMove(player, board)) { return -1;}
         // Check if we want to use the god power
         if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
-
+        for (Player p:ActivePlayers)
+        {
+            p.getGodPower().EnemyTurn(board, player, p);
+        }
         return 0;
     }
 
@@ -113,6 +116,9 @@ public class Turn
     /*
     -5 (Hephaestus) Not same as last built cell
     -6 (Hephaestus) Building is > 2
+    -7 (Zeus) third level build forbidden
+    -8 (Demeter) same as last built
+    -9 (Hestia) cell is a perimeter space
     */
     public int Build(Board board, int x, int y, int typeBuild) {
         //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
