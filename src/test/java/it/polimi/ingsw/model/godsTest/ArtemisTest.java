@@ -39,6 +39,9 @@ public class ArtemisTest
         assertEquals("Return value is wrong", 2, artemis.Move(board, selectedCell, 1, 1));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(1, 1);
+        assertEquals("Return value is wrong", -6, artemis.Move(board, selectedCell, 0, 0));
+        serverView.PrintBoard(board, match);
+        selectedCell = board.getCell(1, 1);
         assertEquals("Return value is wrong", 1, artemis.Move(board, selectedCell, 0, 1));
         serverView.PrintBoard(board, match);
     }

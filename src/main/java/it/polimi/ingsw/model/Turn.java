@@ -87,7 +87,7 @@ public class Turn
     -4 Cell is occupied by Dome/Worker
     -5 Unable to move enemy Worker
     -6 (Artemis) Same cell as the first one
-    -7 (ForcedMovementGod) no space to move enemy worker oppure (Zeus) dome under worker
+    -7 (ForcedMovementGod) no space to move enemy worker or (Zeus) dome under worker
     */
     public int Move(Board board, int x, int y)
     {

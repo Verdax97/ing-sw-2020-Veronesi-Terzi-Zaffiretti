@@ -32,12 +32,12 @@ public class Artemis extends MultipleActionGod
                                 selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
                                 selectedCell.setWorker(null);
                                 use++;
-                            } else return -4;//cell is occupied
-                        } else return -4;//cell is occupied
-                    } else return -3;//cell is too high
-                } else return -6;//same as last position
-            } else return-2;// throw new RuntimeException("Target cell is too far");
-        } else return -1;//throw new RuntimeException("Target cell out of board");
+                            } else return -4; //cell has a worker on it
+                        } else return -4; //cell has a dome on it
+                    } else return -3; //cell is too high
+                } else return -6; //same as last position
+            } else return-2; //cell is too far
+        } else return -1; //cell out of board
         return CheckUse();
     }
 
