@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.ServerView;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,6 +49,15 @@ public class Controller implements Observer {
                 return;
             }
         }
+        ArrayList<Player> players = match.getSetup().getPlayers();
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (players.get(i).getNickname().equals(player.getNickname()))
+            {
+                players.remove(i);
+            }
+        }
+        match.getSetup().SetPlayers(players);
     }
 
     public void ParseServerMsg (String msgView)
@@ -82,7 +92,11 @@ public class Controller implements Observer {
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
                 break;
-            case CHECKWINCONDITION://check after move and build
+            case STARTTURN://check startTurn options
+                targetX = Integer.parseInt(msgView.split(" ")[0]);
+                targetY = Integer.parseInt(msgView.split(" ")[1]);
+                godPower = Integer.parseInt(msgView.split(" ")[2]);
+                match.StartTurn(playerTurn, targetX, targetY, godPower);
                 break;
         }
     }

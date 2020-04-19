@@ -15,7 +15,7 @@ public class Match extends Observable
     private Player winner;
     private ErrorHandler errorHandler;
     private int nPlayer = 0;
-
+    private int lastActionSetup = 0;//0 all right !=0 some problem
     private int lastActionMove = 0;//0 all right !=0 some problem
     private int lastActionBuild = 0;//0 all right !=0 some problem
     private String msgError;
@@ -35,6 +35,11 @@ public class Match extends Observable
 
     }
 
+    public void StartTurn(Player player, int x, int y, int godPower)
+    {
+        lastActionSetup = turn.StartTurn(setup.getPlayers(), player, board, x, y, godPower == 1);
+        msgError = errorHandler.GetErrorSetup(lastActionSetup);
+    }
     public void PickGod(int value)
     {
         if (value < 0 || value >= setup.getGodList().size())
@@ -90,8 +95,15 @@ public class Match extends Observable
     }
     public void Build(int targetX, int targetY, int typeBuilding, int godPower, Player player)
     {
-        CheckBuild(targetX, targetY, typeBuilding, godPower);
-        winner = CheckWinCondition(player);
+        if(turn.CheckLostBuild(player, board))
+            {
+                lastActionBuild = -10;
+
+            } else
+        {
+            CheckBuild(targetX, targetY, typeBuilding, godPower);
+            winner = CheckWinCondition(player);
+        }
         //notify view
     }
 

@@ -35,6 +35,10 @@ public class SetupMatch {
         return players;
     }
 
+    public void SetPlayers(ArrayList<Player> players)
+    {
+        this.players = players;
+    }
     public void setPlayers(ArrayList<String> player)
     {
         for (String elem: player)

@@ -1,6 +1,20 @@
 package it.polimi.ingsw.model;
 
 public class ErrorHandler {
+
+    public String GetErrorSetup(int value)
+    {
+        switch (value)
+        {
+            case -1:
+                return "You Lost";
+            case 1:
+                return "You Won!!";
+            case 0:
+                return "";
+        }
+        return "";
+    }
     public String GetErrorMove(int value)
     {
         switch (value)
@@ -51,6 +65,8 @@ public class ErrorHandler {
                 return "(Demeter) same as last built";
             case -9:
                 return "cell is a perimeter space";
+            case -10:
+                return "You Lost";
             case 1:
                 return "";
             case 2:
