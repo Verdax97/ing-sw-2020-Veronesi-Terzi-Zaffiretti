@@ -1,20 +1,32 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SetupMatch {
 
-    private List<God> godList;
-    private List<God> godPicked;
+    private ArrayList<God> godList;
+    private ArrayList<God> godPicked;
     private ArrayList<Player> players = new ArrayList<Player>();
 
-    public void PickGod() { }
 
-    public void AddGod(God god) {
+    public God PickGod(int i) { return godPicked.get(i); }
+
+    public ArrayList<God> getGodPicked()
+    {
+        return godPicked;
+    }
+
+    public ArrayList<God> getGodList()
+    {
+        return godList;
+    }
+
+    //for the initialization
+    private void AddGod(God god) {
         this.godList.add(god);
     }
 
+    //for the setup phase
     public void AddGodPicked(God god) {
         this.godPicked.add(god);
     }

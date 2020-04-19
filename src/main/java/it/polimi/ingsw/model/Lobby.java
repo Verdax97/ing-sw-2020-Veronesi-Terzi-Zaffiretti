@@ -5,7 +5,15 @@ import java.util.List;
 
 public class Lobby
 {
-    private int nPlayer;
+    public int getnPlayer() {
+        return nPlayer;
+    }
+
+    public void setnPlayer(int nPlayer) {
+        this.nPlayer = nPlayer;
+    }
+
+    private int nPlayer = 1;
     private ArrayList<String> players = new ArrayList<String>();
 
     public void AddPlayer(String toAdd)
@@ -13,7 +21,6 @@ public class Lobby
         if (this.nPlayer == 3)
             return;
         this.players.add(toAdd);
-        this.nPlayer = this.players.size();
     }
 
     public ArrayList<String> getPlayers() {

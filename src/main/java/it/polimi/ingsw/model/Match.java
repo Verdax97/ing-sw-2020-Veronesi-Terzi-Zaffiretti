@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
 public class Match extends Observable
@@ -9,8 +8,17 @@ public class Match extends Observable
     private Board board;
     private Turn turn;
     private SetupMatch setup;
+    //getter for view cause it needs to access god list and playerList
+    public SetupMatch getSetup() {
+        return setup;
+    }
     private Player winner;
+    private ErrorHandler errorHandler;
     private int nPlayer = 0;
+
+    private int lastActionMove = 0;//0 all right !=0 some problem
+    private int lastActionBuild = 0;//0 all right !=0 some problem
+    private String msgError;
 
     public Match(ArrayList<String> nicks)
     {
@@ -19,6 +27,7 @@ public class Match extends Observable
         this.setup = new SetupMatch();
         this.setup.setPlayers(nicks);
         this.winner = new Player("");
+        this.errorHandler = new ErrorHandler();
     }
 
     public void StartMatch()
@@ -26,17 +35,86 @@ public class Match extends Observable
 
     }
 
-    public boolean CheckSelectedCell(Player player, int x, int y)
+    public void PickGod(int value)
     {
-        if (board.getCell(x,y).getWorker().getPlayer().getNickname().equals(player.getNickname()))
-            return true;
-        else
-            return false;
+        if (value < 0 || value >= setup.getGodList().size())
+        {
+            msgError = "Can't pick that god, try another value";
+            lastActionMove = -1;
+            return;
+        }
+        setup.AddGodPicked(setup.getGodList().get(value));
+        setup.getGodList().remove(value);
+        lastActionMove = 1;
     }
 
-    public void NextTurn(Player player)
+    public void SelectPlayerGod(int value, Player player)
     {
+        if (value < 0 || value >= setup.getGodPicked().size())
+        {
+            msgError = "Can't pick that god, try another value";
+            lastActionMove = -1;
+            return;
+        }
+        player.setGodPower(setup.PickGod(value));
+        lastActionMove = 1;
+    }
 
+    public void Move(int x, int y, int targetX, int targetY, int godPower, Player player)
+    {
+        CheckMove(x, y, targetX, targetY, godPower, player);
+        winner = CheckWinCondition(player);
+        //notify view
+    }
+
+    private void CheckMove(int x, int y, int targetX, int targetY, int godPower, Player player)
+    {
+        if (lastActionMove == 2 && godPower == 0)
+        {
+            lastActionMove = 1;
+            msgError = errorHandler.GetErrorMove(lastActionMove);
+            return;
+        }
+        if (!CheckSelectedCell(player, x, y))
+        {
+            lastActionMove = -1;
+            msgError = "There is no worker on the selected cell";
+            return;
+        }
+        turn.setSelectedCell(board.getCell(x, y));
+        lastActionMove = turn.Move(board, targetX, targetY);
+        msgError = errorHandler.GetErrorMove(lastActionMove);
+        if (lastActionMove < 0)
+            return;
+        turn.setSelectedCell(board.getCell(targetX, targetY));
+    }
+    public void Build(int targetX, int targetY, int typeBuilding, int godPower, Player player)
+    {
+        CheckBuild(targetX, targetY, typeBuilding, godPower);
+        winner = CheckWinCondition(player);
+        //notify view
+    }
+
+    private void CheckBuild(int targetX, int targetY, int typeBuilding, int godPower)
+    {
+        if (lastActionBuild == 2 && godPower == 0)
+        {
+            lastActionBuild = 1;
+            msgError = errorHandler.GetErrorMove(lastActionBuild);
+            return;
+        }
+        lastActionBuild = turn.Build(board, targetX, targetY, typeBuilding);
+        msgError = errorHandler.GetErrorMove(lastActionBuild);
+    }
+
+    public boolean CheckSelectedCell(Player player, int x, int y)
+    {
+        return board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname());
+    }
+
+    public void NextTurn()
+    {
+        turn.setTurn(turn.getTurn() + 1);
     }
 
     public Player NextPlayer()
@@ -45,12 +123,12 @@ public class Match extends Observable
             nPlayer = 0;
         else
             nPlayer++;
-        return setup.getPlayers().get(0);
+        return setup.getPlayers().get(nPlayer);
     }
 
-    public void CheckWinCondition(Player player)
+    public Player CheckWinCondition(Player player)
     {
-        turn.CheckWinCondition(board, player);
+        return turn.CheckWinCondition(board, player);
     }
 
     public ArrayList<Player> getPlayers()
