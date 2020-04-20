@@ -20,10 +20,9 @@ public class CharonTest{
         Match match = new Match(players);
         ServerView serverView = new ServerView();
         Board board = match.getBoard();
-        Player zero = new Player(players.get(0));
         Worker testWorker00 = new Worker();
         Worker testWorker01 = new Worker();
-        testWorker00.setPlayer(zero);
+        testWorker00.setPlayer(new Player(players.get(0)));
         testWorker01.setPlayer(new Player(players.get(0)));
         Worker testWorker10 = new Worker();
         Worker testWorker11 = new Worker();
@@ -41,7 +40,9 @@ public class CharonTest{
         board.getCell(0, 0).setWorker(testWorker21);
         Charon charon = new Charon();
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, charon.PlayerTurn(board, zero, 1, 3));
+        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker00.getPlayer(), 1, 3));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker11.getPlayer(), 2, 1));
         serverView.PrintBoard(board, match);
     }
 }
