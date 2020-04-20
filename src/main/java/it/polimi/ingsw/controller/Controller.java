@@ -14,17 +14,6 @@ public class Controller implements Observer {
     private Match match;
     private State state;
 
-    /*
-    public void CreateLobby(Lobby lobby){
-            this.lobby = new Lobby();
-    }
-
-    public void AddPlayerLobby(String player)
-    {
-        this.lobby.AddPlayer(player);
-    }
-    */
-
     public void setLobby(Lobby lobby)
     {
         this.lobby = lobby;
