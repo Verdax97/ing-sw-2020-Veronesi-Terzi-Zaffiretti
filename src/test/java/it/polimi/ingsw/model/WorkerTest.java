@@ -23,7 +23,12 @@ public class WorkerTest
     }
 
     @Test
-    public void SetDebuffTest(){
-
+    public void isDebuffTest(){
+        Worker worker = new Worker();
+        Player player = new Player("Pino");
+        worker.setPlayer(player);
+        boolean debuff = true;
+        worker.setDebuff(debuff);
+        assertEquals("Debuff is wrong", worker.isDebuff(), true);
     }
 }
