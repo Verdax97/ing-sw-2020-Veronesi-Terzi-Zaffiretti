@@ -76,4 +76,37 @@ public class TurnTest
         board.getCell(0, 0).setWorker(testWorker3);
 
     }
+
+    @Test
+    public void StartTurnTest(){
+        Board board = new Board();
+        Turn turn = new Turn();
+        Player player1 = new Player("Pino");
+        Player player2 = new Player("Pippo");
+        Worker worker1p1 =new Worker();
+        Worker worker2p1 =new Worker();
+        Worker worker1p2 =new Worker();
+        Worker worker2p2 =new Worker();
+        worker1p1.setPlayer(player1);
+        worker2p1.setPlayer(player1);
+        worker1p2.setPlayer(player2);
+        worker2p2.setPlayer(player2);
+        board.getCell(0,0).setWorker(worker1p1);
+        board.getCell(0, 1).setWorker(worker2p1);
+        board.getCell(1,0).setWorker(worker1p2);
+        board.getCell(1,1).setWorker(worker2p2);
+        God god1 = new God();
+        player1.setGodPower(god1);
+        God god2 = new God();
+        player2.setGodPower(god2);
+        ArrayList<Player> ActivePlayers = new ArrayList<Player>();
+        ActivePlayers.add(player1);
+        ActivePlayers.add(player2);
+        assertEquals("Error lose false",turn.StartTurn(ActivePlayers, player1, board,0,0,false), 0);
+        board.getCell(0,2).setBuilding(2);
+        board.getCell(1,2).setBuilding(2);
+        assertEquals("Error in Lose true",turn.StartTurn(ActivePlayers,player1,board,0,0,false),-1);
+        ActivePlayers.remove(player2);
+        assertEquals("Error Win True", turn.StartTurn(ActivePlayers, player1, board, 0,0,false), 1);
+    }
 }
