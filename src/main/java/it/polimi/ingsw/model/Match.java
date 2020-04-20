@@ -70,6 +70,8 @@ public class Match extends Observable
         CheckMove(x, y, targetX, targetY, godPower, player);
         winner = CheckWinCondition(player);
         //notify view
+        setChanged();
+        notifyObservers(board.clone());
     }
 
     private void CheckMove(int x, int y, int targetX, int targetY, int godPower, Player player)
@@ -105,6 +107,8 @@ public class Match extends Observable
             winner = CheckWinCondition(player);
         }
         //notify view
+        setChanged();
+        notifyObservers(board.clone());
     }
 
     private void CheckBuild(int targetX, int targetY, int typeBuilding, int godPower)
