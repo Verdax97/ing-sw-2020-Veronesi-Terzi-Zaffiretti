@@ -4,10 +4,14 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.gods.Athena;
+import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.view.ServerView;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 public class PrometheusTest {
     @Test
@@ -37,6 +41,16 @@ public class PrometheusTest {
         board.getCell(3, 1).setWorker(testWorker11);
         board.getCell(4, 0).setWorker(testWorker01);
         board.getCell(0, 0).setWorker(testWorker21);
-
+        Prometheus prometheus = new Prometheus();
+        board.getCell(0,3).setBuilding(1);
+        board.getCell(1, 4).setBuilding(1);
+        board.getCell(3, 0).setBuilding(1);
+        board.getCell(4, 1).setBuilding(1);
+        serverView.PrintBoard(board, match);
+        prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3);
+        assertEquals("Error", testWorker00.isDebuff(), false);
+        assertEquals("Return value is wrong", -1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3));
+        prometheus.PlayerTurn(board, testWorker10.getPlayer(), 1, 2);
+        assertEquals("Error", testWorker10.isDebuff(), true);
     }
 }
