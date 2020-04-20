@@ -132,7 +132,10 @@ public class Match extends Observable
     public Player NextPlayer()
     {
         if (nPlayer == setup.getPlayers().size())
+        {
             nPlayer = 0;
+            turn.setTurn(turn.getTurn() + 1);
+        }
         else
             nPlayer++;
         return setup.getPlayers().get(nPlayer);

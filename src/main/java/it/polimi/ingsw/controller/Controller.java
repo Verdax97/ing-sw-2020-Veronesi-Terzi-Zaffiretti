@@ -104,6 +104,8 @@ public class Controller implements Observer {
 
     private void UpdateStatus(State state)
     {
+        if (state != this.state && state == State.MOVE)
+            match.NextPlayer();
         this.state = state;
     }
 
