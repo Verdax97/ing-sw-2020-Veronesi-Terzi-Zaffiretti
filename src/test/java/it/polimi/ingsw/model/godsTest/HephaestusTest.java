@@ -40,5 +40,11 @@ public class HephaestusTest {
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
+        board.getCell(0,1).setBuilding(2);
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", 2, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -8, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
+        serverView.PrintBoard(board, match);
     }
 }

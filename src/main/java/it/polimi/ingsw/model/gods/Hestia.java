@@ -3,8 +3,11 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
 
-public class Hestia extends MultipleActionGod
-{
+public class Hestia extends MultipleActionGod{
+
+    private int lastX;
+    private int lastY;
+
     public Hestia(){
         this.name = "Hestia";
         this.description = "Your move: Your worker may move one additional time, but not back to the space it started on.";
@@ -12,27 +15,28 @@ public class Hestia extends MultipleActionGod
     }
 
     @Override
-    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber)
+    public int Move(Board board, Cell selectedCell, int x, int y)
     {
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
+        if (use == 0)
+        {
+            lastX = x;
+            lastY = y;
+        }
+        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
-                if (board.getCell(x, y).getWorker() == null) {
-                    if (!board.getCell(x, y).getDome()) {
-                        if (use != 1 || !(x == 0 || x == 4 || y == 0 || y == 4))
-                        {
-                            int building = board.getCell(x, y).getBuilding();
-                            if (building < 3)
-                                board.getCell(x, y).setBuilding(1);
-                            else if (building == 3)
-                                board.getCell(x, y).setDome(true);
-                            board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
-                            board.getCell(x, y).setBuiltTurn(turnNumber);
-                            use++;
-                        } else return -9;//cell is a perimeter space
-                    }else return -4;//Cell occupied by a dome
-                } else return -3;//Worker on the cell
-            } else return -2; //Target cell is too far
-        } else return -1;//Target cell out of board
+                if (selectedCell.IsNotHigh(board, x, y)) {
+                    if (x != lastX && y!= lastY || use == 0) {
+                        if (selectedCell.IsFreeDome(board, x, y)) {
+                            if (selectedCell.IsFreeWorker(board, x, y)) {
+                                board.getCell(x, y).setWorker(selectedCell.getWorker());
+                                selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+                                selectedCell.setWorker(null);
+                            } else return -4;//cell is occupied worker
+                        } else return -4;//cell is occupied dome
+                    } else return -9;//same has last move
+                } else return -3;//cell is too high
+            } else return-2;//cell is too far
+        } else return -1;//cell out of board
         return CheckUse();
     }
 }

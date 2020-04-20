@@ -38,8 +38,8 @@ public class Triton extends MultipleActionGod
                         } else return -4;//cell is occupied
                     } else return -4;//cell is occupied
                 } else return -3;//cell is too high
-            } else return-2;// throw new RuntimeException("Target cell is too far");
-        } else return -1;//throw new RuntimeException("Target cell out of board");
+            } else return-2;//cell is too far
+        } else return -1;//cell out of board
         return CheckUse();
     }
 

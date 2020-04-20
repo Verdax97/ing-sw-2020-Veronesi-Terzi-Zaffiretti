@@ -19,12 +19,12 @@ public class Demeter extends MultipleActionGod {
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber){
         if (use == 0)
         {
-            lastX = selectedCell.getPos()[0];
-            lastY = selectedCell.getPos()[1];
+            lastX = x;
+            lastY = y;
         }
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
-                if (x != lastX || y != lastY) {
+                if ((x != lastX && y != lastY) || use == 0) {
                     if (board.getCell(x, y).getWorker() == null) {
                         if (!board.getCell(x, y).getDome()) {
                             int building = board.getCell(x, y).getBuilding();
@@ -38,7 +38,7 @@ public class Demeter extends MultipleActionGod {
                         }else return -4;//Cell occupied by a dome
                     } else return -3;//Worker on the cell
                 } else return -8;//same as last built
-            } else return -2; //Target cell is too far
+            } else return -2;//Target cell is too far
         } else return -1;//Target cell out of board
         return CheckUse();
     }

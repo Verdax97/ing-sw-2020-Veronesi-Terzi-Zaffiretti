@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.godsTest;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.God;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Chrono;
+import it.polimi.ingsw.view.ServerView;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
