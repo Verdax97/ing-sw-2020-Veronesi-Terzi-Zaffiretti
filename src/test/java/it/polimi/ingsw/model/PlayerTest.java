@@ -22,5 +22,9 @@ public class PlayerTest {
         assertEquals("Nickname is wrong", nameTest, playerTest.getNickname());
     }
 
+    @Test
+    public void getActiveTest(){
+
+    }
 
 }

@@ -22,6 +22,5 @@ public class BoardTest {
         board[x][y] = cellTest;
         boardTest.setBoard(board);
         assertEquals("Cell is wrong", cellTest, boardTest.getCell(x, y));
-
     }
 }

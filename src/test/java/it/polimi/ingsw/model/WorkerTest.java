@@ -21,4 +21,9 @@ public class WorkerTest
         worker.setLastMovement(val);
         assertEquals("turn is wrong", val, worker.getLastMovement());
     }
+
+    @Test
+    public void SetDebuffTest(){
+
+    }
 }

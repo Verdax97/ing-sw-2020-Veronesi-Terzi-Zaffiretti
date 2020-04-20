@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class CellTest {
+
     @Test
     public void GetWorkerTest()
     {
@@ -14,6 +15,7 @@ public class CellTest {
         cell.setWorker(worker);
         assertEquals( "Worker is wrong", cell.getWorker(), worker);
     }
+
     @Test
     public void GetBuildingTest()
     {
@@ -22,6 +24,7 @@ public class CellTest {
         cell.setBuilding(building);
         assertEquals("Building is wrong", cell.getBuilding(), building);
     }
+
     @Test
     public void GetDomeTest()
     {
@@ -30,6 +33,7 @@ public class CellTest {
         cell.setDome(dome);
         assertEquals("Dome is wrong", cell.getDome(), dome);
     }
+
     @Test
     public void GetPosTest()
     {
@@ -39,6 +43,7 @@ public class CellTest {
         assertEquals("Position is wrong", cell.getPos()[0], x);
         assertEquals("Position is wrong", cell.getPos()[1], y);
     }
+
     @Test
     public void GetBuiltTurnTest()
     {
@@ -47,6 +52,7 @@ public class CellTest {
         cell.setBuiltTurn(turn);
         assertEquals("BuiltTurn is wrong", cell.getBuiltTurn(), turn);
     }
+
     @Test
     public void GetBuiltByTest()
     {
@@ -55,6 +61,7 @@ public class CellTest {
         cell.setBuiltBy(player);
         assertEquals("BuiltBy is Wrong", cell.getBuiltBy(), player);
     }
+
     @Test
     public void IsAdjacentTest ()
     {
@@ -65,7 +72,6 @@ public class CellTest {
         assertEquals("isAdjacent is wrong", cell.isAdjacent(3,3), false);
 
     }
-
 }
 
 
