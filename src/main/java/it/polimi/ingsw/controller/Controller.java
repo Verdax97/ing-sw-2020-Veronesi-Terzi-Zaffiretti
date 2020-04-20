@@ -68,7 +68,6 @@ public class Controller implements Observer {
     public void ParseServerMsg (String msgView)
     {
         int workerX, workerY, targetX, targetY, typeBuilding, godPower;
-        int[] gods = new int[lobby.getPlayers().size()];
         switch (state)
         {
             case SETUP:
