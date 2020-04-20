@@ -41,20 +41,25 @@ public class Controller implements Observer {
     //remove player from players list and worker from the board
     public void killPlayer(Player player)
     {
-        for (int i = 0; i < match.getPlayers().size(); i++) {
-            if (player.getNickname().equals(match.getPlayers().get(i).getNickname()))
-            {
-                match.getPlayers().remove(i);
-
-                return;
-            }
-        }
         ArrayList<Player> players = match.getSetup().getPlayers();
         for (int i = 0; i < players.size(); i++)
         {
             if (players.get(i).getNickname().equals(player.getNickname()))
             {
                 players.remove(i);
+            }
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                if (match.getBoard().getCell(i,j).getWorker() != null)
+                {
+                    if (match.getBoard().getCell(i,j).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+                    {
+                        match.getBoard().getCell(i,j).setWorker(null);
+                    }
+                }
             }
         }
         match.getSetup().SetPlayers(players);
