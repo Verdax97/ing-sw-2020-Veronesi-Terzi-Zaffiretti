@@ -56,7 +56,10 @@ public class Hephaestus extends MultipleActionGod {
         } else return -1;//Target cell out of board
         //the player doesn't have the possibility to use his hero power
         if (!again)
+        {
+            use = 0;
             return 1;
+        }
         return CheckUse();
     }
 }
