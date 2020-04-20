@@ -43,7 +43,7 @@ public class Hephaestus extends MultipleActionGod {
                                 board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
                                 board.getCell(x, y).setBuiltTurn(turnNumber);
                                 use++;
-                            } else return -8;//Building is > 2
+                            } else return -6;//Building is > 2
                         } else return -5;//Not same as last built cell
                     } else return -4;//Cell occupied by a dome
                 } else return -3;//Worker on the cell
