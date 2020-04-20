@@ -24,7 +24,10 @@ public class PlayerTest {
 
     @Test
     public void getActiveTest(){
-
+        Player playerTest = new Player("Pino");
+        boolean active = true;
+        playerTest.setActive(active);
+        assertEquals("Return value is wrong", playerTest.getActive(), true);
     }
 
 }
