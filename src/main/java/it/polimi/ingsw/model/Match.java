@@ -116,11 +116,11 @@ public class Match extends Observable
         if (lastActionBuild == 2 && godPower == 0)
         {
             lastActionBuild = 1;
-            msgError = errorHandler.GetErrorMove(lastActionBuild);
+            msgError = errorHandler.GetErrorBuild(lastActionBuild);
             return;
         }
         lastActionBuild = turn.Build(board, targetX, targetY, typeBuilding);
-        msgError = errorHandler.GetErrorMove(lastActionBuild);
+        msgError = errorHandler.GetErrorBuild(lastActionBuild);
     }
 
     public boolean CheckSelectedCell(Player player, int x, int y)
