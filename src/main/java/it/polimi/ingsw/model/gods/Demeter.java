@@ -24,7 +24,7 @@ public class Demeter extends MultipleActionGod {
         }
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
-                if ((x != lastX && y != lastY) || use == 0) {
+                if (x != lastX || y != lastY || use == 0) {
                     if (board.getCell(x, y).getWorker() == null) {
                         if (!board.getCell(x, y).getDome()) {
                             int building = board.getCell(x, y).getBuilding();
