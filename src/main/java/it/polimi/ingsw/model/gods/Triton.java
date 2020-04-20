@@ -28,6 +28,7 @@ public class Triton extends MultipleActionGod
                             board.getCell(x, y).setWorker(selectedCell.getWorker());
                             selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
                             selectedCell.setWorker(null);
+                            use++;
                             if (selectedCell.getPos()[0] < 4 && selectedCell.getPos()[0] > 0 && selectedCell.getPos()[1] < 4 && selectedCell.getPos()[1] > 0)
                             {
                                 if (x == 4 || x == 0 || y == 4 || y == 0)
