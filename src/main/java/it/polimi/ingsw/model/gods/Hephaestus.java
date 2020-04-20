@@ -23,14 +23,19 @@ public class Hephaestus extends MultipleActionGod {
             lastY = y;
 
         }
+        boolean again = false;
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
                     if (!board.getCell(x, y).getDome()) {
                         if (use == 0) {
                             int building = board.getCell(x, y).getBuilding();
-                            if (building < 3)
+                            if (building < 3) {
+                                if (building < 2) {
+                                    again = true;
+                                }
                                 board.getCell(x, y).setBuilding(1);
+                            }
                             else if (building == 3)
                                 board.getCell(x, y).setDome(true);
                             board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
@@ -49,6 +54,9 @@ public class Hephaestus extends MultipleActionGod {
                 } else return -3;//Worker on the cell
             } else return -2; //Target cell is too far
         } else return -1;//Target cell out of board
+        //the player doesn't have the possibility to use his hero power
+        if (!again)
+            return 1;
         return CheckUse();
     }
 }
