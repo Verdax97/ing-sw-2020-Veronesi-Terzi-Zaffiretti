@@ -158,7 +158,8 @@ public class Match extends Observable
             lastActionMove = -1;
             return;
         }
-        board.getCell(x, y).setWorker(new Worker(player));
+        board.getCell(x, y).setWorker(new Worker());
+        board.getCell(x, y).getWorker().setPlayer(player);
     }
 
     public ArrayList<Player> getPlayers()
