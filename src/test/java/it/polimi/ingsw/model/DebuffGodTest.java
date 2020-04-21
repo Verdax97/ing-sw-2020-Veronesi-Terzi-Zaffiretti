@@ -15,6 +15,7 @@ public class DebuffGodTest{
         Board board = match.getBoard();
         Worker testWorker00 = new Worker();
         testWorker00.setPlayer(new Player(players.get(0)));
+        board.getCell(0,0).setWorker(testWorker00);
         DebuffGod gianni = new DebuffGod();
         gianni.debuff = true;
         gianni.DebuffWorker(board, testWorker00.getPlayer());
