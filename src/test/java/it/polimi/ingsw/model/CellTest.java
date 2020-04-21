@@ -81,8 +81,9 @@ public class CellTest {
         worker.setDebuff(false);
         board.getCell(0,0).setWorker(worker);
         board.getCell(0,1).setBuilding(2);
-        Cell cell = board.getCell(0,1);
-        assertEquals("IsNotHigh is high", cell.IsNotHigh(board, 0, 1), false);
+        Cell cell = board.getCell(0,0);
+        assertEquals("IsNotHigh is high", false, cell.IsNotHigh(board, 0, 1));
+        assertEquals("IsNotHigh is high", true, cell.IsNotHigh(board, 1, 1));
     }
 
     @Test
