@@ -40,9 +40,9 @@ public class CharonTest{
         board.getCell(0, 0).setWorker(testWorker21);
         Charon charon = new Charon();
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker00.getPlayer(), 1, 3));
+        assertEquals("Return value is wrong", -7, charon.PlayerTurn(board, testWorker00.getPlayer(), 1, 3));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker11.getPlayer(), 2, 1));
+        assertEquals("Return value is wrong", 1, charon.PlayerTurn(board, testWorker11.getPlayer(), 2, 1));
         serverView.PrintBoard(board, match);
     }
 }
