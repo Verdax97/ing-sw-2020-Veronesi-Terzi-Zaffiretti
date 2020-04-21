@@ -70,7 +70,32 @@ public class CellTest {
         assertEquals("isAdjacent is wrong", cell.isAdjacent(4,4), true);
         assertEquals("isAdjacent is wrong", cell.isAdjacent(4,5), false);
         assertEquals("isAdjacent is wrong", cell.isAdjacent(3,3), false);
+    }
 
+    @Test
+    public void IsNotHighTest(){
+        //da completare
+    }
+
+    @Test
+    public void IsFreeDomeTest(){
+        Board board = new Board();
+        Cell cell = board.getCell(0, 0);
+        cell.setDome(true);
+        assertEquals("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0), false);
+        cell.setDome(false);
+        assertEquals("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0), true);
+    }
+
+    @Test
+    public void IsFreeWorker(){
+        Board board = new Board();
+        Worker worker = new Worker();
+        Cell cell = board.getCell(0, 0);
+        cell.setWorker(worker);
+        assertEquals("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 0), false);
+        Cell cellTest = board.getCell(0, 1);
+        assertEquals("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 1), true);
     }
 }
 
