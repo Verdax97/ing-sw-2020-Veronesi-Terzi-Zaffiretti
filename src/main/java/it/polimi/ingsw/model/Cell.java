@@ -99,25 +99,17 @@ public class Cell
     public boolean IsNotHigh(Board board, int x, int y)
     {
         int debuff = (this.getWorker().isDebuff()) ? 0 : 1;
-        if ((this.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (this.getBuilding() >= board.getCell(x, y).getBuilding()))
-            return true;
-        else
-            return false;
+        return (this.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (this.getBuilding() >= board.getCell(x, y).getBuilding());
     }
 
     public boolean IsFreeDome(Board board, int x, int y)
     {
-        if (!board.getCell(x, y).getDome()) {
-            return true;
-        } else return false;
+        return !board.getCell(x, y).getDome();
     }
 
     public boolean IsFreeWorker(Board board, int x, int y)
     {
-         if(board.getCell(x, y).getWorker() == null)
-             return true;
-         else
-             return false;
+        return board.getCell(x, y).getWorker() == null;
     }
 
 }
