@@ -83,7 +83,8 @@ public class Turn
     }
 
     public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, int x, int y, boolean godPower)
-    /*
+    /*0
+    -5 no space to move enemy worker
     -2 (charon) no worker available
     -1 Player lost
     0 Player neither lost nor won

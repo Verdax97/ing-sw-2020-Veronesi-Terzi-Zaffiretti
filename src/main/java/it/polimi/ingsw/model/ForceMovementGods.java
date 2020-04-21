@@ -33,7 +33,7 @@ public class ForceMovementGods extends God
 
     protected int MoveEnemy(Worker worker, Board board)
     {
-        if (board.getCell(targetPosX, targetPosY).getWorker() == null || !board.getCell(targetPosX, targetPosY).getDome())
+        if (board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome())
         {
             if (worker != null)
                 worker.setLastMovement(0);
