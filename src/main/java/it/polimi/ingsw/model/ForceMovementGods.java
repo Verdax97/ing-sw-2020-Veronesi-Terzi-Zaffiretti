@@ -31,7 +31,7 @@ public class ForceMovementGods extends God
         return 1;
     }
 
-    protected int MoveEnemy (Worker worker, Board board)
+    protected int MoveEnemy(Worker worker, Board board)
     {
         if (board.getCell(targetPosX, targetPosY).getWorker() == null || !board.getCell(targetPosX, targetPosY).getDome())
         {

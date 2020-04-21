@@ -37,12 +37,14 @@ public class CharonTest{
         board.getCell(2, 1).setWorker(testWorker20);
         board.getCell(3, 1).setWorker(testWorker11);
         board.getCell(4, 0).setWorker(testWorker01);
-        board.getCell(0, 0).setWorker(testWorker21);
+        board.getCell(1, 1).setWorker(testWorker21);
         Charon charon = new Charon();
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", -7, charon.PlayerTurn(board, testWorker00.getPlayer(), 1, 3));
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", 1, charon.PlayerTurn(board, testWorker11.getPlayer(), 2, 1));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker20.getPlayer(), 3, 1));
         serverView.PrintBoard(board, match);
     }
 }
