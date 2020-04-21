@@ -47,9 +47,10 @@ public class PrometheusTest {
         board.getCell(3, 0).setBuilding(1);
         board.getCell(4, 1).setBuilding(1);
         serverView.PrintBoard(board, match);
-        prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3);
-        assertEquals("Error", testWorker00.isDebuff(), false);
-        assertEquals("Return value is wrong", -1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3));
+        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3));
+        serverView.PrintBoard(board, match);
+        assertEquals("Error", testWorker00.isDebuff(), true);
+        serverView.PrintBoard(board, match);
         prometheus.PlayerTurn(board, testWorker10.getPlayer(), 1, 2);
         assertEquals("Error", testWorker10.isDebuff(), true);
     }
