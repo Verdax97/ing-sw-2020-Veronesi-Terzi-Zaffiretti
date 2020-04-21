@@ -74,7 +74,15 @@ public class CellTest {
 
     @Test
     public void IsNotHighTest(){
-        //da completare
+        Board board = new Board();
+        Player player = new Player("Pino");
+        Worker worker = new Worker();
+        worker.setPlayer(player);
+        worker.setDebuff(false);
+        board.getCell(0,0).setWorker(worker);
+        board.getCell(0,1).setBuilding(2);
+        Cell cell = board.getCell(0,1);
+        assertEquals("IsNotHigh is high", cell.IsNotHigh(board, 0, 1), false);
     }
 
     @Test
