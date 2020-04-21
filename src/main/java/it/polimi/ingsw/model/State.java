@@ -4,8 +4,9 @@ public enum State
 {
     SETUP,
     SELECT,
-    MOVE,
+    PLACEWORKERS,
     STARTTURN,
+    MOVE,
     BUILD,
     ENDMATCH,
     LOBBY

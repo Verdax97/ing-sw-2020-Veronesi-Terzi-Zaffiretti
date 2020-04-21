@@ -91,14 +91,24 @@ public class Controller implements Observer {
                 godPower = Integer.parseInt(msgView.split(" ")[2]);
                 match.StartTurn(playerTurn, targetX, targetY, godPower);
                 break;
+            case PLACEWORKERS:
+                targetX = Integer.parseInt(msgView.split(" ")[0]);
+                targetY = Integer.parseInt(msgView.split(" ")[1]);
+                int player = Integer.parseInt(msgView.split(" ")[2]);
+                match.PlaceWorker(targetX, targetY, match.getSetup().getPlayers().get(player));
+                break;
         }
     }
-
 
     private void UpdateStatus(State state)
     {
         if (state != this.state && state == State.MOVE)
-            match.NextPlayer();
+        {
+            if (this.state == State.PLACEWORKERS)
+                playerTurn = match.getSetup().getPlayers().get(0);
+            else
+                playerTurn = match.NextPlayer();
+        }
         this.state = state;
     }
 
