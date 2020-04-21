@@ -1,13 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.view.ServerView;
-import org.junit.jupiter.api.Test;
-
+import org.junit.Test;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class DebuffGodTest{
+public class DebuffGodTest{
 
     @Test
     public void debuffWorkerTest() {
