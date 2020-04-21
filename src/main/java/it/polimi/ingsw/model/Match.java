@@ -138,7 +138,7 @@ public class Match extends Observable
         if (nPlayer == setup.getPlayers().size())
         {
             nPlayer = 0;
-            turn.setTurn(turn.getTurn() + 1);
+            NextTurn();
         }
         else
             nPlayer++;
@@ -148,6 +148,17 @@ public class Match extends Observable
     public Player CheckWinCondition(Player player)
     {
         return turn.CheckWinCondition(board, player);
+    }
+
+    public void PlaceWorker(int x, int y, Player player)
+    {
+        if ((x < 0 || x > 4 || y < 0 || y > 4) && board.getCell(x,y).getWorker() == null)
+        {
+            msgError = "Can't place a worker here, try another value";
+            lastActionMove = -1;
+            return;
+        }
+        board.getCell(x, y).setWorker(new Worker(player));
     }
 
     public ArrayList<Player> getPlayers()

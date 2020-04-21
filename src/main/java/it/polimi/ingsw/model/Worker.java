@@ -2,8 +2,13 @@ package it.polimi.ingsw.model;
 
 public class Worker {
     private Player player;
-    private int lastMovement;
+    private int lastMovement = 0;
     private boolean debuff = false;
+
+    public Worker(Player player)
+    {
+        this.player = player;
+    }
 
     public void setPlayer(Player player)
     {
