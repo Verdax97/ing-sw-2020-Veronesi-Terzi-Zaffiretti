@@ -101,7 +101,9 @@ public class Turn
         if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
         for (Player p:ActivePlayers)
         {
-            p.getGodPower().EnemyTurn(board, player, p);
+            if (p != player) {
+                p.getGodPower().EnemyTurn(board, player, p);
+            }
         }
         return 0;
     }
