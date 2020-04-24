@@ -23,6 +23,6 @@ public class Charon extends ForceMovementGods {
         targetPosY = cell.getPos()[1] + dy;
         if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
             return -7; //target space is out of board
-        return MoveEnemy(board.getCell(targetPosX, targetPosY).getWorker(), board);
+        return MoveEnemy(board.getCell(x, y).getWorker(), board);
     }
 }

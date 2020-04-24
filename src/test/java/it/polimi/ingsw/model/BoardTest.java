@@ -23,4 +23,11 @@ public class BoardTest {
         boardTest.setBoard(board);
         assertEquals("Cell is wrong", cellTest, boardTest.getCell(x, y));
     }
+    @Test
+    public void cloneTest(){
+        Cell[][] board = new Cell[5][5];
+        Board boardTest = new Board();
+        boardTest.Clone();
+        assertEquals("Cell is wrong", true, true);
+    }
 }

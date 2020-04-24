@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class Board implements Cloneable
+public class Board
 {
     private Cell[][] board = new Cell[5][5];
 
@@ -27,8 +27,7 @@ public class Board implements Cloneable
         }
     }
 
-    @Override
-    protected final Board clone() {
+    protected final Board Clone() {
         final Board result = new Board();
         for(int i = 0; i < 5; i++){
             result.board[i] = board[i].clone();
