@@ -40,17 +40,17 @@ public class MinotaurTest {
         Minotaur minotaur = new Minotaur();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(1, 3);
-        assertEquals("Return value is wrong", -6, minotaur.Move(board, selectedCell, 0, 4));
+        assertEquals("Return value is wrong", -7, minotaur.Move(board, selectedCell, 0, 4));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(0, 4);
         assertEquals("Return value is wrong", 1, minotaur.Move(board, selectedCell, 1, 3));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(1, 3);
-        assertEquals("Return value is wrong", -7, minotaur.Move(board, selectedCell, 2, 2));
+        assertEquals("Return value is wrong", -5, minotaur.Move(board, selectedCell, 2, 2));
         serverView.PrintBoard(board, match);
         board.getCell(0, 4).setDome(true);
         selectedCell = board.getCell(2,2);
-        assertEquals("Return value is wrong", -7, minotaur.Move(board, selectedCell, 1, 3));
+        assertEquals("Return value is wrong", -5, minotaur.Move(board, selectedCell, 1, 3));
         serverView.PrintBoard(board, match);
     }
 }
