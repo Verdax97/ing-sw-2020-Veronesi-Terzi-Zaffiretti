@@ -46,5 +46,7 @@ public class CharonTest{
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, testWorker20.getPlayer(), 3, 1));
         serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -2, charon.PlayerTurn(board, testWorker20.getPlayer(), 2, 1));
+        serverView.PrintBoard(board, match);
     }
 }

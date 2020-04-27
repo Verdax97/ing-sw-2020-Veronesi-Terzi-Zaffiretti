@@ -71,7 +71,7 @@ public class Match extends Observable
         winner = CheckWinCondition(player);
         //notify view
         setChanged();
-        notifyObservers(board.clone());
+        notifyObservers(board.Clone());
     }
 
     private void CheckMove(int x, int y, int targetX, int targetY, int godPower, Player player)
@@ -108,7 +108,7 @@ public class Match extends Observable
         }
         //notify view
         setChanged();
-        notifyObservers(board.clone());
+        notifyObservers(board.Clone());
     }
 
     private void CheckBuild(int targetX, int targetY, int typeBuilding, int godPower)
