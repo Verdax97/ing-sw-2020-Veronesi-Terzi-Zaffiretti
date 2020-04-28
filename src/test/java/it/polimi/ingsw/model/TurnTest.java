@@ -1,12 +1,14 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.gods.Zeus;
 import it.polimi.ingsw.view.ServerView;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 public class TurnTest
 {
     @Test
@@ -108,5 +110,41 @@ public class TurnTest
         assertEquals("Error in Lose true",turn.StartTurn(ActivePlayers,player1,board,0,0,false),-1);
         ActivePlayers.remove(player2);
         assertEquals("Error Win True", turn.StartTurn(ActivePlayers, player1, board, 0,0,false), 1);
+    }
+
+    @Test
+    public void CheckLostBuildTest() {
+        Board board = new Board();
+        Turn turn = new Turn();
+        Player player1 = new Player("Pino");
+        Player player2 = new Player("Pippo");
+        Worker worker1p1 =new Worker();
+        Worker worker2p1 =new Worker();
+        Worker worker1p2 =new Worker();
+        Worker worker2p2 =new Worker();
+        worker1p1.setPlayer(player1);
+        worker2p1.setPlayer(player1);
+        worker1p2.setPlayer(player2);
+        worker2p2.setPlayer(player2);
+        board.getCell(0,0).setWorker(worker1p1);
+        board.getCell(0, 1).setWorker(worker2p1);
+        board.getCell(1,0).setWorker(worker1p2);
+        board.getCell(1,1).setWorker(worker2p2);
+        God god1 = new God();
+        player1.setGodPower(god1);
+        God god2 = new God();
+        player2.setGodPower(god2);
+        turn.setSelectedCell(board.getCell(0,0));
+        assertTrue("CheckLostBuild true Error", turn.CheckLostBuild(player1, board));
+        turn.setSelectedCell(board.getCell(0,1));
+        assertFalse("CheckLostBuild false error", turn.CheckLostBuild(player1, board));
+        // special controls Zeus
+        Zeus zeus = new Zeus();
+        player1.setGodPower(zeus);
+        turn.setSelectedCell(board.getCell(0,0));
+        assertFalse("CheckLostBuild false: special Zeus Error", turn.CheckLostBuild(player1, board));
+        board.getCell(0,0).setBuilding(3);
+        assertTrue("CheckLostBuild True: special Zeus Error", turn.CheckLostBuild(player1,board));
+
     }
 }
