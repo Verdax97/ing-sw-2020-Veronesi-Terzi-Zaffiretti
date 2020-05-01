@@ -1,15 +1,15 @@
 package it.polimi.ingsw.model;
 
 public class ErrorHandler {
-
+    private final String prefix = "Error ";
     public String GetErrorSetup(int value)
     {
         switch (value)
         {
             case -1:
-                return "You Lost";
+                return prefix + "You Lost";
             case 1:
-                return "You Won!!";
+                return prefix + "You Won!!";
             case 0:
                 return "";
         }
@@ -20,19 +20,19 @@ public class ErrorHandler {
         switch (value)
         {
             case -1:
-                return "Target cell out of board";
+                return prefix + "Target cell out of board";
             case -2:
-                return "Target cell is too far";
+                return prefix + "Target cell is too far";
             case -3:
-                return "Cell is too high";
+                return prefix + "Cell is too high";
             case -4:
-                return "Cell is occupied by Dome/Worker";
+                return prefix + "Cell is occupied by Dome/Worker";
             case -5:
-                return "Unable to move enemy Worker";
+                return prefix + "Unable to move enemy Worker";
             case -6:
-                return "(Artemis) Same cell as the first one";
+                return prefix + "(Artemis) Same cell as the first one";
             case -7:
-                return "(ForcedMovementGod) no space to move enemy worker";
+                return prefix + "(ForcedMovementGod) no space to move enemy worker";
             case 1:
                 return "";
             case 2:
@@ -48,25 +48,25 @@ public class ErrorHandler {
         switch (value)
         {
             case -1:
-                return "Target cell out of board";
+                return prefix + "Target cell out of board";
             case -2:
-                return "Target cell is too far";
+                return prefix + "Target cell is too far";
             case -3:
-                return "Worker on the cell";
+                return prefix + "Worker on the cell";
             case -4:
-                return "Cell occupied by a dome";
+                return prefix + "Cell occupied by a dome";
             case -5:
-                return "(Hephaestus) Not same as last built cell";
+                return prefix + "(Hephaestus) Not same as last built cell";
             case -6:
-                return "(Hephaestus) Building is > 2";
+                return prefix + "(Hephaestus) Building is > 2";
             case -7:
-                return "(Zeus) third level build forbidden";
+                return prefix + "(Zeus) third level build forbidden";
             case -8:
-                return "(Demeter) same as last built";
+                return prefix + "(Demeter) same as last built";
             case -9:
-                return "cell is a perimeter space";
+                return prefix + "cell is a perimeter space";
             case -10:
-                return "You Lost";
+                return prefix + "You Lost";
             case 1:
                 return "";
             case 2:
