@@ -9,7 +9,12 @@ public class SetupMatch {
     private ArrayList<Player> players = new ArrayList<Player>();
 
 
-    public God PickGod(int i) { return godPicked.get(i); }
+    public God PickGod(int i)
+    {
+        God god =godPicked.get(i);
+        godPicked.remove(god);
+        return god;
+    }
 
     public ArrayList<God> getGodPicked()
     {
@@ -29,6 +34,7 @@ public class SetupMatch {
     //for the setup phase
     public void AddGodPicked(God god) {
         this.godPicked.add(god);
+        this.godList.remove(god);
     }
 
     public ArrayList<Player> getPlayers() {
