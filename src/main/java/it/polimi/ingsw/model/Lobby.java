@@ -16,11 +16,12 @@ public class Lobby
     private int nPlayer = 1;
     private ArrayList<String> players = new ArrayList<String>();
 
-    public void AddPlayer(String toAdd)
+    public boolean AddPlayer(String toAdd)
     {
         if (this.nPlayer == 3)
-            return;
+            return false;
         this.players.add(toAdd);
+        return true;
     }
 
     public ArrayList<String> getPlayers() {
