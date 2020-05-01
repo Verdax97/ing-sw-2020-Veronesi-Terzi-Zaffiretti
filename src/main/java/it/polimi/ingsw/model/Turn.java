@@ -95,8 +95,7 @@ public class Turn
         if (ActivePlayers.size() == 1){
             return 1;
         }
-        // Check if we have to kill him
-        if (this.CheckLostMove(player, board)) { return -1;}
+
         // Check if we want to use the god power
         if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
         for (Player p:ActivePlayers)
@@ -105,6 +104,8 @@ public class Turn
                 p.getGodPower().EnemyTurn(board, player, p);
             }
         }
+        // Check if we have to kill him
+        if (this.CheckLostMove(player, board)) { return -1;}
         return 0;
     }
 
