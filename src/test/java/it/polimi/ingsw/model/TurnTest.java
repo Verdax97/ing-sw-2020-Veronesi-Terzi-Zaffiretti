@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.gods.Chrono;
+import it.polimi.ingsw.model.gods.Pan;
 import it.polimi.ingsw.model.gods.Zeus;
 import it.polimi.ingsw.view.ServerView;
 import org.jetbrains.annotations.NotNull;
@@ -146,5 +148,39 @@ public class TurnTest
         board.getCell(0,0).setBuilding(3);
         assertTrue("CheckLostBuild True: special Zeus Error", turn.CheckLostBuild(player1,board));
 
+    }
+
+    @Test
+    public void CheckWinConditionTest() {
+        Turn turn = new Turn();
+        Board board = new Board();
+        Player player1 = new Player("Gino");
+        God god = new God();
+        player1.setGodPower(god);
+        Worker worker1 = new Worker();
+        worker1.setPlayer(player1);
+        board.getCell(3,3).setWorker(worker1);
+        assertNull("CheckWinCondition False error", turn.CheckWinCondition(board, player1));
+        board.getCell(3,3).setBuilding(3);
+        worker1.setLastMovement(1);
+        assertEquals("CheckWinCondition True error", turn.CheckWinCondition(board, player1), player1);
+        board.getCell(3,3).setBuilding(-1);
+        Chrono chrono = new Chrono();
+        player1.setGodPower(chrono);
+        board.getCell(0,0).setBuilding(3);
+        board.getCell(0,1).setBuilding(3);
+        board.getCell(1,1).setBuilding(3);
+        board.getCell(0,2).setBuilding(3);
+        board.getCell(1,2).setBuilding(3);
+        board.getCell(0,0).setDome(true);
+        board.getCell(0,1).setDome(true);
+        board.getCell(1,1).setDome(true);
+        board.getCell(0,2).setDome(true);
+        board.getCell(1,2).setDome(true);
+        assertEquals("CheckWinCondition Chrono case True error", turn.CheckWinCondition(board, player1), player1);
+        Pan pan = new Pan();
+        player1.setGodPower(pan);
+        worker1.setLastMovement(-2);
+        assertEquals("CheckWinCondition Pan case True error", turn.CheckWinCondition(board, player1), player1);
     }
 }
