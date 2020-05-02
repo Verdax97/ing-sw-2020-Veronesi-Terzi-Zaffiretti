@@ -72,8 +72,9 @@ public class TurnTest
         Demeter demeter = new Demeter();
         player.setGodPower(demeter);
         assertEquals("Build god repeat error", turn.Build(board,1,1,0), 2);
-
-
+        board.getCell(1,1).setBuilding(1);
+        player.setGodPower(god);
+        assertEquals("Build dome for coverage", turn.Build(board,1,1,0), 1);
 }
 
     @Test
