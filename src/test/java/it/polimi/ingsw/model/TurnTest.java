@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.gods.Chrono;
-import it.polimi.ingsw.model.gods.Pan;
-import it.polimi.ingsw.model.gods.Zeus;
+import it.polimi.ingsw.model.gods.*;
 import it.polimi.ingsw.view.ServerView;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -53,6 +51,32 @@ public class TurnTest
     }
 
     @Test
+    public void BuilTest() {
+        Board board = new Board();
+        Turn turn = new Turn();
+        Player player = new Player("Pino");
+        Worker worker = new Worker();
+        Worker worker2 = new Worker();
+        worker.setPlayer(player);
+        God god = new God();
+        player.setGodPower(god);
+        board.getCell(1,0).setWorker(worker2);
+        board.getCell(0,0).setWorker(worker);
+        turn.setSelectedCell(board.getCell(0,0));
+        board.getCell(0,1).setDome(true);
+        assertEquals("Build out of board error", turn.Build(board, -1, -1,0),-1);
+        assertEquals("Build success error", turn.Build(board,1,1,0), 1);
+        assertEquals("Build too far error", turn.Build(board,4,4,0), -2);
+        assertEquals("Build on worker error", turn.Build(board,1,0,0),-3);
+        assertEquals("Build on dome error", turn.Build(board,0,1,0),-4);
+        Demeter demeter = new Demeter();
+        player.setGodPower(demeter);
+        assertEquals("Build god repeat error", turn.Build(board,1,1,0), 2);
+
+
+}
+
+    @Test
     public void MoveTest(){
         Turn turn = new Turn();
         ArrayList<String> players = new ArrayList<>();
@@ -88,7 +112,10 @@ public class TurnTest
         assertEquals("Cell is Too far error", turn.Move(board, 4, 3), -2);
         assertEquals("Cell is occupied error", turn.Move(board,2,2),-4);
         board.getCell(2,1).setDome(true);
-        assertEquals("Cell is occupied error", turn.Move(board,2,2),-4);
+        assertEquals("Cell is occupied error", turn.Move(board,2,1),-4);
+        Triton triton = new Triton();
+        testWorker3.getPlayer().setGodPower(triton);
+        assertEquals("Move special god repeat action", turn.Move(board, 0, 0), 2);
 
 
     }
