@@ -54,6 +54,7 @@ public class TurnTest
 
     @Test
     public void MoveTest(){
+        Turn turn = new Turn();
         ArrayList<String> players = new ArrayList<>();
         players.add("Pino");
         players.add("Pippo");
@@ -63,8 +64,6 @@ public class TurnTest
         Board board = match.getBoard();
         board.getCell(4,4).setDome(true);
         board.getCell(3,3).setBuilding(3);
-        board.getCell(2,2).setBuilding(2);
-        board.getCell(1,1).setBuilding(1);
         Worker testWorker = new Worker();
         testWorker.setPlayer(new Player(players.get(0)));
         Worker testWorker2 = new Worker();
@@ -78,6 +77,19 @@ public class TurnTest
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(4, 4).setWorker(testWorker3);
         board.getCell(0, 0).setWorker(testWorker3);
+        God god = new God();
+        testWorker3.getPlayer().setGodPower(god);
+        turn.setSelectedCell(board.getCell(0,0));
+        assertEquals("Cell out of board error",turn.Move(board,-1,-1), -1);
+        assertEquals("Move Success Error", turn.Move(board, 1, 1), 1 );
+        turn.setSelectedCell(board.getCell(1,1));
+        board.getCell(1,2).setBuilding(3);
+        assertEquals("Cell is too high error", turn.Move(board,1,2), -3);
+        assertEquals("Cell is Too far error", turn.Move(board, 4, 3), -2);
+        assertEquals("Cell is occupied error", turn.Move(board,2,2),-4);
+        board.getCell(2,1).setDome(true);
+        assertEquals("Cell is occupied error", turn.Move(board,2,2),-4);
+
 
     }
 

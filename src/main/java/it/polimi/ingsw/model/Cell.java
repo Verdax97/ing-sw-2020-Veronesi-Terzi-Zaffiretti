@@ -98,8 +98,7 @@ public class Cell
 
     public boolean IsNotHigh(Board board, int x, int y)
     {
-        int debuff = (this.getWorker().isDebuff()) ? 0 : 1;
-        return (this.getBuilding() == board.getCell(x, y).getBuilding() + debuff) || (this.getBuilding() >= board.getCell(x, y).getBuilding());
+        return (((this.getBuilding() == board.getCell(x,y).getBuilding()-1) && !this.getWorker().isDebuff()) || (this.getBuilding() >= board.getCell(x, y).getBuilding()));
     }
 
     public boolean IsFreeDome(Board board, int x, int y)

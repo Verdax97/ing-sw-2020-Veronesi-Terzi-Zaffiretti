@@ -2,8 +2,7 @@ package it.polimi.ingsw.model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class CellTest {
 
@@ -82,8 +81,12 @@ public class CellTest {
         board.getCell(0,0).setWorker(worker);
         board.getCell(0,1).setBuilding(2);
         Cell cell = board.getCell(0,0);
-        assertEquals("IsNotHigh is high", false, cell.IsNotHigh(board, 0, 1));
-        assertEquals("IsNotHigh is high", true, cell.IsNotHigh(board, 1, 1));
+        assertFalse("IsNotHigh is high", cell.IsNotHigh(board, 0, 1));
+        assertTrue("IsNotHigh is high", cell.IsNotHigh(board, 1, 1));
+        board.getCell(0,1).setBuilding(-1);
+        assertTrue("IsNotHigh is high", cell.IsNotHigh(board, 0, 1));
+        worker.setDebuff(true);
+        assertFalse("IsNotHigh is high", cell.IsNotHigh(board, 0, 1));
     }
 
     @Test
