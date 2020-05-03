@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class God {
     protected String name;
-    protected String description;
+    public String description;
     protected Image img;
 
     public String getName() { return name; }
@@ -17,10 +17,6 @@ public class God {
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) { return 0; }
 
     public int EnemyTurn(Board board, Player turnPlayer, Player player) { return 0; }
-
-    public void EnemyMove() { }
-
-    public void EnemyBuilding() { }
 
     protected Cell SearchAnyPlayerWorker(Board board, Player player, int x, int y)
     {
@@ -41,4 +37,6 @@ public class God {
     }
 
     public Player WinCondition(Board board, Player player) { return null; }
+
+    public void ResetGod() {}
 }

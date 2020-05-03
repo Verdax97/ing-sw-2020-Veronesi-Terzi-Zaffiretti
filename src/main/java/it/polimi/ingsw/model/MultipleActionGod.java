@@ -14,4 +14,10 @@ public class MultipleActionGod extends God
         }
         return 2;
     }
+
+    @Override
+    public void ResetGod()
+    {
+        use = 0;
+    }
 }
