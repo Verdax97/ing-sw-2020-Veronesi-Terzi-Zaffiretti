@@ -154,7 +154,7 @@ public class Turn
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
-                    if (board.getCell(x, y).getDome()) {
+                    if (!board.getCell(x, y).getDome()) {
                         int building = board.getCell(x, y).getBuilding();
                         if (building < 3)
                             board.getCell(x, y).setBuilding(1);
@@ -162,11 +162,11 @@ public class Turn
                             board.getCell(x, y).setDome(true);
                         board.getCell(x, y).setBuiltBy(this.selectedCell.getWorker().getPlayer());
                         board.getCell(x, y).setBuiltTurn(turnNumber);
+                        return 1;//1 default return value, 2 need to repeat action
                     }else return -4;//Cell occupied by a dome
                 } else return -3;//Worker on the cell
             } else return -2; //Target cell is too far
         } else return -1;//Target cell out of board
-        return 1;//1 default return value, 2 need to repeat action
     }
 
     public Player CheckWinCondition(Board board, Player player)

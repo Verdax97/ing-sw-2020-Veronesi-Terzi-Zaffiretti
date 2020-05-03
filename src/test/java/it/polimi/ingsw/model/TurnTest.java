@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.gods.Zeus;
+import it.polimi.ingsw.model.gods.*;
 import it.polimi.ingsw.view.ServerView;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -51,7 +51,35 @@ public class TurnTest
     }
 
     @Test
+    public void BuilTest() {
+        Board board = new Board();
+        Turn turn = new Turn();
+        Player player = new Player("Pino");
+        Worker worker = new Worker();
+        Worker worker2 = new Worker();
+        worker.setPlayer(player);
+        God god = new God();
+        player.setGodPower(god);
+        board.getCell(1,0).setWorker(worker2);
+        board.getCell(0,0).setWorker(worker);
+        turn.setSelectedCell(board.getCell(0,0));
+        board.getCell(0,1).setDome(true);
+        assertEquals("Build out of board error", turn.Build(board, -1, -1,0),-1);
+        assertEquals("Build success error", turn.Build(board,1,1,0), 1);
+        assertEquals("Build too far error", turn.Build(board,4,4,0), -2);
+        assertEquals("Build on worker error", turn.Build(board,1,0,0),-3);
+        assertEquals("Build on dome error", turn.Build(board,0,1,0),-4);
+        Demeter demeter = new Demeter();
+        player.setGodPower(demeter);
+        assertEquals("Build god repeat error", turn.Build(board,1,1,0), 2);
+        board.getCell(1,1).setBuilding(1);
+        player.setGodPower(god);
+        assertEquals("Build dome for coverage", turn.Build(board,1,1,0), 1);
+}
+
+    @Test
     public void MoveTest(){
+        Turn turn = new Turn();
         ArrayList<String> players = new ArrayList<>();
         players.add("Pino");
         players.add("Pippo");
@@ -61,8 +89,6 @@ public class TurnTest
         Board board = match.getBoard();
         board.getCell(4,4).setDome(true);
         board.getCell(3,3).setBuilding(3);
-        board.getCell(2,2).setBuilding(2);
-        board.getCell(1,1).setBuilding(1);
         Worker testWorker = new Worker();
         testWorker.setPlayer(new Player(players.get(0)));
         Worker testWorker2 = new Worker();
@@ -76,6 +102,22 @@ public class TurnTest
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(4, 4).setWorker(testWorker3);
         board.getCell(0, 0).setWorker(testWorker3);
+        God god = new God();
+        testWorker3.getPlayer().setGodPower(god);
+        turn.setSelectedCell(board.getCell(0,0));
+        assertEquals("Cell out of board error",turn.Move(board,-1,-1), -1);
+        assertEquals("Move Success Error", turn.Move(board, 1, 1), 1 );
+        turn.setSelectedCell(board.getCell(1,1));
+        board.getCell(1,2).setBuilding(3);
+        assertEquals("Cell is too high error", turn.Move(board,1,2), -3);
+        assertEquals("Cell is Too far error", turn.Move(board, 4, 3), -2);
+        assertEquals("Cell is occupied error", turn.Move(board,2,2),-4);
+        board.getCell(2,1).setDome(true);
+        assertEquals("Cell is occupied error", turn.Move(board,2,1),-4);
+        Triton triton = new Triton();
+        testWorker3.getPlayer().setGodPower(triton);
+        assertEquals("Move special god repeat action", turn.Move(board, 0, 0), 2);
+
 
     }
 
@@ -146,5 +188,39 @@ public class TurnTest
         board.getCell(0,0).setBuilding(3);
         assertTrue("CheckLostBuild True: special Zeus Error", turn.CheckLostBuild(player1,board));
 
+    }
+
+    @Test
+    public void CheckWinConditionTest() {
+        Turn turn = new Turn();
+        Board board = new Board();
+        Player player1 = new Player("Gino");
+        God god = new God();
+        player1.setGodPower(god);
+        Worker worker1 = new Worker();
+        worker1.setPlayer(player1);
+        board.getCell(3,3).setWorker(worker1);
+        assertNull("CheckWinCondition False error", turn.CheckWinCondition(board, player1));
+        board.getCell(3,3).setBuilding(3);
+        worker1.setLastMovement(1);
+        assertEquals("CheckWinCondition True error", turn.CheckWinCondition(board, player1), player1);
+        board.getCell(3,3).setBuilding(-1);
+        Chrono chrono = new Chrono();
+        player1.setGodPower(chrono);
+        board.getCell(0,0).setBuilding(3);
+        board.getCell(0,1).setBuilding(3);
+        board.getCell(1,1).setBuilding(3);
+        board.getCell(0,2).setBuilding(3);
+        board.getCell(1,2).setBuilding(3);
+        board.getCell(0,0).setDome(true);
+        board.getCell(0,1).setDome(true);
+        board.getCell(1,1).setDome(true);
+        board.getCell(0,2).setDome(true);
+        board.getCell(1,2).setDome(true);
+        assertEquals("CheckWinCondition Chrono case True error", turn.CheckWinCondition(board, player1), player1);
+        Pan pan = new Pan();
+        player1.setGodPower(pan);
+        worker1.setLastMovement(-2);
+        assertEquals("CheckWinCondition Pan case True error", turn.CheckWinCondition(board, player1), player1);
     }
 }
