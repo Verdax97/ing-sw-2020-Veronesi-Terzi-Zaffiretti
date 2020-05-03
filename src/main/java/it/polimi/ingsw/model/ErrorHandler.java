@@ -7,9 +7,9 @@ public class ErrorHandler {
         switch (value)
         {
             case -1:
-                return prefix + "You Lost";
+                return "You Lost";
             case 1:
-                return prefix + "You Won!!";
+                return "You Won!!";
             case 0:
                 return "";
         }

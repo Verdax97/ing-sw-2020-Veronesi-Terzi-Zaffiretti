@@ -82,7 +82,7 @@ public class Turn
         return true;
     }
 
-    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, int x, int y, boolean godPower)
+    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, int targetX, int targetY, boolean godPower)
     /*0
     -5 no space to move enemy worker
     -2 (charon) no worker available
@@ -97,7 +97,7 @@ public class Turn
         }
 
         // Check if we want to use the god power
-        if (godPower){player.getGodPower().PlayerTurn(board, player, x, y);}
+        if (godPower){player.getGodPower().PlayerTurn(board, player, targetX, targetY);}//TODO aggiungere selected cell
         for (Player p:ActivePlayers)
         {
             if (p != player) {
