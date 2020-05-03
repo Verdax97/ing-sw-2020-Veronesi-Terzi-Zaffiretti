@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.godsTest;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Athena;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.view.ServerView;
@@ -47,11 +44,14 @@ public class PrometheusTest {
         board.getCell(3, 0).setBuilding(1);
         board.getCell(4, 1).setBuilding(1);
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), 0, 3));
+        Turn turn = new Turn();
+        turn.setSelectedCell(board.getCell(0,4));
+        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 0, 3));
         serverView.PrintBoard(board, match);
         assertEquals("Error", testWorker00.isDebuff(), true);
         serverView.PrintBoard(board, match);
-        prometheus.PlayerTurn(board, testWorker10.getPlayer(), 1, 2);
+        turn.setSelectedCell(board.getCell(1,3));
+        prometheus.PlayerTurn(board, testWorker10.getPlayer(), turn.getSelectedCell(), 1, 2);
         assertEquals("Error", testWorker10.isDebuff(), true);
     }
 }

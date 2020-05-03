@@ -97,7 +97,7 @@ public class Turn
         }
 
         // Check if we want to use the god power
-        if (godPower){player.getGodPower().PlayerTurn(board, player, targetX, targetY);}//TODO aggiungere selected cell
+        if (godPower){player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}//TODO aggiungere selected cell
         for (Player p:ActivePlayers)
         {
             if (p != player) {
