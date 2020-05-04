@@ -1,120 +1,97 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.MsgPacket;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class LineClient {
-    private String ip;
-    private int port;
-    private String nick;
+public class LineClient extends Thread {
+    private final ClientMain clientMain;
+    private final String ip;
+    private final int port;
     private Socket socket;
-    private Scanner socketIn;
-    private Scanner stdin;
-    private PrintWriter socketOut;
+    private ObjectInputStream socketIn;
+    private ObjectOutputStream socketOut;
 
-    public LineClient(String ip, int port)
+    public LineClient(String ip, int port, ClientMain clientMain)
     {
         this.ip = ip;
         this.port = port;
+        this.clientMain = clientMain;
     }
 
-    public String startClient() throws IOException
+    public void startClient() throws IOException
     {
         //setup socket
         socket = new Socket(ip, port);
-        //connection established message
-        System.out.println("Connection established");
         //setup in/out socket
-        socketIn = new Scanner(socket.getInputStream());
-        socketOut = new PrintWriter(socket.getOutputStream());
-        //read msg from cli
-        Scanner stdin = new Scanner(System.in);
-        String answer = "";
+        socketIn = new ObjectInputStream(socket.getInputStream());
+        socketOut = new ObjectOutputStream(socket.getOutputStream());
+    }
 
-        //insertion in lobby e nickname setup
-        do
-            {
-                if (!answer.equals(""))
-                {
-                    System.out.println(answer);
-                    if (answer.equalsIgnoreCase("Too many players"))
-                    {
-                        EndClient();
-                        return "Too many players";
-                    }
-                }
-                System.out.println("Insert Nickname");
-                nick = stdin.nextLine();
-                //send the nickname to the server
-                socketOut.println(nick);
-                socketOut.flush();
-                //read answer from server
-                answer = socketIn.nextLine();
-            }
-        while (!answer.equalsIgnoreCase("valid nickname"));
-        //now we just wait for the start (waiting msg)
-        System.out.println(socketIn.nextLine());
+    public void run()
+    {
         while (true)
         {
-            answer = socketIn.nextLine();
-            if (answer.equalsIgnoreCase("Start to start close the lobby and start the game"))
+            MsgPacket msg;
+            try
             {
-                answer = stdin.nextLine();
-                socketOut.println(answer);
-                socketOut.flush();
+                msg = ReceiveMsg();
+            }catch (ClassNotFoundException | IOException e)
+            {
+                System.out.println("problem");
+                break;
             }
-            else
+
+            //pass the message to the main client
+            clientMain.setReceivedMsg(msg);
+            clientMain.setReadyToReceive(true);
+
+            //exit if the game ends
+            if(msg.msg.equalsIgnoreCase("end"))
+                break;
+
+            //wait to have reply msg ready
+            while(!clientMain.isReadyToSend())
             {
-                System.out.println(answer);
-                if (answer.equalsIgnoreCase("Start"))
-                {
-                    break;
-                }
+                //wait until response is ready
+            }
+
+            clientMain.setReadyToSend(false);
+            //send response message to the server
+            try {
+                SendMsg(clientMain.getReplyMsg());
+            } catch (IOException e) {
+                System.out.println("Connection to the server interrupted");
+                break;
             }
         }
 
-        try{
-            boolean wait = false;
-            while (true){
-                //receive an answer for active
-                String active = socketIn.nextLine();
-                if (active.equalsIgnoreCase("active"))
-                {
-                    wait = false;
-
-                    System.out.println(active);
-                    String inputLine = stdin.nextLine();
-                    //send msg
-                    socketOut.println(inputLine);
-                    socketOut.flush();
-                    //receive answer
-                    String socketLine = socketIn.nextLine();
-                    //do stuff
-                    System.out.println(socketLine);
-                }
-                else
-                {
-                    if (!wait)
-                    {
-                        wait = true;
-                        System.out.println(active);
-                    }
-                }
-            }
-        } catch(NoSuchElementException e){
-            System.out.println("Connection closed");
-        } finally {
+        System.out.println("the game is ended");
+        try {
             EndClient();
+        } catch (IOException e) {
+            System.err.println("wtf is happening, socket throws an IOException");
         }
-        return "";
+    }
+
+    private MsgPacket ReceiveMsg() throws IOException, ClassNotFoundException {
+        return (MsgPacket)socketIn.readObject();
+    }
+
+    private void SendMsg(MsgPacket msg) throws IOException
+    {
+        socketOut.writeObject(msg);
     }
 
     private void EndClient() throws IOException
     {
-        stdin.close();
         socketIn.close();
         socketOut.close();
         socket.close();
