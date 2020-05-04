@@ -14,5 +14,6 @@ public class MultipleActionGodTest {
         assertEquals("Return value is wrong", 2, gianni.CheckUse());
         gianni.use = 2;
         assertEquals("Return value is wrong", 1, gianni.CheckUse());
+        gianni.ResetGod();
     }
 }

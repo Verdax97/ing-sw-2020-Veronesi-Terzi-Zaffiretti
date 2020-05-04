@@ -42,5 +42,13 @@ public class AtlasTest {
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 1, 4, 1, 0));
         serverView.PrintBoard(board, match);
+        selectedCell = board.getCell(0, 0);
+        board.getCell(0,1).setBuilding(3);
+        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 0, 1, 0, 0));
+        selectedCell = board.getCell(4, 0);
+        assertEquals("Return value is wrong", -3, atlas.Building(board, selectedCell, 3, 1, 0, 0));
+        assertEquals("Return value is wrong", -2, atlas.Building(board, selectedCell, 0, 1, 0, 0));
+        assertEquals("Return value is wrong", -1, atlas.Building(board, selectedCell, 5, 5, 0, 0));
+
     }
 }
