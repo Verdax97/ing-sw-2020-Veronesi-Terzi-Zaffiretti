@@ -20,14 +20,11 @@ public class Zeus extends God{
                         if (building < 3) {
                             if (x == i && y == j) {
                                 board.getCell(x, y).setBuilding(1);
-                            } else if (x != i && y != j) {
-                                board.getCell(x, y).setBuilding(1);
                             }
                         }
-                        else if (building == 3 && x != i && y != j) {
+                        else if (building == 3 && (x != i || y != j)) {
                             board.getCell(x, y).setDome(true);
-                        }
-                        else return -7;//third level build forbidden
+                        } else return -7;//third level build forbidden
                         board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
                         board.getCell(x, y).setBuiltTurn(turnNumber);
                     } else return -4; //cell has a Dome

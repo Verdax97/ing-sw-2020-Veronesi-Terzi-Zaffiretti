@@ -51,7 +51,7 @@ public class TurnTest
     }
 
     @Test
-    public void BuilTest() {
+    public void BuildTest() {
         Board board = new Board();
         Turn turn = new Turn();
         Player player = new Player("Pino");
@@ -72,10 +72,12 @@ public class TurnTest
         Demeter demeter = new Demeter();
         player.setGodPower(demeter);
         assertEquals("Build god repeat error", turn.Build(board,1,1,0), 2);
+        demeter.ResetGod();
         board.getCell(1,1).setBuilding(1);
         player.setGodPower(god);
         assertEquals("Build dome for coverage", turn.Build(board,1,1,0), 1);
-}
+
+    }
 
     @Test
     public void MoveTest(){

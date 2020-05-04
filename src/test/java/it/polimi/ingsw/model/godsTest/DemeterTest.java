@@ -42,5 +42,16 @@ public class DemeterTest{
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", 1, demeter.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
+        demeter.ResetGod();
+        assertEquals("Return value is wrong", -1, demeter.Building(board, selectedCell,5,5,0, 0));
+        assertEquals("Return value is wrong", -2, demeter.Building(board, selectedCell,4,4,0, 0));
+        board.getCell(4, 0).setWorker(null);
+        board.getCell(1, 0).setWorker(testWorker);
+        assertEquals("Return value is wrong", -3, demeter.Building(board, selectedCell,1,0,0, 0));
+        board.getCell(0,1).setBuilding(2);
+        assertEquals("Return value is wrong", 2, demeter.Building(board, selectedCell,0,1,0,0));
+        demeter.ResetGod();
+        assertEquals("Return value is wrong", -4, demeter.Building(board,selectedCell,0,1,0,0));
+
     }
 }

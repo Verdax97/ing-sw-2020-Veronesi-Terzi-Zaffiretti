@@ -28,7 +28,7 @@ public class ErrorHandlerTest {
         assertEquals("GetErrorMove value error", "Error Unable to move enemy Worker", errorHandler.GetErrorMove(-5));
         assertEquals("GetErrorMove value error", "Error (Artemis) Same cell as the first one", errorHandler.GetErrorMove(-6));
         assertEquals("GetErrorMove value error", "Error (ForcedMovementGod) no space to move enemy worker", errorHandler.GetErrorMove(-7));
-        assertEquals("GetErrorMove value error", "", errorHandler.GetErrorMove(1));
+        assertEquals("GetErrorMove value error", "\n", errorHandler.GetErrorMove(1));
         assertEquals("GetErrorMove value error", "Again", errorHandler.GetErrorMove(2));
         //testiamo anche le cose poco professionali per coverage
         errorHandler.GetErrorMove(0);
@@ -48,7 +48,7 @@ public class ErrorHandlerTest {
         assertEquals("GetErrorBuild value error", "Error (Demeter) same as last built", errorHandler.GetErrorBuild(-8));
         assertEquals("GetErrorBuild value error", "Error Cell is a perimeter space", errorHandler.GetErrorBuild(-9));
         assertEquals("GetErrorBuild value error", "Error You Lost", errorHandler.GetErrorBuild(-10));
-        assertEquals("GetErrorBuild value error", "", errorHandler.GetErrorBuild(1));
+        assertEquals("GetErrorBuild value error", "\n", errorHandler.GetErrorBuild(1));
         assertEquals("GetErrorBuild value error", "Again", errorHandler.GetErrorBuild(2));
         // testiamo altre cose poco professionali per coverage
         errorHandler.GetErrorBuild(0);

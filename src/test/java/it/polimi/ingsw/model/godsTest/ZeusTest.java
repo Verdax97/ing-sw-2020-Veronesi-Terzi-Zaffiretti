@@ -48,5 +48,15 @@ public class ZeusTest {
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", -7, zeus.Building(board, selectedCell, 0, 0, 0, 0));
         serverView.PrintBoard(board, match);
+        zeus.ResetGod();
+        assertEquals("Return value is wrong", -1, zeus.Building(board, selectedCell,5,5,0, 0));
+        assertEquals("Return value is wrong", -2, zeus.Building(board, selectedCell,4,4,0, 0));
+        board.getCell(4, 0).setWorker(null);
+        board.getCell(1, 0).setWorker(testWorker11);
+        board.getCell(0,1).setBuilding(3);
+        assertEquals("Return value is wrong", 1, zeus.Building(board, selectedCell,0,1,0,0));
+        zeus.ResetGod();
+        assertEquals("Return value is wrong", -4, zeus.Building(board,selectedCell,0,1,0,0));
+        
     }
 }
