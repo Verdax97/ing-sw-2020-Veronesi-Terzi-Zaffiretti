@@ -48,5 +48,16 @@ public class TritonTest {
         selectedCell = board.getCell(2, 0);
         assertEquals("Return value is wrong", 1, triton.Move(board, selectedCell, 1, 0));
         serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -1, triton.Move(board, selectedCell, 5, 5));
+        assertEquals("Return value is wrong", -2, triton.Move(board, selectedCell, 4, 4));
+        board.getCell(1,1).setBuilding(2);
+        selectedCell = board.getCell(1,0);
+        assertEquals("Return value is wrong", -3, triton.Move(board, selectedCell, 1, 1));
+        assertEquals("Return value is wrong", -4, triton.Move(board, selectedCell, 0, 0));
+        board.getCell(2,0).setDome(true);
+        assertEquals("Return value is wrong", -4, triton.Move(board, selectedCell, 2, 0));
+        serverView.PrintBoard(board, match);
+        selectedCell = board.getCell(1,3);
+        assertEquals("Return value is wrong", 1, triton.Move(board, selectedCell, 2, 3));
     }
 }

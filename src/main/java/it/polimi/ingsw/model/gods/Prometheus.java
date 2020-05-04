@@ -15,8 +15,7 @@ public class Prometheus extends DebuffGod
     @Override
     public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y)
     {
-        if (selectedCell == null)
-            return -1;//no valid worker to make the move
+
         if (board.getCell(x, y).getWorker() == null) {
             if (!board.getCell(x, y).getDome()) {
                 int building = board.getCell(x, y).getBuilding();

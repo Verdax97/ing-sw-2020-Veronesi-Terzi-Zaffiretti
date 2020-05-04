@@ -46,7 +46,6 @@ public class HephaestusTest {
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", 2, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
         serverView.PrintBoard(board, match);
-
         assertEquals("Return value is wrong", -5, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
         hephaestus.ResetGod();
@@ -58,5 +57,12 @@ public class HephaestusTest {
         assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell,0,1,0,0));
         hephaestus.ResetGod();
         assertEquals("Return value is wrong", -4, hephaestus.Building(board,selectedCell,0,1,0,0));
+        serverView.PrintBoard(board, match);
+        // For coverage only (not reacheable)
+        selectedCell = board.getCell(1,3);
+        hephaestus.ResetGod();
+        hephaestus.Building(board, selectedCell,0,3,0,0);
+        board.getCell(0,3).setBuilding(2);
+        assertEquals("Return value is wrong", -6, hephaestus.Building(board,selectedCell,0,3,0,0));
     }
 }
