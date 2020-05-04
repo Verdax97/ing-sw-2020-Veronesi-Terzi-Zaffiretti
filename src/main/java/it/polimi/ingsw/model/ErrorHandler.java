@@ -2,10 +2,9 @@ package it.polimi.ingsw.model;
 
 public class ErrorHandler {
     private final String prefix = "Error ";
-    public String GetErrorSetup(int value)
-    {
-        switch (value)
-        {
+
+    public String GetErrorSetup(int value) {
+        switch (value) {
             case -1:
                 return "You Lost";
             case 1:
@@ -15,10 +14,9 @@ public class ErrorHandler {
         }
         return "";
     }
-    public String GetErrorMove(int value)
-    {
-        switch (value)
-        {
+
+    public String GetErrorMove(int value) {
+        switch (value) {
             case -1:
                 return prefix + "Target cell out of board";
             case -2:
@@ -39,6 +37,7 @@ public class ErrorHandler {
                 return "Again";
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
+                // POCO PROFESSIONALE!
         }
         return "";
     }
@@ -64,7 +63,7 @@ public class ErrorHandler {
             case -8:
                 return prefix + "(Demeter) same as last built";
             case -9:
-                return prefix + "cell is a perimeter space";
+                return prefix + "Cell is a perimeter space";
             case -10:
                 return prefix + "You Lost";
             case 1:
