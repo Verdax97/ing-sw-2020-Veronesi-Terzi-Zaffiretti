@@ -1,127 +1,116 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.ServerMultiplexer;
 import it.polimi.ingsw.view.ServerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.regex.Pattern;
 
 public class Controller implements Observer {
 
     private Lobby lobby;
-    private Player playerTurn;
     private Match match;
-    private State state;
+    private State state = State.LOBBY;
+
+    private ServerMultiplexer server;
 
     public void setLobby(Lobby lobby)
     {
         this.lobby = lobby;
     }
 
-
     public void CreateMatch()
     {
         this.match = new Match(lobby.getPlayers());
-        this.playerTurn = match.getPlayers().get(0);
-        this.match.StartMatch();
+        UpdateStatus(State.SETUP);
     }
 
-    //remove player from players list and worker from the board
-    public void killPlayer(Player player)
+    public void ParseServerMsg (MsgPacket msgPacket, ServerMultiplexer serverMultiplexer)
     {
-        ArrayList<Player> players = match.getSetup().getPlayers();
-        for (int i = 0; i < players.size(); i++)
+        //TODO implement thread for timer undo
+        if (!msgPacket.nickname.equals(match.getPlayerTurn().getNickname()))
         {
-            if (players.get(i).getNickname().equals(player.getNickname()))
-            {
-                players.remove(i);
-            }
+            //do nothing
+            return;
         }
-        for (int i = 0; i < 5; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                if (match.getBoard().getCell(i,j).getWorker() != null)
-                {
-                    if (match.getBoard().getCell(i,j).getWorker().getPlayer().getNickname().equals(player.getNickname()))
-                    {
-                        match.getBoard().getCell(i,j).setWorker(null);
-                    }
-                }
-            }
-        }
-        match.getSetup().SetPlayers(players);
-    }
-
-    public void ParseServerMsg (String msgView)
-    {
-        int workerX, workerY, targetX, targetY, typeBuilding, godPower;
+        boolean ok;
+        int ret;
         switch (state)
         {
-            case SETUP:
-                match.PickGod(Integer.parseInt(msgView.split(" ")[0]));
-                break;
-            case MOVE://need 5 int
-                workerX = Integer.parseInt(msgView.split(" ")[0]);
-                workerY = Integer.parseInt(msgView.split(" ")[1]);
-                targetX = Integer.parseInt(msgView.split(" ")[2]);
-                targetY = Integer.parseInt(msgView.split(" ")[3]);
-                godPower = Integer.parseInt(msgView.split(" ")[4]);
-                match.Move(workerX, workerY, targetX, targetY, godPower, playerTurn);
-                break;
-            case BUILD://need 4 int
-                targetX = Integer.parseInt(msgView.split(" ")[0]);
-                targetY = Integer.parseInt(msgView.split(" ")[1]);
-                godPower = Integer.parseInt(msgView.split(" ")[2]);
-                typeBuilding = Integer.parseInt(msgView.split(" ")[3]);
-                match.Build(targetX, targetY, godPower, typeBuilding, playerTurn);
-                break;
             case LOBBY://
+                lobby = serverMultiplexer.lobby;
                 CreateMatch();
                 break;
-            case SELECT://select all god
-                match.SelectPlayerGod(Integer.parseInt(msgView.split(" ")[0]), playerTurn);
+            case SETUP:
+                match.PickGod(msgPacket);
+                ret = match.getLastAction();
+                if (ret > 0)
+                    if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
+                        UpdateStatus(State.SELECT);
                 break;
-            case ENDMATCH://we have a winner winner chicken dinner
-                break;
-            case STARTTURN://check startTurn options
-                targetX = Integer.parseInt(msgView.split(" ")[0]);
-                targetY = Integer.parseInt(msgView.split(" ")[1]);
-                godPower = Integer.parseInt(msgView.split(" ")[2]);
-                match.StartTurn(playerTurn, targetX, targetY, godPower);
+            case SELECT://select player god
+                match.SelectPlayerGod(msgPacket);
+                ret = match.getLastAction();
+                if (ret > 0)
+                    if (match.getSetup().getGodPicked().size() == 0)
+                        UpdateStatus(State.PLACEWORKERS);
                 break;
             case PLACEWORKERS:
-                targetX = Integer.parseInt(msgView.split(" ")[0]);
-                targetY = Integer.parseInt(msgView.split(" ")[1]);
-                int player = Integer.parseInt(msgView.split(" ")[2]);
-                match.PlaceWorker(targetX, targetY, match.getSetup().getPlayers().get(player));
+                match.PlaceWorker(msgPacket);
+                ret = match.getLastAction();
+                if (ret == 2)
+                    UpdateStatus(State.STARTTURN);
+                break;
+            case STARTTURN://check startTurn options
+                match.StartTurn(msgPacket);
+                ret = match.getLastAction();
+                if (ret == 0)
+                    UpdateStatus(State.MOVE);
+                if (ret == 1)
+                    UpdateStatus(State.ENDMATCH);
+                if (ret == -1)
+                    UpdateStatus(State.STARTTURN);
+                break;
+            case MOVE:
+                match.Move(msgPacket);
+                ret = match.getLastAction();
+                if (ret == 1)
+                    UpdateStatus(State.BUILD);
+                if (ret == 10)
+                    UpdateStatus(State.ENDMATCH);
+                if (ret == -10)
+                    UpdateStatus(State.STARTTURN);
+                break;
+            case BUILD:
+                match.Build(msgPacket);
+                ret = match.getLastAction();
+                if (ret == 1)
+                    UpdateStatus(State.STARTTURN);
+                if (ret == -10)
+                    UpdateStatus(State.STARTTURN);
+                break;
+            case ENDMATCH://we have a winner winner chicken dinner
+                //TODO all this thing
+                //delete saved data
                 break;
         }
     }
 
     private void UpdateStatus(State state)
     {
-        if (state != this.state && state == State.MOVE)
-        {
-            if (this.state == State.PLACEWORKERS)
-                playerTurn = match.getSetup().getPlayers().get(0);
-            else
-                playerTurn = match.NextPlayer();
-        }
         this.state = state;
     }
+
 
     @Override
     public void update (Observable o, Object arg)
     {
-        if (!(o instanceof ServerView))
+        if (!(o instanceof ServerMultiplexer))
             throw new IllegalArgumentException();
-        if (((ServerView) o).getState() == State.LOBBY)
-        {
-            this.lobby = ((ServerView) o).getLobby();
-        }
-        UpdateStatus(((ServerView) o).getState());
-        ParseServerMsg(((ServerView) o).getMsgIn());
+        ParseServerMsg((MsgPacket)arg, (ServerMultiplexer)o);
     }
 }

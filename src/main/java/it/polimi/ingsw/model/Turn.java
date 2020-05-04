@@ -97,7 +97,7 @@ public class Turn
         }
 
         // Check if we want to use the god power
-        if (godPower){player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}//TODO aggiungere selected cell
+        if (godPower){player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}
         for (Player p:ActivePlayers)
         {
             if (p != player) {
@@ -122,7 +122,14 @@ public class Turn
     {
         int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
         if (a != 0)//must update Selected cell to get the same reference to the builder
+        {
+            if (a > 0)
+            {
+                selectedCell = board.getCell(x, y);
+            }
+
             return a;//1 default return value, 2 need to repeat action
+        }
         if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (selectedCell.IsNotHigh(board, x, y)) {
@@ -136,6 +143,7 @@ public class Turn
                 } else return -3;//cell is too high
             } else return-2;//cell is too far
         } else return -1;//cell out of board
+        selectedCell = board.getCell(x, y);
         return 1;//1 default return value, 2 need to repeat action
     }
 

@@ -32,7 +32,7 @@ public class ErrorHandler {
             case -7:
                 return prefix + "(ForcedMovementGod) no space to move enemy worker";
             case 1:
-                return "";
+                return "\n";
             case 2:
                 return "Again";
             case 0:
@@ -67,7 +67,7 @@ public class ErrorHandler {
             case -10:
                 return prefix + "You Lost";
             case 1:
-                return "";
+                return "\n";
             case 2:
                 return "Again";
             case 0:
