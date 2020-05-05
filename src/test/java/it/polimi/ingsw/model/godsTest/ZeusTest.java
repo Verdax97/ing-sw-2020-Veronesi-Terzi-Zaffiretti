@@ -57,6 +57,8 @@ public class ZeusTest {
         assertEquals("Return value is wrong", 1, zeus.Building(board, selectedCell,0,1,0,0));
         zeus.ResetGod();
         assertEquals("Return value is wrong", -4, zeus.Building(board,selectedCell,0,1,0,0));
+        serverView.PrintBoard(board, match);
+        assertEquals("Return value is wrong", -4, zeus.Building(board,selectedCell,1,0,0,0));
         
     }
 }

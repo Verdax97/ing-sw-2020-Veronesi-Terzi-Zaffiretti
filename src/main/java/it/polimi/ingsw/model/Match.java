@@ -62,8 +62,6 @@ public class Match extends Observable
     public void PickGod(MsgPacket msgPacket)
     {
         String msgView = msgPacket.msg;
-        if (!Pattern.matches("[1-9]+[1-9]?", msgView))
-        {
             int value = Integer.parseInt(msgView);
             if (value < 0 || value >= setup.getGodList().size()) {
                 msgError = "Error Can't pick that god, try another value\n";
@@ -85,7 +83,6 @@ public class Match extends Observable
             }
             CreateMsgPacket("Chose gods for all players by inserting corresponding value" +
                     " (one at the time)\n" + PrintGods(setup.getGodList()), "Wait");
-        }
     }
 
     public void SelectPlayerGod(MsgPacket msgPacket)
@@ -311,22 +308,21 @@ public class Match extends Observable
         {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    if (board.getCell(i,j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname()))
-                    {
-                        //TODO aggiungere salvataggio per undo
-                        board.getCell(i,j).getWorker().setDebuff(false);
-                        board.getCell(i,j).getWorker().getPlayer().getGodPower().ResetGod();
+                    if (board.getCell(i, j).getWorker() != null){
+                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname())) {
+                            //TODO aggiungere salvataggio per undo
+                            board.getCell(i, j).getWorker().setDebuff(false);
+                            board.getCell(i, j).getWorker().getPlayer().getGodPower().ResetGod();
+                        }
                     }
                 }
             }
         }
-        if (nPlayer == setup.getPlayers().size())
-        {
+        nPlayer++;
+        if (nPlayer == setup.getPlayers().size()) {
             nPlayer = 0;
             NextTurn();
         }
-        else
-            nPlayer++;
         playerTurn = setup.getPlayers().get(nPlayer);
         //controller.setPlayerTurn(playerTurn);
     }
