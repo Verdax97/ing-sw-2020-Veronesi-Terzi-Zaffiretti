@@ -98,7 +98,7 @@ public class Turn
         }
 
         // Check if we want to use the god power
-        if (godPower){player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}
+        if (godPower){return player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}
         for (Player p:ActivePlayers)
         {
             if (p != player) {

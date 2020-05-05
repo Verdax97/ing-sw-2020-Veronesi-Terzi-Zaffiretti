@@ -88,8 +88,6 @@ public class Match extends Observable
     public void SelectPlayerGod(MsgPacket msgPacket)
     {
         String msgView = msgPacket.msg;
-        if (!Pattern.matches("[1-3]", msgView))
-        {
             int value = Integer.parseInt(msgView) - 1;
             if (value < 0 || value >= setup.getGodPicked().size()) {
                 msgError = "Error Can't pick that god, try another value\n";
@@ -98,17 +96,16 @@ public class Match extends Observable
                         ":\n" + PrintGods(setup.getGodPicked()), "Wait");
                 return;
             }
+            playerTurn.setGodPower(setup.PickGod(value));
+            lastAction = 1;
+            CreateMsgPacket("Chose your god by inserting corresponding value" +
+                    ":\n" + PrintGods(setup.getGodPicked()), "Wait");
             NextPlayer();
             if (getSetup().getGodPicked().size() == 0)
             {
                 CreateMsgPacket("Place your worker:\n", "Wait");
                 return;
             }
-            playerTurn.setGodPower(setup.PickGod(value));
-            lastAction = 1;
-            CreateMsgPacket("Chose your god by inserting corresponding value" +
-                    ":\n" + PrintGods(setup.getGodPicked()), "Wait");
-        }
     }
 
     public void PlaceWorker(MsgPacket msgPacket)
@@ -236,6 +233,7 @@ public class Match extends Observable
         lastAction = turn.Move(board, targetX, targetY);
         msgError = errorHandler.GetErrorMove(lastAction);
     }
+
     public void Build(MsgPacket msgPacket)
     {
         String[] values = msgPacket.msg.split(" ");
@@ -295,7 +293,9 @@ public class Match extends Observable
 
     public boolean CheckSelectedCell(Player player, int x, int y)
     {
-        return board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname());
+        if (board.getCell(x, y).getWorker() != null)
+            return board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname());
+        else return false;
     }
 
     public void NextTurn()
@@ -320,7 +320,7 @@ public class Match extends Observable
             }
         }
         nPlayer++;
-        if (nPlayer == setup.getPlayers().size()) {
+        if (nPlayer >= setup.getPlayers().size()) {
             nPlayer = 0;
             NextTurn();
         }
@@ -389,7 +389,7 @@ public class Match extends Observable
     //remove player from players list and worker from the board
     public void killPlayer(Player player)
     {
-        ArrayList<Player> players = getSetup().getPlayers();
+       // ArrayList<Player> players = getSetup().getPlayers();
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < 5; j++)
@@ -403,7 +403,8 @@ public class Match extends Observable
                 }
             }
         }
-        for (int i = 0; i < players.size(); i++)
+        getSetup().getPlayers().remove(player);
+        /* for (int i = 0; i < players.size(); i++)
         {
             if (players.get(i).getNickname().equals(player.getNickname()))
             {
@@ -411,5 +412,6 @@ public class Match extends Observable
             }
         }
         getSetup().SetPlayers(players);
+       */
     }
 }

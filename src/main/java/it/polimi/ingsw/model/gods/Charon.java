@@ -14,7 +14,7 @@ public class Charon extends ForceMovementGods {
     @Override
     public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y)
     {
-        if (selectedCell == null || board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+        if (board.getCell(x, y).getWorker() == null || board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname()))
             return -2;//no valid worker to make the move
         int dx = selectedCell.getPos()[0] - x;
         int dy = selectedCell.getPos()[1] - y;

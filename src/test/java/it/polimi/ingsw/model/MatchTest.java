@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.gods.Charon;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -92,7 +93,55 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        MsgPacket msgPacket = new MsgPacket("Gino", "", "", match.getBoard(), match.getPlayers());
+        MsgPacket msgPacket = new MsgPacket("Gino", "1", "", match.getBoard(), match.getPlayers());
+        match.PickGod(msgPacket);
+        match.PickGod(msgPacket);
+        msgPacket.msg = "-1";
+        match.SelectPlayerGod(msgPacket);
+        assertEquals("getLastActionError", -1, match.getLastAction());
+        msgPacket.msg = "1";
+        match.SelectPlayerGod(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+        match.SelectPlayerGod(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+    }
 
+    @Test
+    public void StartTurnTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        MsgPacket msgPacket = new MsgPacket("Gino", "0 1 1 1 0", "", match.getBoard(), match.getPlayers());
+        Worker worker1 = new Worker();
+        worker1.setPlayer(match.getPlayerTurn());
+        God god = new God();
+        God god2 = new God();
+        match.getPlayerTurn().setGodPower(god);
+        match.getPlayers().get(0).setGodPower(god2);
+        match.getBoard().getCell(0,0).setWorker(worker1);
+        match.StartTurn(msgPacket);
+        assertEquals("getLastActionError", -2, match.getLastAction());
+        msgPacket.msg = "0 0 1 1 0";
+        match.StartTurn(msgPacket);
+        assertEquals("getLastActionError", 0, match.getLastAction());
+        Charon charon = new Charon();
+        match.getPlayerTurn().setGodPower(charon);
+        msgPacket.msg = "0 0 1 1 1";
+        Worker worker2 = new Worker();
+        match.getBoard().getCell(1,1).setWorker(worker2);
+        worker2.setPlayer(match.getPlayers().get(0));
+        match.StartTurn(msgPacket);
+        assertEquals("getLastActionError", -7, match.getLastAction());
+        msgPacket.msg = "0 0 1 1 0";
+        match.getBoard().getCell(1,0).setBuilding(3);
+        match.getBoard().getCell(1,1).setBuilding(3);
+        match.getBoard().getCell(0,1).setBuilding(3);
+        match.StartTurn(msgPacket);
+        assertEquals("getLastActionError", -10, match.getLastAction());
+        worker1.setPlayer(match.getPlayerTurn());
+        match.getBoard().getCell(0,0).setWorker(worker1);
+        match.StartTurn(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
     }
 }
