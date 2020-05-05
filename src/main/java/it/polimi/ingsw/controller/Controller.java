@@ -2,21 +2,14 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.ServerMultiplexer;
-import it.polimi.ingsw.view.ServerView;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.regex.Pattern;
 
 public class Controller implements Observer {
 
     private Lobby lobby;
     private Match match;
     private State state = State.LOBBY;
-
-    private ServerMultiplexer server;
 
     public void setLobby(Lobby lobby)
     {
@@ -37,7 +30,6 @@ public class Controller implements Observer {
             //do nothing
             return;
         }
-        boolean ok;
         int ret;
         switch (state)
         {
@@ -47,22 +39,17 @@ public class Controller implements Observer {
                 break;
             case SETUP:
                 match.PickGod(msgPacket);
-                ret = match.getLastAction();
-                if (ret > 0)
-                    if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
-                        UpdateStatus(State.SELECT);
+                if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
+                    UpdateStatus(State.SELECT);
                 break;
             case SELECT://select player god
                 match.SelectPlayerGod(msgPacket);
-                ret = match.getLastAction();
-                if (ret > 0)
-                    if (match.getSetup().getGodPicked().size() == 0)
-                        UpdateStatus(State.PLACEWORKERS);
+                if (match.getSetup().getGodPicked().size() == 0)
+                    UpdateStatus(State.PLACEWORKERS);
                 break;
             case PLACEWORKERS:
                 match.PlaceWorker(msgPacket);
-                ret = match.getLastAction();
-                if (ret == 2)
+                if (match.getLastAction() == 2)
                     UpdateStatus(State.STARTTURN);
                 break;
             case STARTTURN://check startTurn options
@@ -70,9 +57,9 @@ public class Controller implements Observer {
                 ret = match.getLastAction();
                 if (ret == 0)
                     UpdateStatus(State.MOVE);
-                if (ret == 1)
+                else if (ret == 1)
                     UpdateStatus(State.ENDMATCH);
-                if (ret == -1)
+                else if (ret == -1)
                     UpdateStatus(State.STARTTURN);
                 break;
             case MOVE:
@@ -80,9 +67,9 @@ public class Controller implements Observer {
                 ret = match.getLastAction();
                 if (ret == 1)
                     UpdateStatus(State.BUILD);
-                if (ret == 10)
+                else if (ret == 10)
                     UpdateStatus(State.ENDMATCH);
-                if (ret == -10)
+                else if (ret == -10)
                     UpdateStatus(State.STARTTURN);
                 break;
             case BUILD:
@@ -90,7 +77,7 @@ public class Controller implements Observer {
                 ret = match.getLastAction();
                 if (ret == 1)
                     UpdateStatus(State.STARTTURN);
-                if (ret == -10)
+                else if (ret == -10)
                     UpdateStatus(State.STARTTURN);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
