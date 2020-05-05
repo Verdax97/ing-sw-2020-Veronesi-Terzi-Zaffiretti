@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PrometheusTest {
     @Test
@@ -47,10 +47,19 @@ public class PrometheusTest {
         turn.setSelectedCell(board.getCell(0,4));
         assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 0, 3));
         serverView.PrintBoard(board, match);
-        assertEquals("Error", testWorker00.isDebuff(), true);
+        assertTrue("Error", testWorker00.isDebuff());
         serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(1,3));
+        assertFalse("Error", testWorker10.isDebuff());
         prometheus.PlayerTurn(board, testWorker10.getPlayer(), turn.getSelectedCell(), 1, 2);
-        assertEquals("Error", testWorker10.isDebuff(), true);
+        assertTrue("Error", testWorker10.isDebuff());
+        assertEquals("Return value is wrong", -1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 5, 5));
+        assertEquals("Return value is wrong", -2, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 4, 4));
+        assertEquals("Return value is wrong", -3, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 0, 4));
+        board.getCell(0,3).setBuilding(1);
+        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 0, 3));
+        assertEquals("Return value is wrong", -4, prometheus.PlayerTurn(board, testWorker00.getPlayer(), turn.getSelectedCell(), 0, 3));
+        serverView.PrintBoard(board, match);
+
     }
 }
