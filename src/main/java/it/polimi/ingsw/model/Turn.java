@@ -70,13 +70,13 @@ public class Turn
             {
                 int x = pos[0] + i;
                 int y = pos[1] + j;
-                if ((x > 0) && (x < 5) && (y > 0) && (y < 5))
+                if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5))
                 {
                     if (i == 0 && j == 0)
                     {
                         //check for zeus
                         if (selectedCell.getWorker().getPlayer().getGodPower().getName().equals("Zeus") && selectedCell.getBuilding() < 3)
-                            return true;
+                            return false;
                     }
                     else if (selectedCell.IsFreeDome(board, x, y) && selectedCell.IsFreeWorker(board, x, y))
                         return false;
