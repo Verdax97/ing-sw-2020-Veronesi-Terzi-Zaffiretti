@@ -90,7 +90,7 @@ public class Match extends Observable
         String msgView = msgPacket.msg;
         if (!Pattern.matches("[1-3]", msgView))
         {
-            int value = Integer.parseInt(msgView);
+            int value = Integer.parseInt(msgView) - 1;
             if (value < 0 || value >= setup.getGodPicked().size()) {
                 msgError = "Error Can't pick that god, try another value\n";
                 lastAction = -1;
@@ -117,7 +117,8 @@ public class Match extends Observable
         int x = Integer.parseInt(values[0]), y =Integer.parseInt(values[1]);
         int x2 = Integer.parseInt(values[2]), y2 =Integer.parseInt(values[3]);
         if ((x < 0 || x > 4 || y < 0 || y > 4) || board.getCell(x,y).getWorker() != null
-                || (x2 < 0 || x2 > 4 || y2 < 0 || y2 > 4) || board.getCell(x2, y2).getWorker() != null)
+                || (x2 < 0 || x2 > 4 || y2 < 0 || y2 > 4) || board.getCell(x2, y2).getWorker() != null
+                || !(x != x2 && y != y2))
         {
             msgError = "Error Can't place a worker here, try another value\nPlace your worker:";
             lastAction = -1;
