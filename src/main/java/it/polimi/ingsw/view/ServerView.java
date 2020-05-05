@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.State;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
