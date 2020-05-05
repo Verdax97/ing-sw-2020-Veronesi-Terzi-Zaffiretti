@@ -1,15 +1,9 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Lobby;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.State;
+import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
@@ -72,6 +66,11 @@ public class ServerView extends Observable implements Observer, Runnable
 
     public void PrintBoard(Board board, Match match)
     {
+        outputStream.print(ANSI_RED + match.getPlayers().get(0).getNickname() + " ");
+        outputStream.print(ANSI_BLUE + match.getPlayers().get(1).getNickname() + " ");
+        if (match.getPlayers().size() == 3)
+            outputStream.print(ANSI_GREEN + match.getPlayers().get(2).getNickname() + ANSI_RESET);
+        outputStream.println();
         for(int j = 4; j >= 0; j--){
             outputStream.print( j + "|");
             for(int i = 0; i < 5 ; i++){
@@ -115,7 +114,6 @@ public class ServerView extends Observable implements Observer, Runnable
     @Override
     public void run()
     {
-
     }
 
     @Override
