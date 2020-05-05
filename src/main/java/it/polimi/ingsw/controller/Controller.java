@@ -75,9 +75,7 @@ public class Controller implements Observer {
             case BUILD:
                 match.Build(msgPacket);
                 ret = match.getLastAction();
-                if (ret == 1)
-                    UpdateStatus(State.STARTTURN);
-                else if (ret == -10)
+                if (ret == 1 || ret == -10)
                     UpdateStatus(State.STARTTURN);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
