@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.gods.Athena;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.view.ServerView;
 import org.junit.Test;
