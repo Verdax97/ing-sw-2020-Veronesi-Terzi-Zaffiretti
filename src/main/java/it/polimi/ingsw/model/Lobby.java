@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Lobby
 {
+    private int nPlayer = 1;
+    private ArrayList<String> players = new ArrayList<String>();
+
     public int getnPlayer() {
         return nPlayer;
     }
@@ -12,9 +15,6 @@ public class Lobby
     public void setnPlayer(int nPlayer) {
         this.nPlayer = nPlayer;
     }
-
-    private int nPlayer = 1;
-    private ArrayList<String> players = new ArrayList<String>();
 
     public boolean AddPlayer(String toAdd)
     {

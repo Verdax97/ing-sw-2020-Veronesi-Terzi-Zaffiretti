@@ -63,6 +63,7 @@ public class Turn
 
     public boolean CheckLostBuild(Player player, Board board){
         // Controlla che almeno una delle celle adiacenti sia costruibile o che lo sia la propria se hai Zeus
+        //parameter player is not used, why?
         int[] pos = this.selectedCell.getPos();
         for (int i = pos[0]-1; i < pos[0]+2; i++ ){
             for (int j = pos[1]-1; j < pos[1]+2; j++ ){

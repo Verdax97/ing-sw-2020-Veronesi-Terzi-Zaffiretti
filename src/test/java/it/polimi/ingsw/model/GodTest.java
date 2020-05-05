@@ -10,8 +10,13 @@ public class GodTest{
     @Test
     public void getNameTest(){
         God athena = new Athena();
-        athena.setName("Athena");
         assertEquals("Return value is wrong", "Athena", athena.getName());
+    }
+
+    @Test
+    public void getDescriptionTest(){
+        God athena = new Athena();
+        assertEquals("Return value is wrong", "Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.", athena.getDescription());
     }
 
     @Test

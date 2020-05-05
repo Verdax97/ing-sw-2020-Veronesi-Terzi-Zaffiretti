@@ -2,7 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.model.State;
+import it.polimi.ingsw.controller.State;
 
 import java.io.IOException;
 import java.net.ServerSocket;

@@ -8,7 +8,8 @@ public class God {
     protected Image img;
 
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+
+    public String getDescription() {return description; }
 
     public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y) { return 0; }
 

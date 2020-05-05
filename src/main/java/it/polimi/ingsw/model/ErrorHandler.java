@@ -37,7 +37,6 @@ public class ErrorHandler {
                 return "Again";
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
-                // POCO PROFESSIONALE!
         }
         return "";
     }

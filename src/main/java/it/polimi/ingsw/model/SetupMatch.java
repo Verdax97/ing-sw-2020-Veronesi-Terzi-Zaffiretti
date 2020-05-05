@@ -73,5 +73,4 @@ public class SetupMatch {
             players.add(new Player(elem));
         }
     }
-
 }
