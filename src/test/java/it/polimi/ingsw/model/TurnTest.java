@@ -174,7 +174,7 @@ public class TurnTest
         board.getCell(0, 1).setWorker(worker2p1);
         board.getCell(1,0).setWorker(worker1p2);
         board.getCell(1,1).setWorker(worker2p2);
-        God god1 = new God();
+        Artemis god1 = new Artemis();
         player1.setGodPower(god1);
         God god2 = new God();
         player2.setGodPower(god2);

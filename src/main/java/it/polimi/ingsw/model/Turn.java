@@ -45,8 +45,8 @@ public class Turn
                     if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
                         for (int k = -1; k < 2; k++){
                             for (int l = -1; l < 2; l++){
-                                if (((i+k >= 0 & i+k <5)
-                                && (j+l >= 0 & j+l <5))
+                                if (((i+k >= 0 && i+k <5)
+                                && (j+l >= 0 && j+l <5))
                                 && !board.getCell(i+k, j+l).getDome()
                                 && board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
                                 && board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
@@ -61,23 +61,26 @@ public class Turn
         return true;
     }
 
-    public boolean CheckLostBuild(Player player, Board board){
-        // Controlla che almeno una delle celle adiacenti sia costruibile o che lo sia la propria se hai Zeus
-        //parameter player is not used, why?
-        int[] pos = this.selectedCell.getPos();
-        for (int i = pos[0]-1; i < pos[0]+2; i++ ){
-            for (int j = pos[1]-1; j < pos[1]+2; j++ ){
-                if (((i >= 0 & i < 5)
-                   && (j >= 0 & j < 5)
-                   && this.selectedCell.isAdjacent(i,j)
-                   && this.selectedCell.IsNotHigh(board, i, j)
-                   && this.selectedCell.IsFreeDome(board, i, j)
-                   && this.selectedCell.IsFreeWorker(board, i, j))
-                   ||
-                   (this.selectedCell.getWorker().getPlayer().getGodPower().name == "Zeus"
-                   && this.selectedCell.getBuilding() < 3)
-
-                ){return false;}
+    public boolean CheckLostBuild(Player player, Board board)
+    {
+        int[] pos = selectedCell.getPos();
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                int x = pos[0] + i;
+                int y = pos[1] + j;
+                if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5))
+                {
+                    if (i == 0 && j == 0)
+                    {
+                        //check for zeus
+                        if (selectedCell.getWorker().getPlayer().getGodPower().getName().equals("Zeus") && selectedCell.getBuilding() < 3)
+                            return false;
+                    }
+                    else if (selectedCell.IsFreeDome(board, x, y) && selectedCell.IsFreeWorker(board, x, y))
+                        return false;
+                }
             }
         }
         return true;
@@ -131,7 +134,7 @@ public class Turn
 
             return a;//1 default return value, 2 need to repeat action
         }
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
+        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (selectedCell.IsNotHigh(board, x, y)) {
                     if (selectedCell.IsFreeDome(board, x, y)) {
@@ -160,7 +163,7 @@ public class Turn
         int a = selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
         if (a != 0)
             return a;//1 default return value, 2 need to repeat action
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
+        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
                     if (!board.getCell(x, y).getDome()) {
@@ -182,15 +185,11 @@ public class Turn
     {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (board.getCell(i, j).getWorker() != null) {
-                    if (board.getCell(i, j).getWorker().getPlayer() != null) {
-                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
-                            if (board.getCell(i, j).getBuilding() == 3 & board.getCell(i, j).getWorker().getLastMovement() != 0) {
-                                return player;
-                            }
-                        }
-                    }
-                }
+                if (board.getCell(i, j).getWorker() != null &&
+                        board.getCell(i, j).getWorker().getPlayer() != null &&
+                        board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0 &&
+                        board.getCell(i, j).getBuilding() == 3 && board.getCell(i, j).getWorker().getLastMovement() != 0)
+                    return player;
             }
         }
         return player.getGodPower().WinCondition(board, player);

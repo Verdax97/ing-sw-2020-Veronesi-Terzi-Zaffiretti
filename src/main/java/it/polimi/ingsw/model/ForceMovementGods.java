@@ -8,7 +8,7 @@ public class ForceMovementGods extends God
     protected int ForceMove(Board board, Cell selectedCell, int x, int y) {
         if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
             return -7; //target space is out of board
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
+        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (selectedCell.IsNotHigh(board, x, y)) {
                     if (selectedCell.IsFreeDome(board, x, y)) {
