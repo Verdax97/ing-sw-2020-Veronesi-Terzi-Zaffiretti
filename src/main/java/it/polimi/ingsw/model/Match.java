@@ -338,6 +338,7 @@ public class Match extends Observable
     {
         return setup.getPlayers();
     }
+
     public Board getBoard() {
         return board;
     }
@@ -345,6 +346,7 @@ public class Match extends Observable
     public void setBoard(Board board) {
         this.board = board;
     }
+
     //getter for view cause it needs to access god list and playerList
     public SetupMatch getSetup() {
         return setup;
@@ -386,6 +388,7 @@ public class Match extends Observable
         lastAction = -10;
         CreateMsgPacket("StartTurn", alt);
     }
+
     //remove player from players list and worker from the board
     public void killPlayer(Player player)
     {
