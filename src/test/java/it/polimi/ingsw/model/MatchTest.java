@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.gods.Charon;
+import it.polimi.ingsw.model.gods.Hephaestus;
+import it.polimi.ingsw.model.gods.Pan;
+import it.polimi.ingsw.model.gods.Triton;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -143,5 +146,104 @@ public class MatchTest {
         match.getBoard().getCell(0,0).setWorker(worker1);
         match.StartTurn(msgPacket);
         assertEquals("getLastActionError", 1, match.getLastAction());
+    }
+
+    @Test
+    public void MoveTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        MsgPacket msgPacket = new MsgPacket("Gino", "1 1 0 0 0", "", match.getBoard(), match.getPlayers());
+        Worker worker = new Worker();
+        worker.setPlayer(match.getPlayerTurn());
+        Worker worker1 = new Worker();
+        worker1.setPlayer(match.getPlayers().get(0));
+        Triton triton = new Triton();
+        God god = new God();
+        match.getPlayerTurn().setGodPower(triton);
+        match.getBoard().getCell(1,1).setWorker(worker);
+        match.getPlayers().get(0).setGodPower(god);
+        match.getBoard().getCell(3,3).setWorker(worker1);
+        match.StartTurn(msgPacket);
+        msgPacket.msg = "1 0 1";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", 2, match.getLastAction());
+        msgPacket.msg = "0 1 0";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+        msgPacket.msg = "1 1 1";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+        triton.ResetGod();
+        msgPacket.msg = "5 5 1";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", -1, match.getLastAction());
+        msgPacket.msg = "5 5 0";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", -1, match.getLastAction());
+        match.getBoard().getCell(0,1).setBuilding(3);
+        match.getBoard().getCell(1,1).setBuilding(2);
+        msgPacket.msg = "0 1 0";
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", 10, match.getLastAction());
+    }
+
+    @Test
+    public void BuildTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        MsgPacket msgPacket = new MsgPacket("Gino", "1 1 0 0 0", "", match.getBoard(), match.getPlayers());
+        Worker worker = new Worker();
+        worker.setPlayer(match.getPlayerTurn());
+        Worker worker1 = new Worker();
+        worker1.setPlayer(match.getPlayers().get(0));
+        Hephaestus hephaestus = new Hephaestus();
+        God god = new God();
+        match.getPlayerTurn().setGodPower(hephaestus);
+        match.getBoard().getCell(1,1).setWorker(worker);
+        match.getPlayers().get(0).setGodPower(god);
+        match.getBoard().getCell(3,3).setWorker(worker1);
+        match.StartTurn(msgPacket);
+        msgPacket.msg = "0 0 0 0";
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", 2, match.getLastAction());
+        msgPacket.msg = "0 0 0 0";
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+        msgPacket.msg = "5 5 1 0";
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", -1, match.getLastAction());
+        msgPacket.msg = "5 5 0 0";
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", -1, match.getLastAction());
+        match.getBoard().getCell(3,3).setWorker(null);
+        msgPacket.msg = "0 0 0";
+        match.getBoard().getCell(0,0).setBuilding(-1);
+        match.Move(msgPacket);
+        match.getBoard().getCell(0,0).setBuilding(2);
+        msgPacket.msg = "1 1 0 0";
+        Pan pan = new Pan();
+        match.getPlayerTurn().setGodPower(pan);
+        match.getBoard().getCell(0,0).getWorker().setLastMovement(-2);
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", 10, match.getLastAction());
+        match.getBoard().getCell(1,0).setDome(true);
+        match.getBoard().getCell(1,1).setDome(true);
+        match.getBoard().getCell(0,1).setDome(true);
+        msgPacket.msg = "1 1 0 0";
+        match.Build(msgPacket);
+        assertEquals("getLastActionError", -10, match.getLastAction());
+    }
+
+    @Test
+    public void PacketTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        match.SendPacket("Gino", "Test", "TestAlt", match.getBoard());
     }
 }
