@@ -22,7 +22,7 @@ public class Artemis extends MultipleActionGod
             lastX = selectedCell.getPos()[0];
             lastY = selectedCell.getPos()[1];
         }
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)) {
+        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (x != lastX || y != lastY){
                     if (selectedCell.IsNotHigh(board, x, y)) {

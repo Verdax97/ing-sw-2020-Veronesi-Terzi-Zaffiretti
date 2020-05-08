@@ -14,7 +14,7 @@ public class Atlas extends God
     @Override
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber){
         /* typeBuild 0 normale costruzione, typebuild 1 cupola */
-        if ((x < 5 & x >= 0) & (y < 5 & y >= 0)){
+        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)){
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {
                     if (!board.getCell(x, y).getDome()) {
