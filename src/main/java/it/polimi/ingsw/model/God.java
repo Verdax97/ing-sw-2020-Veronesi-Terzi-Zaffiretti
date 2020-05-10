@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
-import java.awt.*;
+//import java.awt.*;
 
 public class God {
     protected String name;
     public String description;
-    protected Image img;
+    //protected Image img;
 
     public String getName() { return name; }
 
