@@ -13,17 +13,14 @@ public class ForceMovementGods extends God
                 if (selectedCell.IsNotHigh(board, x, y)) {
                     if (selectedCell.IsFreeDome(board, x, y)) {
                         Worker targetedWorker = board.getCell(x, y).getWorker();
-                        if (targetedWorker == null) {
-                            board.getCell(x, y).setWorker(selectedCell.getWorker());
-                            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-                            selectedCell.setWorker(null);
-                        } else if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || board.getCell(targetPosX, targetPosY).getWorker() == selectedCell.getWorker()) {
-                            board.getCell(x, y).setWorker(selectedCell.getWorker());
-                            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-                            selectedCell.setWorker(null);
-                            targetedWorker.setLastMovement(0);
-                            board.getCell(targetPosX, targetPosY).setWorker(targetedWorker);
-                        } else return -5;// no space to move enemy worker
+                        if (targetedWorker != null) {
+                            int val = MoveEnemy(targetedWorker, board, x, y);
+                            if (val < 0)
+                                return -5;// no space to move enemy worker
+                        }
+                        board.getCell(x, y).setWorker(selectedCell.getWorker());
+                        selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+                        selectedCell.setWorker(null);
                     } else return -4;// cell is occupied
                 } else return -3;// cell is too high
             } else return-2;// target cell is too far
@@ -31,12 +28,13 @@ public class ForceMovementGods extends God
         return 1;
     }
 
-    protected int MoveEnemy(Worker worker, Board board)
+    protected int MoveEnemy(Worker worker, Board board, int x, int y)
     {
         if (board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome())
         {
             if (worker != null)
                 worker.setLastMovement(0);
+            board.getCell(x, y).setWorker(null);
             board.getCell(targetPosX, targetPosY).setWorker(worker);
         }
         else return -5;//no space to move enemy worker
