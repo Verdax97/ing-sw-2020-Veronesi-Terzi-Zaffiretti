@@ -132,31 +132,9 @@ public class Turn
     */
     public int Move(Board board, int x, int y)
     {
-        int a = this.selectedCell.getWorker().getPlayer().getGodPower().Move(board, this.selectedCell, x, y);
-        if (a != 0)//must update Selected cell to get the same reference to the builder
-        {
-            if (a > 0)
-            {
-                selectedCell = board.getCell(x, y);
-            }
-
-            return a;//1 default return value, 2 need to repeat action
-        }
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
-            if (selectedCell.isAdjacent(x, y)) {
-                if (selectedCell.IsNotHigh(board, x, y)) {
-                    if (selectedCell.IsFreeDome(board, x, y)) {
-                        if (selectedCell.IsFreeWorker(board, x, y)) {
-                            board.getCell(x, y).setWorker(selectedCell.getWorker());
-                            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-                            selectedCell.setWorker(null);
-                        } else return -4;//cell is occupied
-                    } else return -4;//cell is occupied
-                } else return -3;//cell is too high
-            } else return-2;//cell is too far
-        } else return -1;//cell out of board
-        selectedCell = board.getCell(x, y);
-        return 1;//1 default return value, 2 need to repeat action
+        int moved = selectedCell.getWorker().getPlayer().getGodPower().Move(board, selectedCell, x, y);
+        if (moved > 0){selectedCell = board.getCell(x, y);}
+        return moved;
     }
 
     /*
