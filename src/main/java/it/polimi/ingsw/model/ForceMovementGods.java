@@ -39,9 +39,7 @@ public class ForceMovementGods extends God
     @Override
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
        int moved = super.CheckMove(board, selectedCell, x, y);
-       if (moved > 0 || (moved == -4 && !selectedCell.getDome())){
-           return 1;
-       }
+       if (moved > 0 || (moved == -4 && !selectedCell.getDome())) return 1;
        return moved;
     }
 }

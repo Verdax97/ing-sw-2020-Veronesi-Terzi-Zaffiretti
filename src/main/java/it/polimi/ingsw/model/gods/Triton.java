@@ -15,33 +15,18 @@ public class Triton extends MultipleActionGod
     @Override
     public int Move(Board board, Cell selectedCell, int x, int y)
     {
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0))
-        {
-            if (selectedCell.isAdjacent(x, y))
-            {
-                if (selectedCell.IsNotHigh(board, x, y))
-                {
-                    if (selectedCell.IsFreeDome(board, x, y))
-                    {
-                        if (selectedCell.IsFreeWorker(board, x, y))
-                        {
-                            board.getCell(x, y).setWorker(selectedCell.getWorker());
-                            selectedCell.getWorker().setLastMovement(board.getCell(x,y).getBuilding() - selectedCell.getBuilding());
-                            selectedCell.setWorker(null);
-                            use++;
-                            if (selectedCell.getPos()[0] < 4 && selectedCell.getPos()[0] > 0 && selectedCell.getPos()[1] < 4 && selectedCell.getPos()[1] > 0)
-                            {
-                                if (x == 4 || x == 0 || y == 4 || y == 0)
-                                    use = 0;
-                                else
-                                    use = 1;
-                            }
-                        } else return -4;//cell is occupied
-                    } else return -4;//cell is occupied
-                } else return -3;//cell is too high
-            } else return-2;//cell is too far
-        } else return -1;//cell out of board
-        return CheckUse();
+        int moved = CheckMove(board, selectedCell, x, y);
+        if (moved > 0) {
+            board.getCell(x, y).setWorker(selectedCell.getWorker());
+            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+            selectedCell.setWorker(null);
+            use++;
+            if (x == 4 || x == 0 || y == 4 || y == 0)
+                use = 0;
+            else use = 1;
+            return CheckUse();
+        }
+        return moved;
     }
 
 }

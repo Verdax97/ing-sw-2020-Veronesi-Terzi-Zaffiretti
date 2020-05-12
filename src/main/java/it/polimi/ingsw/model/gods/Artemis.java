@@ -17,28 +17,25 @@ public class Artemis extends MultipleActionGod
     @Override
     public int Move(Board board, Cell selectedCell, int x, int y)
     {
-        if (use == 0)
-        {
-            lastX = selectedCell.getPos()[0];
-            lastY = selectedCell.getPos()[1];
+        int moved = CheckMove(board, selectedCell, x, y);
+        if (moved > 0) {
+            if (use == 0)
+            {
+                lastX = selectedCell.getPos()[0];
+                lastY = selectedCell.getPos()[1];
+            }
+            if (x != lastX || y != lastY) {
+                if (selectedCell.IsFreeWorker(board, x, y)) {
+                    board.getCell(x, y).setWorker(selectedCell.getWorker());
+                    selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+                    selectedCell.setWorker(null);
+                    use++;
+                }
+            } else return -6; // Same cell as the first one
+            return CheckUse();
         }
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
-            if (selectedCell.isAdjacent(x, y)) {
-                if (x != lastX || y != lastY){
-                    if (selectedCell.IsNotHigh(board, x, y)) {
-                        if (selectedCell.IsFreeDome(board, x, y)) {
-                            if (selectedCell.IsFreeWorker(board, x, y)) {
-                                board.getCell(x, y).setWorker(selectedCell.getWorker());
-                                selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-                                selectedCell.setWorker(null);
-                                use++;
-                            } else return -4; //cell has a worker on it
-                        } else return -4; //cell has a dome on it
-                    } else return -3; //cell is too high
-                } else return -6; //same as last position
-            } else return-2; //cell is too far
-        } else return -1; //cell out of board
-        return CheckUse();
+        return moved;
     }
+
 
 }

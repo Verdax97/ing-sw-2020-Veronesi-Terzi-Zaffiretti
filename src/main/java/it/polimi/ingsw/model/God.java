@@ -37,8 +37,7 @@ public class God {
             if (selectedCell.isAdjacent(x, y)) {
                 if (selectedCell.IsNotHigh(board, x, y)) {
                     if (selectedCell.IsFreeDome(board, x, y)) {
-                        if (selectedCell.IsFreeWorker(board, x, y)) {
-                        } else return -4;//cell is occupied
+                        if (!selectedCell.IsFreeWorker(board, x, y)) return -4;//cell is occupied
                     } else return -4;//cell is occupied
                 } else return -3;//cell is too high
             } else return-2;//cell is too far
