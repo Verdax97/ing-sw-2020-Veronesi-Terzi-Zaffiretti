@@ -38,6 +38,7 @@ public class Turn
 
     public void setSelectedCell(Cell selectedCell) { this.selectedCell = selectedCell; }
 
+    //todo modify with thew new system
     public boolean CheckLostMove(Player player, Board board) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -61,7 +62,7 @@ public class Turn
         return true;
     }
 
-    public boolean CheckLostBuild(Player player, Board board)
+    public boolean CheckLostBuild(Board board)
     {
         int[] pos = selectedCell.getPos();
         for (int i = -1; i < 2; i++)
@@ -75,7 +76,8 @@ public class Turn
                     if (i == 0 && j == 0)
                     {
                         //check for zeus
-                        if (selectedCell.getWorker().getPlayer().getGodPower().getName().equals("Zeus") && selectedCell.getBuilding() < 3)
+                        if (selectedCell.getWorker().getPlayer().getGodPower().getName().equals("Zeus")
+                                && selectedCell.getBuilding() < 3)
                             return false;
                     }
                     else if (selectedCell.IsFreeDome(board, x, y) && selectedCell.IsFreeWorker(board, x, y))
@@ -86,10 +88,8 @@ public class Turn
         return true;
     }
 
-    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, int targetX, int targetY, boolean godPower)
-    /*0
-    -5 no space to move enemy worker
-    -2 (charon) no worker available
+    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board)
+    /*
     -1 Player lost
     0 Player neither lost nor won
     1 Player won
@@ -100,8 +100,6 @@ public class Turn
             return 1;
         }
 
-        // Check if we want to use the god power
-        if (godPower){return player.getGodPower().PlayerTurn(board, player, selectedCell, targetX, targetY);}
         for (Player p:ActivePlayers)
         {
             if (p != player) {
@@ -109,8 +107,18 @@ public class Turn
             }
         }
         // Check if we have to kill him
-        if (this.CheckLostMove(player, board)) { return -1;}
+        if (CheckLostMove(player, board)) { return -1;}
         return 0;
+    }
+
+    /*
+    1 all good needed for check cause 0 means useless
+
+    */
+    public int BeforeMove(Board board, int x, int y)
+    {
+        return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell.getWorker().getPlayer(),
+                selectedCell, x, y);
     }
 
     /*

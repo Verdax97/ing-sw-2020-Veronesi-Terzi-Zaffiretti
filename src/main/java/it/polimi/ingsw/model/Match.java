@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.regex.Pattern;
 
 public class Match extends Observable
 {
@@ -59,65 +57,54 @@ public class Match extends Observable
         return lastAction;
     }
 
-    public void PickGod(MsgPacket msgPacket)
+    public void PickGod(MsgToServer msgPacket)
     {
-        String msgView = msgPacket.msg;
-            int value = Integer.parseInt(msgView);
-            if (value < 0 || value >= setup.getGodList().size()) {
-                msgError = "Error Can't pick that god, try another value\n";
-                lastAction = -1;
-                CreateMsgPacket(msgError + "Chose gods for all players by inserting corresponding value" +
-                        " (one at the time)\n" + PrintGods(setup.getGodList()), "Wait");
-                return;
-            }
-            setup.AddGodPicked(setup.getGodList().get(value));
-            setup.getGodList().remove(value);
-            lastAction = 1;
-            if (getSetup().getGodPicked().size() == setup.getPlayers().size())
-            {
-                NextPlayer();
-
-                CreateMsgPacket("Chose your god by inserting corresponding value" +
-                        ":\n" + PrintGods(setup.getGodPicked()), "Wait");
-                return;
-            }
-            CreateMsgPacket("Chose gods for all players by inserting corresponding value" +
-                    " (one at the time)\n" + PrintGods(setup.getGodList()), "Wait");
-    }
-
-    public void SelectPlayerGod(MsgPacket msgPacket)
-    {
-        String msgView = msgPacket.msg;
-            int value = Integer.parseInt(msgView) - 1;
-            if (value < 0 || value >= setup.getGodPicked().size()) {
-                msgError = "Error Can't pick that god, try another value\n";
-                lastAction = -1;
-                CreateMsgPacket(msgError + "Chose your god by inserting corresponding value" +
-                        ":\n" + PrintGods(setup.getGodPicked()), "Wait");
-                return;
-            }
-            playerTurn.setGodPower(setup.PickGod(value));
-            lastAction = 1;
-            CreateMsgPacket("Chose your god by inserting corresponding value" +
-                    ":\n" + PrintGods(setup.getGodPicked()), "Wait");
+        int value = msgPacket.x;
+        if (value < 0 || value >= setup.getGodList().size()) {
+            msgError = "Error Can't pick that god, try another value\n";
+            lastAction = -1;
+            CreateMsgPacket(msgError + "choseGods", PrintGods(setup.getGodList()));
+            return;
+        }
+        setup.AddGodPicked(setup.getGodList().get(value));
+        setup.getGodList().remove(value);
+        lastAction = 1;
+        if (getSetup().getGodPicked().size() == setup.getPlayers().size())
+        {
             NextPlayer();
-            if (getSetup().getGodPicked().size() == 0)
-            {
-                CreateMsgPacket("Place your worker:\n", "Wait");
-                return;
-            }
+
+            CreateMsgPacket("choseYourGod", PrintGods(setup.getGodPicked()));
+            return;
+        }
+        CreateMsgPacket("choseGods" , PrintGods(setup.getGodList()));
     }
 
-    public void PlaceWorker(MsgPacket msgPacket)
+    public void SelectPlayerGod(MsgToServer msgPacket)
     {
-        String[] values = msgPacket.msg.split(" ");
-        int x = Integer.parseInt(values[0]), y =Integer.parseInt(values[1]);
-        int x2 = Integer.parseInt(values[2]), y2 =Integer.parseInt(values[3]);
+        int value = msgPacket.x;
+        if (value < 0 || value >= setup.getGodPicked().size()) {
+            msgError = "Error Can't pick that god, try another value\n";
+            lastAction = -1;
+            CreateMsgPacket(msgError + "choseYourGod", PrintGods(setup.getGodPicked()));
+            return;
+        }
+        playerTurn.setGodPower(setup.PickGod(value));
+        lastAction = 1;
+        CreateMsgPacket("choseYourGod", PrintGods(setup.getGodPicked()));
+        NextPlayer();
+        if (getSetup().getGodPicked().size() == 0)
+            CreateMsgPacket("Place", "Wait");
+    }
+
+    public void PlaceWorker(MsgToServer msgPacket)
+    {
+        int x = msgPacket.x, y = msgPacket.y;
+        int x2 = msgPacket.targetX, y2 = msgPacket.targetY;
         if ((x < 0 || x > 4 || y < 0 || y > 4) || board.getCell(x,y).getWorker() != null
                 || (x2 < 0 || x2 > 4 || y2 < 0 || y2 > 4) || board.getCell(x2, y2).getWorker() != null
-                || !(x != x2 && y != y2))
+                || (x == x2 && y == y2))
         {
-            msgError = "Error Can't place a worker here, try another value\nPlace your worker:";
+            msgError = "Error Can't place a worker here, try another value\nPlace";
             lastAction = -1;
         }
         else
@@ -130,48 +117,61 @@ public class Match extends Observable
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (getBoard().getCell(i,j).getWorker() != null)
-                    {
                         found++;
-                    }
                 }
             }
             NextPlayer();
             if (found == getSetup().getPlayers().size() * 2)
             {
-                String name = playerTurn.getGodPower().getName();
                 lastAction = 2;
                 msgError = "StartTurn";
             }
             else
             {
-                msgError = "Place your worker:";
+                msgError = "Place";
                 lastAction = 1;
             }
         }
         CreateMsgPacket(msgError, "Wait");
     }
 
-    public void StartTurn(MsgPacket msgPacket)
+    public void StartTurn()
     {
-        String[] values = msgPacket.msg.split(" ");
         String alt = "Wait";
-        int x = Integer.parseInt(values[0]), y = Integer.parseInt(values[1]);
-        int x2 = Integer.parseInt(values[2]), y2 = Integer.parseInt(values[3]);
-        int b = Integer.parseInt(values[4]);
+        lastAction = turn.StartTurn(setup.getPlayers(), playerTurn, board);
+        if (lastAction == 0)//the game must go on
+            msgError = "BeforeMove";
+        if (lastAction == 1)//you won
+        {
+            msgError = "EndGame Winner winner chicken dinner!";
+            PlayerWin(playerTurn.getNickname());
+            return;
+        }
+        if (lastAction == -1)//you lose
+        {
+            PlayerLost("Error You Lost (can't move worker)", playerTurn.getNickname() + "" +
+                    " lost because he can't move his workers");
+            return;
+        }
+        if (lastAction < -1)
+            msgError = errorHandler.GetErrorSetup(lastAction) + "\nStartTurn";
+        CreateMsgPacket(msgError, alt);
+    }
+
+    /*
+    -1 lost
+    1 ok
+    */
+    public void BeforeMove(MsgToServer msgPacket)
+    {
+        String alt = "Wait";
+        int x = msgPacket.x, y = msgPacket.y;
         if(CheckSelectedCell(playerTurn, x, y))
         {
-            turn.setSelectedCell(board.getCell(x,y));
-            lastAction = turn.StartTurn(setup.getPlayers(), playerTurn, board, x2, y2, b == 1);
-            if (lastAction == 0)//the game must go on
-            {
+            turn.setSelectedCell(board.getCell(x, y));
+            lastAction = turn.BeforeMove(board, msgPacket.targetX, msgPacket.targetY);
+            if (lastAction == 1)//the game must go on
                 msgError = "Move";
-            }
-            if (lastAction == 1)//you won
-            {
-                msgError = "EndGame Winner winner chicken dinner!";
-                PlayerWin(playerTurn.getNickname());
-                return;
-            }
             if (lastAction == -1)//you lose
             {
                 PlayerLost("Error You Lost (can't move worker)", playerTurn.getNickname() + "" +
@@ -179,22 +179,19 @@ public class Match extends Observable
                 return;
             }
             if (lastAction < -1)
-                msgError = errorHandler.GetErrorSetup(lastAction) + "\nStartTurn";
+                msgError = errorHandler.GetErrorSetup(lastAction) + "\nBeforeMove";
         }
         else
         {
             lastAction = -2;
-            msgError = "Error Can't select that cell, try another one\nStartTurn";
+            msgError = "Error Can't select that cell, try another one\nBeforeMove";
         }
         CreateMsgPacket(msgError, alt);
     }
 
-    public void Move(MsgPacket msgPacket)
+    public void Move(MsgToServer msgPacket)
     {
-        String[] values = msgPacket.msg.split(" ");
-        int targetX = Integer.parseInt(values[0]), targetY = Integer.parseInt(values[1]);
-        int godPower = Integer.parseInt(values[2]);
-        CheckMove(targetX, targetY, godPower);
+        CheckMove(msgPacket.targetX, msgPacket.targetY, msgPacket.x);
         winner = CheckWinCondition(playerTurn);
         if (winner != null)
         {
@@ -204,7 +201,7 @@ public class Match extends Observable
         else {
             if (lastAction < 0)
             {
-                if (godPower == 0)
+                if (msgPacket.x == 0)
                     msgError += "\nMove";
                 else
                     msgError += "\nMove Again";
@@ -234,12 +231,11 @@ public class Match extends Observable
         msgError = errorHandler.GetErrorMove(lastAction);
     }
 
-    public void Build(MsgPacket msgPacket)
+    public void Build(MsgToServer msgPacket)
     {
-        String[] values = msgPacket.msg.split(" ");
-        int targetX = Integer.parseInt(values[0]), targetY = Integer.parseInt(values[1]);
-        int godPower = Integer.parseInt(values[2]), typeBuilding = Integer.parseInt(values[3]);
-        if(turn.CheckLostBuild(playerTurn, board))
+        int targetX = msgPacket.targetX, targetY = msgPacket.targetY;
+        int godPower = msgPacket.x, typeBuilding = msgPacket.y;
+        if(turn.CheckLostBuild(board))
         {
             lastAction = -10;
             msgError = errorHandler.GetErrorBuild(lastAction);
@@ -373,9 +369,8 @@ public class Match extends Observable
 
     public void PlayerWin(String player)
     {
-        //CreateMsgPacket("EndGame Winner winner chicken dinner!", "EndGame You get nothing, you lose!\n" +
-        //        player + "Won");//send packet to the player
-        SendPacket(player, "EndGame Winner winner chicken dinner!", "EndGame You get nothing, you lose!\n" +
+        SendPacket(player, "EndGame Winner winner chicken dinner!", "EndGame You get" +
+                " nothing, you lose!\n" +
                 player + "Won", null);
     }
 
@@ -384,6 +379,8 @@ public class Match extends Observable
         Player loser = playerTurn;
         CreateMsgPacket(msg, alt);//send packet to the player
         killPlayer(loser);
+        if (nPlayer > 0)
+            nPlayer--;
         NextPlayer();
         lastAction = -10;
         CreateMsgPacket("StartTurn", alt);
@@ -407,14 +404,5 @@ public class Match extends Observable
             }
         }
         getSetup().getPlayers().remove(player);
-        /* for (int i = 0; i < players.size(); i++)
-        {
-            if (players.get(i).getNickname().equals(player.getNickname()))
-            {
-                players.remove(i);
-            }
-        }
-        getSetup().SetPlayers(players);
-       */
     }
 }

@@ -6,6 +6,7 @@ public enum State
         SELECT,
         PLACEWORKERS,
         STARTTURN,
+        BEFOREMOVE,
         MOVE,
         BUILD,
         ENDMATCH,

@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.ServerMultiplexer;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,6 +11,13 @@ public class Controller implements Observer {
     private Lobby lobby;
     private Match match;
     private State state = State.LOBBY;
+    private final ServerMultiplexer serverMultiplexer;
+
+    public Controller (ServerMultiplexer server)
+    {
+        this.serverMultiplexer = server;
+        serverMultiplexer.addObserver(this);
+    }
 
     public void setLobby(Lobby lobby)
     {
@@ -19,12 +27,12 @@ public class Controller implements Observer {
     public void CreateMatch()
     {
         this.match = new Match(lobby.getPlayers());
+        serverMultiplexer.ConnectObserver(match);
         UpdateStatus(State.SETUP);
     }
 
-    public void ParseServerMsg (MsgPacket msgPacket, ServerMultiplexer serverMultiplexer)
+    public void ParseServerMsg (MsgToServer msgPacket, ServerMultiplexer serverMultiplexer)
     {
-        //TODO implement thread for timer undo
         if (!msgPacket.nickname.equals(match.getPlayerTurn().getNickname()))
         {
             //do nothing
@@ -34,7 +42,7 @@ public class Controller implements Observer {
         switch (state)
         {
             case LOBBY://
-                lobby = serverMultiplexer.lobby;
+                lobby = serverMultiplexer.getLobby();
                 CreateMatch();
                 break;
             case SETUP:
@@ -53,12 +61,20 @@ public class Controller implements Observer {
                     UpdateStatus(State.STARTTURN);
                 break;
             case STARTTURN://check startTurn options
-                match.StartTurn(msgPacket);
+                match.StartTurn();
+                ret = match.getLastAction();
+                if (ret == 0)
+                    UpdateStatus(State.BEFOREMOVE);
+                else if (ret == 1)
+                    UpdateStatus(State.ENDMATCH);
+                else if (ret == -1)
+                    UpdateStatus(State.STARTTURN);
+                break;
+            case BEFOREMOVE:
+                match.BeforeMove(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 0)
                     UpdateStatus(State.MOVE);
-                else if (ret == 1)
-                    UpdateStatus(State.ENDMATCH);
                 else if (ret == -1)
                     UpdateStatus(State.STARTTURN);
                 break;
@@ -77,10 +93,14 @@ public class Controller implements Observer {
                 ret = match.getLastAction();
                 if (ret == 1 || ret == -10)
                     UpdateStatus(State.STARTTURN);
+                if (ret == 10)
+                    UpdateStatus(State.ENDMATCH);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
                 //TODO all this thing
-                //delete saved data
+                //save record data
+                //delete game data ()
+                //close connections
                 break;
         }
     }
@@ -94,8 +114,8 @@ public class Controller implements Observer {
     @Override
     public void update (Observable o, Object arg)
     {
-        if (!(o instanceof ServerMultiplexer))
+        if (!(o instanceof ServerMultiplexer) || !(arg instanceof MsgToServer))
             throw new IllegalArgumentException();
-        ParseServerMsg((MsgPacket)arg, (ServerMultiplexer)o);
+        ParseServerMsg((MsgToServer) arg, (ServerMultiplexer)o);
     }
 }
