@@ -8,16 +8,15 @@ public class ForceMovementGods extends God
     protected int ForceMove(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell,x ,y);
         if (moved > 0) {
+            Worker playerWorker = selectedCell.getWorker();
             Worker targetedWorker = board.getCell(x, y).getWorker();
             if (targetedWorker != null) {
-                if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
-                    return -7; //target space is out of board
                 int val = MoveEnemy(targetedWorker, board, selectedCell, x, y);
                 if (val < 0)
                     return -5;// no space to move enemy worker
             }
-            board.getCell(x, y).setWorker(selectedCell.getWorker());
-            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+            board.getCell(x, y).setWorker(playerWorker);
+            playerWorker.setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
             selectedCell.setWorker(null);
         }
         return moved;
@@ -25,14 +24,9 @@ public class ForceMovementGods extends God
 
     protected int MoveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y)
     {
-        if (worker != null) {
-            if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
-                return -5;//no space to move enemy worker
-        }
-        if (board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome())
+        if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || (selectedCell == board.getCell(targetPosX,targetPosY)))
         {
-            if (worker != null)
-                worker.setLastMovement(0);
+            worker.setLastMovement(0);
             board.getCell(x, y).setWorker(null);
             board.getCell(targetPosX, targetPosY).setWorker(worker);
         }
@@ -48,8 +42,11 @@ public class ForceMovementGods extends God
            Worker worker = board.getCell(x,y).getWorker();
            if (worker != null)
            {
-               if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
-                   return moved;
+               if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))//try to move your other worker
+                   return moved;//should return -4
+
+               if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
+                   return -7; //target space is out of board
            }
            return 1;
        }

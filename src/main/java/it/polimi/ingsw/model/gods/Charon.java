@@ -12,9 +12,18 @@ public class Charon extends ForceMovementGods {
     }
 
     @Override
-    public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y)
+    public int PlayerTurn(Board board, Cell selectedCell, int x, int y)
     {
-        if (board.getCell(x, y).getWorker() == null || board.getCell(x, y).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+        int ret = CheckPlayerTurn(board, selectedCell, x, y);
+        if (ret <= 0)
+            return ret;
+        return MoveEnemy(board.getCell(x, y).getWorker(), board, selectedCell, x, y);
+    }
+
+    @Override
+    public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y)
+    {
+        if (board.getCell(x, y).getWorker() == null || board.getCell(x, y).getWorker().getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
             return -2;//no valid worker to make the move
         int dx = selectedCell.getPos()[0] - x;
         int dy = selectedCell.getPos()[1] - y;
@@ -22,6 +31,6 @@ public class Charon extends ForceMovementGods {
         targetPosY = selectedCell.getPos()[1] + dy;
         if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
             return -7; //target space is out of board
-        return MoveEnemy(board.getCell(x, y).getWorker(), board, selectedCell, x, y);
+        return 1;
     }
 }
