@@ -13,6 +13,8 @@ public class God {
 
     public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y) { return 1; }
 
+    public int CheckPlayerTurn(Board board, Player player, Cell selectedCell, int x, int y) {return 0;}
+
     public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0){
