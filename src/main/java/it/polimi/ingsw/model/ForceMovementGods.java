@@ -12,7 +12,7 @@ public class ForceMovementGods extends God
             if (targetedWorker != null) {
                 if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
                     return -7; //target space is out of board
-                int val = MoveEnemy(targetedWorker, board, x, y);
+                int val = MoveEnemy(targetedWorker, board, selectedCell, x, y);
                 if (val < 0)
                     return -5;// no space to move enemy worker
             }
@@ -23,8 +23,12 @@ public class ForceMovementGods extends God
         return moved;
     }
 
-    protected int MoveEnemy(Worker worker, Board board, int x, int y)
+    protected int MoveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y)
     {
+        if (worker != null) {
+            if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
+                return -5;//no space to move enemy worker
+        }
         if (board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome())
         {
             if (worker != null)
@@ -39,7 +43,16 @@ public class ForceMovementGods extends God
     @Override
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
        int moved = super.CheckMove(board, selectedCell, x, y);
-       if (moved > 0 || (moved == -4 && !selectedCell.getDome())) return 1;
+       if (moved > 0 || (moved == -4 && !selectedCell.getDome()))
+       {
+           Worker worker = board.getCell(x,y).getWorker();
+           if (worker != null)
+           {
+               if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
+                   return moved;
+           }
+           return 1;
+       }
        return moved;
     }
 }
