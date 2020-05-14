@@ -96,7 +96,7 @@ public class Turn
      */
     {
         // if last, player won.
-        if (ActivePlayers.size() == 1){
+        if (ActivePlayers.size() == 1 || CheckWinCondition(board, player) == player) {
             return 1;
         }
 
@@ -117,8 +117,7 @@ public class Turn
     */
     public int BeforeMove(Board board, int x, int y)
     {
-        return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell.getWorker().getPlayer(),
-                selectedCell, x, y);
+        return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell, x, y);
     }
 
     /*

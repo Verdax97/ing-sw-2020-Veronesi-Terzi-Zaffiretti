@@ -7,14 +7,14 @@ import it.polimi.ingsw.model.Player;
 
 public class Prometheus extends DebuffGod
 {
-    public Prometheus()
-    {
+    public Prometheus() {
         this.name = "Prometheus";
         this.description = "Your Turn: If your Worker does not move up, it may build both before and after moving";
     }
+
     @Override
-    public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y)
-    {
+    public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
+        Player player = selectedCell.getWorker().getPlayer();
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {

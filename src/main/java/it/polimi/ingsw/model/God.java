@@ -11,7 +11,9 @@ public class God {
 
     public String getDescription() {return description; }
 
-    public int PlayerTurn(Board board, Cell selectedCell, int x, int y) { return 1; }
+    public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
+        return 1;
+    }//todo implement control if he has moves
 
     public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y) {return 0;}
 
