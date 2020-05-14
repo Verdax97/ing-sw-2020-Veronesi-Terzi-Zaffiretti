@@ -145,26 +145,8 @@ public class Turn
     -9 (Hestia) cell is a perimeter space
     */
     public int Build(Board board, int x, int y, int typeBuild) {
-        //vista la classe Multiple Action God, necessitiamo veramente della variabile a di controllo???
-        int a = selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
-        if (a != 0)
-            return a;//1 default return value, 2 need to repeat action
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)){
-            if (selectedCell.isAdjacent(x, y)) {
-                if (board.getCell(x, y).getWorker() == null) {
-                    if (!board.getCell(x, y).getDome()) {
-                        int building = board.getCell(x, y).getBuilding();
-                        if (building < 3)
-                            board.getCell(x, y).setBuilding(1);
-                        else if (building == 3)
-                            board.getCell(x, y).setDome(true);
-                        board.getCell(x, y).setBuiltBy(this.selectedCell.getWorker().getPlayer());
-                        board.getCell(x, y).setBuiltTurn(turnNumber);
-                        return 1;//1 default return value, 2 need to repeat action
-                    }else return -4;//Cell occupied by a dome
-                } else return -3;//Worker on the cell
-            } else return -2; //Target cell is too far
-        } else return -1;//Target cell out of board
+        return selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
+
     }
 
     public Player CheckWinCondition(Board board, Player player)

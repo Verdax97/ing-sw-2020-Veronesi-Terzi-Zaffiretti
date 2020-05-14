@@ -35,8 +35,7 @@ public class ForceMovementGods extends God
                 worker.setLastMovement(0);
             board.getCell(x, y).setWorker(null);
             board.getCell(targetPosX, targetPosY).setWorker(worker);
-        }
-        else return -5;//no space to move enemy worker
+        } else return -5;//no space to move enemy worker
         return 1;
     }
 

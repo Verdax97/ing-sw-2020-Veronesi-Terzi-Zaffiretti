@@ -14,25 +14,20 @@ public class Hestia extends MultipleActionGod{
     @Override
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber)
     {
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)){
-            if (selectedCell.isAdjacent(x, y)) {
-                if (board.getCell(x, y).getWorker() == null) {
-                    if (!board.getCell(x, y).getDome()) {
-                        if (use != 1 || !(x == 0 || x == 4 || y == 0 || y == 4))
-                        {
-                            int building = board.getCell(x, y).getBuilding();
-                            if (building < 3)
-                                board.getCell(x, y).setBuilding(1);
-                            else if (building == 3)
-                                board.getCell(x, y).setDome(true);
-                            board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
-                            board.getCell(x, y).setBuiltTurn(turnNumber);
-                            use++;
-                        } else return -9;//cell is a perimeter space
-                    }else return -4;//Cell occupied by a dome
-                } else return -3;//Worker on the cell
-            } else return -2; //Target cell is too far
-        } else return -1;//Target cell out of board
-        return CheckUse();
+        int built = CheckBuild(board, selectedCell, x, y);
+        if (built > 0) {
+            if (use != 1 || !(x == 0 || x == 4 || y == 0 || y == 4)) {
+                int building = board.getCell(x, y).getBuilding();
+                if (building < 3)
+                    board.getCell(x, y).setBuilding(1);
+                else if (building == 3)
+                    board.getCell(x, y).setDome(true);
+                board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
+                board.getCell(x, y).setBuiltTurn(turnNumber);
+                use++;
+                return CheckUse();
+            } else return -9; //cell is in a perimeter space
+        }
+        return built;
     }
 }

@@ -22,24 +22,20 @@ public class Demeter extends MultipleActionGod {
             lastX = x;
             lastY = y;
         }
-        if ((x < 5 && x >= 0) && (y < 5 && y >= 0)){
-            if (selectedCell.isAdjacent(x, y)) {
-                if (x != lastX || y != lastY || use == 0) {
-                    if (board.getCell(x, y).getWorker() == null) {
-                        if (!board.getCell(x, y).getDome()) {
-                            int building = board.getCell(x, y).getBuilding();
-                            if (building < 3)
-                                board.getCell(x, y).setBuilding(1);
-                            else if (building == 3)
-                                board.getCell(x, y).setDome(true);
-                            board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
-                            board.getCell(x, y).setBuiltTurn(turnNumber);
-                            use++;
-                        }else return -4;//Cell occupied by a dome
-                    } else return -3;//Worker on the cell
-                } else return -8;//same as last built
-            } else return -2;//Target cell is too far
-        } else return -1;//Target cell out of board
-        return CheckUse();
+        int built = CheckBuild(board, selectedCell, x, y);
+        if (built > 0) {
+            if (x != lastX || y != lastY || use == 0) {
+                int building = board.getCell(x, y).getBuilding();
+                if (building < 3)
+                    board.getCell(x, y).setBuilding(1);
+                else if (building == 3)
+                    board.getCell(x, y).setDome(true);
+                board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
+                board.getCell(x, y).setBuiltTurn(turnNumber);
+                use++;
+                return CheckUse();
+            }else return -8; // same as last Build
+        }
+        return built;
     }
 }
