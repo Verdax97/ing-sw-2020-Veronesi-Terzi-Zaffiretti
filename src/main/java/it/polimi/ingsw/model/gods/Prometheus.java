@@ -12,10 +12,11 @@ public class Prometheus extends DebuffGod
         this.name = "Prometheus";
         this.description = "Your Turn: If your Worker does not move up, it may build both before and after moving";
     }
+
     @Override
-    public int PlayerTurn(Board board, Player player, Cell selectedCell, int x, int y)
+    public int PlayerTurn(Board board, Cell selectedCell, int x, int y)
     {
-        int built = CheckBuild(board, selectedCell, x, y);
+        int built = CheckPlayerTurn(board, selectedCell, x, y);
         if (built > 0) {
             int building = board.getCell(x, y).getBuilding();
             if (building < 3)
@@ -25,8 +26,13 @@ public class Prometheus extends DebuffGod
             board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
             board.getCell(x, y).setBuiltTurn(0);
             debuff = true;
-            DebuffWorker(board, player);
+            DebuffWorker(board, selectedCell.getWorker().getPlayer());
         }
         return built;
+    }
+
+    @Override
+    public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y){
+        return CheckBuild(board, selectedCell, x, y);
     }
 }
