@@ -83,6 +83,14 @@ public class ForceMovementGodsTest {
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
         forceMovementGod.targetPosX = 1;
-        assertEquals("Return value is wrong", 1, forceMovementGod.MoveEnemy(new Worker(), board));
+        forceMovementGod.targetPosY = 0;
+        Cell selectedCell = board.getCell(0, 1);
+        Worker worker = new Worker();
+        Worker enemyWorker = new Worker();
+        worker.setPlayer(match.getPlayers().get(0));
+        enemyWorker.setPlayer(match.getPlayers().get(1));
+        selectedCell.setWorker(worker);
+        board.getCell(1, 0).setWorker(enemyWorker);
+        assertEquals("Return value is wrong", 1, forceMovementGod.MoveEnemy(worker, board, selectedCell, 1, 0));
     }
 }

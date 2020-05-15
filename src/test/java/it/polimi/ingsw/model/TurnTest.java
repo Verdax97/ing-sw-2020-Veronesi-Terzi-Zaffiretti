@@ -148,12 +148,12 @@ public class TurnTest
         ArrayList<Player> ActivePlayers = new ArrayList<Player>();
         ActivePlayers.add(player1);
         ActivePlayers.add(player2);
-        assertEquals("Error lose false",turn.StartTurn(ActivePlayers, player1, board,0,0,false), 0);
-        board.getCell(0,2).setBuilding(2);
-        board.getCell(1,2).setBuilding(2);
-        assertEquals("Error in Lose true",turn.StartTurn(ActivePlayers,player1,board,0,0,false),-1);
+        assertEquals("Error lose false", turn.StartTurn(ActivePlayers, player1, board), 0);
+        board.getCell(0, 2).setBuilding(2);
+        board.getCell(1, 2).setBuilding(2);
+        assertEquals("Error in Lose true", turn.StartTurn(ActivePlayers, player1, board), -1);
         ActivePlayers.remove(player2);
-        assertEquals("Error Win True", turn.StartTurn(ActivePlayers, player1, board, 0,0,false), 1);
+        assertEquals("Error Win True", turn.StartTurn(ActivePlayers, player1, board), 1);
     }
 
     @Test
@@ -178,17 +178,17 @@ public class TurnTest
         player1.setGodPower(god1);
         God god2 = new God();
         player2.setGodPower(god2);
-        turn.setSelectedCell(board.getCell(0,0));
-        assertTrue("CheckLostBuild true Error", turn.CheckLostBuild(player1, board));
-        turn.setSelectedCell(board.getCell(0,1));
-        assertFalse("CheckLostBuild false error", turn.CheckLostBuild(player1, board));
+        turn.setSelectedCell(board.getCell(0, 0));
+        assertTrue("CheckLostBuild true Error", turn.CheckLostBuild(board));
+        turn.setSelectedCell(board.getCell(0, 1));
+        assertFalse("CheckLostBuild false error", turn.CheckLostBuild(board));
         // special controls Zeus
         Zeus zeus = new Zeus();
         player1.setGodPower(zeus);
-        turn.setSelectedCell(board.getCell(0,0));
-        assertFalse("CheckLostBuild false: special Zeus Error", turn.CheckLostBuild(player1, board));
-        board.getCell(0,0).setBuilding(3);
-        assertTrue("CheckLostBuild True: special Zeus Error", turn.CheckLostBuild(player1,board));
+        turn.setSelectedCell(board.getCell(0, 0));
+        assertFalse("CheckLostBuild false: special Zeus Error", turn.CheckLostBuild(board));
+        board.getCell(0, 0).setBuilding(3);
+        assertTrue("CheckLostBuild True: special Zeus Error", turn.CheckLostBuild(board));
 
     }
 
