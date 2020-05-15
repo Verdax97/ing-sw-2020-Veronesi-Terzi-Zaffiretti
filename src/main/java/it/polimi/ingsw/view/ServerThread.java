@@ -1,131 +1,146 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 
 public class ServerThread extends Thread implements Observer {
-    private ServerMultiplexer server;
+
+    private final ServerMultiplexer server;
     private String nick;
     protected Socket socket;
-    private Scanner socketIn;
-    private PrintWriter socketOut;
-    private String msg;
-    private boolean msgReady;
-    private boolean sent;
+    private ObjectInputStream socketIn;
+    private ObjectOutputStream socketOut;
+
     private final int pos;
+    public boolean start;
+    private boolean going = true;
 
     public ServerThread(Socket clientSocket, String string, ServerMultiplexer server, int pos) {
         this.socket = clientSocket;
         this.server = server;
         this.nick = string;
         this.pos = pos;
+        this.nick = "temp";
     }
 
-    public void run()
-    {
-        try
-        {
-            socketOut = new PrintWriter(socket.getOutputStream(), true);
-            socketIn = new Scanner(new InputStreamReader(socket.getInputStream()));
+
+    public void run() {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
+        ) {
+            socketOut = objectOutputStream;
+            socketIn = objectInputStream;
 
             Setup();
-            while (true)
-            {
-                if (msgReady)
-                {
-                    socketOut.println(msg);
-                    socketOut.flush();
-                }
-                String message = socketIn.nextLine();
-                if (message.equalsIgnoreCase("Ping"))
-                {
+            while (!start) {
 
-                }
-                else
-                {
-
-                }
+            }
+            while (going) {
+                MsgToServer msgToServer = ReceiveMsg();
+                server.ReceiveMsg(msgToServer);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
 
     }
 
-    private void Setup()
-    {
-        boolean valid = false;
-        if (pos == 0)
-        {
-            while (valid)
-            {
+    private void Setup() {
+        SetupLobbySize();
+
+        SetupNickname();
+
+        //
+        SendMsg(new MsgPacket(nick, "Waiting", "Waiting for players", null, null));
+        ReceiveMsg();
+
+        //add user to the number successfully connected
+        System.out.println("Player " + nick + " has joined the game");
+        server.addConnected();
+    }
+
+    private void SetupLobbySize() {
+        if (pos == 0) {
+            String mess = "Lobby";
+            String err = "";
+            while (true) {
                 //insert player number
-                socketOut.println("Insert number of players");
-                socketOut.flush();
+                SendMsg(new MsgPacket(nick, err + mess, "", null, null));
+
                 //read response
-                String response = socketIn.nextLine();
-                int n = Integer.parseInt(response);
-                if (n == 2 || n == 3)
-                {
-                    valid = true;
-                    server.lobby.setnPlayer(n);
+                int n = ReceiveMsg().x;
+                if (n == 2 || n == 3) {
+                    server.getLobby().setnPlayer(n);
+                    return;
+                } else {
+                    err = "Error Input not valid\n";
                 }
             }
         }
+    }
 
-        valid = false;
-        while (valid)
-        {
-            //insert nickname
-            socketOut.println("Insert nickname");
-            socketOut.flush();
+    private void SetupNickname() {
+        System.out.println("Waiting for player " + pos + " nickname");
+        String mess = "Insert nickname";
+        String err = "";
+        while (true) {
+            //insert player nickname
+            SendMsg(new MsgPacket(nick, err + mess, "", null, null));
             //read response
-            String response = socketIn.nextLine();
-            if(server.SetNickname(response))
-            {
-                valid = true;
+            nick = ReceiveMsg().nickname;
+            if (server.SetNickname(nick)) {
+                break;
+            } else {
+                err = "Error Nickname not valid\n";
+                System.out.println(err);
             }
         }
-        socketOut.println("Waiting for players");
-        socketOut.flush();
-        socketIn.nextLine();
-        //add user to the number successfully connected
-        server.addConnected();
+    }
 
-        while (server.getnConnectionPlayer() < server.lobby.getnPlayer())
-        {
-            //wait for all players to be connected
+    private void SendMsg(MsgPacket msg) {
+        while (true) {
+            try {
+                System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
+                //socketOut.reset();
+                socketOut.writeObject(msg);
+                socketOut.flush();
+                return;
+            } catch (IOException e) {
+                System.out.println(e.toString());
+            }
         }
-
     }
 
-    private void CloseConnection()
-    {
-
+    private MsgToServer ReceiveMsg() {
+        while (true) {
+            try {
+                return (MsgToServer) socketIn.readObject();
+            } catch (ClassNotFoundException | IOException e) {
+                if (e instanceof IOException) {
+                    System.out.println("connection crashed");
+                    //todo
+                } else
+                    System.out.println("The message received from " + nick + " is wrong type");
+            }
+        }
     }
 
-    public void SendMsg()
-    {
-
-    }
-
-    public String getNick()
-    {return nick;}
 
     @Override
-    public void update(Observable o, Object arg)
-    {
-        if(!(o instanceof Match) || !(arg instanceof MsgPacket)){
+    public void update(Observable o, Object arg) {
+        if (!(o instanceof Match) || !(arg instanceof MsgPacket)) {
             throw new IllegalArgumentException();
         }
-        Match match = (Match)o;
 
+        //send the msg packet
+        if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
+            going = false;
+        SendMsg((MsgPacket) arg);
     }
 }
