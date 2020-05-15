@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String nickname;
     private God godPower;
     private boolean Active;
 
-    public Player(String nick)
-    {
+    public Player(String nick) {
         this.nickname = nick;
         this.Active = true;
     }

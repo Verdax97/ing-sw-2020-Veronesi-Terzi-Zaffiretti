@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class Cell
-{
+import java.io.Serializable;
+
+public class Cell implements Serializable {
     private Worker worker;
     private int building;
     private boolean dome;
@@ -10,7 +11,7 @@ public class Cell
     private Player builtBy;
     private int builtTurn;
 
-    public Cell (int x, int y)
+    public Cell(int x, int y)
     {
         this.worker = null;
         this.building = 0;

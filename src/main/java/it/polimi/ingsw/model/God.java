@@ -2,14 +2,20 @@ package it.polimi.ingsw.model;
 
 //import java.awt.*;
 
-public class God {
+import java.io.Serializable;
+
+public class God implements Serializable {
     protected String name;
     public String description;
     //protected Image img;
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getDescription() {return description; }
+    public String getDescription() {
+        return description;
+    }
 
     public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
         return 1;
