@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class Board
-{
+import java.io.Serializable;
+
+public class Board implements Serializable {
     private Cell[][] board = new Cell[5][5];
 
     public Cell[][] getBoard() {
