@@ -22,28 +22,24 @@ public class Match extends Observable
 
     private MsgPacket msgPacket;
 
-    public Match(ArrayList<String> nicks)
-    {
+    public Match(ArrayList<String> nicks) {
         this.board = new Board();
         this.turn = new Turn();
         this.setup = new SetupMatch();
         this.setup.setPlayers(nicks);
         this.winner = new Player("");
         this.errorHandler = new ErrorHandler();
-        nPlayer = setup.getPlayers().size()-1;
-        playerTurn = setup.getPlayers().get(nPlayer);
-        msgPacket = new MsgPacket(playerTurn.getNickname(), "" +
-                "Chose gods for all players by inserting corresponding value (one at the time)" +
-                "\n"+PrintGods(setup.getGodList()), "Wait", board.Clone(), setup.getPlayers());
-        setChanged();
-        notifyObservers(msgPacket);
     }
 
-    private String PrintGods(ArrayList<God> gods)
-    {
+    public void StartGame() {
+        nPlayer = setup.getPlayers().size() - 1;
+        playerTurn = setup.getPlayers().get(nPlayer);
+        CreateMsgPacket("choseGods", PrintGods(setup.getGodList()));
+    }
+
+    private String PrintGods(ArrayList<God> gods) {
         StringBuilder printable = new StringBuilder();
-        for (int i = 0; i < gods.size(); i++)
-        {
+        for (int i = 0; i < gods.size(); i++) {
             printable.append(i).append(") ");
             printable.append(gods.get(i).name).append(": ");
             printable.append(gods.get(i).description);
@@ -67,7 +63,7 @@ public class Match extends Observable
             return;
         }
         setup.AddGodPicked(setup.getGodList().get(value));
-        setup.getGodList().remove(value);
+        //setup.getGodList().remove(value);
         lastAction = 1;
         if (getSetup().getGodPicked().size() == setup.getPlayers().size())
         {
@@ -90,10 +86,11 @@ public class Match extends Observable
         }
         playerTurn.setGodPower(setup.PickGod(value));
         lastAction = 1;
-        CreateMsgPacket("choseYourGod", PrintGods(setup.getGodPicked()));
         NextPlayer();
         if (getSetup().getGodPicked().size() == 0)
             CreateMsgPacket("Place", "Wait");
+        else
+            CreateMsgPacket("choseYourGod", PrintGods(setup.getGodPicked()));
     }
 
     public void PlaceWorker(MsgToServer msgPacket)
@@ -160,6 +157,7 @@ public class Match extends Observable
 
     /*
     -1 lost
+    0 did nothing
     1 ok
     */
     public void BeforeMove(MsgToServer msgPacket)

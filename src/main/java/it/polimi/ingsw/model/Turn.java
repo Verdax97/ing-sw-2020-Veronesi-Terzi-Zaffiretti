@@ -117,6 +117,8 @@ public class Turn
     */
     public int BeforeMove(Board board, int x, int y)
     {
+        if (x == -5 && y == -5)
+            return 1;
         return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell, x, y);
     }
 
