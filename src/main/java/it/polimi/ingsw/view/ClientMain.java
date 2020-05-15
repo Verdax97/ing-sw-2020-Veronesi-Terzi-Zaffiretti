@@ -2,109 +2,107 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.controller.State;
+import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.model.Player;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ClientMain
-{
+public class ClientMain implements Runnable {
     Scanner stdin = new Scanner(System.in);
 
-    private boolean readyToReceive = false;
-    private boolean readyToSend = false;
-    private MsgPacket replyMsg;
+    private volatile boolean readyToReceive = false;
+    private volatile boolean readyToSend = false;
+    private MsgToServer replyMsg;
     private MsgPacket receivedMsg;
-    public State state;
-    public String precPlayer;
     private ClientInput clientInput;
-    private ArrayList<StringBuilder> players= new ArrayList<>();
-    private ArrayList<String> colors = new ArrayList<>();
+    public LineClient lineClient;
+    private final ArrayList<String> colors = new ArrayList<>();
 
     public Board board;
 
-    private String nick;
-    //usefull to controll if need to send msg on socket
-    private String playerTurn;
+    private String nick = "temp";
 
-    public void main(String[] args)
-    {
-        System.out.println("Insert Server IP");
-        String IP = stdin.nextLine();
-        System.out.println("Insert Server port");
+
+    private boolean end = false;
+
+    private ExecutorService executor;
+
+    @Override
+    public void run() {
+        clientInput = new ClientInput(this);
         colors.add(Colors.ANSI_RED);
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
-        int port = stdin.nextInt();
-        LineClient client = new LineClient(IP, port, this);
-        try
-        {
-            InitializeClient();
-            boolean end = false;
-            while (!end)
-            {
-                end = CLIStuff();
-            }
-        }catch (IOException e)
-        {
-            System.err.println("No Server found, check inserted IP and port");
+        while (true) {
+            if (InitializeClient()) break;
         }
-
+        while (!end) {
+            end = CLIStuff();
+        }
         System.out.println("Press enter to end the program");
         stdin.nextLine();
     }
 
-    void InitializeClient() throws IOException
-    {
+    boolean InitializeClient() {
         System.out.println("Insert Server IP");
         String IP = stdin.nextLine();
         System.out.println("Insert Server port");
-        int port = stdin.nextInt();
-        ExecutorService executor = Executors.newCachedThreadPool();
+
+        int port;
+        while (true) {
+            try {
+                port = stdin.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Insert a valid port");
+                stdin = new Scanner(System.in);
+            }
+        }
+        executor = Executors.newCachedThreadPool();
         LineClient client = new LineClient(IP, port, this);
+        clientInput.addObserver(client);
 
         try {
             client.startClient();
         } catch (IOException e) {
             System.err.println("Server not reachable"); //server not available
-            return;
+            stdin = new Scanner(System.in);
+            return false;
         }
         //connection established message
         System.out.println("Connection established");
 
         //create
         executor.submit(client);
+        return true;
     }
 
-    private boolean CLIStuff()
-    {
+    private boolean CLIStuff() {
         //wait to have reply msg ready
-        if (!isReadyToRecive()) { return false; }
+        if (!isReadyToRecive()) {
+            return false;
+        }
         //read received message
         setReadyToReceive(false);
 
         //exit if the game ends
-        if(getReceivedMsg().msg.equalsIgnoreCase("end")) { return true; }
-
-        if(getReceivedMsg().msg.equalsIgnoreCase("Ping"))
-        {
-            clientInput.Reply("Ping");
-            return false;
+        if (getReceivedMsg().msg.equalsIgnoreCase("end")) {
+            return true;
         }
-        printBoard(receivedMsg);
 
-        if (receivedMsg.nickname.equals(nick))
-        {
+        board = receivedMsg.board;
+        printBoard(receivedMsg.board, receivedMsg.players);
+
+        if (receivedMsg.nickname.equals(nick)) {
             clientInput.ParseMsg(receivedMsg);
-        }
-        else
-        {
-            setReplyMsg(new MsgPacket(getNick(), "ok", "", null, null));
+        } else {
+            System.out.println(receivedMsg.nickname + "'s turn, wait");
+            setReplyMsg(new MsgToServer(getNick(), -5, -5, -5, -5));
             setReadyToSend(true);
         }
         return false;
@@ -126,11 +124,11 @@ public class ClientMain
         this.readyToSend = readyToSend;
     }
 
-    public synchronized MsgPacket getReplyMsg() {
+    public synchronized MsgToServer getReplyMsg() {
         return replyMsg;
     }
 
-    public synchronized void setReplyMsg(MsgPacket replyMsg) {
+    public synchronized void setReplyMsg(MsgToServer replyMsg) {
         this.replyMsg = replyMsg;
     }
 
@@ -150,31 +148,32 @@ public class ClientMain
         this.nick = nick;
     }
 
-    public String getPlayerTurn() {
-        return playerTurn;
-    }
-
-    public void setPlayerTurn(String playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-
-    public void printBoard(MsgPacket msgPacket)
-    {
+    public void printBoard(Board board, ArrayList<Player> players) {
+        if (players == null)
+            return;
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        for (int i = 0; i < msgPacket.players.size(); i++)
-        {
-            System.out.print(colors.get(i) + msgPacket.players.get(i).getNickname() + " ");
-            if (msgPacket.players.get(i).getGodPower() != null)
-            {
-                System.out.println(msgPacket.players.get(i).getGodPower().getName() + ": " +msgPacket.players.get(i).getGodPower().description + Colors.ANSI_RESET);
+        for (int i = 0; i < players.size(); i++) {
+            System.out.print(colors.get(i) + players.get(i).getNickname() + " ");
+            if (players.get(i).getGodPower() != null) {
+                System.out.println(players.get(i).getGodPower().getName() + ": " + players.get(i).getGodPower().description + Colors.ANSI_RESET);
             }
+            System.out.println(Colors.ANSI_RESET);
         }
         //now print the board
-        if (msgPacket.board != null)
-        {
+        if (board != null) {
             //TODO print the actual board
+            System.out.println("Print the board (this message only for debug)");
+        } else {
+            System.out.println("No board to print (this message only for debug)");
         }
+    }
+
+    public void EndAll() {
+        //todo end the game
+        executor.shutdownNow();//todo fix
+        System.out.println("quitting");
+        end = true;
     }
 
 }

@@ -1,217 +1,299 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Scanner;
+import java.util.*;
 
-public class ClientInput extends Thread
-{
+public class ClientInput extends Observable {
     private final ClientMain clientMain;
-    private final Scanner scanner;
-    private final PrintWriter printWriter;
-    private boolean CLI;
-    private String previousMsg;
+    private Scanner scanner;
+    private int selectedX = -5, selectedY = -5;
+    private int precSelectedX = -5, precSelectedY = -5;
 
-    public ClientInput(ClientMain clientMain, boolean CLI)
-    {
+    public ClientInput(ClientMain clientMain) {
         this.clientMain = clientMain;
         this.scanner = new Scanner(System.in);
-        this.printWriter = new PrintWriter(System.out);
-        this.CLI = CLI;
     }
 
-    public void run()
-    {
-
-    }
-
-    public void ParseMsg(MsgPacket msgPacket)
-    {
+    public void ParseMsg(MsgPacket msgPacket) {
         String msg = msgPacket.msg;
+        int[] arr = {-5, -5, -5, -5};
         //String alt = msgPacket.altMsg;
         //wait for input only in particular cases
-        StringBuilder answ = new StringBuilder();
-        String toPrint = "";
+        //StringBuilder answ = new StringBuilder();
 
-        if (msg.split(" ")[0].equalsIgnoreCase("Error"))
-        {
-            //TODO scrivere in rosso l'errore
+        if (msg.split(" ")[0].equalsIgnoreCase("Error")) {
             System.out.println(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
+            selectedX = precSelectedX;
+            selectedY = precSelectedY;
+        }
+        precSelectedX = selectedX;
+        precSelectedY = selectedY;
+
+        if (msg.equalsIgnoreCase("Lobby")) {
+            System.out.println("Select number of players (2/3)");
+            arr[0] = ReadIntInput();
         }
 
-        if (msg.equalsIgnoreCase("Place your worker:"))
-        {
-            boolean check = false;
-            //TODO print board
-            for (int i = 0; i < 2; i++)
-            {
-                int x = 0, y = 0;
-                while (!check)
-                {
-                    System.out.println("Place worker " + i + ":");
-                    boolean valid = false;
-                    while (!valid)
-                    {
-                        System.out.print("Insert x coordinate (0/4): ");
-                        x = scanner.nextInt();
-                        if (x < 5 && x >= 0)
-                        {
-                            System.out.println("Are you sure? (y/n)");
-                            if (scanner.nextLine().equalsIgnoreCase("y"))
-                                valid = true;
-                        } else {
-                            System.out.println("coordinate x not valid");
-                        }
-                    }
-                    valid = false;
-                    while (!valid)
-                    {
-                        System.out.print("Insert y coordinate (0/4): ");
-                        y = scanner.nextInt();
-                        if (y < 5 && y >= 0) {
-                            System.out.println("Are you sure? (y/n)");
-                            if (scanner.nextLine().equalsIgnoreCase("y"))
-                                valid = true;
-                        } else {
-                            System.out.println("coordinate x not valid");
-                        }
-                    }
-                    if (msgPacket.board.getCell(x,y).getWorker() == null)
-                        check = true;
-                    else
-                    {
-                        System.out.println("Cannot place worker here, is already occupied, try another cell");
-                    }
-                }
-                answ.append(x).append(",").append(y).append(" ");
-            }
-            Reply(answ.toString());
+        if (msg.equalsIgnoreCase("Insert Nickname")) {
+            System.out.println(msg);
+            clientMain.setNick(ReadStringInput());
+        }
+        if (msg.equalsIgnoreCase("Start")) {
+            System.out.println("Starting the game");
         }
 
-        if (msg.equalsIgnoreCase("StartTurn"))
-        {
-            int power = 0;
-            int x = 0,y = 0,targx = 0,targy = 0;
-            for (Player player:msgPacket.players)
-            {
-                if (player.getNickname().equals(clientMain.getNick()))
-                {
-                    String name = player.getGodPower().getName();
-                    if (name.equalsIgnoreCase("Prometheus") ||
-                            name.equalsIgnoreCase("Charon"))
-                    {
-                        System.out.println("Do you want to use your god power?(y/n)");
-                        String re = scanner.nextLine();
-                        if (re.equalsIgnoreCase("y"))
-                            power = 1;
-                    }
+        if (msg.equalsIgnoreCase("choseGods")) {
+            arr[0] = SelectGod(msgPacket, "Chose gods for all players by inserting corresponding value (one at the time)");
+        }
 
-                }
-            }
-            boolean check = false;
-            while (!check)
-            {
-                System.out.println("Select the cell with your worker on it that you want to use");
-                System.out.print("X coordinate between 0 and 4: ");
-                x = scanner.nextInt();
-                System.out.print("Y coordinate between 0 and 4: ");
-                y = scanner.nextInt();
-                if (x >=0 && x < 5 && y >=0 && y < 5)
-                {
-                    System.out.println("You selected cell " + x + " " + y);
-                    System.out.println("Are you sure?(y/n)");
-                    String re = scanner.nextLine();
-                    if (re.equalsIgnoreCase("y"))
-                        check = true;
-                }
-                else {
-                    System.out.println("Selected cell is not valid");
-                }
-            }
-            check = false;
-            if (power == 1)//only if you have a god with startTurn power
-            {
-                while (!check)
-                {
-                    System.out.println("Select the target cell");
-                    System.out.print("X coordinate between 0 and 4: ");
-                    targx = scanner.nextInt();
-                    System.out.print("Y coordinate between 0 and 4: ");
-                    targy = scanner.nextInt();
-                    if (targx >= 0 && targx < 5 && targy >= 0 && targy < 5) {
-                        System.out.println("You selected cell " + targx + " " + targy);
-                        System.out.println("Are you sure?(y/n)");
-                        String re = scanner.nextLine();
-                        if (re.equalsIgnoreCase("y"))
-                            check = true;
+        if (msg.equalsIgnoreCase("choseYourGod")) {
+            arr[0] = SelectGod(msgPacket, "Chose your god by inserting corresponding value");
+        }
+
+        if (msg.equalsIgnoreCase("Place")) {
+            for (int i = 0; i < 2; i++) {
+                System.out.println("Place worker " + i + ":");
+                while (true) {
+                    int[] worker = SelectCell();
+                    if (worker[0] >= 0 && worker[0] < 5 && worker[1] >= 0 && worker[1] < 5) {
+                        if (msgPacket.board.getCell(worker[0], worker[1]).getWorker() == null) {
+                            arr[i] = worker[0];
+                            arr[i + 1] = worker[1];
+                            break;
+                        } else {
+                            System.out.println("This cell is already occupied, try another one");
+                        }
                     } else {
                         System.out.println("Selected cell is not valid");
                     }
                 }
             }
-            Reply( x + " " + y + " " + targx + " " + targy + " " + power);
         }
 
-        if (msg.equalsIgnoreCase("Move") ||
-                msg.equalsIgnoreCase("Move Again"))
-        {
-            int power = 0;
-            int x = 0,y = 0;
-            if (msg.equalsIgnoreCase("Move Again"))
-            {
-                System.out.println("You the possibility to make another move tanks to your " +
-                        "god power.");
-                System.out.println("Do you want to use your god power?(y/n)");
-                String re = scanner.nextLine();
-                if (re.equalsIgnoreCase("y"))
-                    power = 1;
-            }
-            if (msg.equalsIgnoreCase("Move") || power == 1)
-            {
-                boolean check = false;
-                while (!check)
+        if (msg.equalsIgnoreCase("StartTurn")) {
+            System.out.println("Your Turn");
+            Reply(-5, -5, -5, -5);
+            return;
+        }
+        if (msg.equalsIgnoreCase("BeforeMove")) {
+            int[] coord;
+            ArrayList<int[]> movePossibilities;
+            ArrayList<int[]> beforeMovePossibilities;
+            do {
+                while (true)//the worker can make a move?
                 {
-                    System.out.println("Select the cell to move the worker:");
-                    System.out.print("X coordinate between 0 and 4: ");
-                    x = scanner.nextInt();
-                    System.out.print("Y coordinate between 0 and 4: ");
-                    y = scanner.nextInt();
-                    if (x >=0 && x < 5 && y >=0 && y < 5)
+                    while (true)//the selected cell is correct?
                     {
-                        System.out.println("You selected cell " + x + " " + y);
-                        System.out.println("Are you sure?(y/n)");
-                        String re = scanner.nextLine();
-                        if (re.equalsIgnoreCase("y"))
-                            check = true;
+                        System.out.println("Select the cell with your worker that you want to use");
+                        coord = SelectCell();
+                        if (msgPacket.board.getCell(coord[0], coord[1]).getWorker() != null) {
+                            if (msgPacket.board.getCell(coord[0], coord[1]).getWorker().getPlayer().getNickname().equals(clientMain.getNick()))
+                                break;
+                            else
+                                System.out.println("This is not your worker");
+                        } else
+                            System.out.println("There are no worker on this cell");
                     }
-                    else {
-                        System.out.println("Selected cell is not valid");
-                    }
+
+                    movePossibilities = CheckAround(msgPacket.board, coord[0], coord[1], msgPacket.board.getCell(coord[0], coord[1]).getWorker().getPlayer().getGodPower(), 1);
+                    beforeMovePossibilities = CheckAround(msgPacket.board, coord[0], coord[1], msgPacket.board.getCell(coord[0], coord[1]).getWorker().getPlayer().getGodPower(), 0);
+                    if (movePossibilities.size() > 0 || beforeMovePossibilities.size() > 0)
+                        break;
+                    else
+                        System.out.println("This worker has no moves available, i can't let you lose like an uncivilized monkey, retry.");
                 }
-            }
-            Reply( x + " " + y + " " + power);
+                if (!(beforeMovePossibilities.size() == 0)) {
+                    //print all possibilities
+                    System.out.println("All the possible coordinates that actions that your worker can do before he moves:");
+                    PrintPossibilities(beforeMovePossibilities);
+
+                    System.out.println("Do you want to make an action before the move phase?");
+                    if (!Confirm())
+                        break;
+
+                    arr = SelectPossibility(beforeMovePossibilities);
+                }
+                /*
+                System.out.println("Recap:\n" +
+                                    "   cell selected: "+coord[0] + ", " + coord[1] + "\n" +
+                                    "   "+ possibilityString.toString());*/
+            } while (!Confirm());//are you sure about your choice?
+            arr[0] = coord[0];
+            arr[1] = coord[1];
+            selectedX = arr[0];
+            selectedY = arr[1];
         }
 
-        if (msg.equalsIgnoreCase("Insert Nickname")
-                ||
-                msg.equalsIgnoreCase("Error nickname not valid," +
-                        " try another nickname"))
-        {
-            printWriter.println(msg+"\n>");
-            answ = new StringBuilder(scanner.nextLine());
+        if (msg.equalsIgnoreCase("Move Again")) {
+            System.out.println("You the possibility to make another move.");
+            System.out.println("Do you want to use your god power?(y/n)");
+            if (ReadStringInput().equalsIgnoreCase("y")) {
+                arr[0] = 1;
+                msg = "Move";//to make another move action
+            } else
+                arr[0] = 0;
+        }
 
-            clientMain.setNick(answ.toString());
+        if (msg.equalsIgnoreCase("Move")) {
+            int x = 0, y = 0;
+
+            System.out.println("You must move");
+            do {
+                //print all possibilities
+                System.out.println("All the possible coordinates where your worker can move:");
+                ArrayList<int[]> movePossibilities = CheckAround(msgPacket.board, selectedX, selectedY, msgPacket.board.getCell(selectedX, selectedY).getWorker().getPlayer().getGodPower(), 1);
+                PrintPossibilities(movePossibilities);
+                SelectPossibility(movePossibilities);
+            } while (!Confirm());
+            arr[2] = x;
+            arr[3] = y;
+            selectedY = y;
+            selectedX = x;
+        }
+
+        if (msg.equalsIgnoreCase("Build")) {
+            int x = 0, y = 0;
+            System.out.println("You must move");
+            do {
+                //print all possibilities
+                System.out.println("All the possible coordinates where your worker can build:");
+                ArrayList<int[]> buildPossibilities = CheckAround(msgPacket.board, selectedX, selectedY, msgPacket.board.getCell(selectedX, selectedY).getWorker().getPlayer().getGodPower(), 2);
+                PrintPossibilities(buildPossibilities);
+                SelectPossibility(buildPossibilities);
+            } while (!Confirm());
+            arr[2] = x;
+            arr[3] = y;
+            selectedY = y;
+            selectedX = x;
+        }
+        if (msg.equalsIgnoreCase("Waiting")) {
+            System.out.println(msgPacket.altMsg);
+        }
+        Reply(arr[0], arr[1], arr[2], arr[3]);
+    }
+
+    public void Reply(int x, int y, int targetX, int targetY) {
+        //clientMain.setReplyMsg(new MsgToServer(clientMain.getNick(), x,y,targetX, targetY));
+        clientMain.setReadyToSend(true);
+
+        setChanged();
+        notifyObservers(new MsgToServer(clientMain.getNick(), x, y, targetX, targetY));
+    }
+
+    public String ReadStringInput() {
+        System.out.print(">");
+        String a = scanner.nextLine();
+        scanner = new Scanner(System.in);
+        return a;
+    }
+
+    public int ReadIntInput() {
+        int a;
+        while (true) {
+
+            try {
+                System.out.print(">");
+                a = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Insert a valid value");
+                scanner = new Scanner(System.in);
+            }
+        }
+        scanner = new Scanner(System.in);
+        return a;
+    }
+
+    private int SelectGod(MsgPacket msgPacket, String msg) {
+        System.out.println(msg);
+        System.out.println(msgPacket.altMsg);
+        while (true) {
+            int val = ReadIntInput();
+            System.out.println("You selected the god with number " + val);
+            if (Confirm())
+                return val;
+            System.out.println(msg);
+            System.out.println(msgPacket.altMsg);
         }
     }
 
-    public void Reply(String msg)
-    {
-        clientMain.setReplyMsg(new MsgPacket(clientMain.getNick(), msg, "", null, null));
-        clientMain.setReadyToSend(true);
-        System.out.println("now we wait for the server (debug only)");
+    private int[] SelectCell() {
+        while (true) {
+            int x, y;
+            System.out.print("Insert x coordinate (0/4): ");
+            x = ReadIntInput();
+            System.out.print("Insert y coordinate (0/4): ");
+            y = ReadIntInput();
+            if (y < 5 && y >= 0 && x < 5 && x >= 0) {
+                System.out.println("You selected the cell (" + x + "," + y + ")");
+                if (Confirm()) {
+                    int[] arr = new int[2];
+                    arr[0] = x;
+                    arr[1] = y;
+                    return arr;
+                }
+            } else {
+                System.out.println("Coordinates not valid");
+            }
+        }
+    }
+
+    private boolean Confirm() {
+        System.out.println("Are you sure? (y/n)");
+        return ReadStringInput().equalsIgnoreCase("y");
+    }
+
+    private ArrayList<int[]> CheckAround(Board board, int tempx, int tempy, God god, int phase) {
+        ArrayList<int[]> arr = new ArrayList<>();
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                int x = tempx + i;
+                int y = tempy + j;
+                if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5)) {
+                    int ret = -1;
+                    if (phase == 0)
+                        ret = god.CheckPlayerTurn(board, board.getCell(tempx, tempy), x, y);
+                    if (phase == 1)
+                        ret = god.CheckMove(board, board.getCell(tempx, tempy), x, y);
+                    if (phase == 2)
+                        ret = god.CheckBuild(board, board.getCell(tempx, tempy), x, y);
+                    if (ret >= 0) {
+                        arr.add(new int[]{x, y});//add to the list of possible moves
+                    }
+                }
+            }
+        }
+        return arr;
+    }
+
+    private void PrintPossibilities(ArrayList<int[]> arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println(i + ") (" + arrayList.get(i)[0] + ", " + arrayList.get(i)[1] + ")");
+        }
+    }
+
+    private int[] SelectPossibility(ArrayList<int[]> arrayList) {
+        int[] arr = {-5, -5, -5, -5};
+        StringBuilder possibilityString;
+        System.out.println("Insert corresponding value:");
+        while (true)//select the action you want to make
+        {
+            int in = ReadIntInput();
+            if (in >= 0 && in < arrayList.size()) {
+                possibilityString = new StringBuilder();
+                possibilityString.append(in).append("action selected: ");
+                arr[2] = arrayList.get(in)[0];
+                arr[3] = arrayList.get(in)[1];
+                possibilityString.append(" (").append(arr[2]).append(", ").append(arr[3]).append(")");
+                break;
+            } else
+                System.out.println("This value is not valid, try another one.");
+        }
+        System.out.println("Recap:\n" +
+                "   cell selected: " + selectedX + ", " + selectedY + "\n" +
+                "   " + possibilityString.toString());
+        return arr;
     }
 }

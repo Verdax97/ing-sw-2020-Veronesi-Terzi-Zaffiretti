@@ -1,17 +1,17 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.lang.invoke.MethodHandles.Lookup;
 import java.net.Socket;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.Observable;
+import java.util.Observer;
 
-public class LineClient extends Thread {
+public class LineClient extends Thread implements Observer {
     private final ClientMain clientMain;
     private final String ip;
     private final int port;
@@ -19,8 +19,7 @@ public class LineClient extends Thread {
     private ObjectInputStream socketIn;
     private ObjectOutputStream socketOut;
 
-    public LineClient(String ip, int port, ClientMain clientMain)
-    {
+    public LineClient(String ip, int port, ClientMain clientMain) {
         this.ip = ip;
         this.port = port;
         this.clientMain = clientMain;
@@ -39,15 +38,7 @@ public class LineClient extends Thread {
     {
         while (true)
         {
-            MsgPacket msg;
-            try
-            {
-                msg = ReceiveMsg();
-            }catch (ClassNotFoundException | IOException e)
-            {
-                System.out.println("problem");
-                break;
-            }
+            MsgPacket msg = ReceiveMsg();
 
             //pass the message to the main client
             clientMain.setReceivedMsg(msg);
@@ -56,21 +47,6 @@ public class LineClient extends Thread {
             //exit if the game ends
             if(msg.msg.equalsIgnoreCase("end"))
                 break;
-
-            //wait to have reply msg ready
-            while(!clientMain.isReadyToSend())
-            {
-                //wait until response is ready
-            }
-
-            clientMain.setReadyToSend(false);
-            //send response message to the server
-            try {
-                SendMsg(clientMain.getReplyMsg());
-            } catch (IOException e) {
-                System.out.println("Connection to the server interrupted");
-                break;
-            }
         }
 
         System.out.println("the game is ended");
@@ -81,20 +57,45 @@ public class LineClient extends Thread {
         }
     }
 
-    private MsgPacket ReceiveMsg() throws IOException, ClassNotFoundException {
-        return (MsgPacket)socketIn.readObject();
+    private void SendMsg(MsgToServer msg) {
+        while (true) {
+            try {
+                socketOut.reset();
+                socketOut.writeObject(msg);
+                socketOut.flush();
+                return;
+            } catch (IOException e) {
+                System.out.println("no more connection");
+            }
+        }
     }
 
-    private void SendMsg(MsgPacket msg) throws IOException
-    {
-        socketOut.writeObject(msg);
+    private MsgPacket ReceiveMsg() {
+        while (true) {
+            try {
+                return (MsgPacket) socketIn.readObject();
+            } catch (ClassNotFoundException | IOException e) {
+                if (e instanceof IOException) {
+                    System.out.println("dropped connection");
+                    //todo close all
+                    clientMain.EndAll();
+                } else
+                    System.out.println("The format of the message to receive is incorrect");
+            }
+        }
     }
 
-    private void EndClient() throws IOException
-    {
+    private void EndClient() throws IOException {
         socketIn.close();
         socketOut.close();
         socket.close();
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!(o instanceof ClientInput) || !(arg instanceof MsgToServer)) {
+            throw new IllegalArgumentException();
+        }
+        SendMsg((MsgToServer) arg);
+    }
 }
