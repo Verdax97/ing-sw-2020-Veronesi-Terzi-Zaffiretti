@@ -11,23 +11,21 @@ public class Controller implements Observer {
     private Lobby lobby;
     private Match match;
     private State state = State.LOBBY;
-    private final ServerMultiplexer serverMultiplexer;
+    private ServerMultiplexer serverMultiplexer;
 
-    public Controller (ServerMultiplexer server)
-    {
-        this.serverMultiplexer = server;
+    public void setServerMultiplexer(ServerMultiplexer serverMultiplexer) {
+        this.serverMultiplexer = serverMultiplexer;
         serverMultiplexer.addObserver(this);
     }
 
-    public void setLobby(Lobby lobby)
-    {
+    public void setLobby(Lobby lobby) {
         this.lobby = lobby;
     }
 
-    public void CreateMatch()
-    {
+    public void CreateMatch() {
         this.match = new Match(lobby.getPlayers());
         serverMultiplexer.ConnectObserver(match);
+        this.match.StartGame();
         UpdateStatus(State.SETUP);
     }
 
