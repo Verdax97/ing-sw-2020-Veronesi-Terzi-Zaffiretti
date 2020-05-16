@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Lobby;

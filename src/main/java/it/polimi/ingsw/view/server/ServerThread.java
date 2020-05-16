@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgPacket;
@@ -18,8 +18,9 @@ public class ServerThread extends Thread implements Observer {
     private ObjectOutputStream socketOut;
 
     private final int pos;
-    public boolean start;
-    private boolean going = true;
+    public volatile boolean start;
+    private volatile boolean going = true;
+    private volatile boolean fired;
 
     public ServerThread(Socket clientSocket, String string, ServerMultiplexer server, int pos) {
         this.socket = clientSocket;
@@ -44,6 +45,9 @@ public class ServerThread extends Thread implements Observer {
             while (going) {
                 MsgToServer msgToServer = ReceiveMsg();
                 server.ReceiveMsg(msgToServer);
+                fired = false;
+                while (fired)
+                    Thread.yield();
             }
         } catch (IOException e) {
             System.out.println(e.toString());
@@ -106,8 +110,8 @@ public class ServerThread extends Thread implements Observer {
     private void SendMsg(MsgPacket msg) {
         while (true) {
             try {
-                System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
-                //socketOut.reset();
+                //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
+                socketOut.reset();
                 socketOut.writeObject(msg);
                 socketOut.flush();
                 return;
@@ -142,5 +146,6 @@ public class ServerThread extends Thread implements Observer {
         if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
             going = false;
         SendMsg((MsgPacket) arg);
+        fired = true;
     }
 }

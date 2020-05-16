@@ -1,6 +1,7 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.Colors;
 
 import java.util.*;
 
@@ -59,8 +60,8 @@ public class ClientInput extends Observable {
                     int[] worker = SelectCell();
                     if (worker[0] >= 0 && worker[0] < 5 && worker[1] >= 0 && worker[1] < 5) {
                         if (msgPacket.board.getCell(worker[0], worker[1]).getWorker() == null) {
-                            arr[i] = worker[0];
-                            arr[i + 1] = worker[1];
+                            arr[2 * i] = worker[0];
+                            arr[2 * i + 1] = worker[1];
                             break;
                         } else {
                             System.out.println("This cell is already occupied, try another one");
@@ -170,6 +171,10 @@ public class ClientInput extends Observable {
         }
         if (msg.equalsIgnoreCase("Waiting")) {
             System.out.println(msgPacket.altMsg);
+        }
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {//
         }
         Reply(arr[0], arr[1], arr[2], arr[3]);
     }

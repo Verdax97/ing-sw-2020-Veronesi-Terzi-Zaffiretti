@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model;
 
-public class Worker {
+import java.io.Serializable;
+
+public class Worker implements Serializable {
     private Player player;
     private int lastMovement = 0;
     private boolean debuff = false;
 
 
-    public void setPlayer(Player player)
-    {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
