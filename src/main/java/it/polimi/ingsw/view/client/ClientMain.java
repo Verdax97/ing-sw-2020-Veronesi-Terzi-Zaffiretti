@@ -1,9 +1,10 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.view.Colors;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ClientMain implements Runnable {
 
     private String nick = "temp";
 
+    Thread threadInput;
 
     private boolean end = false;
 
@@ -44,8 +46,11 @@ public class ClientMain implements Runnable {
         while (!end) {
             end = CLIStuff();
         }
-        System.out.println("Press enter to end the program");
-        stdin.nextLine();
+        try {
+            EndAll();
+        } catch (InterruptedException e) {
+            System.out.println("Mo non so piú cosa fare");
+        }
     }
 
     boolean InitializeClient() {
@@ -89,7 +94,8 @@ public class ClientMain implements Runnable {
         }
         //read received message
         setReadyToReceive(false);
-
+        if (getReceivedMsg() == null)
+            return true;
         //exit if the game ends
         if (getReceivedMsg().msg.equalsIgnoreCase("end")) {
             return true;
@@ -99,7 +105,12 @@ public class ClientMain implements Runnable {
         printBoard(receivedMsg.board, receivedMsg.players);
 
         if (receivedMsg.nickname.equals(nick)) {
-            clientInput.ParseMsg(receivedMsg);
+            //start a new thread for the input receiver
+            Runnable runnable = () -> {
+                clientInput.ParseMsg(receivedMsg);
+            };
+            threadInput = new Thread(runnable);
+            threadInput.start();
         } else {
             System.out.println(receivedMsg.nickname + "'s turn, wait");
             setReplyMsg(new MsgToServer(getNick(), -5, -5, -5, -5));
@@ -162,18 +173,36 @@ public class ClientMain implements Runnable {
         }
         //now print the board
         if (board != null) {
-            //TODO print the actual board
-            System.out.println("Print the board (this message only for debug)");
+            //System.out.println("Print the board (this message only for debug)");
+            for (int j = 4; j >= 0; j--) {
+                System.out.print(j + "|");
+                for (int i = 0; i < 5; i++) {
+                    if (board.getCell(i, j).getDome()) {
+                        System.out.print("D" + " ");
+                    } else if (board.getCell(i, j).getWorker() != null) {
+                        for (int k = 0; k < players.size(); k++) {
+                            if (players.get(k).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
+                                System.out.print(colors.get(k) + board.getCell(i, j).getBuilding() + Colors.ANSI_RESET + " ");
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.print(board.getCell(i, j).getBuilding() + " ");
+                    }
+                }
+                System.out.println();
+            }
+            System.out.println("Y|---------");
+            System.out.println("X 0 1 2 3 4\n\n");
         } else {
             System.out.println("No board to print (this message only for debug)");
         }
     }
 
-    public void EndAll() {
+    public void EndAll() throws InterruptedException {
         //todo end the game
-        executor.shutdownNow();//todo fix
         System.out.println("quitting");
-        end = true;
+        threadInput.stop();
     }
 
 }

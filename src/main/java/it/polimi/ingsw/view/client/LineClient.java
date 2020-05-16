@@ -1,8 +1,9 @@
-package it.polimi.ingsw.view;
+package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.view.client.ClientInput;
+import it.polimi.ingsw.view.client.ClientMain;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -36,16 +37,17 @@ public class LineClient extends Thread implements Observer {
 
     public void run()
     {
-        while (true)
-        {
+        while (true) {
             MsgPacket msg = ReceiveMsg();
 
             //pass the message to the main client
             clientMain.setReceivedMsg(msg);
             clientMain.setReadyToReceive(true);
 
+            if (msg == null)
+                break;
             //exit if the game ends
-            if(msg.msg.equalsIgnoreCase("end"))
+            if (msg.msg.equalsIgnoreCase("end"))
                 break;
         }
 
@@ -76,13 +78,14 @@ public class LineClient extends Thread implements Observer {
                 return (MsgPacket) socketIn.readObject();
             } catch (ClassNotFoundException | IOException e) {
                 if (e instanceof IOException) {
-                    System.out.println("dropped connection");
+                    System.out.println("Dropped connection\n disconnecting from server");
                     //todo close all
-                    clientMain.EndAll();
+                    break;
                 } else
                     System.out.println("The format of the message to receive is incorrect");
             }
         }
+        return null;
     }
 
     private void EndClient() throws IOException {
