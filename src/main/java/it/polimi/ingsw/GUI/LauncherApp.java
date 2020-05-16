@@ -9,7 +9,7 @@ public class LauncherApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene root = FXMLLoader.load(getClass().getClassLoader().getResource("FXML/SantoriniBoardGame.fxml"));
+        Scene root = FXMLLoader.load(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
         stage.setScene(root);
         stage.show();
     }
