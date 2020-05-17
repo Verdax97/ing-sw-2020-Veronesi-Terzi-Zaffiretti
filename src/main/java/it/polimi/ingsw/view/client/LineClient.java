@@ -76,7 +76,7 @@ public class LineClient extends Thread implements Observer {
                 return (MsgPacket) socketIn.readObject();
             } catch (ClassNotFoundException | IOException e) {
                 if (e instanceof IOException) {
-                    System.out.println("Dropped connection\n disconnecting from server");
+                    System.out.println("Dropped connection\nDisconnecting from server");
                     //todo close all
                     break;
                 } else

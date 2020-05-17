@@ -10,15 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ClientMain implements Runnable {
     Scanner stdin = new Scanner(System.in);
 
     private volatile boolean readyToReceive = false;
-    private volatile boolean readyToSend = false;
-    private MsgToServer replyMsg;
     private MsgPacket receivedMsg;
     private ClientInput clientInput;
     public LineClient lineClient;
@@ -44,11 +40,7 @@ public class ClientMain implements Runnable {
         while (!end) {
             end = CLIStuff();
         }
-        try {
-            EndAll();
-        } catch (InterruptedException e) {
-            System.out.println("Mo non so piú cosa fare");
-        }
+        EndAll();
     }
 
     boolean InitializeClient() {
@@ -66,7 +58,7 @@ public class ClientMain implements Runnable {
                 stdin = new Scanner(System.in);
             }
         }
-        ExecutorService executor = Executors.newCachedThreadPool();
+
         LineClient client = new LineClient(IP, port, this);
         clientInput.addObserver(client);
 
@@ -81,7 +73,7 @@ public class ClientMain implements Runnable {
         System.out.println("Connection established");
 
         //create
-        executor.submit(client);
+        client.start();
         return true;
     }
 
@@ -109,8 +101,7 @@ public class ClientMain implements Runnable {
             threadInput.start();
         } else {
             System.out.println(receivedMsg.nickname + "'s turn, wait");
-            setReplyMsg(new MsgToServer(getNick(), -5, -5, -5, -5));
-            setReadyToSend(true);
+            clientInput.Reply(-5, -5, -5, -5);
         }
         return false;
     }
@@ -121,22 +112,6 @@ public class ClientMain implements Runnable {
 
     public void setReadyToReceive(boolean readyToReceive) {
         this.readyToReceive = readyToReceive;
-    }
-
-    public boolean isReadyToSend() {
-        return readyToSend;
-    }
-
-    public void setReadyToSend(boolean readyToSend) {
-        this.readyToSend = readyToSend;
-    }
-
-    public synchronized MsgToServer getReplyMsg() {
-        return replyMsg;
-    }
-
-    public synchronized void setReplyMsg(MsgToServer replyMsg) {
-        this.replyMsg = replyMsg;
     }
 
     public synchronized MsgPacket getReceivedMsg() {
@@ -171,7 +146,7 @@ public class ClientMain implements Runnable {
             System.out.println(Colors.ANSI_RESET);
         }
         //now print the board
-        System.out.println("");
+        System.out.print("\n");
         if (board != null) {
             //System.out.println("Print the board (this message only for debug)");
             for (int j = 4; j >= 0; j--) {
@@ -199,10 +174,16 @@ public class ClientMain implements Runnable {
         }
     }
 
-    public void EndAll() throws InterruptedException {
+    public void EndAll() {
         //todo end the game
         System.out.println("quitting");
-        threadInput.stop();
+        try {
+            threadInput.interrupt();
+            threadInput.join(300);
+        } catch (InterruptedException e) {
+            System.out.println(threadInput.getName());
+        }
+        end = true;
     }
 
 }
