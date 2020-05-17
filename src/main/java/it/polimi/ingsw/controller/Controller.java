@@ -71,7 +71,7 @@ public class Controller implements Observer {
             case BEFOREMOVE:
                 match.BeforeMove(msgPacket);
                 ret = match.getLastAction();
-                if (ret == 0)
+                if (ret == 1)
                     UpdateStatus(State.MOVE);
                 else if (ret == -1)
                     UpdateStatus(State.STARTTURN);
@@ -99,6 +99,10 @@ public class Controller implements Observer {
                 //save record data
                 //delete game data ()
                 //close connections
+                break;
+            default:
+                System.out.println("Error of received message");
+                match.CreateMsgPacket(match.getMsgError(), "Wait");
                 break;
         }
     }
