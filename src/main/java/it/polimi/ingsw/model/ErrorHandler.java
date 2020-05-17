@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class ErrorHandler {
-    private final String prefix = "Error ";
+    private final String prefix = Messages.error + " ";
 
     public String GetErrorSetup(int value) {
         switch (value) {
@@ -12,7 +12,7 @@ public class ErrorHandler {
             case 0:
                 return "";
         }
-        return "Error generic";
+        return Messages.error + " generic";
     }
 
     public String GetErrorMove(int value) {
@@ -38,7 +38,7 @@ public class ErrorHandler {
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
         }
-        return "Error Generic";
+        return Messages.error + " Generic";
     }
 
     public String GetErrorBuild(int value)
@@ -72,6 +72,6 @@ public class ErrorHandler {
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
         }
-        return "Error generic";
+        return Messages.error + " generic";
     }
 }

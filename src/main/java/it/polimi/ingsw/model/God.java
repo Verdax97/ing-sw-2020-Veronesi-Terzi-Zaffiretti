@@ -47,12 +47,18 @@ public class God implements Serializable {
         return built;
     }
 
-    public int EnemyTurn(Board board, Player turnPlayer, Player player) { return 0; }
+    public int EnemyTurn(Board board, Player turnPlayer, Player player) {
+        return 0;
+    }
 
 
-    public Player WinCondition(Board board, Player player) { return null; }
+    public Player WinCondition(Board board, Player player) {
+        return null;
+    }
 
-    public void ResetGod() {}
+    public void ResetGod() {
+        //no need to reset for all gods just need to implement in force move, multiple action, and debuff
+    }
 
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
@@ -62,7 +68,7 @@ public class God implements Serializable {
                         if (!selectedCell.IsFreeWorker(board, x, y)) return -4;//cell is occupied
                     } else return -4;//cell is occupied
                 } else return -3;//cell is too high
-            } else return-2;//cell is too far
+            } else return -2;//cell is too far
         } else return -1;//cell out of board
         return 1;//1 default return value, 2 need to repeat action
     }
