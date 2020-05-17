@@ -6,7 +6,7 @@ import java.util.List;
 public class Lobby
 {
     private int nPlayer = 1;
-    private ArrayList<String> players = new ArrayList<String>();
+    private final ArrayList<String> players = new ArrayList<>();
 
     public int getnPlayer() {
         return nPlayer;
@@ -18,8 +18,6 @@ public class Lobby
 
     public boolean AddPlayer(String toAdd)
     {
-        if (this.nPlayer == 3)
-            return false;
         this.players.add(toAdd);
         return true;
     }
