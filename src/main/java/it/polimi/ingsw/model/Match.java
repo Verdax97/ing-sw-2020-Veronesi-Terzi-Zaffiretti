@@ -3,11 +3,10 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Match extends Observable
-{
+public class Match extends Observable {
     private Board board;
-    private Turn turn;
-    private SetupMatch setup;
+    private final Turn turn;
+    private final SetupMatch setup;
 
     public Player getPlayerTurn() {
         return playerTurn;
@@ -18,9 +17,12 @@ public class Match extends Observable
     private final ErrorHandler errorHandler;
     private int nPlayer = 0;
     private int lastAction = 0;//0 all right < 0 some problem
-    private String msgError;
 
-    private MsgPacket msgPacket;
+    public String getMsgError() {
+        return msgError;
+    }
+
+    private String msgError;
 
     public Match(ArrayList<String> nicks) {
         this.board = new Board();
@@ -45,7 +47,7 @@ public class Match extends Observable
             printable.append(gods.get(i).description);
             printable.append("\n");
         }
-        printable.append("\n");
+        //printable.append("\n");
         return printable.toString();
     }
 
@@ -220,7 +222,7 @@ public class Match extends Observable
 
     private void CheckMove(int targetX, int targetY, int godPower)
     {
-        if (lastAction == 2 && godPower == 0)//don't use the godPower
+        if (lastAction == 2 && godPower != 1)//don't use the godPower
         {
             lastAction = 1;
             return;
@@ -253,16 +255,15 @@ public class Match extends Observable
             else {
                 if (lastAction < 0)
                 {
-                    if (godPower == 0)
+                    if (godPower != 1)
                         msgError += "\nBuild";
                     else
                         msgError += "\nBuild Again";
                 }
-                else
-                {
-                    if (lastAction == 1)
-                    {
-                        msgError = "Build";
+                else {
+                    if (lastAction == 1) {
+                        NextPlayer();
+                        msgError = "StartTurn";
                     }
                     if (lastAction == 2)
                         msgError = "Build Again";
@@ -275,8 +276,7 @@ public class Match extends Observable
 
     private void CheckBuild(int targetX, int targetY, int typeBuilding, int godPower)
     {
-        if (lastAction == 2 && godPower == 0)
-        {
+        if (lastAction == 2 && godPower != 1) {
             lastAction = 1;
             msgError = errorHandler.GetErrorBuild(lastAction);
             return;
@@ -305,7 +305,6 @@ public class Match extends Observable
                 for (int j = 0; j < 5; j++) {
                     if (board.getCell(i, j).getWorker() != null){
                         if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname())) {
-                            //TODO aggiungere salvataggio per undo
                             board.getCell(i, j).getWorker().setDebuff(false);
                             board.getCell(i, j).getWorker().getPlayer().getGodPower().ResetGod();
                         }
@@ -319,7 +318,7 @@ public class Match extends Observable
             NextTurn();
         }
         playerTurn = setup.getPlayers().get(nPlayer);
-        //controller.setPlayerTurn(playerTurn);
+        //TODO aggiungere salvataggio per partita
     }
 
     public Player CheckWinCondition(Player player)
