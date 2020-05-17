@@ -30,7 +30,7 @@ public class Zeus extends God{
 
         int built = super.CheckBuild(board, selectedCell, x, y);
         if (built < 0 && x == selectedCell.getPos()[0] && y == selectedCell.getPos()[1]){
-            return 2;
+            return 1;
         }
         return built;
     }
