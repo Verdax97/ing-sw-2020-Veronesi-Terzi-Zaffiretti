@@ -12,7 +12,7 @@ public class ErrorHandler {
             case 0:
                 return "";
         }
-        return "";
+        return "Error generic";
     }
 
     public String GetErrorMove(int value) {
@@ -38,7 +38,7 @@ public class ErrorHandler {
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
         }
-        return "";
+        return "Error Generic";
     }
 
     public String GetErrorBuild(int value)
@@ -72,6 +72,6 @@ public class ErrorHandler {
             case 0:
                 return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
         }
-        return "";
+        return "Error generic";
     }
 }
