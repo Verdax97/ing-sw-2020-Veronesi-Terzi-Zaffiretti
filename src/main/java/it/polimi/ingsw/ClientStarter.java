@@ -4,8 +4,9 @@ import it.polimi.ingsw.view.client.ClientMain;
 
 import java.util.Scanner;
 
-public class ClientStarter {
-    public static void main(String[] args) {
+public class ClientStarter implements Runnable {
+    @Override
+    public void run() {
         ClientMain clientMain = new ClientMain();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to use GUI? (y/n)");
