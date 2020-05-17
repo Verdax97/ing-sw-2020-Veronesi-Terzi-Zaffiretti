@@ -17,7 +17,8 @@ public class ForceMovementGods extends God
             }
             board.getCell(x, y).setWorker(playerWorker);
             playerWorker.setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-            selectedCell.setWorker(null);
+            if (board.getCell(targetPosX, targetPosY) != selectedCell || targetedWorker == null)
+                selectedCell.setWorker(null);
         }
         return moved;
     }
@@ -27,8 +28,8 @@ public class ForceMovementGods extends God
         if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || (selectedCell == board.getCell(targetPosX,targetPosY)))
         {
             worker.setLastMovement(0);
-            board.getCell(x, y).setWorker(null);
             board.getCell(targetPosX, targetPosY).setWorker(worker);
+            board.getCell(x, y).setWorker(null);
         } else return -5;//no space to move enemy worker
         return 1;
     }
