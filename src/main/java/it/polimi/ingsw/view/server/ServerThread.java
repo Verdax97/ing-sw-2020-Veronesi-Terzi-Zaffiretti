@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
 
@@ -19,12 +20,13 @@ public class ServerThread extends Thread implements Observer {
     private ObjectOutputStream socketOut;
 
     private final int pos;
-    public volatile boolean start;
+    public volatile boolean waitForStart;
     private volatile boolean going = true;
 
+    /*
     public void setFired(boolean fired) {
         this.fired = fired;
-    }
+    }*/
 
     private volatile boolean fired;
 
@@ -45,8 +47,8 @@ public class ServerThread extends Thread implements Observer {
             socketIn = objectInputStream;
 
             Setup();
-            while (!start) {
-
+            while (!waitForStart) {
+                Thread.yield();
             }
             while (going) {
                 MsgToServer msgToServer = ReceiveMsg();
@@ -69,7 +71,7 @@ public class ServerThread extends Thread implements Observer {
         SetupNickname();
 
         //
-        SendMsg(new MsgPacket(nick, "Waiting", "Waiting for players", null, null));
+        SendMsg(new MsgPacket(nick, Messages.wait, "Waiting for players", null, null));
         ReceiveMsg();
 
         //add user to the number successfully connected
@@ -86,7 +88,9 @@ public class ServerThread extends Thread implements Observer {
                 SendMsg(new MsgPacket(nick, err + mess, "", null, null));
 
                 //read response
-                int n = ReceiveMsg().x;
+                MsgToServer msgToServer = ReceiveMsg();
+                assert msgToServer != null;
+                int n = msgToServer.x;
                 if (n == 2 || n == 3) {
                     server.getLobby().setnPlayer(n);
                     return;
@@ -121,7 +125,6 @@ public class ServerThread extends Thread implements Observer {
             socketOut.reset();
             socketOut.writeObject(msg);
             socketOut.flush();
-            return;
         } catch (IOException e) {
             System.out.println(e.toString());
             going = false;
@@ -136,6 +139,7 @@ public class ServerThread extends Thread implements Observer {
                 System.out.println("connection crashed");
                 //todo
                 server.CloseConnection();
+                Thread.currentThread().interrupt();
             } else {
                 System.out.println("The message received from " + nick + " is wrong type");
                 going = false;

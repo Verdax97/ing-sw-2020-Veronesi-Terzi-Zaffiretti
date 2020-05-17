@@ -92,7 +92,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
 
         //start all thread
         for (ServerThread thread : playersThread) {
-            thread.start = true;
+            thread.waitForStart = true;
         }
         //create the game
         controller.setLobby(lobby);
