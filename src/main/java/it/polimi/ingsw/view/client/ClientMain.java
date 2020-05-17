@@ -32,8 +32,6 @@ public class ClientMain implements Runnable {
 
     private boolean end = false;
 
-    private ExecutorService executor;
-
     @Override
     public void run() {
         clientInput = new ClientInput(this);
@@ -68,7 +66,7 @@ public class ClientMain implements Runnable {
                 stdin = new Scanner(System.in);
             }
         }
-        executor = Executors.newCachedThreadPool();
+        ExecutorService executor = Executors.newCachedThreadPool();
         LineClient client = new LineClient(IP, port, this);
         clientInput.addObserver(client);
 
@@ -106,9 +104,7 @@ public class ClientMain implements Runnable {
 
         if (receivedMsg.nickname.equals(nick)) {
             //start a new thread for the input receiver
-            Runnable runnable = () -> {
-                clientInput.ParseMsg(receivedMsg);
-            };
+            Runnable runnable = () -> clientInput.ParseMsg(receivedMsg);
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
@@ -162,16 +158,20 @@ public class ClientMain implements Runnable {
     public void printBoard(Board board, ArrayList<Player> players) {
         if (players == null)
             return;
+
         System.out.print("\033[H\033[2J");
         System.out.flush();
+
+        System.out.println("-------------------------------------------------------------------");
         for (int i = 0; i < players.size(); i++) {
             System.out.print(colors.get(i) + players.get(i).getNickname() + " ");
             if (players.get(i).getGodPower() != null) {
-                System.out.println(players.get(i).getGodPower().getName() + ": " + players.get(i).getGodPower().description + Colors.ANSI_RESET);
+                System.out.print(players.get(i).getGodPower().getName() + ": " + players.get(i).getGodPower().description + Colors.ANSI_RESET);
             }
             System.out.println(Colors.ANSI_RESET);
         }
         //now print the board
+        System.out.println("");
         if (board != null) {
             //System.out.println("Print the board (this message only for debug)");
             for (int j = 4; j >= 0; j--) {
@@ -193,7 +193,7 @@ public class ClientMain implements Runnable {
                 System.out.println();
             }
             System.out.println("Y|---------");
-            System.out.println("X 0 1 2 3 4\n\n");
+            System.out.println("X 0 1 2 3 4\n");
         } else {
             System.out.println("No board to print (this message only for debug)");
         }

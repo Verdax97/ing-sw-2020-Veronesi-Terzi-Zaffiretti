@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
-import it.polimi.ingsw.view.client.ClientInput;
-import it.polimi.ingsw.view.client.ClientMain;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -62,7 +60,7 @@ public class LineClient extends Thread implements Observer {
     private void SendMsg(MsgToServer msg) {
         while (true) {
             try {
-                socketOut.reset();
+                //socketOut.reset();
                 socketOut.writeObject(msg);
                 socketOut.flush();
                 return;
