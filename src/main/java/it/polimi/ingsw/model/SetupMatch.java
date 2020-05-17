@@ -66,10 +66,8 @@ public class SetupMatch {
         this.players = players;
     }
 
-    public void setPlayers(ArrayList<String> player)
-    {
-        for (String elem: player)
-        {
+    public void CreatePlayersFromNickname(ArrayList<String> player) {
+        for (String elem : player) {
             players.add(new Player(elem));
         }
     }

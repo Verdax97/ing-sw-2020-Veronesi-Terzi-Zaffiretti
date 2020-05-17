@@ -28,9 +28,9 @@ public class Board implements Serializable {
         }
     }
 
-    protected final Board Clone() {
+    protected final Board CopyValuesInNewBoard() {
         final Board result = new Board();
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             result.board[i] = board[i].clone();
         }
         return result;
