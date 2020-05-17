@@ -159,7 +159,7 @@ public class ClientInput extends Observable {
             }
         }
         PrintPossibilities(possibilities);
-        int sel = ReadIntInput();
+        int sel = -1;
         while (sel < 0 || sel >= possibilities.size()) {
             sel = ReadIntInput();
         }
@@ -167,7 +167,6 @@ public class ClientInput extends Observable {
     }
 
     private int[] BeforeMove(MsgPacket msgPacket) {
-        System.out.println("parsing message");
         int[] coord;
         int[] arr = {-5, -5, -5, -5};
         ArrayList<int[]> movePossibilities;
