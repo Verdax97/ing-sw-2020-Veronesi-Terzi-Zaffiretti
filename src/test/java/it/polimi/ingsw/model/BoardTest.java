@@ -27,7 +27,7 @@ public class BoardTest {
     public void cloneTest(){
         Cell[][] board = new Cell[5][5];
         Board boardTest = new Board();
-        boardTest.Clone();
+        boardTest.CopyValuesInNewBoard();
         assertEquals("Cell is wrong", true, true);
     }
 }

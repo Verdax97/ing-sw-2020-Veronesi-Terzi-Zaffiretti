@@ -14,7 +14,7 @@ public class SetupMatchTest
         ArrayList<String> players = new ArrayList<String>();
         players.add("pino");
         players.add("pippo");
-        setup.setPlayers(players);
+        setup.CreatePlayersFromNickname(players);
         assertEquals("player are wrong", players.get(0), setup.getPlayers().get(0).getNickname());
         assertEquals("player are wrong", players.get(1), setup.getPlayers().get(1).getNickname());
     }
