@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,6 +21,11 @@ public class ServerThread extends Thread implements Observer {
     private final int pos;
     public volatile boolean start;
     private volatile boolean going = true;
+
+    public void setFired(boolean fired) {
+        this.fired = fired;
+    }
+
     private volatile boolean fired;
 
     public ServerThread(Socket clientSocket, String string, ServerMultiplexer server, int pos) {
@@ -44,6 +50,8 @@ public class ServerThread extends Thread implements Observer {
             }
             while (going) {
                 MsgToServer msgToServer = ReceiveMsg();
+                if (msgToServer == null)
+                    break;
                 server.ReceiveMsg(msgToServer);
                 fired = false;
                 while (fired)
@@ -97,7 +105,7 @@ public class ServerThread extends Thread implements Observer {
             //insert player nickname
             SendMsg(new MsgPacket(nick, err + mess, "", null, null));
             //read response
-            nick = ReceiveMsg().nickname;
+            nick = Objects.requireNonNull(ReceiveMsg()).nickname;
             if (server.SetNickname(nick)) {
                 break;
             } else {
@@ -108,31 +116,32 @@ public class ServerThread extends Thread implements Observer {
     }
 
     private void SendMsg(MsgPacket msg) {
-        while (true) {
-            try {
-                //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
-                socketOut.reset();
-                socketOut.writeObject(msg);
-                socketOut.flush();
-                return;
-            } catch (IOException e) {
-                System.out.println(e.toString());
-            }
+        try {
+            //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
+            socketOut.reset();
+            socketOut.writeObject(msg);
+            socketOut.flush();
+            return;
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            going = false;
         }
     }
 
     private MsgToServer ReceiveMsg() {
-        while (true) {
-            try {
-                return (MsgToServer) socketIn.readObject();
-            } catch (ClassNotFoundException | IOException e) {
-                if (e instanceof IOException) {
-                    System.out.println("connection crashed");
-                    //todo
-                } else
-                    System.out.println("The message received from " + nick + " is wrong type");
+        try {
+            return (MsgToServer) socketIn.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            if (e instanceof IOException) {
+                System.out.println("connection crashed");
+                //todo
+                server.CloseConnection();
+            } else {
+                System.out.println("The message received from " + nick + " is wrong type");
+                going = false;
             }
         }
+        return null;
     }
 
 
@@ -145,6 +154,7 @@ public class ServerThread extends Thread implements Observer {
         //send the msg packet
         if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
             going = false;
+
         SendMsg((MsgPacket) arg);
         fired = true;
     }

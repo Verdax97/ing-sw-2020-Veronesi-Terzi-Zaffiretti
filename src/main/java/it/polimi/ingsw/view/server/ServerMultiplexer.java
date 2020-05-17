@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.server;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.IOException;
@@ -98,18 +99,24 @@ public class ServerMultiplexer extends Observable implements Runnable {
         controller.CreateMatch();
     }
 
-    public void CloseConnection() throws IOException
-    {
-        executor.shutdown();
-        serverSocket.close();
+    public void CloseConnection() {
+        for (ServerThread thread :
+                playersThread) {
+            thread.update(new Match(lobby.getPlayers()), new MsgPacket("", "end", "end connection from server", null, null));
+        }
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            //ok
+        }
     }
 
-    public synchronized boolean SetNickname(String name)
-    {
-        for (String s:lobby.getPlayers())
-        {
-            if (name.equalsIgnoreCase(s))
+    public synchronized boolean SetNickname(String name) {
+        for (String s : lobby.getPlayers()) {
+            if (name.equalsIgnoreCase(s)) {
+                System.out.println(name + "-" + s);
                 return false;
+            }
         }
         return lobby.AddPlayer(name);
     }
@@ -131,6 +138,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
             System.out.println("Server Ended");
         }
         while (nConnectionPlayer == lobby.getnPlayer()) {
+            Thread.yield();
             //game
         }
     }
