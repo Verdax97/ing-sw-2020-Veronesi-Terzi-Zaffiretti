@@ -12,8 +12,6 @@ public class ClientStarter implements Runnable {
         System.out.println("Do you want to use GUI? (y/n)");
         if (scanner.nextLine().equalsIgnoreCase("n"))
             clientMain.run();
-
-
         //at the end of the program
         System.out.println("Press enter to end the program");
         scanner.nextLine();
