@@ -1,12 +1,9 @@
 package it.polimi.ingsw.model;
 
-public class ForceMovementGods extends God
-{
-    protected int targetPosX;
-    protected int targetPosY;
+public class ForceMovementGods extends MoveEnemyGods {
 
     protected int ForceMove(Board board, Cell selectedCell, int x, int y) {
-        int moved = CheckMove(board, selectedCell,x ,y);
+        int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0) {
             Worker playerWorker = selectedCell.getWorker();
             Worker targetedWorker = board.getCell(x, y).getWorker();
@@ -21,17 +18,6 @@ public class ForceMovementGods extends God
                 selectedCell.setWorker(null);
         }
         return moved;
-    }
-
-    protected int MoveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y)
-    {
-        if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || (selectedCell == board.getCell(targetPosX,targetPosY)))
-        {
-            worker.setLastMovement(0);
-            board.getCell(targetPosX, targetPosY).setWorker(worker);
-            board.getCell(x, y).setWorker(null);
-        } else return -5;//no space to move enemy worker
-        return 1;
     }
 
     @Override

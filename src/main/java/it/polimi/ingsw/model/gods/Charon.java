@@ -1,19 +1,15 @@
 package it.polimi.ingsw.model.gods;
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Cell;
-import it.polimi.ingsw.model.ForceMovementGods;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 
-public class Charon extends ForceMovementGods {
+public class Charon extends MoveEnemyGods {
 
-    public Charon(){
+    public Charon() {
         this.name = "Charon";
         this.description = "Before your worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if the space is unoccupied";
     }
 
     @Override
-    public int PlayerTurn(Board board, Cell selectedCell, int x, int y)
-    {
+    public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
         int ret = CheckPlayerTurn(board, selectedCell, x, y);
         if (ret <= 0)
             return ret;
