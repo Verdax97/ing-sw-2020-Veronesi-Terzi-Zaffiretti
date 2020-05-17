@@ -22,7 +22,7 @@ public class ClientInput extends Observable {
 
         //wait for input only in particular cases
 
-        if (msg.split(" ")[0].equalsIgnoreCase("Error")) {
+        if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
             System.out.println(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
             selectedX = precSelectedX;
@@ -31,28 +31,29 @@ public class ClientInput extends Observable {
         precSelectedX = selectedX;
         precSelectedY = selectedY;
 
-        if (msg.equalsIgnoreCase("Lobby")) {
+        if (msg.equalsIgnoreCase(Messages.lobby)) {
             System.out.println("Select number of players (2/3)");
             arr[0] = ReadIntInput();
         }
 
-        if (msg.equalsIgnoreCase("Insert Nickname")) {
-            System.out.println(msg);
+        if (msg.equalsIgnoreCase(Messages.nickname)) {
+            System.out.println("Insert your nickname");
             clientMain.setNick(ReadStringInput());
         }
-        if (msg.equalsIgnoreCase("Start")) {
+
+        if (msg.equalsIgnoreCase(Messages.start)) {
             System.out.println("Starting the game");
         }
 
-        if (msg.equalsIgnoreCase("choseGods")) {
+        if (msg.equalsIgnoreCase(Messages.choseGods)) {
             arr[0] = SelectGod(msgPacket, "Chose gods for all players by inserting corresponding value (one at the time)");
         }
 
-        if (msg.equalsIgnoreCase("choseYourGod")) {
+        if (msg.equalsIgnoreCase(Messages.choseYourGod)) {
             arr[0] = SelectGod(msgPacket, "Chose your god by inserting corresponding value");
         }
 
-        if (msg.equalsIgnoreCase("Place")) {
+        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             for (int i = 0; i < 2; i++) {
                 System.out.println("Place worker " + i + ":");
                 while (true) {
@@ -72,16 +73,17 @@ public class ClientInput extends Observable {
             }
         }
 
-        if (msg.equalsIgnoreCase("StartTurn")) {
+        if (msg.equalsIgnoreCase(Messages.startTurn)) {
             System.out.println("Your Turn");
             Reply(-5, -5, -5, -5);
             return;
         }
-        if (msg.equalsIgnoreCase("BeforeMove")) {
+
+        if (msg.equalsIgnoreCase(Messages.beforeMove)) {
             arr = BeforeMove(msgPacket);
         }
 
-        if (msg.equalsIgnoreCase("Move Again")) {
+        if (msg.equalsIgnoreCase(Messages.moveAgain)) {
             System.out.println("You have the possibility to make another move phase.");
             System.out.println("Do you want to make it?(y/n)");
             if (ReadStringInput().equalsIgnoreCase("y")) {
@@ -91,7 +93,7 @@ public class ClientInput extends Observable {
                 arr[0] = 0;
         }
 
-        if (msg.equalsIgnoreCase("Move")) {
+        if (msg.equalsIgnoreCase(Messages.move)) {
             int[] temp = Move(msgPacket);
 
             arr[2] = temp[2];
@@ -101,7 +103,7 @@ public class ClientInput extends Observable {
             selectedY = arr[3];
         }
 
-        if (msg.equalsIgnoreCase("Build Again")) {
+        if (msg.equalsIgnoreCase(Messages.buildAgain)) {
             System.out.println("You have the possibility to make another build phase.");
             System.out.println("Do you want to make it?(y/n)");
             if (ReadStringInput().equalsIgnoreCase("y")) {
@@ -111,7 +113,7 @@ public class ClientInput extends Observable {
                 arr[0] = 0;
         }
 
-        if (msg.equalsIgnoreCase("Build")) {
+        if (msg.equalsIgnoreCase(Messages.build)) {
             int[] temp = Build(msgPacket);
             if (arr[0] != 1) {
                 arr[2] = temp[2];
@@ -130,16 +132,38 @@ public class ClientInput extends Observable {
                 System.out.println("eeeeeeeeeeeeee se fai cagare");
             }
         }
-        if (msg.equalsIgnoreCase("Waiting")) {
+
+        if (msg.equalsIgnoreCase(Messages.wait)) {
             System.out.println(msgPacket.altMsg);
         }
 
-
         try {
             Thread.sleep(200);//dunno why but with this it works
-        } catch (InterruptedException e) {//
+            Reply(arr[0], arr[1], arr[2], arr[3]);
+        } catch (InterruptedException e) {
+            //close all
+            clientMain.EndAll();
         }
-        Reply(arr[0], arr[1], arr[2], arr[3]);
+    }
+
+    private int[] SelectWorker(Board board, String nickname) {
+        ArrayList<int[]> possibilities = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                Worker worker = board.getCell(i, j).getWorker();
+                if (worker != null) {
+                    if (worker.getPlayer().getNickname().equals(nickname)) {
+                        possibilities.add(new int[]{i, j});
+                    }
+                }
+            }
+        }
+        PrintPossibilities(possibilities);
+        int sel = ReadIntInput();
+        while (sel < 0 || sel >= possibilities.size()) {
+            sel = ReadIntInput();
+        }
+        return possibilities.get(ReadIntInput());
     }
 
     private int[] BeforeMove(MsgPacket msgPacket) {
@@ -153,14 +177,14 @@ public class ClientInput extends Observable {
             while (true)//the selected cell is correct?
             {
                 System.out.println("Select the cell with your worker that you want to use");
-                coord = SelectCell();
+                coord = SelectWorker(msgPacket.board, clientMain.getNick());
                 if (msgPacket.board.getCell(coord[0], coord[1]).getWorker() != null) {
                     if (msgPacket.board.getCell(coord[0], coord[1]).getWorker().getPlayer().getNickname().equals(clientMain.getNick()))
                         break;
                     else
                         System.out.println("This is not your worker");
                 } else
-                    System.out.println("There are no worker on this cell");
+                    System.out.println("There is no worker on this cell");
             }
             selectedX = coord[0];
             selectedY = coord[1];
@@ -169,7 +193,7 @@ public class ClientInput extends Observable {
             if (movePossibilities.size() > 0 || beforeMovePossibilities.size() > 0)
                 break;
             else
-                System.out.println("This worker has no moves available, i can't let you lose like an uncivilized monkey, retry.");
+                System.out.println("This worker has no moves left, I can't let you lose like an uncivilized monkey, retry.");
         }
         if (!(beforeMovePossibilities.size() == 0)) {
             //print all possibilities
@@ -214,8 +238,6 @@ public class ClientInput extends Observable {
 
     public void Reply(int x, int y, int targetX, int targetY) {
         //clientMain.setReplyMsg(new MsgToServer(clientMain.getNick(), x,y,targetX, targetY));
-        clientMain.setReadyToSend(true);
-
         setChanged();
         notifyObservers(new MsgToServer(clientMain.getNick(), x, y, targetX, targetY));
     }
