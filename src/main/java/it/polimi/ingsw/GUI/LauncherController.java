@@ -4,10 +4,7 @@ import it.polimi.ingsw.view.client.ClientMain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -19,66 +16,45 @@ public class LauncherController implements Initializable {
     private ClientMain clientMain;
 
     @FXML
-    private TextField nickname;
-
-    @FXML
     private TextField ip;
 
     @FXML
     private TextField port;
 
-    @FXML
-    private CheckBox resume;
 
     @FXML
     private void connection(ActionEvent event) {
         event.consume();
         clientMain = new ClientMain();
-        //debug
-        System.out.println("Debug message, Button Fired");
-        if (resume.isSelected()){
-            System.out.println("Checkbox selected");
-        }
-        //end debug
-        String nicknameTry = nickname.getText();
         String ipTry = ip.getText();
         String portTry = port.getText();
         Pattern pattern = Pattern.compile("[0-9]+");
         Matcher matcher = pattern.matcher(portTry);
         if(!matcher.matches()){
-            error();
+            error("Input is wrong", "Please insert a valid Port Number");
             return;
         }
         else {
             int portNumber = Integer.parseInt(portTry);
             if (!clientMain.InitializeClient(ipTry, portNumber)) {
-                errorFail();
+                error("Connection Failed", "Not able to reach the Server");
                 return;
             }
         }
-        clientMain.run();
+        //clientMain.run();
         //lobby creation
     }
 
-    private void error(){
+    private void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Input not valid");
-        errorAlert.setContentText("Insert a valid Port number");
-        errorAlert.showAndWait();
-    }
-
-    private void errorFail(){
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText("Connection failed");
-        errorAlert.setContentText("Not able to connect with the current server");
+        errorAlert.setHeaderText(header);
+        errorAlert.setContentText(content);
         errorAlert.showAndWait();
     }
 
     @Override
     public void initialize(java.net.URL arg0, ResourceBundle arg1) {
-        ip.setText("");
-        port.setText("");
-        nickname.setText("");
-        resume.setSelected(false);
+        ip.setText("127.0.0.1");
+        port.setText("4567");
     }
 }
