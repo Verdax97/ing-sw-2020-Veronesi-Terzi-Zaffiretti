@@ -28,9 +28,12 @@ public class ClientMain implements Runnable {
 
     private boolean end = false;
 
+    public ClientMain() {
+        this.clientInput = new ClientInput(this);
+    }
+
     @Override
     public void run() {
-        clientInput = new ClientInput(this);
         colors.add(Colors.ANSI_RED);
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
