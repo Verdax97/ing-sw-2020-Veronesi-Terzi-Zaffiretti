@@ -1,12 +1,12 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.GUI.LauncherApp;
 import it.polimi.ingsw.view.client.ClientMain;
 
 
 import java.util.Scanner;
 
 public class ClientStarter implements Runnable {
-
 
     @Override
     public void run() {
@@ -16,6 +16,7 @@ public class ClientStarter implements Runnable {
         if (scanner.nextLine().equalsIgnoreCase("y"))
             //TODO
             //Application.lauch or Application.main
+            LauncherApp.launch(LauncherApp.class, null);
         System.out.println("Debug time");
         if (scanner.nextLine().equalsIgnoreCase("n"))
             clientMain.run();
