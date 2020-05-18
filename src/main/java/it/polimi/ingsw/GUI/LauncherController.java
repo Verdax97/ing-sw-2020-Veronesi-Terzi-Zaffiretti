@@ -5,12 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
@@ -37,6 +33,7 @@ public class LauncherController implements Initializable {
     @FXML
     private void connection(ActionEvent event) {
         event.consume();
+        clientMain = new ClientMain();
         //debug
         System.out.println("Debug message, Button Fired");
         if (resume.isSelected()){
@@ -49,26 +46,32 @@ public class LauncherController implements Initializable {
         Pattern pattern = Pattern.compile("[0-9]+");
         Matcher matcher = pattern.matcher(portTry);
         if(!matcher.matches()){
-            //eventualmente si può fare un altro fxml che viene loadato dal controller per schermata di errore
-            //anche se a sua volta non avrebbe behavior
-            Button errorButton = new Button("Ok");
-            Label errorLabel = new Label("Error: invalid port");
-            BorderPane borderPaneError = new BorderPane();
-            borderPaneError.setTop(errorLabel);
-            borderPaneError.setCenter(errorButton);
-            Scene error = new Scene(borderPaneError, 150,150);
-            Stage errorStage = new Stage();
-            errorStage.setScene(error);
-            errorStage.show();
+            error();
+            return;
         }
-        int portNumber = Integer.parseInt(portTry);
-        boolean success;
-        //0 non fa niente e caccia errore
-        //1 controlla il nickname, mantenendo aperta la connessione
+        else {
+            int portNumber = Integer.parseInt(portTry);
+            if (!clientMain.InitializeClient(ipTry, portNumber)) {
+                errorFail();
+                return;
+            }
+        }
+        clientMain.run();
+        //lobby creation
     }
 
-    public void setClientMain(ClientMain clientMain){
-        this.clientMain = clientMain;
+    private void error(){
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setHeaderText("Input not valid");
+        errorAlert.setContentText("Insert a valid Port number");
+        errorAlert.showAndWait();
+    }
+
+    private void errorFail(){
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setHeaderText("Connection failed");
+        errorAlert.setContentText("Not able to connect with the current server");
+        errorAlert.showAndWait();
     }
 
     @Override
