@@ -62,19 +62,25 @@ public class Controller implements Observer {
                 match.StartTurn();
                 ret = match.getLastAction();
                 if (ret == 0)
-                    UpdateStatus(State.BEFOREMOVE);
+                    UpdateStatus(State.SELECTWORKER);
                 else if (ret == 1)
                     UpdateStatus(State.ENDMATCH);
                 else if (ret == -1)
                     UpdateStatus(State.STARTTURN);
+                break;
+            case SELECTWORKER:
+                match.SelectWorker(msgPacket);
+                ret = match.getLastAction();
+                if (ret == 1)
+                    UpdateStatus(State.BEFOREMOVE);
+                else if (ret == 2)
+                    UpdateStatus(State.MOVE);
                 break;
             case BEFOREMOVE:
                 match.BeforeMove(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     UpdateStatus(State.MOVE);
-                else if (ret == -1)
-                    UpdateStatus(State.STARTTURN);
                 break;
             case MOVE:
                 match.Move(msgPacket);

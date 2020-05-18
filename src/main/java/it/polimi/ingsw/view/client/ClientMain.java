@@ -1,14 +1,10 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.model.MsgToServer;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Colors;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ClientMain implements Runnable {
@@ -17,10 +13,10 @@ public class ClientMain implements Runnable {
     private volatile boolean readyToReceive = false;
     private MsgPacket receivedMsg;
     private ClientInput clientInput;
-    public LineClient lineClient;
-    private final ArrayList<String> colors = new ArrayList<>();
+    public final ArrayList<String> colors = new ArrayList<>();
 
-    public Board board;
+    public boolean CLI = false;
+    public SimpleBoard board;
 
     private String nick = "temp";
 
@@ -38,7 +34,8 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
         while (!end) {
-            end = CLIStuff();
+            if (CLI)
+                end = CLIStuff();
         }
         EndAll();
         System.exit(1);
@@ -46,6 +43,10 @@ public class ClientMain implements Runnable {
 
     public boolean InitializeClient(String IP, int port) {
         LineClient client = new LineClient(IP, port, this);
+        if (CLI)
+            clientInput = new ClientInputCLI(this);
+        else
+            clientInput = new ClientInputGUI(this);
         clientInput.addObserver(client);
 
         try {
@@ -78,7 +79,7 @@ public class ClientMain implements Runnable {
         }
 
         board = receivedMsg.board;
-        printBoard(receivedMsg.board, receivedMsg.players);
+        clientInput.printBoard(board);
 
         if (receivedMsg.nickname.equals(nick)) {
             //start a new thread for the input receiver
@@ -114,50 +115,6 @@ public class ClientMain implements Runnable {
 
     public void setNick(String nick) {
         this.nick = nick;
-    }
-
-    public void printBoard(Board board, ArrayList<Player> players) {
-        if (players == null)
-            return;
-
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-        System.out.println("-------------------------------------------------------------------");
-        for (int i = 0; i < players.size(); i++) {
-            System.out.print(colors.get(i) + players.get(i).getNickname() + " ");
-            if (players.get(i).getGodPower() != null) {
-                System.out.print(players.get(i).getGodPower().getName() + ": " + players.get(i).getGodPower().description + Colors.ANSI_RESET);
-            }
-            System.out.println(Colors.ANSI_RESET);
-        }
-        //now print the board
-        System.out.print("\n");
-        if (board != null) {
-            //System.out.println("Print the board (this message only for debug)");
-            for (int j = 4; j >= 0; j--) {
-                System.out.print(j + "|");
-                for (int i = 0; i < 5; i++) {
-                    if (board.getCell(i, j).getDome()) {
-                        System.out.print("D" + " ");
-                    } else if (board.getCell(i, j).getWorker() != null) {
-                        for (int k = 0; k < players.size(); k++) {
-                            if (players.get(k).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
-                                System.out.print(colors.get(k) + board.getCell(i, j).getBuilding() + Colors.ANSI_RESET + " ");
-                                break;
-                            }
-                        }
-                    } else {
-                        System.out.print(board.getCell(i, j).getBuilding() + " ");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println("Y|---------");
-            System.out.println("X 0 1 2 3 4\n");
-        } else {
-            System.out.println("No board to print (this message only for debug)");
-        }
     }
 
     public void EndAll() {

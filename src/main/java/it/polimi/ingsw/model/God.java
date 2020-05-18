@@ -1,31 +1,19 @@
 package it.polimi.ingsw.model;
 
-//import java.awt.*;
-
 import java.io.Serializable;
 
-public class God implements Serializable {
-    protected String name;
-    public String description;
-    //protected Image img;
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
+public class God extends SimpleGod implements Serializable {
     public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
         return 1;
-    }//todo implement control if he has moves
+    }
 
-    public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y) {return 0;}
+    public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y) {
+        return 0;
+    }
 
     public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
-        if (moved > 0){
+        if (moved > 0) {
             board.getCell(x, y).setWorker(selectedCell.getWorker());
             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
             selectedCell.setWorker(null);

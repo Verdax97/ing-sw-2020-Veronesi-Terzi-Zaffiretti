@@ -21,7 +21,9 @@ public class ClientStarter implements Runnable {
             String IP;
             int port;
             do {
+                clientMain.CLI = true;
                 System.out.println("Insert Server IP");
+                scanner = new Scanner(System.in);
                 IP = scanner.nextLine();
                 System.out.println("Insert Server port");
                 while (true) {
@@ -34,7 +36,7 @@ public class ClientStarter implements Runnable {
                     }
                 }
 
-            } while (clientMain.InitializeClient(IP, port));
+            } while (!clientMain.InitializeClient(IP, port));
             clientMain.run();
         }
         /*

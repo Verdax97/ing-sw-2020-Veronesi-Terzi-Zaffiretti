@@ -163,4 +163,27 @@ public class Turn
         }
         return player.getGodPower().WinCondition(board, player);
     }
+
+    public ArrayList<int[]> CheckAround(Board board, int tempx, int tempy, God god, int phase) {
+        ArrayList<int[]> arr = new ArrayList<>();
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                int x = tempx + i;
+                int y = tempy + j;
+                if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5)) {
+                    int ret = -1;
+                    if (phase == 0)//beforeMove
+                        ret = god.CheckPlayerTurn(board, board.getCell(tempx, tempy), x, y);
+                    if (phase == 1)//move
+                        ret = god.CheckMove(board, board.getCell(tempx, tempy), x, y);
+                    if (phase == 2)//build
+                        ret = god.CheckBuild(board, board.getCell(tempx, tempy), x, y);
+                    if (ret > 0) {
+                        arr.add(new int[]{x, y});//add to the list of possible moves
+                    }
+                }
+            }
+        }
+        return arr;
+    }
 }

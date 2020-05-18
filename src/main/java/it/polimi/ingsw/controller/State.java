@@ -1,11 +1,11 @@
 package it.polimi.ingsw.controller;
 
-public enum State
-{
+public enum State {
         SETUP,
         SELECT,
         PLACEWORKERS,
         STARTTURN,
+        SELECTWORKER,
         BEFOREMOVE,
         MOVE,
         BUILD,

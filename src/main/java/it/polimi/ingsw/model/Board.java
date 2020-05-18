@@ -28,10 +28,23 @@ public class Board implements Serializable {
         }
     }
 
-    protected final Board CopyValuesInNewBoard() {
+    public final Board CopyValuesInNewBoard() {
         final Board result = new Board();
         for (int i = 0; i < 5; i++) {
             result.board[i] = board[i].clone();
+        }
+        return result;
+    }
+
+    public int[][] CopyValuesInNewSimpleBoard() {
+        int[][] result = new int[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (board[i][j].getDome())
+                    result[i][j] = 4;
+                else
+                    result[i][j] = board[i][j].getBuilding();
+            }
         }
         return result;
     }

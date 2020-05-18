@@ -39,14 +39,17 @@ public class LineClient extends Thread implements Observer {
             MsgPacket msg = ReceiveMsg();
 
             //pass the message to the main client
-            clientMain.setReceivedMsg(msg);
-            clientMain.setReadyToReceive(true);
+            if (msg != null) {
 
-            if (msg == null)
-                break;
-            //exit if the game ends
-            if (msg.msg.equalsIgnoreCase("end"))
-                break;
+                clientMain.setReceivedMsg(msg);
+                clientMain.setReadyToReceive(true);
+
+            /*if (msg == null)
+                break;*/
+                //exit if the game ends
+                if (msg.msg.equalsIgnoreCase("end"))
+                    break;
+            } else System.out.println("null message");
         }
 
         System.out.println("the game is ended");
@@ -58,30 +61,24 @@ public class LineClient extends Thread implements Observer {
     }
 
     private void SendMsg(MsgToServer msg) {
-        while (true) {
-            try {
-                //socketOut.reset();
-                socketOut.writeObject(msg);
-                socketOut.flush();
-                return;
-            } catch (IOException e) {
-                System.out.println("no more connection");
-            }
+        try {
+            //socketOut.reset();
+            socketOut.writeObject(msg);
+            socketOut.flush();
+        } catch (IOException e) {
+            System.out.println("no more connection");
         }
     }
 
     private MsgPacket ReceiveMsg() {
-        while (true) {
-            try {
-                return (MsgPacket) socketIn.readObject();
-            } catch (ClassNotFoundException | IOException e) {
-                if (e instanceof IOException) {
-                    System.out.println("Dropped connection\nDisconnecting from server");
-                    //todo close all
-                    break;
-                } else
-                    System.out.println("The format of the message to receive is incorrect");
-            }
+        try {
+            return (MsgPacket) socketIn.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            if (e instanceof IOException) {
+                System.out.println("Dropped connection\nDisconnecting from server");
+                //todo close all
+            } else
+                System.out.println("The format of the message to receive is incorrect");
         }
         return null;
     }

@@ -71,7 +71,7 @@ public class ServerThread extends Thread implements Observer {
         SetupNickname();
 
         //
-        SendMsg(new MsgPacket(nick, Messages.wait, "Waiting for players", null, null));
+        SendMsg(new MsgPacket(nick, Messages.wait, "Waiting for players", null));
         ReceiveMsg();
 
         //add user to the number successfully connected
@@ -85,7 +85,7 @@ public class ServerThread extends Thread implements Observer {
             String err = "";
             while (true) {
                 //insert player number
-                SendMsg(new MsgPacket(nick, err + mess, "", null, null));
+                SendMsg(new MsgPacket(nick, err + mess, "", null));
 
                 //read response
                 MsgToServer msgToServer = ReceiveMsg();
@@ -107,7 +107,7 @@ public class ServerThread extends Thread implements Observer {
         String err = "";
         while (true) {
             //insert player nickname
-            SendMsg(new MsgPacket(nick, err + mess, "", null, null));
+            SendMsg(new MsgPacket(nick, err + mess, "", null));
             //read response
             nick = Objects.requireNonNull(ReceiveMsg()).nickname;
             if (server.SetNickname(nick)) {
@@ -122,7 +122,7 @@ public class ServerThread extends Thread implements Observer {
     private void SendMsg(MsgPacket msg) {
         try {
             //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
-            socketOut.reset();
+            //socketOut.reset();
             socketOut.writeObject(msg);
             socketOut.flush();
         } catch (IOException e) {

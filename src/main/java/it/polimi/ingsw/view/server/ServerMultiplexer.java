@@ -102,7 +102,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
     public void CloseConnection() {
         for (ServerThread thread :
                 playersThread) {
-            thread.update(new Match(lobby.getPlayers()), new MsgPacket("", "end", "end connection from server", null, null));
+            thread.update(new Match(lobby.getPlayers()), new MsgPacket("", "end", "end connection from server", null));
         }
         try {
             serverSocket.close();
