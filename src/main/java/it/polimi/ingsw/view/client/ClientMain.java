@@ -34,31 +34,14 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_RED);
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
-        while (true) {
-            if (InitializeClient()) break;
-        }
         while (!end) {
             end = CLIStuff();
         }
         EndAll();
+        System.exit(1);
     }
 
-    boolean InitializeClient() {
-        System.out.println("Insert Server IP");
-        String IP = stdin.nextLine();
-        System.out.println("Insert Server port");
-
-        int port;
-        while (true) {
-            try {
-                port = stdin.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Insert a valid port");
-                stdin = new Scanner(System.in);
-            }
-        }
-
+    public boolean InitializeClient(String IP, int port) {
         LineClient client = new LineClient(IP, port, this);
         clientInput.addObserver(client);
 
@@ -176,7 +159,7 @@ public class ClientMain implements Runnable {
 
     public void EndAll() {
         //todo end the game
-        System.out.println("quitting");
+        System.out.println("Game is ended.\nClosing the application");
         try {
             threadInput.interrupt();
             threadInput.join(300);
