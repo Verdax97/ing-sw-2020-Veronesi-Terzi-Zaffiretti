@@ -64,11 +64,11 @@ public class CellTest {
     @Test
     public void IsAdjacentTest ()
     {
-        Cell cell = new Cell(0,0);
-        cell.setPos(3,3);
-        assertEquals("isAdjacent is wrong", cell.isAdjacent(4,4), true);
-        assertEquals("isAdjacent is wrong", cell.isAdjacent(4,5), false);
-        assertEquals("isAdjacent is wrong", cell.isAdjacent(3,3), false);
+        Cell cell = new Cell(0, 0);
+        cell.setPos(3, 3);
+        assertTrue("isAdjacent is wrong", cell.isAdjacent(4, 4));
+        assertFalse("isAdjacent is wrong", cell.isAdjacent(4, 5));
+        assertFalse("isAdjacent is wrong", cell.isAdjacent(3, 3));
     }
 
     @Test
@@ -94,20 +94,19 @@ public class CellTest {
         Board board = new Board();
         Cell cell = board.getCell(0, 0);
         cell.setDome(true);
-        assertEquals("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0), false);
+        assertFalse("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0));
         cell.setDome(false);
-        assertEquals("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0), true);
+        assertTrue("IsFreeDome is wrong", cell.IsFreeDome(board, 0, 0));
     }
 
     @Test
-    public void IsFreeWorker(){
+    public void IsFreeWorker() {
         Board board = new Board();
         Worker worker = new Worker();
         Cell cell = board.getCell(0, 0);
         cell.setWorker(worker);
-        assertEquals("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 0), false);
-        Cell cellTest = board.getCell(0, 1);
-        assertEquals("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 1), true);
+        assertFalse("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 0));
+        assertTrue("IsFreeWorker is wrong", cell.IsFreeWorker(board, 0, 1));
     }
 }
 

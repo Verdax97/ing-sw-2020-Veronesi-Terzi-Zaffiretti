@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class SimpleGod implements Serializable {
     protected String name;
     protected String description;
-    protected Image img;
+    protected Image img = null;
 
     public void setSimpleGod(String name, String description, Image img) {
         this.name = name;

@@ -11,7 +11,7 @@ public class SetupMatchTest
     public void GetPlayersTest()
     {
         SetupMatch setup = new SetupMatch();
-        ArrayList<String> players = new ArrayList<String>();
+        ArrayList<String> players = new ArrayList<>();
         players.add("pino");
         players.add("pippo");
         setup.CreatePlayersFromNickname(players);
@@ -22,7 +22,7 @@ public class SetupMatchTest
     @Test
     public void getGodPicked(){
         // First Look, NOT FINISHED
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Player> players = new ArrayList<>();
         SetupMatch setupMatch = new SetupMatch();
         setupMatch.SetPlayers(players);
         setupMatch.AddGodPicked(setupMatch.getGodList().get(0));

@@ -19,8 +19,10 @@ public class Charon extends MoveEnemyGods {
     @Override
     public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y)
     {
-        if (board.getCell(x, y).getWorker() == null || board.getCell(x, y).getWorker().getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
+        if (board.getCell(x, y).getWorker() == null)
             return -2;//no valid worker to make the move
+        if (board.getCell(x, y).getWorker().getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))
+            return -2;
         int dx = selectedCell.getPos()[0] - x;
         int dy = selectedCell.getPos()[1] - y;
         targetPosX = selectedCell.getPos()[0] + dx;

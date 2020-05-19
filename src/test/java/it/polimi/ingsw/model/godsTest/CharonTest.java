@@ -44,11 +44,11 @@ public class CharonTest{
         turn.setSelectedCell(board.getCell(0, 4));
         assertEquals("Return value is wrong", -7, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 3));
         serverView.PrintBoard(board, match);
+        turn.setSelectedCell(board.getCell(2, 1));
+        assertEquals("Return value is wrong", -2, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(3, 1));
         assertEquals("Return value is wrong", 1, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
-        serverView.PrintBoard(board, match);
-        turn.setSelectedCell(board.getCell(2, 1));
-        assertEquals("Return value is wrong", -5, charon.PlayerTurn(board, turn.getSelectedCell(), 3, 1));
         serverView.PrintBoard(board, match);
         assertEquals("Return value is wrong", -2, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
         serverView.PrintBoard(board, match);

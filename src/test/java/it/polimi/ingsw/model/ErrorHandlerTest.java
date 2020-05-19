@@ -14,7 +14,7 @@ public class ErrorHandlerTest {
         assertEquals("GetErrorSetup value error", "You Won!!", errorHandler.GetErrorSetup(1));
         assertEquals("GetErrorSetup value error", "", errorHandler.GetErrorSetup(0));
         int n = 15;
-        assertEquals("GetErrorSetup value error", "", errorHandler.GetErrorSetup(n));
+        assertEquals("GetErrorSetup value error", "Error generic", errorHandler.GetErrorSetup(n));
 
     }
 

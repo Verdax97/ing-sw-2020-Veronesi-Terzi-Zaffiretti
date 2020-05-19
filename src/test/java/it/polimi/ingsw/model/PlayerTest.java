@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 public class PlayerTest {
@@ -23,11 +25,10 @@ public class PlayerTest {
     }
 
     @Test
-    public void getActiveTest(){
+    public void getActiveTest() {
         Player playerTest = new Player("Pino");
-        boolean active = true;
-        playerTest.setActive(active);
-        assertEquals("Return value is wrong", playerTest.getActive(), true);
+        playerTest.setActive(true);
+        assertTrue("Return value is wrong", playerTest.getActive());
     }
 
 }
