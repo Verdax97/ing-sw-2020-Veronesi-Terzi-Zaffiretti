@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.gods.Charon;
+
 import it.polimi.ingsw.model.gods.Hephaestus;
 import it.polimi.ingsw.model.gods.Pan;
 import it.polimi.ingsw.model.gods.Triton;
@@ -38,6 +38,7 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
         match.getSetup();
+        assertTrue("IsFreeDome is wrong", true);
     }
 
     @Test
@@ -144,7 +145,7 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        MsgToServer msgPacket = new MsgToServer("Pino", 0, 0, 1, 1);
+        MsgToServer msgPacket;
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
         Worker worker1 = new Worker();

@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class LobbyTest
 {
@@ -13,7 +12,7 @@ public class LobbyTest
     public void GetPlayersTest()
     {
         Lobby lobby = new Lobby();
-        ArrayList<String> players = new ArrayList<String>();
+        ArrayList<String> players = new ArrayList<>();
         players.add("pino");
         players.add("pippo");
         players.add("Magnifico Rettore Ferruccio Resta");

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.gods.*;
-import it.polimi.ingsw.view.ServerView;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.*;
@@ -33,7 +31,7 @@ public class TurnTest
     public void GetWorkersTest()
     {
         Turn turn = new Turn();
-        ArrayList<Worker> workers = new ArrayList<Worker>();
+        ArrayList<Worker> workers = new ArrayList<>();
         workers.add(new Worker());
         workers.add(new Worker());
         workers.add(new Worker());
@@ -87,7 +85,6 @@ public class TurnTest
         players.add("Pippo");
         players.add("Magnifico Rettore Ferruccio Resta");
         Match match = new Match(players);
-        SetupMatch setupMatch = new SetupMatch();
         Board board = match.getBoard();
         board.getCell(4,4).setDome(true);
         board.getCell(3,3).setBuilding(3);
@@ -145,7 +142,7 @@ public class TurnTest
         player1.setGodPower(god1);
         God god2 = new God();
         player2.setGodPower(god2);
-        ArrayList<Player> ActivePlayers = new ArrayList<Player>();
+        ArrayList<Player> ActivePlayers = new ArrayList<>();
         ActivePlayers.add(player1);
         ActivePlayers.add(player2);
         assertEquals("Error lose false", turn.StartTurn(ActivePlayers, player1, board), 0);

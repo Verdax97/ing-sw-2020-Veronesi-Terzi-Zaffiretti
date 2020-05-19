@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 public class WorkerTest
@@ -23,12 +24,11 @@ public class WorkerTest
     }
 
     @Test
-    public void isDebuffTest(){
+    public void isDebuffTest() {
         Worker worker = new Worker();
         Player player = new Player("Pino");
         worker.setPlayer(player);
-        boolean debuff = true;
-        worker.setDebuff(debuff);
-        assertEquals("Debuff is wrong", worker.isDebuff(), true);
+        worker.setDebuff(true);
+        assertTrue("Debuff is wrong", worker.isDebuff());
     }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.gods.Athena;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class GodTest {
 
@@ -16,7 +17,7 @@ public class GodTest {
     @Test
     public void getImgTest() {
         God god = new God();
-        assertEquals("Return value is wrong", null, god.getImg());
+        assertNull("Return value is wrong", god.getImg());
     }
 
     @Test
