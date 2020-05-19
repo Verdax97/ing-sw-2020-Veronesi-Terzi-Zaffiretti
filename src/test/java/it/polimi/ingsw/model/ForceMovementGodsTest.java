@@ -73,8 +73,7 @@ public class ForceMovementGodsTest {
     }
 
     @Test
-    public  void MoveEnemyTest()
-    {
+    public void invalidWorkerToMove() {
         ArrayList<String> players = new ArrayList<>();
         players.add("Pino");
         players.add("Pippo");
@@ -82,15 +81,12 @@ public class ForceMovementGodsTest {
         Match match = new Match(players);
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
-        forceMovementGod.targetPosX = 1;
-        forceMovementGod.targetPosY = 0;
         Cell selectedCell = board.getCell(0, 1);
+        Player player = new Player(players.get(0));
         Worker worker = new Worker();
-        Worker enemyWorker = new Worker();
-        worker.setPlayer(match.getPlayers().get(0));
-        enemyWorker.setPlayer(match.getPlayers().get(1));
+        worker.setPlayer(player);
         selectedCell.setWorker(worker);
-        board.getCell(1, 0).setWorker(enemyWorker);
-        assertEquals("Return value is wrong", 1, forceMovementGod.MoveEnemy(worker, board, selectedCell, 1, 0));
+        board.getCell(0, 2).setWorker(worker);
+        assertEquals("Return value is wrong", -4, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
     }
 }

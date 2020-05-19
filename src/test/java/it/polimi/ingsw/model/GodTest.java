@@ -5,16 +5,22 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class GodTest{
+public class GodTest {
 
     @Test
-    public void getNameTest(){
+    public void getNameTest() {
         God athena = new Athena();
         assertEquals("Return value is wrong", "Athena", athena.getName());
     }
 
     @Test
-    public void getDescriptionTest(){
+    public void getImgTest() {
+        God god = new God();
+        assertEquals("Return value is wrong", null, god.getImg());
+    }
+
+    @Test
+    public void getDescriptionTest() {
         God athena = new Athena();
         assertEquals("Return value is wrong", "Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.", athena.getDescription());
     }
@@ -24,9 +30,19 @@ public class GodTest{
         Board board = new Board();
         God god = new God();
         Turn turn = new Turn();
-        turn.setSelectedCell(board.getCell(0,0));
+        turn.setSelectedCell(board.getCell(0, 0));
         god.ResetGod();
-        assertEquals("std Turn Error", god.PlayerTurn(board, turn.getSelectedCell(), 1, 1), 0);
+        assertEquals("std Turn Error", 1, god.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
+    }
+
+    @Test
+    public void checkPlayerTurnTest() {
+        Board board = new Board();
+        God god = new God();
+        Turn turn = new Turn();
+        turn.setSelectedCell(board.getCell(0, 0));
+        god.ResetGod();
+        assertEquals("std Turn Error", 0, god.CheckPlayerTurn(board, turn.getSelectedCell(), 1, 1));
     }
 
 }

@@ -22,8 +22,6 @@ public class LobbyTest
         lobby.AddPlayer("Magnifico Rettore Ferruccio Resta");
         assertEquals("player are wrong", players, lobby.getPlayers());
         lobby.setnPlayer(3);
-        players.add("Rifiutato");
-        assertFalse("return false error", lobby.AddPlayer("Rifiutato"));
         assertEquals("nPlayers wrong",3, lobby.getnPlayer());
     }
 }
