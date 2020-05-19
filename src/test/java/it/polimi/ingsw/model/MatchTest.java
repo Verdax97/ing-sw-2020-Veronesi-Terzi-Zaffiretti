@@ -110,6 +110,7 @@ public class MatchTest {
         MsgToServer msg1 = new MsgToServer("Gino", -1, 0, 0, 0);
         match.SelectPlayerGod(msg1);
         assertEquals("getLastActionError", -1, match.getLastAction());
+        msg = new MsgToServer("Gino", 0,0,0,0);
         match.SelectPlayerGod(msg);
         assertEquals("getLastActionError", 1, match.getLastAction());
         match.SelectPlayerGod(msg);
@@ -117,23 +118,30 @@ public class MatchTest {
     }
 
     @Test
-    public void StartTurnTest() {
+    public void StartTurnTest(){
         ArrayList<String> players = new ArrayList<>();
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-
         match.StartGame();
+        God god = new God();
+        God god1 = new God();
+        match.getPlayers().get(0).setGodPower(god);
+        match.getPlayers().get(1).setGodPower(god1);
         MsgToServer msg = new MsgToServer("Pino", 0, 0, 2, 2);
         match.PlaceWorker(msg);
-        match.getBoard().getCell(1, 0).setBuilding(3);
-        match.getBoard().getCell(1, 1).setBuilding(3);
-        match.getBoard().getCell(0, 1).setBuilding(3);
+        msg = new MsgToServer("Pino", 4, 4, 3, 3);
+        match.PlaceWorker(msg);
         match.StartTurn();
         assertEquals("getLastActionError", 0, match.getLastAction());
+        match.getBoard().getCell(1,0).setBuilding(3);
+        match.getBoard().getCell(1,1).setBuilding(3);
+        match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(2, 2).setWorker(null);
         match.StartTurn();
         assertEquals("getLastActionError", -10, match.getLastAction());
+        match.getBoard().getCell(0,0).setWorker(match.getBoard().getCell(4,4).getWorker());
+        match.getBoard().getCell(4,4).setWorker(null);
         match.getBoard().getCell(0,0).getWorker().setPlayer(match.getPlayerTurn());
         match.StartTurn();
         assertEquals("getLastActionError", 1, match.getLastAction());
@@ -145,36 +153,30 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        MsgToServer msgPacket;
+        match.StartGame();
+        MsgToServer msgPacket = new MsgToServer("Pino", 0, 0, 0, 0);
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
         Worker worker1 = new Worker();
         worker1.setPlayer(match.getPlayers().get(0));
         Triton triton = new Triton();
         God god = new God();
-
-        match.StartGame();
-        match.getPlayerTurn().setGodPower(triton);
+        match.getPlayerTurn().setGodPower(god);
         match.getBoard().getCell(1, 1).setWorker(worker);
         match.getPlayers().get(0).setGodPower(god);
         match.getBoard().getCell(3, 3).setWorker(worker1);
         match.StartTurn();
-        msgPacket = new MsgToServer("Pino", 1, 0, 1, 0);
-        match.Move(msgPacket);
-        assertEquals("getLastActionError", 2, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 0, 0, 0, 1);
+        match.SelectWorker(msgPacket);
+        msgPacket = new MsgToServer("Pino", 4, 0, 1, 1);
         match.Move(msgPacket);
         assertEquals("getLastActionError", 1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 1,0,1,1);
+        msgPacket = new MsgToServer("Pino", 0, 0, 1, 1);
+        match.Move(msgPacket);
+        assertEquals("getLastActionError", 1, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", 2,0,1,1);
         match.Move(msgPacket);
         assertEquals("getLastActionError", 1, match.getLastAction());
         triton.ResetGod();
-        msgPacket = new MsgToServer("Pino", 1,0,5,5);
-        match.Move(msgPacket);
-        assertEquals("getLastActionError", -1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 0,0,5,5);
-        match.Move(msgPacket);
-        assertEquals("getLastActionError", -1, match.getLastAction());
         match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(1,1).setBuilding(2);
         msgPacket = new MsgToServer("Pino", 1,0,0,1);
