@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.GUI.LauncherApp;
+import it.polimi.ingsw.view.GUI.LauncherApp;
 import it.polimi.ingsw.view.client.ClientMain;
 
 
