@@ -5,7 +5,7 @@ public class MultipleActionGod extends God
     protected int use = 0;
     protected int useLimit = 0;
 
-    protected int CheckUse()
+    public int CheckUse()
     {
         if (this.use == this.useLimit){
             this.use = 0;

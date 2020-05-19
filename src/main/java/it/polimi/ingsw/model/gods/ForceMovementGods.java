@@ -1,8 +1,12 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.gods;
+
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.Worker;
 
 public class ForceMovementGods extends MoveEnemyGods {
 
-    protected int ForceMove(Board board, Cell selectedCell, int x, int y) {
+    public int ForceMove(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0) {
             Worker playerWorker = selectedCell.getWorker();

@@ -1,10 +1,14 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.gods;
+
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.God;
+import it.polimi.ingsw.model.Player;
 
 public class DebuffGod extends God
 {
     protected boolean debuff = false;
 
-    protected void DebuffWorker(Board board, Player player)
+    public void DebuffWorker(Board board, Player player)
     {
         for (int i = 0; i < 5; i++)
         {
@@ -18,4 +22,9 @@ public class DebuffGod extends God
             }
         }
     }
+
+    public void setDebuff(boolean debuff) {
+        this.debuff = debuff;
+    }
+
 }

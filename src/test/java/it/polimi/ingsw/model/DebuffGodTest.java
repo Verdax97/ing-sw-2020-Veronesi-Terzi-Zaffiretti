@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.gods.DebuffGod;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class DebuffGodTest {
         testWorker00.setPlayer(new Player(players.get(0)));
         board.getCell(0,0).setWorker(testWorker00);
         DebuffGod gianni = new DebuffGod();
-        gianni.debuff = true;
+        gianni.setDebuff(true);
         gianni.DebuffWorker(board, testWorker00.getPlayer());
         assertTrue("IsFreeDome is wrong", testWorker00.isDebuff());
     }

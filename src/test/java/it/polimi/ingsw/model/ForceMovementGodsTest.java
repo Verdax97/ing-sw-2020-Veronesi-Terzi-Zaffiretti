@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.gods.ForceMovementGods;
 import org.junit.Test;
 
 import java.util.ArrayList;

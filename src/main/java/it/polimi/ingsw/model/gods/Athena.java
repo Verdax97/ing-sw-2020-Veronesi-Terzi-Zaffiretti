@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.DebuffGod;
 import it.polimi.ingsw.model.Player;
 
 public class Athena extends DebuffGod
