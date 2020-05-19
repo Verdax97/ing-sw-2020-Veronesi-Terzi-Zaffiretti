@@ -144,14 +144,14 @@ public class ClientInputCLI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.wait)) {
             System.out.println(msgPacket.altMsg);
         }
-
+/*
         try {
-            Thread.sleep(200);//dunno why but with this it works
-            Reply(arr[0], arr[1], arr[2], arr[3]);
+            Thread.sleep(50);//dunno why but with this it works
         } catch (InterruptedException e) {
             //close all
             clientMain.EndAll();
-        }
+        }*/
+        Reply(arr[0], arr[1], arr[2], arr[3]);
     }
 
 

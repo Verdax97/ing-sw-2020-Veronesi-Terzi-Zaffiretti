@@ -234,7 +234,7 @@ public class Match extends Observable {
         ArrayList<int[]> beforeMovePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 0);
 
         if (pow == 1)
-            lastAction = turn.BeforeMove(board, beforeMovePossibilities.get(sel)[2], beforeMovePossibilities.get(sel)[3]);
+            lastAction = turn.BeforeMove(board, beforeMovePossibilities.get(sel)[0], beforeMovePossibilities.get(sel)[1]);
         else
             lastAction = 1;
 
@@ -254,7 +254,7 @@ public class Match extends Observable {
         String alt;
         int sel = msgPacket.x;
         ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
-        CheckMove(movePossibilities.get(sel)[2], movePossibilities.get(sel)[3], msgPacket.y);
+        CheckMove(movePossibilities.get(sel)[0], movePossibilities.get(sel)[1], msgPacket.y);
         winner = CheckWinCondition(playerTurn);
         if (winner != null) {
             lastAction = 10;
@@ -305,7 +305,7 @@ public class Match extends Observable {
                     " lost because he can't build with his workers");
         } else {
 
-            CheckBuild(buildPossibilities.get(sel)[2], buildPossibilities.get(sel)[3], typeBuilding, godPower);
+            CheckBuild(buildPossibilities.get(sel)[0], buildPossibilities.get(sel)[1], typeBuilding, godPower);
             winner = CheckWinCondition(playerTurn);
             if (winner != null)
             {
