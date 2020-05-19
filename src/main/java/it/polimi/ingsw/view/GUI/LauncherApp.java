@@ -10,6 +10,10 @@ public class LauncherApp extends Application {
 
     private static Stage primaryStage;
 
+    static Stage getPrimaryStage(){
+        return primaryStage;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
