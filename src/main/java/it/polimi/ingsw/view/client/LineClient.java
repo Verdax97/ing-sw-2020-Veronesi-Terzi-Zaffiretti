@@ -43,13 +43,13 @@ public class LineClient extends Thread implements Observer {
 
                 clientMain.setReceivedMsg(msg);
                 clientMain.setReadyToReceive(true);
-
-            /*if (msg == null)
-                break;*/
-                //exit if the game ends
                 if (msg.msg.equalsIgnoreCase("end"))
                     break;
-            } else System.out.println("null message");
+            } else {
+                System.out.println("null message");
+                SendMsg(new MsgToServer(clientMain.getNick(), -5, -5, -5, -5));
+                break;
+            }
         }
 
         System.out.println("the game is ended");
@@ -75,7 +75,7 @@ public class LineClient extends Thread implements Observer {
             return (MsgPacket) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
             if (e instanceof IOException) {
-                System.out.println("Dropped connection\nDisconnecting from server");
+                System.out.println(((IOException) e).toString());
                 //todo close all
             } else
                 System.out.println("The format of the message to receive is incorrect");

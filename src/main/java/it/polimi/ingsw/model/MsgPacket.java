@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MsgPacket implements Serializable {
+    private static final long serialVersionUID = 1234L;
     public String nickname;
     public String msg;
     public String altMsg;
