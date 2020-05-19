@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.ServerView;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 
 import java.util.Observable;
@@ -111,6 +112,7 @@ public class Controller implements Observer {
                 match.CreateMsgPacket(match.getMsgError(), "Wait");
                 break;
         }
+        new ServerView().PrintBoard(match.getBoard(), match);
     }
 
     private void UpdateStatus(State state)
