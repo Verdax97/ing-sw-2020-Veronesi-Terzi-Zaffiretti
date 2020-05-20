@@ -11,13 +11,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.LobbyController">
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="475.0">
+<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="it.polimi.ingsw.view.gui.LobbyController">
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0"
+                prefWidth="475.0">
         <children>
-            <TextField fx:id="nickname" layoutX="245.0" layoutY="135.0" text="Insert Nickname" />
-            <Button fx:id="lobbyButton" layoutX="171.0" layoutY="249.0" mnemonicParsing="false" onAction="#createLobby" prefHeight="58.0" prefWidth="134.0" text="Create Lobby" />
-         <Text layoutX="130.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         <Text layoutX="223.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <TextField fx:id="nickname" layoutX="245.0" layoutY="135.0" text="Insert Nickname"/>
+            <Button fx:id="lobbyButton" layoutX="171.0" layoutY="249.0" mnemonicParsing="false" onAction="#createLobby"
+                    prefHeight="58.0" prefWidth="134.0" text="Create Lobby"/>
+            <Text layoutX="130.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
+            <Text layoutX="223.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
             <ChoiceBox fx:id="numberPlayer" layoutX="256.0" layoutY="181.0" prefWidth="150.0" value="Select number:">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

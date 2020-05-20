@@ -1,22 +1,19 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.controller.State;
-import org.junit.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 public class StateTest {
     @Test
-    public  void TestStates()
-    {
-        assertEquals("LOBBY", State.LOBBY.name());
-        assertEquals("MOVE", State.MOVE.name());
-        assertEquals("PLACEWORKERS", State.PLACEWORKERS.name());
-        assertEquals("SETUP", State.SETUP.name());
-        assertEquals("STARTTURN", State.STARTTURN.name());
-        assertEquals("BUILD", State.BUILD.name());
-        assertEquals("ENDMATCH", State.ENDMATCH.name());
-        assertEquals("SELECT", State.SELECT.name());
+    public  void TestStates() {
+        Assertions.assertEquals("LOBBY", State.LOBBY.name());
+        Assertions.assertEquals("MOVE", State.MOVE.name());
+        Assertions.assertEquals("PLACEWORKERS", State.PLACEWORKERS.name());
+        Assertions.assertEquals("SETUP", State.SETUP.name());
+        Assertions.assertEquals("STARTTURN", State.STARTTURN.name());
+        Assertions.assertEquals("BUILD", State.BUILD.name());
+        Assertions.assertEquals("ENDMATCH", State.ENDMATCH.name());
+        Assertions.assertEquals("SELECT", State.SELECT.name());
     }
 
 }

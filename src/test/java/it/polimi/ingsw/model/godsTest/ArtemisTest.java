@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Artemis;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class ArtemisTest
 {
@@ -36,26 +36,26 @@ public class ArtemisTest
         Artemis artemis = new Artemis();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", 2, artemis.Move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(2, artemis.Move(board, selectedCell, 1, 1));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(1, 1);
-        assertEquals("Return value is wrong", -6, artemis.Move(board, selectedCell, 0, 0));
+        Assertions.assertEquals(-6, artemis.Move(board, selectedCell, 0, 0));
         serverView.PrintBoard(board, match);
         artemis.ResetGod();
-        artemis.Move(board, selectedCell,0,0);
+        artemis.Move(board, selectedCell, 0, 0);
         artemis.ResetGod();
         selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", -1, artemis.Move(board, selectedCell, 5, 5));
-        assertEquals("Return value is wrong", -2, artemis.Move(board, selectedCell, 4, 4));
-        board.getCell(1,0).setBuilding(2);
-        assertEquals("Return value is wrong", -3, artemis.Move(board, selectedCell, 1, 0));
-        board.getCell(1,1).setDome(true);
-        assertEquals("Return value is wrong", -4, artemis.Move(board, selectedCell, 1, 1));
-        board.getCell(1,1).setDome(false);
+        Assertions.assertEquals(-1, artemis.Move(board, selectedCell, 5, 5));
+        Assertions.assertEquals(-2, artemis.Move(board, selectedCell, 4, 4));
+        board.getCell(1, 0).setBuilding(2);
+        Assertions.assertEquals(-3, artemis.Move(board, selectedCell, 1, 0));
+        board.getCell(1, 1).setDome(true);
+        Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
+        board.getCell(1, 1).setDome(false);
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 1).setWorker(testWorker00);
-        assertEquals("Return value is wrong", -4, artemis.Move(board, selectedCell, 1, 1));
-        assertEquals("Return value is wrong", 2, artemis.Move(board, selectedCell, 0, 1));
+        Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(2, artemis.Move(board, selectedCell, 0, 1));
         serverView.PrintBoard(board, match);
 
     }

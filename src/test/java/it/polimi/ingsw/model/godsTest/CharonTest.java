@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Charon;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class CharonTest{
 
@@ -42,15 +42,15 @@ public class CharonTest{
         Turn turn = new Turn();
         serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(0, 4));
-        assertEquals("Return value is wrong", -7, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 3));
+        Assertions.assertEquals(-7, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 3));
         serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(2, 1));
-        assertEquals("Return value is wrong", -2, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        Assertions.assertEquals(-2, charon.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
         serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(3, 1));
-        assertEquals("Return value is wrong", 1, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
+        Assertions.assertEquals(1, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -2, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
+        Assertions.assertEquals(-2, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
         serverView.PrintBoard(board, match);
     }
 }

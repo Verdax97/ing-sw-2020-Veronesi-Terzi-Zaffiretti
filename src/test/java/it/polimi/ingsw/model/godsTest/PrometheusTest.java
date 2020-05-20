@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Assertions;
 
 public class PrometheusTest {
     @Test
@@ -45,20 +45,20 @@ public class PrometheusTest {
         serverView.PrintBoard(board, match);
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 4));
-        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
         serverView.PrintBoard(board, match);
-        assertTrue("Error", testWorker00.isDebuff());
+        Assertions.assertTrue(testWorker00.isDebuff());
         serverView.PrintBoard(board, match);
         turn.setSelectedCell(board.getCell(1, 3));
-        assertFalse("Error", testWorker10.isDebuff());
+        Assertions.assertFalse(testWorker10.isDebuff());
         prometheus.PlayerTurn(board, turn.getSelectedCell(), 1, 2);
-        assertTrue("Error", testWorker10.isDebuff());
-        assertEquals("Return value is wrong", -1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 5, 5));
-        assertEquals("Return value is wrong", -2, prometheus.PlayerTurn(board, turn.getSelectedCell(), 4, 4));
-        assertEquals("Return value is wrong", -3, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 4));
+        Assertions.assertTrue(testWorker10.isDebuff());
+        Assertions.assertEquals(-1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 5, 5));
+        Assertions.assertEquals(-2, prometheus.PlayerTurn(board, turn.getSelectedCell(), 4, 4));
+        Assertions.assertEquals(-3, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 4));
         board.getCell(0, 3).setBuilding(1);
-        assertEquals("Return value is wrong", 1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
-        assertEquals("Return value is wrong", -4, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(-4, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
         serverView.PrintBoard(board, match);
 
     }

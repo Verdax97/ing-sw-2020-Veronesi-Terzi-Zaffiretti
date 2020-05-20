@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Hestia;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class HestiaTest
 {
@@ -36,22 +36,22 @@ public class HestiaTest
         Hestia hestia = new Hestia();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", 2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, hestia.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(1, hestia.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
-        assertEquals("Return value is wrong", -9, hestia.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(-9, hestia.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
         hestia.ResetGod();
-        assertEquals("Return value is wrong", -1, hestia.Building(board, selectedCell,5,5,0, 0));
-        assertEquals("Return value is wrong", -2, hestia.Building(board, selectedCell,4,4,0, 0));
+        Assertions.assertEquals(-1, hestia.Building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-2, hestia.Building(board, selectedCell, 4, 4, 0, 0));
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker);
-        assertEquals("Return value is wrong", -3, hestia.Building(board, selectedCell,1,0,0, 0));
-        board.getCell(0,1).setBuilding(3);
-        assertEquals("Return value is wrong", 2, hestia.Building(board, selectedCell,0,1,0,0));
+        Assertions.assertEquals(-3, hestia.Building(board, selectedCell, 1, 0, 0, 0));
+        board.getCell(0, 1).setBuilding(3);
+        Assertions.assertEquals(2, hestia.Building(board, selectedCell, 0, 1, 0, 0));
         hestia.ResetGod();
-        assertEquals("Return value is wrong", -4, hestia.Building(board,selectedCell,0,1,0,0));
+        Assertions.assertEquals(-4, hestia.Building(board, selectedCell, 0, 1, 0, 0));
     }
 }

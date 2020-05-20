@@ -7,6 +7,12 @@ import it.polimi.ingsw.view.server.ServerMultiplexer;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class Controller initialize the match and redirect the messages based on current state
+ *
+ * @author Davide
+ * Created on 20/05/2020
+ */
 public class Controller implements Observer {
 
     private Lobby lobby;
@@ -14,32 +20,48 @@ public class Controller implements Observer {
     private State state = State.LOBBY;
     private ServerMultiplexer serverMultiplexer;
 
+    /**
+     * Method setServerMultiplexer sets the serverMultiplexer of this Controller object.
+     *
+     * @param serverMultiplexer the serverMultiplexer of this Controller object.
+     */
     public void setServerMultiplexer(ServerMultiplexer serverMultiplexer) {
         this.serverMultiplexer = serverMultiplexer;
         serverMultiplexer.addObserver(this);
     }
 
+    /**
+     * Method setLobby sets the lobby of this Controller object.
+     *
+     * @param lobby the lobby of this Controller object.
+     */
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
     }
 
+    /**
+     * Method CreateMatch ...
+     */
     public void CreateMatch() {
         this.match = new Match(lobby.getPlayers());
         serverMultiplexer.ConnectObserver(match);
         this.match.StartGame();
-        UpdateStatus(State.SETUP);
+        setState(State.SETUP);
     }
 
-    public void ParseServerMsg (MsgToServer msgPacket, ServerMultiplexer serverMultiplexer)
-    {
-        if (!msgPacket.nickname.equals(match.getPlayerTurn().getNickname()))
-        {
+    /**
+     * Method ParseServerMsg redirect the message from the client to the correct function of match
+     *
+     * @param msgPacket         of type MsgToServer the message that is needed to make a move
+     * @param serverMultiplexer of type ServerMultiplexer
+     */
+    public void RedirectMessage(MsgToServer msgPacket, ServerMultiplexer serverMultiplexer) {
+        if (!msgPacket.nickname.equals(match.getPlayerTurn().getNickname())) {
             //do nothing
             return;
         }
         int ret;
-        switch (state)
-        {
+        switch (state) {
             case LOBBY://
                 lobby = serverMultiplexer.getLobby();
                 CreateMatch();
@@ -47,59 +69,59 @@ public class Controller implements Observer {
             case SETUP:
                 match.PickGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
-                    UpdateStatus(State.SELECT);
+                    setState(State.SELECT);
                 break;
             case SELECT://select player god
                 match.SelectPlayerGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == 0)
-                    UpdateStatus(State.PLACEWORKERS);
+                    setState(State.PLACEWORKERS);
                 break;
             case PLACEWORKERS:
                 match.PlaceWorker(msgPacket);
                 if (match.getLastAction() == 2)
-                    UpdateStatus(State.STARTTURN);
+                    setState(State.STARTTURN);
                 break;
             case STARTTURN://check startTurn options
                 match.StartTurn();
                 ret = match.getLastAction();
                 if (ret == 0)
-                    UpdateStatus(State.SELECTWORKER);
+                    setState(State.SELECTWORKER);
                 else if (ret == 1)
-                    UpdateStatus(State.ENDMATCH);
+                    setState(State.ENDMATCH);
                 else if (ret == -1)
-                    UpdateStatus(State.STARTTURN);
+                    setState(State.STARTTURN);
                 break;
             case SELECTWORKER:
                 match.SelectWorker(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
-                    UpdateStatus(State.BEFOREMOVE);
+                    setState(State.BEFOREMOVE);
                 else if (ret == 2)
-                    UpdateStatus(State.MOVE);
+                    setState(State.MOVE);
                 break;
             case BEFOREMOVE:
                 match.BeforeMove(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
-                    UpdateStatus(State.MOVE);
+                    setState(State.MOVE);
                 break;
             case MOVE:
                 match.Move(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
-                    UpdateStatus(State.BUILD);
+                    setState(State.BUILD);
                 else if (ret == 10)
-                    UpdateStatus(State.ENDMATCH);
+                    setState(State.ENDMATCH);
                 else if (ret == -10)
-                    UpdateStatus(State.STARTTURN);
+                    setState(State.STARTTURN);
                 break;
             case BUILD:
                 match.Build(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1 || ret == -10)
-                    UpdateStatus(State.STARTTURN);
+                    setState(State.STARTTURN);
                 if (ret == 10)
-                    UpdateStatus(State.ENDMATCH);
+                    setState(State.ENDMATCH);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
                 //TODO all this thing
@@ -115,17 +137,26 @@ public class Controller implements Observer {
         new ServerView().PrintBoard(match.getBoard(), match);
     }
 
-    private void UpdateStatus(State state)
-    {
+    /**
+     * Method setState sets the state of this Controller object.
+     *
+     * @param state the state of this Controller object.
+     */
+    private void setState(State state) {
         this.state = state;
     }
 
 
+    /**
+     * Method update when receives a message calls the RedirectMessage function
+     *
+     * @param o   of type Observable
+     * @param arg of type Object
+     */
     @Override
-    public void update (Observable o, Object arg)
-    {
+    public void update(Observable o, Object arg) {
         if (!(o instanceof ServerMultiplexer) || !(arg instanceof MsgToServer))
             throw new IllegalArgumentException();
-        ParseServerMsg((MsgToServer) arg, (ServerMultiplexer)o);
+        RedirectMessage((MsgToServer) arg, (ServerMultiplexer) o);
     }
 }

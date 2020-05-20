@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Triton;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class TritonTest {
     @Test
@@ -40,24 +40,24 @@ public class TritonTest {
         Triton triton = new Triton();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(3, 1);
-        assertEquals("Return value is wrong", 2, triton.Move(board, selectedCell, 3, 0));
+        Assertions.assertEquals(2, triton.Move(board, selectedCell, 3, 0));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(3, 0);
-        assertEquals("Return value is wrong", 2, triton.Move(board, selectedCell, 2, 0));
+        Assertions.assertEquals(2, triton.Move(board, selectedCell, 2, 0));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(2, 0);
-        assertEquals("Return value is wrong", 2, triton.Move(board, selectedCell, 1, 0));
+        Assertions.assertEquals(2, triton.Move(board, selectedCell, 1, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -1, triton.Move(board, selectedCell, 5, 5));
-        assertEquals("Return value is wrong", -2, triton.Move(board, selectedCell, 4, 4));
-        board.getCell(1,1).setBuilding(2);
-        selectedCell = board.getCell(1,0);
-        assertEquals("Return value is wrong", -3, triton.Move(board, selectedCell, 1, 1));
-        assertEquals("Return value is wrong", -4, triton.Move(board, selectedCell, 0, 0));
-        board.getCell(2,0).setDome(true);
-        assertEquals("Return value is wrong", -4, triton.Move(board, selectedCell, 2, 0));
+        Assertions.assertEquals(-1, triton.Move(board, selectedCell, 5, 5));
+        Assertions.assertEquals(-2, triton.Move(board, selectedCell, 4, 4));
+        board.getCell(1, 1).setBuilding(2);
+        selectedCell = board.getCell(1, 0);
+        Assertions.assertEquals(-3, triton.Move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(-4, triton.Move(board, selectedCell, 0, 0));
+        board.getCell(2, 0).setDome(true);
+        Assertions.assertEquals(-4, triton.Move(board, selectedCell, 2, 0));
         serverView.PrintBoard(board, match);
-        selectedCell = board.getCell(1,3);
-        assertEquals("Return value is wrong", 1, triton.Move(board, selectedCell, 2, 3));
+        selectedCell = board.getCell(1, 3);
+        Assertions.assertEquals(1, triton.Move(board, selectedCell, 2, 3));
     }
 }

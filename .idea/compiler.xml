@@ -9,5 +9,6 @@
         <module name="ing-sw-2020-Veronesi-Terzi-Zaffiretti" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="14" />
   </component>
 </project>

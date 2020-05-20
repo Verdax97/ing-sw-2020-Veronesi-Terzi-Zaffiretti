@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class BoardTest {
 
@@ -10,7 +10,7 @@ public class BoardTest {
         Cell[][] board = new Cell[5][5];
         Board boardTest = new Board();
         boardTest.setBoard(board);
-        assertTrue("Cell is wrong", true);
+        Assertions.assertTrue(true, "Cell is wrong");
     }
 
     @Test
@@ -21,12 +21,12 @@ public class BoardTest {
         Cell cellTest = new Cell(0,0);
         board[x][y] = cellTest;
         boardTest.setBoard(board);
-        assertEquals("Cell is wrong", cellTest, boardTest.getCell(x, y));
+        Assertions.assertEquals(cellTest, boardTest.getCell(x, y));
     }
     @Test
     public void cloneTest(){
         Board boardTest = new Board();
         boardTest.CopyValuesInNewBoard();
-        assertTrue("Cell is wrong", true);
+        Assertions.assertTrue(true, "Cell is wrong");
     }
 }

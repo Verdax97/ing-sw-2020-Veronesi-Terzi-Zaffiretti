@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
@@ -12,7 +12,7 @@ public class PlayerTest {
         Player playerTest = new Player("Pino");
         God godPower = new God();
         playerTest.setGodPower(godPower);
-        assertEquals("GodPower is wrong", godPower, playerTest.getGodPower());
+        Assertions.assertEquals(godPower, playerTest.getGodPower());
     }
 
     @Test
@@ -21,14 +21,14 @@ public class PlayerTest {
         String nameTest = "Gianni";
         Player playerTest = new Player(name);
         playerTest.setNickname(nameTest);
-        assertEquals("Nickname is wrong", nameTest, playerTest.getNickname());
+        Assertions.assertEquals(nameTest, playerTest.getNickname());
     }
 
     @Test
     public void getActiveTest() {
         Player playerTest = new Player("Pino");
         playerTest.setActive(true);
-        assertTrue("Return value is wrong", playerTest.getActive());
+        Assertions.assertTrue(playerTest.getActive());
     }
 
 }

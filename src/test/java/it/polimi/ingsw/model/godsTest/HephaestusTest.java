@@ -4,11 +4,11 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Demeter;
 import it.polimi.ingsw.model.gods.Hephaestus;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class HephaestusTest {
 
@@ -36,33 +36,33 @@ public class HephaestusTest {
         Hephaestus hephaestus = new Hephaestus();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", 2, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(2, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        board.getCell(0,1).setBuilding(2);
+        board.getCell(0, 1).setBuilding(2);
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 2, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
+        Assertions.assertEquals(2, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
         hephaestus.ResetGod();
-        assertEquals("Return value is wrong", -1, hephaestus.Building(board, selectedCell,5,5,0, 0));
-        assertEquals("Return value is wrong", -2, hephaestus.Building(board, selectedCell,4,4,0, 0));
+        Assertions.assertEquals(-1, hephaestus.Building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-2, hephaestus.Building(board, selectedCell, 4, 4, 0, 0));
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker);
-        assertEquals("Return value is wrong", -3, hephaestus.Building(board, selectedCell,1,0,0, 0));
-        assertEquals("Return value is wrong", 1, hephaestus.Building(board, selectedCell,0,1,0,0));
+        Assertions.assertEquals(-3, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
+        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         hephaestus.ResetGod();
-        assertEquals("Return value is wrong", -4, hephaestus.Building(board,selectedCell,0,1,0,0));
+        Assertions.assertEquals(-4, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
         // For coverage only (not reacheable)
-        selectedCell = board.getCell(1,3);
+        selectedCell = board.getCell(1, 3);
         hephaestus.ResetGod();
-        hephaestus.Building(board, selectedCell,0,3,0,0);
-        board.getCell(0,3).setBuilding(2);
-        assertEquals("Return value is wrong", -6, hephaestus.Building(board,selectedCell,0,3,0,0));
+        hephaestus.Building(board, selectedCell, 0, 3, 0, 0);
+        board.getCell(0, 3).setBuilding(2);
+        Assertions.assertEquals(-6, hephaestus.Building(board, selectedCell, 0, 3, 0, 0));
     }
 }

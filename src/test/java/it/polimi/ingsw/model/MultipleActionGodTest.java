@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class MultipleActionGodTest {
 
@@ -11,9 +11,9 @@ public class MultipleActionGodTest {
         MultipleActionGod gianni = new MultipleActionGod();
         gianni.use = 0;
         gianni.useLimit = 2;
-        assertEquals("Return value is wrong", 2, gianni.CheckUse());
+        Assertions.assertEquals(2, gianni.CheckUse());
         gianni.use = 2;
-        assertEquals("Return value is wrong", 1, gianni.CheckUse());
+        Assertions.assertEquals(1, gianni.CheckUse());
         gianni.ResetGod();
     }
 }

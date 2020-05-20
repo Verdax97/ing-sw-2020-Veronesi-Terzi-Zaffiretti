@@ -2,12 +2,12 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.model.gods.Hephaestus;
-import it.polimi.ingsw.model.gods.Pan;
 import it.polimi.ingsw.model.gods.Triton;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Assertions;
 
 public class MatchTest {
 
@@ -17,7 +17,7 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        assertEquals("getLastAction error", 0, match.getLastAction());
+        Assertions.assertEquals(0, match.getLastAction());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class MatchTest {
         Match match = new Match(players);
 
         match.StartGame();
-        assertEquals("Getter error", players.get(1), match.getPlayerTurn().getNickname());
+        Assertions.assertEquals(players.get(1), match.getPlayerTurn().getNickname());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
         match.getSetup();
-        assertTrue("IsFreeDome is wrong", true);
+        Assertions.assertTrue(true);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MatchTest {
         Match match = new Match(players);
         Board board = new Board();
         match.setBoard(board);
-        assertEquals("getBoard error", board, match.getBoard());
+        Assertions.assertEquals(board, match.getBoard());
     }
 
     @Test
@@ -61,13 +61,13 @@ public class MatchTest {
         match.StartGame();
         MsgToServer msg50 = new MsgToServer("Pino", 50, 0, 0, 0 );
         match.PickGod(msg50);
-        assertEquals("getLastAction error", -1, match.getLastAction());
+        Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg1 = new MsgToServer("Pino", 1, 0, 0, 0 );
         match.PickGod(msg1);
-        assertEquals("getLastAction error", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         MsgToServer msg2 = new MsgToServer("Pino", 2, 0, 0, 0 );
         match.PickGod(msg2);
-        assertEquals("getLastAction error", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
     }
 
     @Test
@@ -84,16 +84,16 @@ public class MatchTest {
         match.getPlayers().get(1).setGodPower(god2);
         MsgToServer msg0511 = new MsgToServer("Pino", 0, 5, 1, 1);
         match.PlaceWorker(msg0511);
-        assertEquals("getLastAction error", -1, match.getLastAction());
+        Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg0000 = new MsgToServer("Pino", 0, 0, 0, 0);
         match.PlaceWorker(msg0000);
-        assertEquals("getLastAction error", -1, match.getLastAction());
+        Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg0011 = new MsgToServer("Pino", 0, 0, 1, 1);
         match.PlaceWorker(msg0011);
-        assertEquals("getLastAction error", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         MsgToServer msg4433 = new MsgToServer("Pino", 4, 4, 3, 3);
         match.PlaceWorker(msg4433);
-        assertEquals("getLastAction error", 2, match.getLastAction());
+        Assertions.assertEquals(2, match.getLastAction());
     }
 
     @Test
@@ -109,12 +109,12 @@ public class MatchTest {
         match.PickGod(msg);
         MsgToServer msg1 = new MsgToServer("Gino", -1, 0, 0, 0);
         match.SelectPlayerGod(msg1);
-        assertEquals("getLastActionError", -1, match.getLastAction());
-        msg = new MsgToServer("Gino", 0,0,0,0);
+        Assertions.assertEquals(-1, match.getLastAction());
+        msg = new MsgToServer("Gino", 0, 0, 0, 0);
         match.SelectPlayerGod(msg);
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         match.SelectPlayerGod(msg);
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
     }
 
     @Test
@@ -133,18 +133,18 @@ public class MatchTest {
         msg = new MsgToServer("Pino", 4, 4, 3, 3);
         match.PlaceWorker(msg);
         match.StartTurn();
-        assertEquals("getLastActionError", 0, match.getLastAction());
-        match.getBoard().getCell(1,0).setBuilding(3);
+        Assertions.assertEquals(0, match.getLastAction());
+        match.getBoard().getCell(1, 0).setBuilding(3);
         match.getBoard().getCell(1,1).setBuilding(3);
         match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(2, 2).setWorker(null);
         match.StartTurn();
-        assertEquals("getLastActionError", -10, match.getLastAction());
-        match.getBoard().getCell(0,0).setWorker(match.getBoard().getCell(4,4).getWorker());
+        Assertions.assertEquals(-10, match.getLastAction());
+        match.getBoard().getCell(0, 0).setWorker(match.getBoard().getCell(4, 4).getWorker());
         match.getBoard().getCell(4,4).setWorker(null);
         match.getBoard().getCell(0,0).getWorker().setPlayer(match.getPlayerTurn());
         match.StartTurn();
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
     }
 
     @Test
@@ -169,19 +169,19 @@ public class MatchTest {
         match.SelectWorker(msgPacket);
         msgPacket = new MsgToServer("Pino", 4, 0, 1, 1);
         match.Move(msgPacket);
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         msgPacket = new MsgToServer("Pino", 0, 0, 1, 1);
         match.Move(msgPacket);
-        assertEquals("getLastActionError", 1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 2,0,1,1);
+        Assertions.assertEquals(1, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", 2, 0, 1, 1);
         match.Move(msgPacket);
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         triton.ResetGod();
         match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(1,1).setBuilding(2);
         msgPacket = new MsgToServer("Pino", 1,0,0,1);
         match.Move(msgPacket);
-        assertEquals("getLastActionError", 10, match.getLastAction());
+        Assertions.assertEquals(10, match.getLastAction());
     }
 
     @Test
@@ -205,11 +205,10 @@ public class MatchTest {
         match.StartTurn();
         match.SelectWorker(msgPacket);
         match.Build(msgPacket);
-        assertEquals("getLastActionError", 1, match.getLastAction());
+        Assertions.assertEquals(1, match.getLastAction());
         match.Build(msgPacket);
-        assertEquals("getLastActionError", 2, match.getLastAction());
-        match.getBoard().getCell(3,3).setWorker(null);
-        msgPacket = new MsgToServer("Pino", 0,0,0,0);
+        Assertions.assertEquals(2, match.getLastAction());
+        match.getBoard().getCell(3, 3).setWorker(null);
         match.getBoard().getCell(0,0).setBuilding(-1);
         match.getBoard().getCell(0,0).setBuilding(2);
         msgPacket = new MsgToServer("Pino", 0,0,0,0);
@@ -222,7 +221,7 @@ public class MatchTest {
         match.getBoard().getCell(0,2).setDome(true);
         match.getBoard().getCell(2,0).setDome(true);
         match.Build(msgPacket);
-        assertEquals("getLastActionError", -10, match.getLastAction());
+        Assertions.assertEquals(-10, match.getLastAction());
     }
 
     @Test

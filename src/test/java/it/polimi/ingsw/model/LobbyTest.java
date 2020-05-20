@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class LobbyTest
 {
@@ -19,8 +19,8 @@ public class LobbyTest
         lobby.AddPlayer("pino");
         lobby.AddPlayer("pippo");
         lobby.AddPlayer("Magnifico Rettore Ferruccio Resta");
-        assertEquals("player are wrong", players, lobby.getPlayers());
+        Assertions.assertEquals(players, lobby.getPlayers());
         lobby.setnPlayer(3);
-        assertEquals("nPlayers wrong",3, lobby.getnPlayer());
+        Assertions.assertEquals(3, lobby.getnPlayer());
     }
 }

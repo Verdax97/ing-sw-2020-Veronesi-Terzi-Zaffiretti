@@ -1,11 +1,11 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.model.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class ServerViewTest
 {

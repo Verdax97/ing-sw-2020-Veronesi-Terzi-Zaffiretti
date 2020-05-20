@@ -1,29 +1,29 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.gods.Athena;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Assertions;
+
 
 public class GodTest {
 
     @Test
     public void getNameTest() {
         God athena = new Athena();
-        assertEquals("Return value is wrong", "Athena", athena.getName());
+        Assertions.assertEquals("Athena", athena.getName());
     }
 
     @Test
     public void getImgTest() {
         God god = new God();
-        assertNull("Return value is wrong", god.getImg());
+        Assertions.assertNull(god.getImg());
     }
 
     @Test
     public void getDescriptionTest() {
         God athena = new Athena();
-        assertEquals("Return value is wrong", "Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.", athena.getDescription());
+        Assertions.assertEquals("Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.", athena.getDescription());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class GodTest {
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 0));
         god.ResetGod();
-        assertEquals("std Turn Error", 1, god.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        Assertions.assertEquals(1, god.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class GodTest {
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 0));
         god.ResetGod();
-        assertEquals("std Turn Error", 0, god.CheckPlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        Assertions.assertEquals(0, god.CheckPlayerTurn(board, turn.getSelectedCell(), 1, 1));
     }
 
 }

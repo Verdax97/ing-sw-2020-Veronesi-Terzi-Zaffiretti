@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.gods.DebuffGod;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertTrue;
 
 public class DebuffGodTest {
 
@@ -23,6 +23,6 @@ public class DebuffGodTest {
         DebuffGod gianni = new DebuffGod();
         gianni.setDebuff(true);
         gianni.DebuffWorker(board, testWorker00.getPlayer());
-        assertTrue("IsFreeDome is wrong", testWorker00.isDebuff());
+        Assertions.assertTrue(testWorker00.isDebuff());
     }
 }

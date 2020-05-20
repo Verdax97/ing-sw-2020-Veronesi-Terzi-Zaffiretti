@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.gods.ForceMovementGods;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 public class ForceMovementGodsTest {
     @Test
@@ -18,7 +17,7 @@ public class ForceMovementGodsTest {
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
         Cell selectedCell = board.getCell(0, 1);
-        assertEquals("Return value is wrong", -1, forceMovementGod.ForceMove(board, selectedCell, 0, 9));
+        Assertions.assertEquals(-1, forceMovementGod.ForceMove(board, selectedCell, 0, 9));
 
     }
 
@@ -33,7 +32,7 @@ public class ForceMovementGodsTest {
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
         Cell selectedCell = board.getCell(0, 1);
-        assertEquals("Return value is wrong", -2, forceMovementGod.ForceMove(board, selectedCell, 0, 4));
+        Assertions.assertEquals(-2, forceMovementGod.ForceMove(board, selectedCell, 0, 4));
 
     }
 
@@ -51,7 +50,7 @@ public class ForceMovementGodsTest {
         board.getCell(0,2).setBuilding(2);
         Worker worker = new Worker();
         selectedCell.setWorker(worker);
-        assertEquals("Return value is wrong", -3, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(-3, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
     }
 
     @Test
@@ -67,7 +66,7 @@ public class ForceMovementGodsTest {
         Cell selectedCell = board.getCell(0, 1);
         Worker worker = new Worker();
         selectedCell.setWorker(worker);
-        assertEquals("Return value is wrong", 1, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(1, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
     }
 
     @Test
@@ -85,6 +84,6 @@ public class ForceMovementGodsTest {
         worker.setPlayer(player);
         selectedCell.setWorker(worker);
         board.getCell(0, 2).setWorker(worker);
-        assertEquals("Return value is wrong", -4, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(-4, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
     }
 }

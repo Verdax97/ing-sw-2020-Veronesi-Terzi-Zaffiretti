@@ -11,6 +11,15 @@ public class God extends SimpleGod implements Serializable {
         return 0;
     }
 
+    /**
+     * Method Move ...
+     *
+     * @param board        of type Board
+     * @param selectedCell of type Cell
+     * @param x            of type int
+     * @param y            of type int
+     * @return int
+     */
     public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0) {

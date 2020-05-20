@@ -2,13 +2,9 @@ package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Chrono;
-import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class ChronoTest {
     @Test
@@ -27,10 +23,10 @@ public class ChronoTest {
         board.getCell(0,2).setBuilding(3);
         board.getCell(0,2).setDome(true);
         board.getCell(0,3).setBuilding(3);
-        board.getCell(0,3).setDome(true);
-        assertNull("WinCondition negative Fail", player.getGodPower().WinCondition(board, player));
-        board.getCell(0,4).setBuilding(3);
-        board.getCell(0,4).setDome(true);
-        assertEquals("WinCondition Fail", player.getGodPower().WinCondition(board, player), player);
+        board.getCell(0, 3).setDome(true);
+        Assertions.assertNull(player.getGodPower().WinCondition(board, player));
+        board.getCell(0, 4).setBuilding(3);
+        board.getCell(0, 4).setDome(true);
+        Assertions.assertEquals(player.getGodPower().WinCondition(board, player), player);
     }
 }

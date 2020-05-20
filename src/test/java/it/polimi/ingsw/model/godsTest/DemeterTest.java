@@ -4,11 +4,11 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Artemis;
 import it.polimi.ingsw.model.gods.Demeter;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class DemeterTest{
 
@@ -36,22 +36,22 @@ public class DemeterTest{
         Demeter demeter = new Demeter();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        assertEquals("Return value is wrong", 2, demeter.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(2, demeter.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -8, demeter.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(-8, demeter.Building(board, selectedCell, 1, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, demeter.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, demeter.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
         demeter.ResetGod();
-        assertEquals("Return value is wrong", -1, demeter.Building(board, selectedCell,5,5,0, 0));
-        assertEquals("Return value is wrong", -2, demeter.Building(board, selectedCell,4,4,0, 0));
+        Assertions.assertEquals(-1, demeter.Building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-2, demeter.Building(board, selectedCell, 4, 4, 0, 0));
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker);
-        assertEquals("Return value is wrong", -3, demeter.Building(board, selectedCell,1,0,0, 0));
-        board.getCell(0,1).setBuilding(2);
-        assertEquals("Return value is wrong", 2, demeter.Building(board, selectedCell,0,1,0,0));
+        Assertions.assertEquals(-3, demeter.Building(board, selectedCell, 1, 0, 0, 0));
+        board.getCell(0, 1).setBuilding(2);
+        Assertions.assertEquals(2, demeter.Building(board, selectedCell, 0, 1, 0, 0));
         demeter.ResetGod();
-        assertEquals("Return value is wrong", -4, demeter.Building(board,selectedCell,0,1,0,0));
+        Assertions.assertEquals(-4, demeter.Building(board, selectedCell, 0, 1, 0, 0));
 
     }
 }

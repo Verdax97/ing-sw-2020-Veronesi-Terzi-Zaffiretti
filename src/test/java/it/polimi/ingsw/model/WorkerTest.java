@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 public class WorkerTest
 {
     @Test
@@ -11,7 +11,7 @@ public class WorkerTest
         Worker worker = new Worker();
         Player player = new Player("pino");
         worker.setPlayer(player);
-        assertEquals("Player is wrong", player, worker.getPlayer());
+        Assertions.assertEquals(player, worker.getPlayer());
     }
 
     @Test
@@ -20,7 +20,7 @@ public class WorkerTest
         Worker worker = new Worker();
         int val = 10;
         worker.setLastMovement(val);
-        assertEquals("turn is wrong", val, worker.getLastMovement());
+        Assertions.assertEquals(val, worker.getLastMovement());
     }
 
     @Test
@@ -29,6 +29,6 @@ public class WorkerTest
         Player player = new Player("Pino");
         worker.setPlayer(player);
         worker.setDebuff(true);
-        assertTrue("Debuff is wrong", worker.isDebuff());
+        Assertions.assertTrue(worker.isDebuff());
     }
 }

@@ -8,17 +8,20 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="352.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.LobbyController">
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="475.0">
+<GridPane prefHeight="352.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/11.0.1"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.LobbyController">
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0"
+                prefWidth="475.0">
         <children>
-            <TextField fx:id="nickname" layoutX="238.0" layoutY="138.0" text="Insert Nickname:" />
-            <Button fx:id="lobbyJoin" layoutX="185.0" layoutY="229.0" mnemonicParsing="false" onAction="#joinLobby" prefHeight="54.0" prefWidth="105.0" text="Join Lobby" />
-         <Text layoutX="111.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         <Text layoutX="224.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <TextField fx:id="nickname" layoutX="238.0" layoutY="138.0" text="Insert Nickname:"/>
+            <Button fx:id="lobbyJoin" layoutX="185.0" layoutY="229.0" mnemonicParsing="false" onAction="#joinLobby"
+                    prefHeight="54.0" prefWidth="105.0" text="Join Lobby"/>
+            <Text layoutX="111.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
+            <Text layoutX="224.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
         </children>
     </AnchorPane>
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
         <RowConstraints />

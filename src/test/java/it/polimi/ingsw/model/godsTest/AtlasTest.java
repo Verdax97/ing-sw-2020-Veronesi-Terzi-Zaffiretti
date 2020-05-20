@@ -3,11 +3,11 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Atlas;
 import it.polimi.ingsw.view.ServerView;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 public class AtlasTest {
     @Test
@@ -34,21 +34,21 @@ public class AtlasTest {
         Atlas atlas = new Atlas();
         serverView.PrintBoard(board, match);
         Cell selectedCell = board.getCell(0, 4);
-        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 1, 4, 0, 0));
+        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 1, 4, 0, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 0, 3, 1, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", -4, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        Assertions.assertEquals(-4, atlas.Building(board, selectedCell, 0, 3, 1, 0));
         serverView.PrintBoard(board, match);
-        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 1, 4, 1, 0));
+        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 1, 4, 1, 0));
         serverView.PrintBoard(board, match);
         selectedCell = board.getCell(0, 0);
-        board.getCell(0,1).setBuilding(3);
-        assertEquals("Return value is wrong", 1, atlas.Building(board, selectedCell, 0, 1, 0, 0));
+        board.getCell(0, 1).setBuilding(3);
+        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 0, 1, 0, 0));
         selectedCell = board.getCell(4, 0);
-        assertEquals("Return value is wrong", -3, atlas.Building(board, selectedCell, 3, 1, 0, 0));
-        assertEquals("Return value is wrong", -2, atlas.Building(board, selectedCell, 0, 1, 0, 0));
-        assertEquals("Return value is wrong", -1, atlas.Building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-3, atlas.Building(board, selectedCell, 3, 1, 0, 0));
+        Assertions.assertEquals(-2, atlas.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(-1, atlas.Building(board, selectedCell, 5, 5, 0, 0));
 
     }
 }

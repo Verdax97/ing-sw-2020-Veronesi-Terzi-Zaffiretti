@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Assertions;
+
 
 import it.polimi.ingsw.model.gods.Pan;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PanTest {
     @Test
@@ -18,8 +18,8 @@ public class PanTest {
         worker.setPlayer(player);
         board.getCell(3, 3).setWorker(worker);
         worker.setLastMovement(-2);
-        assertEquals("WinCondition Fail", player.getGodPower().WinCondition(board, player), player);
+        Assertions.assertEquals(player.getGodPower().WinCondition(board, player), player);
         worker.setLastMovement(0);
-        assertNull("WinCondition negative Fail", player.getGodPower().WinCondition(board, player));
+        Assertions.assertNull(player.getGodPower().WinCondition(board, player));
     }
 }
