@@ -190,7 +190,6 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-
         match.StartGame();
         MsgToServer msgPacket = new MsgToServer("Pino", 0, 0, 0, 0);
         Worker worker = new Worker();
@@ -204,30 +203,24 @@ public class MatchTest {
         match.getPlayers().get(0).setGodPower(god);
         match.getBoard().getCell(3,3).setWorker(worker1);
         match.StartTurn();
-        match.Build(msgPacket);
-        assertEquals("getLastActionError", 2, match.getLastAction());
+        match.SelectWorker(msgPacket);
         match.Build(msgPacket);
         assertEquals("getLastActionError", 1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 1,0,5,5);
         match.Build(msgPacket);
-        assertEquals("getLastActionError", -1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 0,0,5,5);
-        match.Build(msgPacket);
-        assertEquals("getLastActionError", -1, match.getLastAction());
+        assertEquals("getLastActionError", 2, match.getLastAction());
         match.getBoard().getCell(3,3).setWorker(null);
         msgPacket = new MsgToServer("Pino", 0,0,0,0);
         match.getBoard().getCell(0,0).setBuilding(-1);
-        match.Move(msgPacket);
         match.getBoard().getCell(0,0).setBuilding(2);
-        msgPacket = new MsgToServer("Pino", 0,0,1,1);
-        Pan pan = new Pan();
-        match.getPlayerTurn().setGodPower(pan);
-        match.getBoard().getCell(0,0).getWorker().setLastMovement(-2);
-        match.Build(msgPacket);
-        assertEquals("getLastActionError", 10, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", 0,0,0,0);
         match.getBoard().getCell(1,0).setDome(true);
-        match.getBoard().getCell(1,1).setDome(true);
+        match.getBoard().getCell(0,0).setDome(true);
         match.getBoard().getCell(0,1).setDome(true);
+        match.getBoard().getCell(2,2).setDome(true);
+        match.getBoard().getCell(2,1).setDome(true);
+        match.getBoard().getCell(1,2).setDome(true);
+        match.getBoard().getCell(0,2).setDome(true);
+        match.getBoard().getCell(2,0).setDome(true);
         match.Build(msgPacket);
         assertEquals("getLastActionError", -10, match.getLastAction());
     }
