@@ -137,6 +137,7 @@ public class Match extends Observable {
 
     public void StartTurn()
     {
+        lastAction = 1;
         String alt = "Wait";
         lastAction = turn.StartTurn(setup.getPlayers(), playerTurn, board);
         if (lastAction == 0)//the game must go on
@@ -172,6 +173,7 @@ public class Match extends Observable {
 
 
     public void SelectWorker(MsgToServer msgPacket) {
+        lastAction = 1;
         String alt = "Wait";
         ArrayList<int[]> workers = new ArrayList<>();
         if (msgPacket.x >= 0 & msgPacket.x < 2) {
@@ -228,6 +230,7 @@ public class Match extends Observable {
     1 ok
     */
     public void BeforeMove(MsgToServer msgPacket) {
+        lastAction = 1;
         String alt = "Wait";
         int sel = msgPacket.x;
         int pow = msgPacket.y;
@@ -251,6 +254,7 @@ public class Match extends Observable {
     }
 
     public void Move(MsgToServer msgPacket) {
+        lastAction = 1;
         String alt;
         int sel = msgPacket.x;
         ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
@@ -294,9 +298,10 @@ public class Match extends Observable {
     }
 
     public void Build(MsgToServer msgPacket) {
+        lastAction = 1;
         String alt;
         int sel = msgPacket.x;
-        ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
+        ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
         int godPower = msgPacket.y, typeBuilding = msgPacket.targetX;
         if (turn.CheckLostBuild(board)) {
             lastAction = -10;
