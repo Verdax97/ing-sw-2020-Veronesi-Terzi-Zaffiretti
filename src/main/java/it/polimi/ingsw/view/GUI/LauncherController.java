@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,11 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class LauncherController{
+public class LauncherController {
 
-    public int value;
+    public void setClientMain(ClientMain clientMain) {
+        this.clientMain = clientMain;
+    }
 
-    private ClientMain clientMain;
+    private ClientMain clientMain = null;
 
     @FXML
     private TextField ip;
@@ -21,27 +24,25 @@ public class LauncherController{
     private TextField port;
 
     @FXML
-    private void connection() {
+    public boolean connection() {
         //controller should create a GuiClient since this is the first gui process running
-        clientMain = new ClientMain();
         String ipTry = ip.getText();
         String portTry = port.getText();
         Pattern pattern = Pattern.compile("[0-9]+");
         Matcher matcher = pattern.matcher(portTry);
-        if(!matcher.matches()){
+        if (!matcher.matches()) {
             error("Input is wrong", "Please insert a valid Port Number");
-            return;
-        }
-        else {
+            return false;
+        } else {
             int portNumber = Integer.parseInt(portTry);
             if (!clientMain.InitializeClient(ipTry, portNumber)) {
                 error("Connection Failed", "Not able to reach the Server");
-                return;
+                return false;
             }
         }
         Thread main = new Thread(clientMain);
         main.start();
-        new ConnectionEvent(CustomEvent.CUSTOM_EVENT_TYPE).notify();
+        return true;
     }
 
     private void error(String header, String content){

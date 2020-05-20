@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Text?>
 
 <GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="it.polimi.ingsw.view.gui.LauncherController">
+          fx:controller="it.polimi.ingsw.view.GUI.LauncherController">
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
                 prefWidth="475.0">
         <children>
             <TextField fx:id="ip" layoutX="243.0" layoutY="295.0" text="127.0.0.1"/>
             <TextField fx:id="port" layoutX="243.0" layoutY="348.0" text="4567"/>
-            <Button fx:id="connect" layoutX="191.0" layoutY="434.0" mnemonicParsing="false" onAction="#connection"
+            <Button fx:id="connect" layoutX="191.0" layoutY="434.0" mnemonicParsing="false"
                     prefHeight="47.0" prefWidth="92.0" text="Login"/>
             <Text layoutX="91.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP:"/>
             <Text layoutX="88.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porta:"/>

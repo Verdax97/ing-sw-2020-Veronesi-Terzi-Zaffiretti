@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.view.GUI.LauncherApp;
 import it.polimi.ingsw.view.client.ClientMain;
+import javafx.application.Application;
 
 
 import java.util.InputMismatchException;
@@ -15,9 +16,9 @@ public class ClientStarter implements Runnable {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to use GUI? (y/n)");
 
-        if (scanner.nextLine().equalsIgnoreCase("y")) {
-            LauncherApp.launch(LauncherApp.class);
-        } else {
+        if (scanner.nextLine().equalsIgnoreCase("y"))
+            Application.launch(LauncherApp.class);
+        else {
             String IP;
             int port;
             do {
