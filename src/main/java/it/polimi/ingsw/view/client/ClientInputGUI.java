@@ -4,4 +4,6 @@ public class ClientInputGUI extends ClientInput {
     public ClientInputGUI(ClientMain clientMain) {
         super(clientMain);
     }
+
+
 }

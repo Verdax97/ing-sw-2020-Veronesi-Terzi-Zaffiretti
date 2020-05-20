@@ -35,7 +35,6 @@ public class ClientStarter implements Runnable {
                         scanner = new Scanner(System.in);
                     }
                 }
-
             } while (!clientMain.InitializeClient(IP, port));
             clientMain.run();
         }

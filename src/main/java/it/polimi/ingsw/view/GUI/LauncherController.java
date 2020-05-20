@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 
 public class LauncherController{
 
+    public int value;
+
     private ClientMain clientMain;
 
     @FXML
@@ -37,7 +39,9 @@ public class LauncherController{
                 return;
             }
         }
-        //clientMain.run();
+        Thread main = new Thread(clientMain);
+        main.start();
+        new ConnectionEvent(CustomEvent.CUSTOM_EVENT_TYPE).notify();
     }
 
     private void error(String header, String content){
