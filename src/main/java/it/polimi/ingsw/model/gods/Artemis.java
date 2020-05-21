@@ -4,23 +4,36 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
 
-public class Artemis extends MultipleActionGod
-{
+/**
+ * Class Artemis implements Artemis functionalities
+ */
+public class Artemis extends MultipleActionGod {
     private int lastX;
     private int lastY;
-    public Artemis(){
-            this.name = "Artemis";
-            this.description = "Your move: Your worker may move one additional time, but not back to the space it started on.";
-            this.useLimit = 2;
+
+    /**
+     * Constructor Artemis creates a new Artemis instance.
+     */
+    public Artemis() {
+        this.name = "Artemis";
+        this.description = "Your move: Your worker may move one additional time, but not back to the space it started on.";
+        this.useLimit = 2;
     }
 
+    /**
+     * Method Move implements the move for Artemis
+     *
+     * @param board of type Board
+     * @param selectedCell of type Cell
+     * @param x of type int
+     * @param y of type int
+     * @return int
+     */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y)
-    {
+    public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0) {
-            if (use == 0)
-            {
+            if (use == 0) {
                 lastX = selectedCell.getPos()[0];
                 lastY = selectedCell.getPos()[1];
             }

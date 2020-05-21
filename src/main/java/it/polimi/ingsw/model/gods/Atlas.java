@@ -4,15 +4,21 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.God;
 
-public class Atlas extends God
-{
-    public Atlas(){
+/**
+ * Class Atlas implements Atlas functionalities
+ */
+public class Atlas extends God {
+    /**
+     * Constructor Atlas creates a new Atlas instance.
+     */
+    public Atlas() {
         this.name = "Atlas";
         this.description = "Your Build: your worker may build a dome at any level including the ground";
     }
 
+    /** @see God#Building(Board, Cell, int, int, int, int) */
     @Override
-    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber){
+    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
         /* typeBuild 0 normale costruzione, typebuild 1 cupola */
         int built = CheckBuild(board, selectedCell, x, y);
         if (built > 0) {

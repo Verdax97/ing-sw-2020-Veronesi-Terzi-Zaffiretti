@@ -40,7 +40,7 @@ public class Controller implements Observer {
     }
 
     /**
-     * Method CreateMatch ...
+     * Method CreateMatch instantiate and initialize match and send first message to the players
      */
     public void CreateMatch() {
         this.match = new Match(lobby.getPlayers());

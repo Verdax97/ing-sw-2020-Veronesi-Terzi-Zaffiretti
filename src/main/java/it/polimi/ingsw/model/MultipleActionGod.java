@@ -1,23 +1,27 @@
 package it.polimi.ingsw.model;
 
-public class MultipleActionGod extends God
-{
+/**
+ * Class MultipleActionGod for the gods that can do more times the same action
+ */
+public class MultipleActionGod extends God {
     protected int use = 0;
     protected int useLimit = 0;
 
-    public int CheckUse()
-    {
-        if (this.use == this.useLimit){
+    /**
+     * Method CheckUse checks if is reached the useLimit
+     * @return int
+     */
+    public int CheckUse() {
+        if (this.use == this.useLimit) {
             this.use = 0;
-            //aggiornare stato a building
             return 1;
         }
         return 2;
     }
 
+    /** @see God#ResetGod() */
     @Override
-    public void ResetGod()
-    {
+    public void ResetGod() {
         use = 0;
     }
 }

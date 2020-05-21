@@ -4,10 +4,7 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 
 /**
- * Class Apollo ...
- *
- * @author Davide
- * Created on 20/05/2020
+ * Class Apollo implements Artemis functionalities
  */
 public class Apollo extends ForceMovementGods {
     /**
