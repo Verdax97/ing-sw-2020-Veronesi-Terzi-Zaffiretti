@@ -90,10 +90,10 @@ public class ClientInputCLI extends ClientInput {
             System.out.println("Do you want to make it?(y/n)");
             if (ReadStringInput().equalsIgnoreCase("y")) {
                 arr[1] = 1;
+                System.out.println("Insert value");
+                arr[0] = ReadIntInput();
             } else
                 arr[1] = 0;
-            System.out.println("Insert value");
-            arr[0] = ReadIntInput();
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {

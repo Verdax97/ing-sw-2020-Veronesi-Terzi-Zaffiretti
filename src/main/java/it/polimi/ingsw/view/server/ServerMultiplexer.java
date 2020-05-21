@@ -15,6 +15,7 @@ import java.util.Observable;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ServerMultiplexer extends Observable implements Runnable {
     private final Controller controller;
@@ -39,15 +40,15 @@ public class ServerMultiplexer extends Observable implements Runnable {
         //It creates threads when necessary, otherwise it re-uses existing one when possible
         executor = Executors.newCachedThreadPool();
         System.out.println("Insert server port:");
-        Scanner scanner = new Scanner(System.in);
+        AtomicReference<Scanner> scanner = new AtomicReference<>(new Scanner(System.in));
         int port;
         while (true) {
             try {
-                port = scanner.nextInt();
+                port = scanner.get().nextInt();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Insert a valid port");
-                scanner = new Scanner(System.in);
+                scanner.set(new Scanner(System.in));
             }
         }
 
@@ -58,9 +59,17 @@ public class ServerMultiplexer extends Observable implements Runnable {
             return;
         }
         System.out.println("Server ready on port " + port);
-        boolean entered = false;
-        while (true)
+        Runnable runnable = () ->
         {
+            scanner.set(new Scanner(System.in));
+            while (!scanner.get().nextLine().equalsIgnoreCase("quit")) {
+            }
+            System.exit(1);
+        };
+        Thread threadInput = new Thread(runnable);
+        threadInput.start();
+        boolean entered = false;
+        while (true) {
             try {
                 if (nConnectionPlayer == 0 && !entered) {
                     System.out.println("Waiting for first player");
