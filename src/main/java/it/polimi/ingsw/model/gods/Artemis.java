@@ -21,13 +21,7 @@ public class Artemis extends MultipleActionGod {
     }
 
     /**
-     * Method Move implements the move for Artemis
-     *
-     * @param board of type Board
-     * @param selectedCell of type Cell
-     * @param x of type int
-     * @param y of type int
-     * @return int
+     * @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int)
      */
     @Override
     public int Move(Board board, Cell selectedCell, int x, int y) {
