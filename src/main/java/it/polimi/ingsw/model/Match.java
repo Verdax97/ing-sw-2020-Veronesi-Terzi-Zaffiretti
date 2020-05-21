@@ -268,6 +268,7 @@ public class Match extends Observable {
                     }
                 }
             }
+            lastAction = -1;
             alt = PrintPossibilities(workers);
             msgError = "Error the inserted value is not valid\n" + Messages.selectWorker;
         }
