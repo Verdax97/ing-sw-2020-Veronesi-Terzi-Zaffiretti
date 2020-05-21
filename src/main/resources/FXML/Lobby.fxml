@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 <GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="it.polimi.ingsw.view.gui.LobbyController">
+          fx:controller="it.polimi.ingsw.view.GUI.LobbyController">
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0"
                 prefWidth="475.0">
         <children>
