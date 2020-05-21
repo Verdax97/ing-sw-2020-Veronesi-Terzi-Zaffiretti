@@ -4,7 +4,6 @@ import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

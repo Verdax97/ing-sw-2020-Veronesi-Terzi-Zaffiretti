@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class LauncherApp extends Application implements EventHandler<CustomEvent> {
@@ -23,24 +22,25 @@ public class LauncherApp extends Application implements EventHandler<CustomEvent
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        Button button1 = new Button("button");
-        button1.setOnAction(e -> primaryStage.setScene(lobbyScene));
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().add(button1);
-        connectionScene = new Scene(layout1, 200, 200);
-        primaryStage.setScene(connectionScene);
-
-        //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
+        FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
+        FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Match.fxml"));
         Parent root = (Parent) loader.load();
+        Parent rootLobby = (Parent) loaderLobby.load();
+        Parent rootMatch = (Parent) loaderMatch.load();
         LauncherController launcherController = loader.getController();
+        LobbyController lobbyController = loaderLobby.getController();
+        MatchController matchcontroller = loaderMatch.getController();
         launcherController.setClientMain(clientMain);
-        lobbyScene = new Scene(root);
-        buttonConnect = (Button) lobbyScene.lookup("#connect");
+        connectionScene = new Scene(root);
+        lobbyScene = new Scene(rootLobby);
+        primaryStage.setScene(connectionScene);
+        buttonConnect = (Button) connectionScene.lookup("#connect");
         buttonConnect.setOnAction(e ->
         {
             if (launcherController.connection())
-                primaryStage.setScene(connectionScene);
+                primaryStage.setScene(lobbyScene);
+                primaryStage.setTitle("Lobby");
         });
         stage.setTitle("Santorini Game Launcher");
         stage.show();
