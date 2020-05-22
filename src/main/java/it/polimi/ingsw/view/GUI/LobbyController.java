@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.model.Messages;
+import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -33,19 +35,19 @@ public class LobbyController{
 
     @FXML
     public boolean lobby() {
-            if (nickname != null) {
-                //sendnickname
-                return true;
-            }
-            else {
-                error("Nickname not written", "Nickname must not be empty");
-                return false;
-            }
+        if (nickname != null) {
+            //send nickname
+            return true;
+        }
+        else {
+            error("Nickname not written", "Nickname must not be empty");
+            return false;
+        }
     }
 
-    public void lobbyMaster(){
-        //se lobby nel primo messaggio che riceve
-        if(true/*cosa da controllare*/){
+    public void lobbyMaster(MsgPacket msgPacket){
+        String msg = msgPacket.msg;
+        if(msg.equalsIgnoreCase(Messages.lobby)){
             numberPlayer.isVisible();
             confirm.isVisible();
         }
