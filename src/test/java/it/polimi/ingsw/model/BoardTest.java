@@ -10,7 +10,8 @@ public class BoardTest {
         Cell[][] board = new Cell[5][5];
         Board boardTest = new Board();
         boardTest.setBoard(board);
-        Assertions.assertTrue(true, "Cell is wrong");
+        Assertions.assertEquals(board, boardTest.getBoard(), "getBoardError");
+
     }
 
     @Test
@@ -29,4 +30,5 @@ public class BoardTest {
         boardTest.CopyValuesInNewBoard();
         Assertions.assertTrue(true, "Cell is wrong");
     }
+
 }

@@ -1,5 +1,9 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.godsTest;
 
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.gods.DebuffGod;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
