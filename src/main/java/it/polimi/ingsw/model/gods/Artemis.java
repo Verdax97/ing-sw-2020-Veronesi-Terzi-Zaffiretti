@@ -31,18 +31,30 @@ public class Artemis extends MultipleActionGod {
                 lastX = selectedCell.getPos()[0];
                 lastY = selectedCell.getPos()[1];
             }
-            if (x != lastX || y != lastY) {
-                if (selectedCell.IsFreeWorker(board, x, y)) {
-                    board.getCell(x, y).setWorker(selectedCell.getWorker());
-                    selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-                    selectedCell.setWorker(null);
-                    use++;
-                }
-            } else return -6; // Same cell as the first one
+            board.getCell(x, y).setWorker(selectedCell.getWorker());
+            selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
+            selectedCell.setWorker(null);
+            use++;
             return CheckUse();
         }
         return moved;
     }
 
 
+    /**
+     * @see it.polimi.ingsw.model.God#CheckMove(Board, Cell, int, int)
+     */
+    @Override
+    public int CheckMove(Board board, Cell selectedCell, int x, int y) {
+        int ret = super.CheckMove(board, selectedCell, x, y);
+        if (ret < 0)
+            return ret;
+
+        if (use == 0)
+            return CheckUse();
+
+        if (x != lastX || y != lastY) {
+            return CheckUse();
+        } else return -6; // Same cell as the first one
+    }
 }
