@@ -1,4 +1,5 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.godsTest;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.ForceMovementGods;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

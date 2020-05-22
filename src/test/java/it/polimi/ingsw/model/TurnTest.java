@@ -218,4 +218,19 @@ public class TurnTest
         worker1.setLastMovement(-2);
         Assertions.assertEquals(turn.CheckWinCondition(board, player1), player1);
     }
+
+    @Test
+    public void BeforeMoveTest(){
+        Board board = new Board();
+        Turn turn = new Turn();
+        Assertions.assertEquals(1, turn.BeforeMove(board, -5, -5));
+        turn.setSelectedCell(board.getCell(0,0));
+        Worker worker = new Worker();
+        Player player = new Player("Pino");
+        God god = new God();
+        player.setGodPower(god);
+        worker.setPlayer(player);
+        turn.getSelectedCell().setWorker(worker);
+        Assertions.assertEquals(1, turn.BeforeMove(board, 1, 1));
+    }
 }
