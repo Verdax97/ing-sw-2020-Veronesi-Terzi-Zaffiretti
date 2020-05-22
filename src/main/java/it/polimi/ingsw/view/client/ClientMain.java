@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class ClientMain manage all the client logic
+ */
 public class ClientMain implements Runnable {
     Scanner stdin = new Scanner(System.in);
 
@@ -35,10 +38,9 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_BLUE);
         while (!end) {
             if (CLI)
-                end = CLIStuff();
+                end = clientLogic();
         }
         EndAll();
-        System.exit(1);
     }
 
     public boolean InitializeClient(String IP, int port) {
@@ -64,7 +66,7 @@ public class ClientMain implements Runnable {
         return true;
     }
 
-    private boolean CLIStuff() {
+    private boolean clientLogic() {
         //wait to have reply msg ready
         if (!isReadyToRecive()) {
             return false;
@@ -93,30 +95,63 @@ public class ClientMain implements Runnable {
         return false;
     }
 
+    /**
+     * Method isReadyToRecive returns the readyToRecive of this ClientMain object.
+     *
+     * @return the readyToRecive (type boolean) of this ClientMain object.
+     */
     public boolean isReadyToRecive() {
         return readyToReceive;
     }
 
+    /**
+     * Method setReadyToReceive sets the readyToReceive of this ClientMain object.
+     *
+     * @param readyToReceive the readyToReceive of this ClientMain object.
+     */
     public void setReadyToReceive(boolean readyToReceive) {
         this.readyToReceive = readyToReceive;
     }
 
+    /**
+     * Method getReceivedMsg returns the receivedMsg of this ClientMain object.
+     *
+     * @return the receivedMsg (type MsgPacket) of this ClientMain object.
+     */
     public synchronized MsgPacket getReceivedMsg() {
         return receivedMsg;
     }
 
+    /**
+     * Method setReceivedMsg sets the receivedMsg of this ClientMain object.
+     *
+     * @param receivedMsg the receivedMsg of this ClientMain object.
+     */
     public synchronized void setReceivedMsg(MsgPacket receivedMsg) {
         this.receivedMsg = receivedMsg;
     }
 
+    /**
+     * Method getNick returns the nick of this ClientMain object.
+     *
+     * @return the nick (type String) of this ClientMain object.
+     */
     public String getNick() {
         return nick;
     }
 
+    /**
+     * Method setNick sets the nick of this ClientMain object.
+     *
+     * @param nick the nick of this ClientMain object.
+     */
     public void setNick(String nick) {
         this.nick = nick;
     }
 
+    /**
+     * Method EndAll close all thread
+     */
     public void EndAll() {
         //todo end the game
         System.out.println("Game is ended.\nClosing the application");
@@ -126,6 +161,7 @@ public class ClientMain implements Runnable {
         } catch (InterruptedException e) {
             System.out.println(threadInput.getName());
         }
+        System.exit(1);
         end = true;
     }
 

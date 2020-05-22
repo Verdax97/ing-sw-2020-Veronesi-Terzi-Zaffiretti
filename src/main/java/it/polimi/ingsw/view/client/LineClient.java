@@ -46,18 +46,14 @@ public class LineClient extends Thread implements Observer {
                 if (msg.msg.equalsIgnoreCase("end"))
                     break;
             } else {
-                System.out.println("null message");
+                //System.out.println("null message");
                 SendMsg(new MsgToServer(clientMain.getNick(), -5, -5, -5, -5));
                 break;
             }
         }
 
         System.out.println("the game is ended");
-        try {
-            EndClient();
-        } catch (IOException e) {
-            System.err.println("wtf is happening, socket throws an IOException");
-        }
+        clientMain.EndAll();
     }
 
     private void SendMsg(MsgToServer msg) {
@@ -74,19 +70,10 @@ public class LineClient extends Thread implements Observer {
         try {
             return (MsgPacket) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
-            if (e instanceof IOException) {
-                System.out.println(((IOException) e).toString());
-                //todo close all
-            } else
+            if (!(e instanceof IOException))
                 System.out.println("The format of the message to receive is incorrect");
         }
         return null;
-    }
-
-    private void EndClient() throws IOException {
-        socketIn.close();
-        socketOut.close();
-        socket.close();
     }
 
     @Override
