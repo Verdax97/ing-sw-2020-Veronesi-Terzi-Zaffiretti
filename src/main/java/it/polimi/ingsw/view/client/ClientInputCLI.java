@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ClientInputCLI extends ClientInput {
+
     protected Scanner scanner = new Scanner(System.in);
 
     public ClientInputCLI(ClientMain clientMain) {

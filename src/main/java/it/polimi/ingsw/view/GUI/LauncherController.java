@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
