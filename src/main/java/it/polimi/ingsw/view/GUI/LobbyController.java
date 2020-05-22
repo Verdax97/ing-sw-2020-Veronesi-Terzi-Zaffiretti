@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class LobbyController{
 
@@ -16,43 +17,68 @@ public class LobbyController{
     private ClientInputGUI clientInputGUI;
 
     @FXML
+    private Text nicknameMessage;
+
+    @FXML
     private TextField nickname;
 
     @FXML
-    private Button lobbyButton;
+    private Button lobby;
+
+    @FXML
+    private Button confirm;
 
     @FXML
     private ChoiceBox numberPlayer;
 
     @FXML
     public boolean lobby() {
-        if (true/*capo lobby*/) {
-            int val;
-            String number = numberPlayer.getValue().toString();
-            if (nickname != null && number.equalsIgnoreCase("2 Players")) {
-                val = 2;
-                //send nickname?
-                //clientInputGUI.Reply(val, -5, -5, -5);
+            if (nickname != null) {
+                //sendnickname
                 return true;
             }
-            else if (nickname != null && number.equalsIgnoreCase("2 Players")) {
-                val = 3;
-                //send nickname??
-                //clientInputGUI.Reply(val, -5, -5, -5);
-                return true;
-            }
-            else if (nickname != null && number.equalsIgnoreCase("Select number:")) {
-                error("Number of player not selected", "Please select number of players");
-                return false;
-            }
-            else if (nickname == null) {
+            else {
                 error("Nickname not written", "Nickname must not be empty");
                 return false;
-            } else return false;
+            }
+    }
+
+    public void lobbyMaster(){
+        //se lobby nel primo messaggio che riceve
+        if(true/*cosa da controllare*/){
+            numberPlayer.isVisible();
+            confirm.isVisible();
         }
         else{
-            return true;
-            //la visibilità dei bottoni dovrebbe essere settata prima
+            nicknameMessage.isVisible();
+            nickname.isVisible();
+            lobby.isVisible();
+        }
+    }
+
+    @FXML
+    public void setNumberPlayer(){
+        int val;
+        String number = numberPlayer.getValue().toString();
+        if (number.equalsIgnoreCase("2 Players")) {
+            val = 2;
+            //clientInputGUI.Reply(val, -5, -5, -5);
+            nicknameMessage.isVisible();
+            nickname.isVisible();
+            lobby.isVisible();
+            return;
+        }
+        else if (number.equalsIgnoreCase("3 Players")) {
+            val = 3;
+            //clientInputGUI.Reply(val, -5, -5, -5);
+            nicknameMessage.isVisible();
+            nickname.isVisible();
+            lobby.isVisible();
+            return;
+        }
+        else {
+            error("put text in here", "put text in here");
+            return;
         }
     }
 
