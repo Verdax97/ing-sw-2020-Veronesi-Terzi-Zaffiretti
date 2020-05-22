@@ -87,23 +87,35 @@ public class ClientInputCLI extends ClientInput {
             System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
 
             System.out.println(msgPacket.altMsg);
-            System.out.println("Do you want to make it?(y/n)");
-            if (ReadStringInput().equalsIgnoreCase("y")) {
-                arr[1] = 1;
-                System.out.println("Insert value");
-                arr[0] = ReadIntInput();
-            } else
-                arr[1] = 0;
+            while (true) {
+                System.out.println("Do you want to make it?(y/n)");
+                if (ReadStringInput().equalsIgnoreCase("y")) {
+                    arr[1] = 1;
+                    System.out.println("Insert value");
+                    arr[0] = ReadIntInput();
+                    break;
+                } else if (ReadStringInput().equalsIgnoreCase("n")) {
+                    arr[1] = 0;
+                    break;
+                }
+                System.out.println("Insert a valid input");
+            }
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
             System.out.println("You have the possibility to make another move phase.");
-            System.out.println("Do you want to make it?(y/n)");
-            if (ReadStringInput().equalsIgnoreCase("y")) {
-                arr[1] = 1;
-                msg = Messages.move;//to make another move action
-            } else
-                arr[1] = 0;
+            while (true) {
+                System.out.println("Do you want to make it?(y/n)");
+                if (ReadStringInput().equalsIgnoreCase("y")) {
+                    arr[1] = 1;
+                    msg = Messages.move;//to make another move action
+                    break;
+                } else if (ReadStringInput().equalsIgnoreCase("n")) {
+                    arr[1] = 0;
+                    break;
+                }
+                System.out.println("Insert a valid input");
+            }
         }
 
         if (msg.equalsIgnoreCase(Messages.move)) {
@@ -113,13 +125,18 @@ public class ClientInputCLI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.buildAgain)) {
-            System.out.println("You have the possibility to make another build phase.");
-            System.out.println("Do you want to make it?(y/n)");
-            if (ReadStringInput().equalsIgnoreCase("y")) {
-                arr[1] = 1;
-                msg = Messages.build;//to make another move action
-            } else
-                arr[1] = 0;
+            while (true) {
+                System.out.println("Do you want to make it?(y/n)");
+                if (ReadStringInput().equalsIgnoreCase("y")) {
+                    arr[1] = 1;
+                    msg = Messages.build;//to make another move action
+                    break;
+                } else if (ReadStringInput().equalsIgnoreCase("n")) {
+                    arr[1] = 0;
+                    break;
+                }
+                System.out.println("Insert a valid input");
+            }
         }
 
         if (msg.equalsIgnoreCase(Messages.build)) {
@@ -201,7 +218,14 @@ public class ClientInputCLI extends ClientInput {
 
     private boolean Confirm() {
         System.out.println("Are you sure? (y/n)");
-        return ReadStringInput().equalsIgnoreCase("y");
+        while (true) {
+            if (ReadStringInput().equalsIgnoreCase("y")) {
+                return true;
+            } else if (ReadStringInput().equalsIgnoreCase("n")) {
+                return false;
+            }
+            System.out.println("Insert a valid input");
+        }
     }
 
     @Override
