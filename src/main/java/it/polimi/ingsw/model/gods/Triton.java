@@ -4,17 +4,22 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
 
-public class Triton extends MultipleActionGod
-{
-    public Triton(){
+/**
+ * Class Triton implements Triton functionalities
+ */
+public class Triton extends MultipleActionGod {
+    /**
+     * Constructor Triton creates a new Triton instance.
+     */
+    public Triton() {
         this.name = "Triton";
         this.description = "Your Move: Each time your Worker moves into a perimeter space, it may immediately move again.";
         this.useLimit = 1;
     }
 
+    /** @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int) */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y)
-    {
+    public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
         if (moved > 0) {
             board.getCell(x, y).setWorker(selectedCell.getWorker());
