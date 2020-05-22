@@ -56,6 +56,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println(e.getMessage()); //port not available
+            System.out.println("asdasd");
             return;
         }
         System.out.println("Server ready on port " + port);
@@ -118,6 +119,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
         } catch (IOException e) {
             //ok
         }
+        System.exit(1);
     }
 
     public synchronized boolean SetNickname(String name) {
@@ -131,7 +133,6 @@ public class ServerMultiplexer extends Observable implements Runnable {
     }
 
     public synchronized void addConnected() {
-        //create
         nConnectionPlayer++;
     }
 
@@ -146,21 +147,27 @@ public class ServerMultiplexer extends Observable implements Runnable {
         } catch (IOException e) {
             System.out.println("Server Ended");
         }
-        while (nConnectionPlayer == lobby.getnPlayer()) {
-            Thread.yield();
-            //game
-        }
     }
 
+    /**
+     * Method ReceiveMsg notify the controller
+     *
+     * @param msg of type MsgToServer
+     */
     public void ReceiveMsg(MsgToServer msg) {
-        System.out.println("Received message from " + msg.nickname + " x=" + msg.x + ", y=" + msg.y + ", targX=" + msg.targetX + ", targY=" + msg.targetY);
+        //System.out.println("Received message from " + msg.nickname + " x=" + msg.x + ", y=" + msg.y + ", targX=" + msg.targetX + ", targY=" + msg.targetY);
         setChanged();
         notifyObservers(msg);
     }
 
-    public void ConnectObserver(Match match) {
+    /**
+     * Method ConnectObserver set the ServerThread as observer of the  observable object
+     *
+     * @param observable of type Match
+     */
+    public void ConnectObserver(Observable observable) {
         for (ServerThread observer : playersThread) {
-            match.addObserver(observer);
+            observable.addObserver(observer);
         }
     }
 }

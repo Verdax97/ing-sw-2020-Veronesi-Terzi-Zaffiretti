@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class ServerThread is thread that read incoming messages from client and send replies
+ */
 public class ServerThread extends Thread implements Observer {
 
     private final ServerMultiplexer server;
@@ -23,13 +26,16 @@ public class ServerThread extends Thread implements Observer {
     public volatile boolean waitForStart;
     private volatile boolean going = true;
 
-    /*
-    public void setFired(boolean fired) {
-        this.fired = fired;
-    }*/
-
     private volatile boolean fired;
 
+    /**
+     * Constructor ServerThread creates a new ServerThread instance.
+     *
+     * @param clientSocket of type Socket
+     * @param string       of type String
+     * @param server       of type ServerMultiplexer
+     * @param pos          of type int
+     */
     public ServerThread(Socket clientSocket, String string, ServerMultiplexer server, int pos) {
         this.socket = clientSocket;
         this.server = server;
@@ -39,6 +45,9 @@ public class ServerThread extends Thread implements Observer {
     }
 
 
+    /**
+     * Method run for invoking thread
+     */
     public void run() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
              ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
@@ -61,10 +70,14 @@ public class ServerThread extends Thread implements Observer {
             }
         } catch (IOException e) {
             System.out.println(e.toString());
+            System.out.println("qui");
+            CloseConnection();
         }
-
     }
 
+    /**
+     * Method Setup initializes lobby size and nickname
+     */
     private void Setup() {
         SetupLobbySize();
 
@@ -79,6 +92,9 @@ public class ServerThread extends Thread implements Observer {
         server.addConnected();
     }
 
+    /**
+     * Method SetupLobbySize for setting the number of players
+     */
     private void SetupLobbySize() {
         if (pos == 0) {
             String mess = "Lobby";
@@ -101,6 +117,9 @@ public class ServerThread extends Thread implements Observer {
         }
     }
 
+    /**
+     * Method SetupNickname check if the nickname is available on the server
+     */
     private void SetupNickname() {
         System.out.println("Waiting for player " + pos + " nickname");
         String mess = "Insert nickname";
@@ -119,6 +138,12 @@ public class ServerThread extends Thread implements Observer {
         }
     }
 
+
+    /**
+     * Method SendMsg for sending objects via socket
+     *
+     * @param msg of type MsgPacket
+     */
     private void SendMsg(MsgPacket msg) {
         try {
             //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
@@ -126,29 +151,45 @@ public class ServerThread extends Thread implements Observer {
             socketOut.writeObject(msg);
             socketOut.flush();
         } catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println("Can't send message");
             going = false;
         }
     }
 
+    /**
+     * Method ReceiveMsg for receiving objects via socket
+     *
+     * @return MsgToServer
+     */
     private MsgToServer ReceiveMsg() {
         try {
             return (MsgToServer) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
-            if (e instanceof IOException) {
-                System.out.println("connection crashed");
-                //todo
-                server.CloseConnection();
-                Thread.currentThread().interrupt();
-            } else {
-                System.out.println("The message received from " + nick + " is wrong type");
-                going = false;
-            }
+            System.out.println("connection crashed");
+            CloseConnection();
+            going = false;
         }
         return null;
     }
 
+    private void CloseConnection() {
+        try {
+            socketIn.close();
+            socketOut.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        server.CloseConnection();
+    }
 
+
+    /**
+     * Method update when receives an update send the message to the client
+     *
+     * @param o   of type Observable
+     * @param arg of type Object
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (!(o instanceof Match) || !(arg instanceof MsgPacket)) {
@@ -159,6 +200,7 @@ public class ServerThread extends Thread implements Observer {
         if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
             going = false;
 
+        //
         SendMsg((MsgPacket) arg);
         fired = true;
     }
