@@ -3,111 +3,120 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Turn
-{
+public class Turn {
     private int turnNumber;
     private ArrayList<Worker> workers;
     private int validMoves;
     private Cell selectedCell;
 
+    /**
+     * Method getTurn returns the turn of this Turn object.
+     *
+     * @return the turn (type int) of this Turn object.
+     */
     public int getTurn() {
         return turnNumber;
     }
 
+    /**
+     * Method setTurn sets the turn of this Turn object.
+     *
+     * @param turn the turn of this Turn object.
+     */
     public void setTurn(int turn) {
         this.turnNumber = turn;
     }
 
+    /**
+     * Method getValidMoves returns the validMoves of this Turn object.
+     *
+     * @return the validMoves (type int) of this Turn object.
+     */
     public int getValidMoves() {
         return validMoves;
     }
 
+    /**
+     * Method setValidMoves sets the validMoves of this Turn object.
+     *
+     * @param validMoves the validMoves of this Turn object.
+     */
     public void setValidMoves(int validMoves) {
         this.validMoves = validMoves;
     }
 
+    /**
+     * Method getWorkers returns the workers of this Turn object.
+     *
+     * @return the workers (type List<Worker>) of this Turn object.
+     */
     public List<Worker> getWorkers() {
         return workers;
     }
 
+    /**
+     * Method setWorkers sets the workers of this Turn object.
+     *
+     * @param workers the workers of this Turn object.
+     */
     public void setWorkers(ArrayList<Worker> workers) {
         this.workers = workers;
     }
 
-    public Cell getSelectedCell() { return selectedCell; }
+    /**
+     * Method getSelectedCell returns the selectedCell of this Turn object.
+     *
+     * @return the selectedCell (type Cell) of this Turn object.
+     */
+    public Cell getSelectedCell() {
+        return selectedCell;
+    }
 
-    public void setSelectedCell(Cell selectedCell) { this.selectedCell = selectedCell; }
+    /**
+     * Method setSelectedCell sets the selectedCell of this Turn object.
+     *
+     * @param selectedCell the selectedCell of this Turn object.
+     */
+    public void setSelectedCell(Cell selectedCell) {
+        this.selectedCell = selectedCell;
+    }
 
     //todo modify with thew new system
-    public boolean CheckLostMove(Player player, Board board) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (board.getCell(i, j).getWorker() != null) {
-                    if (board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0) {
-                        for (int k = -1; k < 2; k++){
-                            for (int l = -1; l < 2; l++){
-                                if (((i+k >= 0 && i+k <5)
-                                && (j+l >= 0 && j+l <5))
-                                && !board.getCell(i+k, j+l).getDome()
-                                && board.getCell(i+k, j+l).IsFreeWorker(board,i+k, j+l)
-                                && board.getCell(i, j).IsNotHigh(board, i+k, j+l)){
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
+    public boolean CheckLostMove(Player player, Board board, ArrayList<int[]> workers) {
+        for (int[] coords : workers) {
+            int i = coords[0];
+            int j = coords[1];
+            if (CheckAround(board, i, j, player.getGodPower(), 0).size() == 0) {
+                if (CheckAround(board, i, j, player.getGodPower(), 1).size() == 0)
+                    return true;
             }
         }
-        return true;
+        return false;
     }
 
-    public boolean CheckLostBuild(Board board)
-    {
-        int[] pos = selectedCell.getPos();
-        for (int i = -1; i < 2; i++)
-        {
-            for (int j = -1; j < 2; j++)
-            {
-                int x = pos[0] + i;
-                int y = pos[1] + j;
-                if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5))
-                {
-                    if (i == 0 && j == 0)
-                    {
-                        //check for zeus
-                        if (selectedCell.getWorker().getPlayer().getGodPower().getName().equals("Zeus")
-                                && selectedCell.getBuilding() < 3)
-                            return false;
-                    }
-                    else if (selectedCell.IsFreeDome(board, x, y) && selectedCell.IsFreeWorker(board, x, y))
-                        return false;
-                }
-            }
-        }
-        return true;
+    public boolean CheckLostBuild(Board board) {
+        ArrayList<int[]> buildPossibilities = CheckAround(board, getSelectedCell().getPos()[0], getSelectedCell().getPos()[1], selectedCell.getWorker().getPlayer().getGodPower(), 2);
+        return buildPossibilities.size() <= 0;
     }
 
-    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board)
+    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, ArrayList<int[]> workers)
     /*
     -1 Player lost
     0 Player neither lost nor won
     1 Player won
-     */
-    {
+     */ {
         // if last, player won.
-        if (ActivePlayers.size() == 1 || CheckWinCondition(board, player) == player) {
+        if (ActivePlayers.size() == 1 || CheckWinCondition(board, player, workers) == player) {
             return 1;
         }
 
-        for (Player p:ActivePlayers)
-        {
+        for (Player p : ActivePlayers) {
             if (p != player) {
                 p.getGodPower().EnemyTurn(board, player, p);
             }
         }
         // Check if we have to kill him
-        if (CheckLostMove(player, board)) { return -1;}
+        if (CheckLostMove(player, board, workers)) { return -1;}
         return 0;
     }
 
@@ -115,8 +124,7 @@ public class Turn
     1 all good needed for check cause 0 means useless
 
     */
-    public int BeforeMove(Board board, int x, int y)
-    {
+    public int BeforeMove(Board board, int x, int y) {
         if (x == -5 && y == -5)
             return 1;
         return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell, x, y);
@@ -131,8 +139,7 @@ public class Turn
     -6 (Artemis) Same cell as the first one
     -7 (ForcedMovementGod) no space to move enemy worker or (Zeus) dome under worker
     */
-    public int Move(Board board, int x, int y)
-    {
+    public int Move(Board board, int x, int y) {
         int moved = selectedCell.getWorker().getPlayer().getGodPower().Move(board, selectedCell, x, y);
         if (moved > 0){selectedCell = board.getCell(x, y);}
         return moved;
@@ -150,16 +157,12 @@ public class Turn
 
     }
 
-    public Player CheckWinCondition(Board board, Player player)
-    {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (board.getCell(i, j).getWorker() != null &&
-                        board.getCell(i, j).getWorker().getPlayer() != null &&
-                        board.getCell(i, j).getWorker().getPlayer().getNickname().compareTo(player.getNickname()) == 0 &&
-                        board.getCell(i, j).getBuilding() == 3 && board.getCell(i, j).getWorker().getLastMovement() != 0)
-                    return player;
-            }
+    public Player CheckWinCondition(Board board, Player player, ArrayList<int[]> workers) {
+        for (int[] coords : workers) {
+            int i = coords[0];
+            int j = coords[1];
+            if (board.getCell(i, j).getBuilding() == 3 && board.getCell(i, j).getWorker().getLastMovement() > 0)
+                return player;
         }
         return player.getGodPower().WinCondition(board, player);
     }
@@ -171,13 +174,7 @@ public class Turn
                 int x = tempx + i;
                 int y = tempy + j;
                 if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5)) {
-                    int ret = -1;
-                    if (phase == 0)//beforeMove
-                        ret = god.CheckPlayerTurn(board, board.getCell(tempx, tempy), x, y);
-                    if (phase == 1)//move
-                        ret = god.CheckMove(board, board.getCell(tempx, tempy), x, y);
-                    if (phase == 2)//build
-                        ret = god.CheckBuild(board, board.getCell(tempx, tempy), x, y);
+                    int ret = CheckPhase(board, tempx, tempy, god, x, y, phase);
                     if (ret > 0) {
                         arr.add(new int[]{x, y});//add to the list of possible moves
                     }
@@ -185,5 +182,16 @@ public class Turn
             }
         }
         return arr;
+    }
+
+    public int CheckPhase(Board board, int tempx, int tempy, God god, int x, int y, int phase) {
+        int ret = -1;
+        if (phase == 0)//beforeMove
+            ret = god.CheckPlayerTurn(board, board.getCell(tempx, tempy), x, y);
+        if (phase == 1)//move
+            ret = god.CheckMove(board, board.getCell(tempx, tempy), x, y);
+        if (phase == 2)//build
+            ret = god.CheckBuild(board, board.getCell(tempx, tempy), x, y);
+        return ret;//add to the list of possible moves
     }
 }

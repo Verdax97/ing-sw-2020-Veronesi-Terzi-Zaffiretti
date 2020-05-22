@@ -154,26 +154,27 @@ public class Match extends Observable {
             msgError = "Error Can't place a worker here, try another value\n";
             msgError += Messages.placeWorkers;
             lastAction = -1;
+            CreateMsgPacket(msgError, "Wait");
+            return;
+        }
+        board.getCell(x, y).setWorker(new Worker());
+        board.getCell(x, y).getWorker().setPlayer(playerTurn);
+        board.getCell(x2, y2).setWorker(new Worker());
+        board.getCell(x2, y2).getWorker().setPlayer(playerTurn);
+        int found = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (getBoard().getCell(i, j).getWorker() != null)
+                    found++;
+            }
+        }
+        NextPlayer();
+        if (found == getSetup().getPlayers().size() * 2) {
+            lastAction = 2;
+            msgError = Messages.startTurn;
         } else {
-            board.getCell(x, y).setWorker(new Worker());
-            board.getCell(x, y).getWorker().setPlayer(playerTurn);
-            board.getCell(x2, y2).setWorker(new Worker());
-            board.getCell(x2, y2).getWorker().setPlayer(playerTurn);
-            int found = 0;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (getBoard().getCell(i,j).getWorker() != null)
-                        found++;
-                }
-            }
-            NextPlayer();
-            if (found == getSetup().getPlayers().size() * 2) {
-                lastAction = 2;
-                msgError = Messages.startTurn;
-            } else {
-                msgError = Messages.placeWorkers;
-                lastAction = 1;
-            }
+            msgError = Messages.placeWorkers;
+            lastAction = 1;
         }
         CreateMsgPacket(msgError, "Wait");
     }
@@ -184,18 +185,12 @@ public class Match extends Observable {
     public void StartTurn() {
         lastAction = 1;
         String alt = "Wait";
-        lastAction = turn.StartTurn(setup.getPlayers(), playerTurn, board);
+
+        ArrayList<int[]> workers = FindWorkers(playerTurn.getNickname());
+        lastAction = turn.StartTurn(setup.getPlayers(), playerTurn, board, workers);
         if (lastAction == 0)//the game must go on
         {
-            ArrayList<int[]> workers = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board.getCell(i, j).getWorker() != null) {
-                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname()))
-                            workers.add(new int[]{i, j});
-                    }
-                }
-            }
+            workers = FindWorkers(playerTurn.getNickname());
             alt = PrintPossibilities(workers);
             msgError = Messages.selectWorker;
         }
@@ -225,16 +220,8 @@ public class Match extends Observable {
     public void SelectWorker(MsgToServer msgPacket) {
         lastAction = 1;
         String alt = "Wait";
-        ArrayList<int[]> workers = new ArrayList<>();
-        if (msgPacket.x >= 0 & msgPacket.x < 2) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board.getCell(i, j).getWorker() != null) {
-                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname()))
-                            workers.add(new int[]{i, j});
-                    }
-                }
-            }
+        ArrayList<int[]> workers = FindWorkers(playerTurn.getNickname());
+        if (msgPacket.x >= 0 && msgPacket.x < 2) {
             int x = workers.get(msgPacket.x)[0], y = workers.get(msgPacket.x)[1];
             if (CheckSelectedCell(playerTurn, x, y)) {
                 ArrayList<int[]> beforeMovePossibilities = turn.CheckAround(board, x, y, playerTurn.getGodPower(), 0);
@@ -259,20 +246,12 @@ public class Match extends Observable {
                 lastAction = -2;
                 msgError = "Error Can't select that cell, try another one\n" + Messages.selectWorker;
             }
-        } else {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board.getCell(i, j).getWorker() != null) {
-                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname()))
-                            workers.add(new int[]{i, j});
-                    }
-                }
-            }
-            lastAction = -1;
-            alt = PrintPossibilities(workers);
-            msgError = "Error the inserted value is not valid\n" + Messages.selectWorker;
+            CreateMsgPacket(msgError, alt);
+            return;
         }
-        CreateMsgPacket(msgError, alt);
+        lastAction = -1;
+        msgError = "Error the inserted value is not valid\n" + Messages.selectWorker;
+        CreateMsgPacket(msgError, PrintPossibilities(workers));
     }
 
     /**
@@ -320,35 +299,54 @@ public class Match extends Observable {
         ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
         if (msgPacket.y == 0)
             lastAction = 1;
-        else if (sel < 0 || sel >= movePossibilities.size())
+        else if (sel < 0 || sel >= movePossibilities.size()) {
             lastAction = -1;
-        else
+            msgError = Messages.error + " Value out of possibilities";
+            alt = PrintPossibilities(movePossibilities);
+            if (msgPacket.y == 1)
+                msgError += "\n" + Messages.moveAgain;
+            else
+                msgError += "\n" + Messages.move;
+            //notify view
+            CreateMsgPacket(msgError, alt);
+            return;
+        } else
             CheckMove(movePossibilities.get(sel)[0], movePossibilities.get(sel)[1], msgPacket.y);
 
         winner = CheckWinCondition(playerTurn);
+        //check if he won
         if (winner != null) {
             lastAction = 10;
             PlayerWin(playerTurn.getNickname());
-        } else {
-            if (lastAction < 0) {
-                msgError = errorHandler.GetErrorMove(lastAction);
-                alt = PrintPossibilities(movePossibilities);
-                if (msgPacket.y == 0)
-                    msgError += "\n" + Messages.move;
-                else
-                    msgError += "\n" + Messages.moveAgain;
-            } else {
-                ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
-                alt = PrintPossibilities(buildPossibilities);
-                if (lastAction == 1) {
-                    msgError = Messages.build;
-                }
-                if (lastAction == 2)
-                    msgError = Messages.moveAgain;
-            }
+            return;
+        }
+
+        //redo move
+        if (lastAction < 0) {
+            msgError = errorHandler.GetErrorMove(lastAction);
+            alt = PrintPossibilities(movePossibilities);
+            if (msgPacket.y == 1)
+                msgError += "\n" + Messages.moveAgain;
+            else
+                msgError += "\n" + Messages.move;
             //notify view
             CreateMsgPacket(msgError, alt);
+            return;
         }
+
+
+        if (lastAction == 1) {
+            msgError = Messages.build;
+            ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
+            alt = PrintPossibilities(buildPossibilities);
+        } else if (lastAction == 2) {//move again
+            movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
+            alt = PrintPossibilities(movePossibilities);
+            msgError = Messages.moveAgain;
+        } else
+            alt = "there was a 0 return value in move... why??!!!";
+        //notify view
+        CreateMsgPacket(msgError, alt);
     }
 
     /**
@@ -378,43 +376,65 @@ public class Match extends Observable {
         int sel = msgPacket.x;
         ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
         int godPower = msgPacket.y, typeBuilding = msgPacket.targetX;
+        if (typeBuilding < 0)
+            typeBuilding = 0;
 
+        //check if you lost
         if (turn.CheckLostBuild(board)) {
             lastAction = -10;
             msgError = errorHandler.GetErrorBuild(lastAction);
             PlayerLost("Error You Lost (can't build)", playerTurn.getNickname() + "" +
-                    " lost because he can't build with his workers");
-        } else {
-            if (godPower == 0)
-                lastAction = 1;
-            else if (sel < 0 || sel >= buildPossibilities.size())
-                lastAction = -1;
-            else
-                CheckBuild(buildPossibilities.get(sel)[0], buildPossibilities.get(sel)[1], typeBuilding, godPower);
-            winner = CheckWinCondition(playerTurn);
-            if (winner != null) {
-                lastAction = 10;
-                PlayerWin(playerTurn.getNickname());
-            } else {
-                if (lastAction < 0) {
-                    if (godPower != 1)
-                        msgError += "\n" + Messages.build;
-                    else
-                        msgError += "\n" + Messages.buildAgain;
-                    alt = PrintPossibilities(buildPossibilities);
-                } else {
-                    if (lastAction == 1) {
-                        NextPlayer();
-                        msgError = Messages.startTurn;
-                    }
-                    if (lastAction == 2)
-                        msgError = Messages.buildAgain;
-                    alt = "";
-                }
-                //notify view
-                CreateMsgPacket(msgError, alt);
-            }
+                    " lost because he can't build with his worker");
+            return;
         }
+
+        if (godPower == 0)
+            lastAction = 1;
+        else if (sel < 0 || sel >= buildPossibilities.size()) {
+            lastAction = -1;
+            msgError = Messages.error + " Value out of possibilities";
+            alt = PrintPossibilities(buildPossibilities);
+            if (msgPacket.y == 1)
+                msgError += "\n" + Messages.buildAgain;
+            else
+                msgError += "\n" + Messages.build;
+            //notify view
+            CreateMsgPacket(msgError, alt);
+            return;
+        } else
+            CheckBuild(buildPossibilities.get(sel)[0], buildPossibilities.get(sel)[1], typeBuilding, godPower);
+
+        winner = CheckWinCondition(playerTurn);
+        //if someone win
+        if (winner != null) {
+            lastAction = 10;
+            PlayerWin(playerTurn.getNickname());
+            return;
+        }
+
+        //redo build
+        if (lastAction < 0) {
+            if (godPower == 1)
+                msgError += "\n" + Messages.buildAgain;
+            else
+                msgError += "\n" + Messages.build;
+            alt = PrintPossibilities(buildPossibilities);
+            //notify view
+            CreateMsgPacket(msgError, alt);
+            return;
+        }
+
+        if (lastAction == 1) {//turn is ended, go to the next player
+            NextPlayer();
+            msgError = Messages.startTurn;
+        }
+        if (lastAction == 2) {//build again
+            msgError = Messages.buildAgain;
+            alt = PrintPossibilities(buildPossibilities);
+        } else
+            alt = "there was a 0 return value in move... why??!!!";
+        //notify view
+        CreateMsgPacket(msgError, alt);
     }
 
     /**
@@ -460,17 +480,10 @@ public class Match extends Observable {
      * Method NextPlayer passes the turn to the next player
      */
     public void NextPlayer() {
-        if (board != null) {
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (board.getCell(i, j).getWorker() != null) {
-                        if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(playerTurn.getNickname())) {
-                            board.getCell(i, j).getWorker().setDebuff(false);
-                            board.getCell(i, j).getWorker().getPlayer().getGodPower().ResetGod();
-                        }
-                    }
-                }
-            }
+        ArrayList<int[]> workers = FindWorkers(playerTurn.getNickname());
+        for (int[] coords : workers) {
+            board.getCell(coords[0], coords[1]).getWorker().setDebuff(false);
+            board.getCell(coords[0], coords[1]).getWorker().getPlayer().getGodPower().ResetGod();
         }
         nPlayer++;
         if (nPlayer >= setup.getPlayers().size()) {
@@ -488,7 +501,7 @@ public class Match extends Observable {
      * @return Player
      */
     public Player CheckWinCondition(Player player) {
-        return turn.CheckWinCondition(board, player);
+        return turn.CheckWinCondition(board, player, FindWorkers(playerTurn.getNickname()));
     }
 
 
@@ -567,8 +580,9 @@ public class Match extends Observable {
                 workers.add(temp.get(1));
             }
         }
+        SimpleBoard simpleBoard = new SimpleBoard(board, gods, players, workers);
         setChanged();
-        notifyObservers(new MsgPacket(nickname, msg, alt, new SimpleBoard(board, gods, players, workers)));
+        notifyObservers(new MsgPacket(nickname, msg, alt, simpleBoard));
     }
 
     /**
