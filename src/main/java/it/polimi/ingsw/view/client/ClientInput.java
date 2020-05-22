@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.*;
 import java.util.*;
 
 public class ClientInput extends Observable {
+
     protected final ClientMain clientMain;
 
     public ClientInput(ClientMain clientMain) {
