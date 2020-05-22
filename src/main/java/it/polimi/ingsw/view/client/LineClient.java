@@ -47,13 +47,11 @@ public class LineClient extends Thread implements Observer {
                     break;
             } else {
                 //System.out.println("null message");
-                SendMsg(new MsgToServer(clientMain.getNick(), -5, -5, -5, -5));
+                System.out.println("the game is ended");
+                clientMain.EndAll();
                 break;
             }
         }
-
-        System.out.println("the game is ended");
-        clientMain.EndAll();
     }
 
     private void SendMsg(MsgToServer msg) {
@@ -63,6 +61,7 @@ public class LineClient extends Thread implements Observer {
             socketOut.flush();
         } catch (IOException e) {
             System.out.println("no more connection");
+            clientMain.EndAll();
         }
     }
 

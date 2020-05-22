@@ -75,13 +75,15 @@ public class ClientMain implements Runnable {
         setReadyToReceive(false);
         if (getReceivedMsg() == null)
             return true;
-        //exit if the game ends
-        if (getReceivedMsg().msg.equalsIgnoreCase("end")) {
-            return true;
-        }
 
         board = receivedMsg.board;
         clientInput.printBoard(board);
+
+        //exit if the game ends
+        if (getReceivedMsg().msg.equalsIgnoreCase(Messages.End)) {
+            System.out.println(getReceivedMsg().altMsg);
+            return true;
+        }
 
         if (receivedMsg.nickname.equals(nick)) {
             //start a new thread for the input receiver
@@ -90,6 +92,7 @@ public class ClientMain implements Runnable {
             threadInput.start();
         } else {
             System.out.println(receivedMsg.nickname + "'s turn, wait");
+            System.out.println(getReceivedMsg().altMsg);
             clientInput.Reply(-5, -5, -5, -5);
         }
         return false;

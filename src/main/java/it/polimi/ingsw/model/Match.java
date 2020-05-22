@@ -597,9 +597,7 @@ public class Match extends Observable {
      * @param player of type String
      */
     public void PlayerWin(String player) {
-        SendPacket(player, "EndGame Winner winner chicken dinner!", "EndGame You get" +
-                " nothing, you lose!\n" +
-                player + "Won", null);
+        SendPacket(player, Messages.End, player + " Won", null);
     }
 
     /**

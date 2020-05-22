@@ -1,8 +1,15 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Class Messages all possible messages that the server sends to the client
+ *
+ * @author Davide
+ * Created on 22/05/2020
+ */
 public class Messages {
     public static final String lobby = "Lobby";
     public static final String nickname = "Insert Nickname";
+    public static final String resume = "Resume";
     public static final String start = "Start";
     public static final String choseGods = "choseGods";
     public static final String choseYourGod = "choseYourGod";
@@ -16,4 +23,5 @@ public class Messages {
     public static final String buildAgain = "Build Again";
     public static final String wait = "Wait";
     public static final String error = "Error";
+    public static final String End = "End";
 }
