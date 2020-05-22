@@ -84,7 +84,7 @@ public class ServerThread extends Thread implements Observer {
         SetupNickname();
 
         //
-        SendMsg(new MsgPacket(nick, Messages.wait, "Waiting for players", null));
+        SendMsg(new MsgPacket(nick, Messages.waitTurn, "Waiting for players", null));
         ReceiveMsg();
 
         //add user to the number successfully connected
@@ -172,13 +172,16 @@ public class ServerThread extends Thread implements Observer {
         return null;
     }
 
+    /**
+     * Method CloseConnection close the connection to the client
+     */
     private void CloseConnection() {
         try {
             socketIn.close();
             socketOut.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
         server.CloseConnection();
     }

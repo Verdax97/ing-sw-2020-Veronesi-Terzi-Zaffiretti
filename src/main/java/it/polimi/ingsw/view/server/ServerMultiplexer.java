@@ -86,7 +86,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
                     playersThread.add(new ServerThread(socket, "temp", this, playersThread.size()));
                     //Run Thread
                     executor.submit(playersThread.get(playersThread.size() - 1));
-                } else if (getnConnectionPlayer() == lobby.getnPlayer() && getnConnectionPlayer() > 1) {
+                } else if (getNConnectionPlayer() == lobby.getnPlayer() && getNConnectionPlayer() > 1) {
                     //cut the possibility to connect to the server
                     break;
                 }
@@ -96,7 +96,6 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 return;
                 //break; //In case the serverSocket gets closed
             }
-
         }
         //todo check if there are other games with same players
 
@@ -132,11 +131,19 @@ public class ServerMultiplexer extends Observable implements Runnable {
         return lobby.AddPlayer(name);
     }
 
+    /**
+     * Method addConnected increment nConnectionPlayer
+     */
     public synchronized void addConnected() {
         nConnectionPlayer++;
     }
 
-    public synchronized int getnConnectionPlayer() {
+    /**
+     * Method getNConnectionPlayer returns the nConnectionPlayer of this ServerMultiplexer object.
+     *
+     * @return the nConnectionPlayer (type int) of this ServerMultiplexer object.
+     */
+    public synchronized int getNConnectionPlayer() {
         return nConnectionPlayer;
     }
 
