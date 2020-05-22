@@ -153,7 +153,6 @@ public class ClientMain implements Runnable {
      * Method EndAll close all thread
      */
     public void EndAll() {
-        //todo end the game
         System.out.println("Game is ended.\nClosing the application");
         try {
             threadInput.interrupt();
