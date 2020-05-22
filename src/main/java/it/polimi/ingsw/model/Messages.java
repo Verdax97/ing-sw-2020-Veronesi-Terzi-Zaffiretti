@@ -21,7 +21,7 @@ public class Messages {
     public static final String moveAgain = "Move Again";
     public static final String build = "Build";
     public static final String buildAgain = "Build Again";
-    public static final String wait = "Wait";
+    public static final String waitTurn = "Wait";
     public static final String error = "Error";
     public static final String End = "End";
 }

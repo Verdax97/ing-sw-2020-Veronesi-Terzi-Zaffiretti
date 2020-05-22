@@ -98,7 +98,6 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
             System.out.println("You have the possibility to make another move phase.");
-            System.out.println("Do you want to make it?(y/n)");
             if (Confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
                 msg = Messages.build;//to make another move action
@@ -141,7 +140,7 @@ public class ClientInputCLI extends ClientInput {
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.wait)) {
+        if (msg.equalsIgnoreCase(Messages.waitTurn)) {
             System.out.println(msgPacket.altMsg);
         }
 /*

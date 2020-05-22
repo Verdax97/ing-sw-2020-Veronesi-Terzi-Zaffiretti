@@ -4,74 +4,46 @@ public class ErrorHandler {
     private final String prefix = Messages.error + " ";
 
     public String GetErrorSetup(int value) {
-        switch (value) {
-            case -1:
-                return "You Lost";
-            case 1:
-                return "You Won!!";
-            case 0:
-                return "";
-        }
-        return Messages.error + " generic";
+        return switch (value) {
+            case -1 -> "You Lost";
+            case 1 -> "You Won!!";
+            case 0 -> "";
+            default -> Messages.error + " generic";
+        };
     }
 
     public String GetErrorMove(int value) {
-        switch (value) {
-            case -1:
-                return prefix + "Target cell out of board";
-            case -2:
-                return prefix + "Target cell is too far";
-            case -3:
-                return prefix + "Cell is too high";
-            case -4:
-                return prefix + "Cell is occupied by Dome/Worker";
-            case -5:
-                return prefix + "Unable to move enemy Worker";
-            case -6:
-                return prefix + "(Artemis) Same cell as the first one";
-            case -7:
-                return prefix + "(ForcedMovementGod) no space to move enemy worker";
-            case 1:
-                return "\n";
-            case 2:
-                return "Again";
-            case 0:
-                return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
-        }
-        return Messages.error + " Generic";
+        return switch (value) {
+            case -1 -> prefix + "Target cell out of board";
+            case -2 -> prefix + "Target cell is too far";
+            case -3 -> prefix + "Cell is too high";
+            case -4 -> prefix + "Cell is occupied by Dome/Worker";
+            case -5 -> prefix + "Unable to move enemy Worker";
+            case -6 -> prefix + "(Artemis) Same cell as the first one";
+            case -7 -> prefix + "(ForcedMovementGod) no space to move enemy worker";
+            case 1 -> "\n";
+            case 2 -> "Again";
+            case 0 -> "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
+            default -> Messages.error + " Generic";
+        };
     }
 
-    public String GetErrorBuild(int value)
-    {
-        switch (value)
-        {
-            case -1:
-                return prefix + "Target cell out of board";
-            case -2:
-                return prefix + "Target cell is too far";
-            case -3:
-                return prefix + "Worker on the cell";
-            case -4:
-                return prefix + "Cell occupied by a dome";
-            case -5:
-                return prefix + "(Hephaestus) Not same as last built cell";
-            case -6:
-                return prefix + "(Hephaestus) Building is > 2";
-            case -7:
-                return prefix + "(Zeus) third level build forbidden";
-            case -8:
-                return prefix + "(Demeter) same as last built";
-            case -9:
-                return prefix + "Cell is a perimeter space";
-            case -10:
-                return prefix + "You Lost";
-            case 1:
-                return "\n";
-            case 2:
-                return "Again";
-            case 0:
-                return "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
-        }
-        return Messages.error + " generic";
+    public String GetErrorBuild(int value) {
+        return switch (value) {
+            case -1 -> prefix + "Target cell out of board";
+            case -2 -> prefix + "Target cell is too far";
+            case -3 -> prefix + "Worker on the cell";
+            case -4 -> prefix + "Cell occupied by a dome";
+            case -5 -> prefix + "(Hephaestus) Not same as last built cell";
+            case -6 -> prefix + "(Hephaestus) Building is > 2";
+            case -7 -> prefix + "(Zeus) third level build forbidden";
+            case -8 -> prefix + "(Demeter) same as last built";
+            case -9 -> prefix + "Cell is a perimeter space";
+            case -10 -> prefix + "You Lost";
+            case 1 -> "\n";
+            case 2 -> "Again";
+            case 0 -> "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
+            default -> Messages.error + " generic";
+        };
     }
 }
