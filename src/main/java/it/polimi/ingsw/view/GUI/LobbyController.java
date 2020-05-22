@@ -17,6 +17,7 @@ public class LobbyController {
     }
 
     private ClientInputGUI clientInputGUI;
+
     @FXML
     private TextField nickname;
 
@@ -24,19 +25,12 @@ public class LobbyController {
     private Button lobbyButton;
 
     @FXML
-    private Button lobbyJoin;
-
-    @FXML
     private ChoiceBox numberPlayer;
 
     @FXML
-    private void createLobby() {
+    public boolean lobby() {
+        return true;
         //send nickname, number of players to server
-    }
-
-    @FXML
-    private void joinLobby() {
-        //send nickname to server
     }
 
     private void setNumberPlayer(int val) {

@@ -17,7 +17,7 @@
                 prefWidth="475.0">
         <children>
             <TextField fx:id="nickname" layoutX="245.0" layoutY="135.0" text="Insert Nickname"/>
-            <Button fx:id="lobbyButton" layoutX="171.0" layoutY="249.0" mnemonicParsing="false" onAction="#createLobby"
+            <Button fx:id="lobby" layoutX="171.0" layoutY="249.0" mnemonicParsing="false"
                     prefHeight="58.0" prefWidth="134.0" text="Create Lobby"/>
             <Text layoutX="130.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>
             <Text layoutX="223.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"/>

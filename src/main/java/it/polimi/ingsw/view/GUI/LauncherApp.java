@@ -9,11 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class LauncherApp extends Application implements EventHandler<CustomEvent> {
+public class LauncherApp extends Application /*implements EventHandler<CustomEvent> */{
 
     Scene connectionScene, lobbyScene, matchScene;
 
-    Button buttonConnect;
+    Button buttonConnect, buttonLobby;
 
     ClientMain clientMain = new ClientMain();
 
@@ -30,26 +30,29 @@ public class LauncherApp extends Application implements EventHandler<CustomEvent
         Parent rootMatch = (Parent) loaderMatch.load();
         LauncherController launcherController = loader.getController();
         LobbyController lobbyController = loaderLobby.getController();
-        MatchController matchcontroller = loaderMatch.getController();
+        MatchController matchController = loaderMatch.getController();
         launcherController.setClientMain(clientMain);
         connectionScene = new Scene(root);
         lobbyScene = new Scene(rootLobby);
+        matchScene = new Scene(rootMatch);
         primaryStage.setScene(connectionScene);
         buttonConnect = (Button) connectionScene.lookup("#connect");
+        buttonLobby = (Button) lobbyScene.lookup("#lobby");
         buttonConnect.setOnAction(e ->
         {
-            if (launcherController.connection())
+            if (launcherController.connection()){
                 primaryStage.setScene(lobbyScene);
                 primaryStage.setTitle("Lobby");
+                buttonLobby.setOnAction(f ->
+                {
+                    if (lobbyController.lobby())
+                        primaryStage.setScene(matchScene);
+                        primaryStage.setTitle("Santorini Match");
+                });
+            }
         });
         stage.setTitle("Santorini Game Launcher");
         stage.show();
-    }
-
-    @Override
-    public void handle(CustomEvent event) {
-        event.invokeHandler(this);
-        event.consume();
     }
 
     @Override
@@ -63,9 +66,5 @@ public class LauncherApp extends Application implements EventHandler<CustomEvent
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-    }
-
-    public void onConnection() {
-        primaryStage.setScene(connectionScene);
     }
 }
