@@ -39,12 +39,12 @@ public class LobbyController{
     @FXML
     private ChoiceBox numberPlayer;
 
-    public void lobbyMaster(){
+    public void showNumberPlayers(){
         numberPlayer.isVisible();
         confirm.isVisible();
     }
 
-    public void lobbyOthers(){
+    public void showNicknames(){
         nicknameMessage.isVisible();
         nickname.isVisible();
         lobby.isVisible();
@@ -56,14 +56,14 @@ public class LobbyController{
         String number = numberPlayer.getValue().toString();
         if (number.equalsIgnoreCase("2 Players")) {
             val = 2;
-            //clientInputGUI.Reply(val, -5, -5, -5);
+            clientInputGUI.Reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
             return;
         }
         else if (number.equalsIgnoreCase("3 Players")) {
             val = 3;
-            //clientInputGUI.Reply(val, -5, -5, -5);
+            clientInputGUI.Reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
             return;
@@ -77,7 +77,8 @@ public class LobbyController{
     @FXML
     public boolean lobby() {
         if (nickname != null) {
-            //send nickname
+            clientMain.setNick(nickname.getText());
+            clientInputGUI.Reply(-5,-5, -5, -5);
             return true;
         }
         else {
