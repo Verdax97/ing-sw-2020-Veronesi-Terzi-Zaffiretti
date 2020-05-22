@@ -91,7 +91,7 @@ public class ClientMain implements Runnable {
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
-            System.out.println(receivedMsg.nickname + "'s turn, wait");
+            System.out.println(Colors.ANSI_YELLOW + receivedMsg.nickname + "'s turn, wait" + Colors.ANSI_RESET);
             System.out.println(getReceivedMsg().altMsg);
             clientInput.Reply(-5, -5, -5, -5);
         }

@@ -85,36 +85,25 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.beforeMove)) {
             System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
-
             System.out.println(msgPacket.altMsg);
-            while (true) {
-                System.out.println("Do you want to make it?(y/n)");
-                if (ReadStringInput().equalsIgnoreCase("y")) {
-                    arr[1] = 1;
-                    System.out.println("Insert value");
-                    arr[0] = ReadIntInput();
-                    break;
-                } else if (ReadStringInput().equalsIgnoreCase("n")) {
-                    arr[1] = 0;
-                    break;
-                }
-                System.out.println("Insert a valid input");
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                System.out.println("Insert value");
+                arr[0] = ReadIntInput();
+            } else {
+                arr[1] = 0;
             }
+            System.out.println("Insert a valid input");
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
             System.out.println("You have the possibility to make another move phase.");
-            while (true) {
-                System.out.println("Do you want to make it?(y/n)");
-                if (ReadStringInput().equalsIgnoreCase("y")) {
-                    arr[1] = 1;
-                    msg = Messages.move;//to make another move action
-                    break;
-                } else if (ReadStringInput().equalsIgnoreCase("n")) {
-                    arr[1] = 0;
-                    break;
-                }
-                System.out.println("Insert a valid input");
+            System.out.println("Do you want to make it?(y/n)");
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                msg = Messages.build;//to make another move action
+            } else {
+                arr[1] = 0;
             }
         }
 
@@ -125,17 +114,12 @@ public class ClientInputCLI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.buildAgain)) {
-            while (true) {
-                System.out.println("Do you want to make it?(y/n)");
-                if (ReadStringInput().equalsIgnoreCase("y")) {
-                    arr[1] = 1;
-                    msg = Messages.build;//to make another move action
-                    break;
-                } else if (ReadStringInput().equalsIgnoreCase("n")) {
-                    arr[1] = 0;
-                    break;
-                }
-                System.out.println("Insert a valid input");
+            System.out.println("You have the possibility to make another build phase.");
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                msg = Messages.build;//to make another move action
+            } else {
+                arr[1] = 0;
             }
         }
 
@@ -151,8 +135,7 @@ public class ClientInputCLI extends ClientInput {
             }
             if (msgPacket.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
                 System.out.println("You have the power to build a dome here");
-                System.out.println("Do you want to do it? (y/n)");
-                if (ReadStringInput().equalsIgnoreCase("y")) {
+                if (Confirm("Do you want to do it? (y/n)")) {
                     arr[2] = 1;
                 }
             }
@@ -204,7 +187,7 @@ public class ClientInputCLI extends ClientInput {
             y = ReadIntInput();
             if (y < 5 && y >= 0 && x < 5 && x >= 0) {
                 System.out.println("You selected the cell (" + x + "," + y + ")");
-                if (Confirm()) {
+                if (Confirm("Are you sure?(y/n)")) {
                     int[] arr = new int[2];
                     arr[0] = x;
                     arr[1] = y;
@@ -216,12 +199,13 @@ public class ClientInputCLI extends ClientInput {
         }
     }
 
-    private boolean Confirm() {
-        System.out.println("Are you sure? (y/n)");
+    private boolean Confirm(String message) {
+        System.out.println(message);
         while (true) {
-            if (ReadStringInput().equalsIgnoreCase("y")) {
+            String s = ReadStringInput();
+            if (s.equalsIgnoreCase("y")) {
                 return true;
-            } else if (ReadStringInput().equalsIgnoreCase("n")) {
+            } else if (s.equalsIgnoreCase("n")) {
                 return false;
             }
             System.out.println("Insert a valid input");
