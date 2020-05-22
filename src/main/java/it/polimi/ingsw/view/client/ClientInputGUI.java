@@ -16,8 +16,13 @@ public class ClientInputGUI extends ClientInput {
         int[] arr = {-5, -5, -5, -5};
 
         if (msg.equalsIgnoreCase(Messages.lobby)) {
-            
+            //lobbyController.lobby();
         }
+
+        if (msg.equalsIgnoreCase(Messages.nickname)) {
+            //lobbyController.lobbyOthers();
+        }
+
     }
 
     @Override

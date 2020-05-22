@@ -32,6 +32,7 @@ public class LauncherApp extends Application /*implements EventHandler<CustomEve
         LobbyController lobbyController = loaderLobby.getController();
         MatchController matchController = loaderMatch.getController();
         launcherController.setClientMain(clientMain);
+        lobbyController.setClientMain(clientMain);
         connectionScene = new Scene(root);
         lobbyScene = new Scene(rootLobby);
         matchScene = new Scene(rootMatch);

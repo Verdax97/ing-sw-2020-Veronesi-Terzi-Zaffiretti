@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.view.client.ClientInputGUI;
+import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +17,11 @@ public class LobbyController{
         this.clientInputGUI = clientInputGUI;
     }
 
+    public void setClientMain(ClientMain clientMain) {
+        this.clientMain = clientMain;
+    }
+
+    private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI;
 
     @FXML
@@ -33,29 +39,15 @@ public class LobbyController{
     @FXML
     private ChoiceBox numberPlayer;
 
-    @FXML
-    public boolean lobby() {
-        if (nickname != null) {
-            //send nickname
-            return true;
-        }
-        else {
-            error("Nickname not written", "Nickname must not be empty");
-            return false;
-        }
+    public void lobbyMaster(){
+        numberPlayer.isVisible();
+        confirm.isVisible();
     }
 
-    public void lobbyMaster(MsgPacket msgPacket){
-        String msg = msgPacket.msg;
-        if(msg.equalsIgnoreCase(Messages.lobby)){
-            numberPlayer.isVisible();
-            confirm.isVisible();
-        }
-        else{
-            nicknameMessage.isVisible();
-            nickname.isVisible();
-            lobby.isVisible();
-        }
+    public void lobbyOthers(){
+        nicknameMessage.isVisible();
+        nickname.isVisible();
+        lobby.isVisible();
     }
 
     @FXML
@@ -65,22 +57,32 @@ public class LobbyController{
         if (number.equalsIgnoreCase("2 Players")) {
             val = 2;
             //clientInputGUI.Reply(val, -5, -5, -5);
-            nicknameMessage.isVisible();
-            nickname.isVisible();
-            lobby.isVisible();
+            numberPlayer.setVisible(false);
+            confirm.setVisible(false);
             return;
         }
         else if (number.equalsIgnoreCase("3 Players")) {
             val = 3;
             //clientInputGUI.Reply(val, -5, -5, -5);
-            nicknameMessage.isVisible();
-            nickname.isVisible();
-            lobby.isVisible();
+            numberPlayer.setVisible(false);
+            confirm.setVisible(false);
             return;
         }
         else {
             error("put text in here", "put text in here");
             return;
+        }
+    }
+
+    @FXML
+    public boolean lobby() {
+        if (nickname != null) {
+            //send nickname
+            return true;
+        }
+        else {
+            error("Nickname not written", "Nickname must not be empty");
+            return false;
         }
     }
 
