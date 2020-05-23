@@ -57,6 +57,8 @@ public class ArtemisTest
         Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
         Assertions.assertEquals(2, artemis.Move(board, selectedCell, 0, 1));
         serverView.PrintBoard(board, match);
+        selectedCell = board.getCell(0,1);
+        Assertions.assertEquals(1, artemis.Move(board, selectedCell, 0,2));
 
     }
 }
