@@ -40,8 +40,7 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
         while (!end) {
-            if (CLI)
-                end = clientLogic();
+            end = clientLogic();
         }
         EndAll();
     }

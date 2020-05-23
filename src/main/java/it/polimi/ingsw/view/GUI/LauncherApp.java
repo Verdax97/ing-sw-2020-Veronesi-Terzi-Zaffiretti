@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -40,11 +41,14 @@ public class LauncherApp extends Application{
         launcherController.setClientMain(clientMain);
         lobbyController.setClientMain(clientMain);
         matchController.setClientMain(clientMain);
-
         clientMain.setClientInput((ClientInput) new ClientInputGUI(clientMain));
         //set client input to each window
         lobbyController.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
         matchController.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
+        //set client gui input to each window
+        ((ClientInputGUI) clientMain.getClientInput()).setLauncherApp(this);
+        ((ClientInputGUI) clientMain.getClientInput()).setLobbyController(lobbyController);
+        ((ClientInputGUI) clientMain.getClientInput()).setMatchController(matchController);
         //set different scenes
         connectionScene = new Scene(root);
         lobbyScene = new Scene(rootLobby);
@@ -60,18 +64,25 @@ public class LauncherApp extends Application{
             if (launcherController.connection()){
                 primaryStage.setScene(lobbyScene);
                 primaryStage.setTitle("Lobby");
-                //on lobby method execution if return true changes window to Santorini Match, nickname is set
-                buttonLobby.setOnAction(f ->
-                {
-                    if (lobbyController.lobby())
-                        primaryStage.setScene(matchScene);
-                        primaryStage.setTitle("Santorini Match");
-                });
+            }
+        });
+        buttonLobby.setOnAction(e ->
+        {
+            if (lobbyController.validNickname()){
+                primaryStage.setScene(matchScene);
+                primaryStage.setTitle("Match");
             }
         });
         //show first scene
         stage.setTitle("Santorini Game Launcher");
         stage.show();
+    }
+
+    public void error(String header, String content){
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setHeaderText(header);
+        errorAlert.setContentText(content);
+        errorAlert.showAndWait();
     }
 
     @Override

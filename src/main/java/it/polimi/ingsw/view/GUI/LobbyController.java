@@ -36,14 +36,14 @@ public class LobbyController{
     private ChoiceBox numberPlayer;
 
     public void showNumberPlayers(){
-        numberPlayer.isVisible();
-        confirm.isVisible();
+        numberPlayer.setVisible(true);
+        confirm.setVisible(true);
     }
 
     public void showNicknames(){
-        nicknameMessage.isVisible();
-        nickname.isVisible();
-        lobby.isVisible();
+        nicknameMessage.setVisible(true);
+        nickname.setVisible(true);
+        lobby.setVisible(true);
     }
 
     @FXML
@@ -71,19 +71,21 @@ public class LobbyController{
     }
 
     @FXML
-    public boolean lobby() {
+    public void lobby() {
         if (nickname != null) {
             clientMain.setNick(nickname.getText());
             clientInputGUI.Reply(-5,-5, -5, -5);
-            return true;
         }
         else {
             error("Nickname not written", "Nickname must not be empty");
-            return false;
         }
     }
 
-    private void error(String header, String content){
+    public boolean validNickname(){
+        return true;
+    }
+
+    public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
