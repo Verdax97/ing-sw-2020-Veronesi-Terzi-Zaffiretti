@@ -65,7 +65,7 @@ public class LobbyController{
             return;
         }
         else {
-            error("put text in here", "put text in here");
+            error("Number of players not selected", "Please select number of players");
             return;
         }
     }

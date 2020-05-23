@@ -1,18 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="it.polimi.ingsw.view.GUI.MatchController">
+<GridPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.MatchController">
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="792.0">
       <children>
-         <AnchorPane layoutX="34.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" />
-         <AnchorPane layoutX="440.0" layoutY="101.0" prefHeight="200.0" prefWidth="200.0" />
-         <AnchorPane layoutX="59.0" layoutY="379.0" prefHeight="200.0" prefWidth="200.0" />
-         <AnchorPane layoutX="487.0" layoutY="379.0" prefHeight="200.0" prefWidth="200.0" />
+         <ImageView fx:id="apollo" fitHeight="130.0" fitWidth="97.0" layoutX="46.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/01.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="artemis" fitHeight="130.0" fitWidth="96.0" layoutX="163.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/02.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="130.0" fitWidth="87.0" layoutX="299.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/03.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="130.0" fitWidth="77.0" layoutX="467.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/04.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="130.0" fitWidth="77.0" layoutX="254.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/05.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="140.0" fitWidth="77.0" layoutX="429.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/06.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="129.0" fitWidth="77.0" layoutX="533.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/08.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="146.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/09.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="293.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/10.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="609.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/15.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/16.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="119.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/21.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="609.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/30.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="461.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/godCards/29.png" />
+            </image>
+         </ImageView>
       </children>
     </AnchorPane>
     <columnConstraints>
