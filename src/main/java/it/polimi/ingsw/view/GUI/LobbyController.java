@@ -1,7 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.model.Messages;
-import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
@@ -13,16 +11,14 @@ import javafx.scene.text.Text;
 
 public class LobbyController{
 
-    public void setClientInputGUI(ClientInputGUI clientInputGUI) {
-        this.clientInputGUI = clientInputGUI;
-    }
+    public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
     private ClientMain clientMain = null;
-    private ClientInputGUI clientInputGUI;
+    private ClientInputGUI clientInputGUI = null;
 
     @FXML
     private Text nicknameMessage;

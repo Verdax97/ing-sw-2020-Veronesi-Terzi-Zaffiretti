@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Colors;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,6 +28,10 @@ public class ClientMain implements Runnable {
 
     public ClientMain() {
         this.clientInput = new ClientInput(this);
+    }
+
+    public ClientInput getClientInput(){
+        return clientInput;
     }
 
     @Override
