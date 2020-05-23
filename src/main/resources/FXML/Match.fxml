@@ -12,72 +12,72 @@
       <children>
          <ImageView fx:id="apollo" fitHeight="130.0" fitWidth="97.0" layoutX="46.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/01.png" />
+               <Image url="@../Images/godCards/Apollo.png" />
             </image>
          </ImageView>
          <ImageView fx:id="artemis" fitHeight="130.0" fitWidth="96.0" layoutX="163.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/02.png" />
+               <Image url="@../Images/godCards/Artemis.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="130.0" fitWidth="87.0" layoutX="299.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/03.png" />
+               <Image url="@../Images/godCards/Athena.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="130.0" fitWidth="77.0" layoutX="467.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/04.png" />
+               <Image url="@../Images/godCards/Atlas.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="130.0" fitWidth="77.0" layoutX="254.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/05.png" />
+               <Image url="@../Images/godCards/Demeter.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="140.0" fitWidth="77.0" layoutX="429.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/06.png" />
+               <Image url="@../Images/godCards/Hephaestus.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="129.0" fitWidth="77.0" layoutX="533.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/08.png" />
+               <Image url="@../Images/godCards/Minotaur.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="146.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/09.png" />
+               <Image url="@../Images/godCards/Pan.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="293.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/10.png" />
+               <Image url="@../Images/godCards/Prometheus.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="609.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/15.png" />
+               <Image url="@../Images/godCards/Charon.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/16.png" />
+               <Image url="@../Images/godCards/Chronus.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="119.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/21.png" />
+               <Image url="@../Images/godCards/Hestia.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="609.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/30.png" />
+               <Image url="@../Images/godCards/Zeus.png" />
             </image>
          </ImageView>
          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="461.0" layoutY="399.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../Images/godCards/29.png" />
+               <Image url="@../Images/godCards/Triton.png" />
             </image>
          </ImageView>
       </children>
