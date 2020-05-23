@@ -68,7 +68,7 @@ public class LauncherApp extends Application{
         });
         buttonLobby.setOnAction(e ->
         {
-            if (lobbyController.validNickname()){
+            if (lobbyController.lobby()){
                 primaryStage.setScene(matchScene);
                 primaryStage.setTitle("Match");
             }

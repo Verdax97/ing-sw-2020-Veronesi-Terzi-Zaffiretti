@@ -71,13 +71,15 @@ public class LobbyController{
     }
 
     @FXML
-    public void lobby() {
+    public boolean lobby() {
         if (nickname != null) {
             clientMain.setNick(nickname.getText());
             clientInputGUI.Reply(-5,-5, -5, -5);
+            return true;
         }
         else {
             error("Nickname not written", "Nickname must not be empty");
+            return false;
         }
     }
 
