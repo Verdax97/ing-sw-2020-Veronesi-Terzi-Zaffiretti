@@ -446,7 +446,7 @@ public class Match extends Observable {
      * @param godPower     of type int
      */
     private void CheckBuild(int targetX, int targetY, int typeBuilding, int godPower) {
-        if (lastAction == 2 && godPower != 1) {
+        if (lastAction == 2 && godPower == 0) {
             lastAction = 1;
             msgError = errorHandler.GetErrorBuild(lastAction);
             return;

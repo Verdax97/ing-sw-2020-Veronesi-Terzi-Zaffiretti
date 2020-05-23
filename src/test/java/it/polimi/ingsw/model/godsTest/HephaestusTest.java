@@ -44,7 +44,7 @@ public class HephaestusTest {
         serverView.PrintBoard(board, match);
         Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
-        Assertions.assertEquals(2, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
+        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
         serverView.PrintBoard(board, match);
         Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);
@@ -54,7 +54,6 @@ public class HephaestusTest {
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker);
         Assertions.assertEquals(-3, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
-        Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         hephaestus.ResetGod();
         Assertions.assertEquals(-4, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
         serverView.PrintBoard(board, match);

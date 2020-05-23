@@ -154,7 +154,7 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
         match.StartGame();
-        MsgToServer msgPacket = new MsgToServer("Pino", 0, 0, 0, 0);
+        MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
         Worker worker1 = new Worker();
@@ -167,19 +167,19 @@ public class MatchTest {
         match.getBoard().getCell(3, 3).setWorker(worker1);
         match.StartTurn();
         match.SelectWorker(msgPacket);
-        msgPacket = new MsgToServer("Pino", 4, 0, 1, 1);
+        msgPacket = new MsgToServer("Pino", 4, -5, 1, 1);
         match.Move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 0, 0, 1, 1);
+        msgPacket = new MsgToServer("Pino", 0, -5, 1, 1);
         match.Move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
-        msgPacket = new MsgToServer("Pino", 2, 0, 1, 1);
+        msgPacket = new MsgToServer("Pino", 2, -5, 1, 1);
         match.Move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
         triton.ResetGod();
         match.getBoard().getCell(0,1).setBuilding(3);
-        match.getBoard().getCell(1,1).setBuilding(2);
-        msgPacket = new MsgToServer("Pino", 1,0,0,1);
+        match.getBoard().getCell(1,0).setBuilding(2);
+        msgPacket = new MsgToServer("Pino", 1,-5,-5,-5);
         match.Move(msgPacket);
         Assertions.assertEquals(10, match.getLastAction());
     }
@@ -191,7 +191,7 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
         match.StartGame();
-        MsgToServer msgPacket = new MsgToServer("Pino", 0, 0, 0, 0);
+        MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
         Worker worker1 = new Worker();
@@ -205,13 +205,31 @@ public class MatchTest {
         match.StartTurn();
         match.SelectWorker(msgPacket);
         match.Build(msgPacket);
-        Assertions.assertEquals(1, match.getLastAction());
-        match.Build(msgPacket);
         Assertions.assertEquals(2, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", 0,1,-5,-5);
+        match.Build(msgPacket);
+        Assertions.assertEquals(1, match.getLastAction());
+        match.NextPlayer();
+        msgPacket = new MsgToServer("Pino", 0,0,-5,-5);
+        match.Build(msgPacket);
+        Assertions.assertEquals(1, match.getLastAction());
+        match.NextPlayer();
+        hephaestus.ResetGod();
+        msgPacket = new MsgToServer("Pino", -1,1,-5,-5);
+        match.Build(msgPacket);
+        Assertions.assertEquals(-1, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", -1,-5,-5,-5);
+        match.Build(msgPacket);
+        Assertions.assertEquals(-1, match.getLastAction());
+        msgPacket = new MsgToServer("Pino", 0,-5,-5,-5);
+        worker.setLastMovement(1);
+        match.getBoard().getCell(1,1).setBuilding(3);
+        match.Build(msgPacket);
+        Assertions.assertEquals(10, match.getLastAction());
         match.getBoard().getCell(3, 3).setWorker(null);
         match.getBoard().getCell(0,0).setBuilding(-1);
         match.getBoard().getCell(0,0).setBuilding(2);
-        msgPacket = new MsgToServer("Pino", 0,0,0,0);
+        msgPacket = new MsgToServer("Pino", 0,-5,-5,-5);
         match.getBoard().getCell(1,0).setDome(true);
         match.getBoard().getCell(0,0).setDome(true);
         match.getBoard().getCell(0,1).setDome(true);
@@ -234,5 +252,29 @@ public class MatchTest {
 
         match.SendPacket("Gino", "Test", "TestAlt", null);
         match.SendPacket("Gino", "Test", "TestAlt", match.getBoard());
+    }
+
+    @Test
+    public void setBoardTest() {
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        Board board = new Board();
+        match.setBoard(board);
+        Assertions.assertEquals(board, match.getBoard());
+    }
+
+    @Test
+    public void PlaceWorkersTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        MsgToServer msg = new MsgToServer("Pino", 0, 0, 0, 0);
+        match.StartGame();
+        match.PlaceWorker(msg);
+        Assertions.assertEquals(-1, match.getLastAction(), "PlaceWorker error");
+
     }
 }
