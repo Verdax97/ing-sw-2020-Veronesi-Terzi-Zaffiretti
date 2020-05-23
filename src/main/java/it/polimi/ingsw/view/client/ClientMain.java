@@ -46,12 +46,14 @@ public class ClientMain implements Runnable {
         EndAll();
     }
 
+    public void setClientInput(ClientInput clientInput) {
+        this.clientInput = clientInput;
+    }
+
     public boolean InitializeClient(String IP, int port) {
         LineClient client = new LineClient(IP, port, this);
         if (CLI)
             clientInput = new ClientInputCLI(this);
-        else
-            clientInput = new ClientInputGUI(this);
         clientInput.addObserver(client);
 
         try {

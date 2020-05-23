@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Application;
@@ -39,6 +40,8 @@ public class LauncherApp extends Application{
         launcherController.setClientMain(clientMain);
         lobbyController.setClientMain(clientMain);
         matchController.setClientMain(clientMain);
+
+        clientMain.setClientInput((ClientInput) new ClientInputGUI(clientMain));
         //set client input to each window
         lobbyController.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
         matchController.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
