@@ -39,7 +39,7 @@ public class Match extends Observable {
         return msgError;
     }
 
-    private String msgError;
+    private String msgError = "InitialMsgError";
 
     /**
      * Constructor Match creates a new Match instance.
