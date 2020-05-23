@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.model.gods.Hephaestus;
+import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.model.gods.Triton;
 import org.junit.jupiter.api.Test;
 
@@ -266,7 +267,7 @@ public class MatchTest {
     }
 
     @Test
-    public void PlaceWorkersTest(){
+    public void SelectWorkerTest() {
         ArrayList<String> players = new ArrayList<>();
         players.add("Gino");
         players.add("Pino");
@@ -274,7 +275,51 @@ public class MatchTest {
         MsgToServer msg = new MsgToServer("Pino", 0, 0, 0, 0);
         match.StartGame();
         match.PlaceWorker(msg);
+        match.getPlayers().get(0).setGodPower(new God());
+        match.getPlayers().get(1).setGodPower(new God());
         Assertions.assertEquals(-1, match.getLastAction(), "PlaceWorker error");
+        msg = new MsgToServer("Pino", 0, 0, 1, 1);
+        match.PlaceWorker(msg);
+        Assertions.assertEquals(1, match.getLastAction(), "PlaceWorker error");
+        match.NextPlayer();
+        msg = new MsgToServer("Pino", 2, -5, -5, -5);
+        match.SelectWorker(msg);
+        Assertions.assertEquals(-1, match.getLastAction(), "SelectWorker error");
+        msg = new MsgToServer("Pino", 1, -5, -5, -5);
+        match.SelectWorker(msg);
+        Assertions.assertEquals(2, match.getLastAction(), "SelectWorker error");
+    }
+
+    @Test
+    public void getMsgErrorTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        Assertions.assertEquals("InitialMsgError", match.getMsgError());
+    }
+
+    @Test
+    public void BeforeMoveTest(){
+        ArrayList<String> players = new ArrayList<>();
+        players.add("Gino");
+        players.add("Pino");
+        Match match = new Match(players);
+        match.StartGame();
+        MsgToServer msg = new MsgToServer("Pino", 0,0,1,1);
+        match.getPlayerTurn().setGodPower(new God());
+        match.PlaceWorker(msg);
+        msg = new MsgToServer("Gino", 4,4,3,3);
+        match.getPlayerTurn().setGodPower(new God());
+        match.PlaceWorker(msg);
+        msg = new MsgToServer("Pino", 0,0,-5,-5);
+        match.SelectWorker(msg);
+        match.BeforeMove(msg);
+        Assertions.assertEquals(1, match.getLastAction());
+        msg = new MsgToServer("Pino", 0,1,-5,-5);
+        match.getPlayerTurn().setGodPower(new Prometheus());
+        match.BeforeMove(msg);
+        Assertions.assertEquals(1, match.getLastAction());
 
     }
 }
