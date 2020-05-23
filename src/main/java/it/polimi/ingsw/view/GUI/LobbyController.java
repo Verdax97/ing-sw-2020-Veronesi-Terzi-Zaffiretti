@@ -83,10 +83,6 @@ public class LobbyController{
         }
     }
 
-    public boolean validNickname(){
-        return true;
-    }
-
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);

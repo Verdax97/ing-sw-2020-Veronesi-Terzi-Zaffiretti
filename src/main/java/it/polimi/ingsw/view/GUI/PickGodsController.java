@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MatchController {
+public class PickGodsController {
 
     ClientMain clientMain = null;
     ClientInputGUI clientInputGUI = null;

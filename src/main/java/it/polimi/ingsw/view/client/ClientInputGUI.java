@@ -2,20 +2,28 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.view.GUI.LauncherApp;
+import it.polimi.ingsw.view.GUI.ChangeWindow;
 import it.polimi.ingsw.view.GUI.LobbyController;
-import it.polimi.ingsw.view.GUI.MatchController;
+import it.polimi.ingsw.view.GUI.PickGodsController;
 import javafx.scene.control.Alert;
+
+import java.io.IOException;
 
 public class ClientInputGUI extends ClientInput {
 
-    private LauncherApp launcherApp;
+    private ChangeWindow changeWindow;
+
+    public ChangeWindow getChangeWindow() { return changeWindow; }
+
+    public void setChangeWindow(ChangeWindow changeWindow) { this.changeWindow = changeWindow; }
+
+    //private LauncherApp launcherApp;
     private LobbyController lobbyController;
-    private MatchController matchController;
+    private PickGodsController pickGodsController;
 
-    public LauncherApp getLauncherApp() { return launcherApp; }
+    /*public LauncherApp getLauncherApp() { return launcherApp; }
 
-    public void setLauncherApp(LauncherApp launcherApp) { this.launcherApp = launcherApp; }
+    public void setLauncherApp(LauncherApp launcherApp) { this.launcherApp = launcherApp; }*/
 
     public LobbyController getLobbyController() {
         return lobbyController;
@@ -25,12 +33,12 @@ public class ClientInputGUI extends ClientInput {
         this.lobbyController = lobbyController;
     }
 
-    public MatchController getMatchController() {
-        return matchController;
+    public PickGodsController getPickGodsController() {
+        return pickGodsController;
     }
 
-    public void setMatchController(MatchController matchController) {
-        this.matchController = matchController;
+    public void setPickGodsController(PickGodsController pickGodsController) {
+        this.pickGodsController = pickGodsController;
     }
 
     public ClientInputGUI(ClientMain clientMain) {
@@ -49,6 +57,11 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.lobby)) {
+            try {
+                changeWindow.changeToLobby();
+                } catch (IOException e) {
+                e.printStackTrace();
+            }
             lobbyController.showNumberPlayers();
         }
 
@@ -57,11 +70,12 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
-            matchController.getDescriptionGod(msgPacket.altMsg);
+            pickGodsController.getDescriptionGod(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
-            lobbyController.validNickname();
+            //launcherApp set in this way throws Exception in thread "Thread-6" java.lang.IllegalStateException: Not on FX application thread; currentThread = Thread-6
+            //launcherApp.validNickname();
             Reply(-5, -5, -5, -5);
         }
     }

@@ -13,22 +13,25 @@ import javafx.stage.Stage;
 
 public class LauncherApp extends Application{
 
+    ChangeWindow changeWindow = new ChangeWindow();
+/*
     Scene connectionScene, lobbyScene, matchScene;
 
     Button buttonConnect, buttonLobby;
 
     ClientMain clientMain = new ClientMain();
-
-    private static Stage primaryStage;
+*/
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws Exception {
+        /*
         //window on which each other window will be load
         primaryStage = stage;
         //loading .fxml on different loader for further use
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
         FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
-        FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Match.fxml"));
+        FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         //each window gets his data
         Parent root = (Parent) loader.load();
         Parent rootLobby = (Parent) loaderLobby.load();
@@ -66,18 +69,27 @@ public class LauncherApp extends Application{
                 primaryStage.setTitle("Lobby");
             }
         });
-        buttonLobby.setOnAction(e ->
+        /*buttonLobby.setOnAction(e ->
         {
             if (lobbyController.lobby()){
                 primaryStage.setScene(matchScene);
                 primaryStage.setTitle("Match");
             }
-        });
+        });*/
         //show first scene
+        primaryStage = stage;
+        Scene firstScene = changeWindow.getFirstWindow();
+        primaryStage.setScene(firstScene);
         stage.setTitle("Santorini Game Launcher");
         stage.show();
     }
-
+/*
+    public void validNickname(){
+        //Exception in thread "Thread-6" java.lang.IllegalStateException: Not on FX application thread; currentThread = Thread-6
+        primaryStage.setScene(matchScene);
+        primaryStage.setTitle("Match");
+    }
+*/
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);

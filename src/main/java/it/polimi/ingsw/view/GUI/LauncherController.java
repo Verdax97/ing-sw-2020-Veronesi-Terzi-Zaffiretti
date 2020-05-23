@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 
 public class LauncherController {
 
+    private ClientMain clientMain = null;
+
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
-
-    private ClientMain clientMain = null;
 
     @FXML
     private TextField ip;

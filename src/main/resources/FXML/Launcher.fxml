@@ -15,7 +15,7 @@
         <children>
             <TextField fx:id="ip" layoutX="243.0" layoutY="295.0" text="127.0.0.1" />
             <TextField fx:id="port" layoutX="243.0" layoutY="348.0" text="4567" />
-            <Button fx:id="connect" layoutX="191.0" layoutY="434.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="92.0" text="Login" />
+            <Button fx:id="connect" layoutX="191.0" layoutY="434.0" mnemonicParsing="false" onAction="#connection" prefHeight="47.0" prefWidth="92.0" text="Login" />
             <Text layoutX="91.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP:" />
             <Text layoutX="88.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porta:" />
             <ImageView fitHeight="125.0" fitWidth="125.0" layoutX="175.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
