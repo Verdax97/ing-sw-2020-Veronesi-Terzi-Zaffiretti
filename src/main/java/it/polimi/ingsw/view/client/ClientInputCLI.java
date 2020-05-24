@@ -1,6 +1,9 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Messages;
+import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.SimpleBoard;
+import it.polimi.ingsw.model.SimpleGod;
 import it.polimi.ingsw.view.Colors;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class ClientInputCLI extends ClientInput {
     public void ParseMsg(MsgPacket msgPacket) {
         String msg = msgPacket.msg;
         int[] arr = {-5, -5, -5, -5};
-
+        scanner = new Scanner(System.in);
         //wait for input only in particular cases
 
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
@@ -101,7 +104,7 @@ public class ClientInputCLI extends ClientInput {
             System.out.println("You have the possibility to make another move phase.");
             if (Confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
-                msg = Messages.build;//to make another move action
+                msg = Messages.move;//to make another move action
             } else {
                 arr[1] = 0;
             }
