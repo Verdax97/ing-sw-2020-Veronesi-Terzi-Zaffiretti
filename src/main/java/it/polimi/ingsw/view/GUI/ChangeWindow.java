@@ -14,6 +14,9 @@ public class ChangeWindow{
     Scene connectionScene, lobbyScene, matchScene;
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
+    //public LauncherController launcherController = null;
+    private LobbyController lobbyController = null;
+    private PickGodsController pickGodsController = null;
 
     public ClientMain getClientMain() {
         return clientMain;
@@ -24,6 +27,16 @@ public class ChangeWindow{
     }
 
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    private Stage primaryStage = null;
 
 
     public void getFirstWindow() throws IOException {
@@ -36,26 +49,35 @@ public class ChangeWindow{
         LauncherApp.primaryStage.setScene(connectionScene);
     }
 
-    public void changeToLobby() throws IOException {
-        FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
-        Parent rootLobby = (Parent) loaderLobby.load();
-        LobbyController lobbyController = loaderLobby.getController();
-        lobbyController.setClientMain(clientMain);
-        ((ClientInputGUI) clientMain.getClientInput()).setLobbyController(lobbyController);
-        lobbyScene = new Scene(rootLobby);
-        LauncherApp.primaryStage.setScene(lobbyScene);
-        LauncherApp.primaryStage.setTitle("Lobby");
+    public void changeToLobby(boolean master) throws IOException {
+        if (lobbyController == null){
+            FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
+            Parent rootLobby = (Parent) loaderLobby.load();
+            lobbyController = loaderLobby.getController();
+            lobbyController.setClientMain(clientMain);
+            lobbyController.setClientInputGUI(clientInputGUI);
+            ((ClientInputGUI) clientMain.getClientInput()).setLobbyController(lobbyController);
+            lobbyScene = new Scene(rootLobby);
+            primaryStage.setScene(lobbyScene);
+            primaryStage.setTitle("Lobby");
+        }
+        if (master) {
+            lobbyController.showNumberPlayers();
+        }
+        else lobbyController.showNicknames();
     }
 
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         Parent rootMatch = (Parent) loaderMatch.load();
-        PickGodsController pickGodsController = loaderMatch.getController();
+        pickGodsController = loaderMatch.getController();
         pickGodsController.setClientMain(clientMain);
+        pickGodsController.setClientInputGUI(clientInputGUI);
         ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
         matchScene = new Scene(rootMatch);
-        LauncherApp.primaryStage.setScene(matchScene);
-        LauncherApp.primaryStage.setTitle("Match");
+        primaryStage.setScene(matchScene);
+        primaryStage.setTitle("Match");
+        clientInputGUI.Reply(-5,-5,-5,-5);
     }
 
     public void changeToSantoriniMatch() throws IOException {

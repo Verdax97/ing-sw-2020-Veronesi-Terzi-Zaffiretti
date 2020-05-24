@@ -2,10 +2,8 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.view.GUI.ChangeWindow;
-import it.polimi.ingsw.view.GUI.LauncherController;
-import it.polimi.ingsw.view.GUI.LobbyController;
-import it.polimi.ingsw.view.GUI.PickGodsController;
+import it.polimi.ingsw.view.GUI.*;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 import java.io.IOException;
@@ -13,17 +11,6 @@ import java.io.IOException;
 public class ClientInputGUI extends ClientInput {
 
     private ChangeWindow changeWindow = null;
-
-    /*public LauncherController getLauncherController() {
-        return launcherController;
-    }
-
-    public void setLauncherController(LauncherController launcherController) {
-        this.launcherController = launcherController;
-    }
-
-    //private LauncherApp launcherApp;
-    private LauncherController launcherController;*/
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
@@ -31,27 +18,15 @@ public class ClientInputGUI extends ClientInput {
 
     public void setChangeWindow(ChangeWindow changeWindow) { this.changeWindow = changeWindow; }
 
-    /*public LauncherApp getLauncherApp() { return launcherApp; }
+    public LobbyController getLobbyController() { return lobbyController; }
 
-    public void setLauncherApp(LauncherApp launcherApp) { this.launcherApp = launcherApp; }*/
+    public void setLobbyController(LobbyController lobbyController) { this.lobbyController = lobbyController; }
 
-    public LobbyController getLobbyController() {
-        return lobbyController;
-    }
-
-    public void setLobbyController(LobbyController lobbyController) {
-        this.lobbyController = lobbyController;
-    }
-
-    public PickGodsController getPickGodsController() {
-        return pickGodsController;
-    }
+    public PickGodsController getPickGodsController() { return pickGodsController; }
 
     public void setPickGodsController(PickGodsController pickGodsController) { this.pickGodsController = pickGodsController; }
 
-    public ClientInputGUI(ClientMain clientMain) {
-        super(clientMain);
-    }
+    public ClientInputGUI(ClientMain clientMain) { super(clientMain); }
 
     @Override
     public void ParseMsg(MsgPacket msgPacket) {
@@ -66,18 +41,33 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.lobby)) {
+            Platform.runLater(()-> {
             try {
-                changeWindow.changeToLobby();
-                } catch (IOException e) { e.printStackTrace(); }
-            lobbyController.showNumberPlayers();
+                    changeWindow.changeToLobby(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.nickname)) {
-            lobbyController.showNicknames();
+            Platform.runLater(()-> {
+                try {
+                    changeWindow.changeToLobby(false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.start)) {
-            //System.out.println("Starting the game");
+            Platform.runLater(()-> {
+                try {
+                    changeWindow.changeToPickGods();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {

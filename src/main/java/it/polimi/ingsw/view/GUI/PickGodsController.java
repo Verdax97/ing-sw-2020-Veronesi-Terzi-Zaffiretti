@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class PickGodsController {
 
@@ -36,11 +37,15 @@ public class PickGodsController {
         godStrings.addAll(Arrays.asList(msg.split("/n")));
         //godSelectionPane.getChildren().clear();
         int row = 0;
-        int colLimit = godStrings.size() / 2;
+        int colLimit = 0;
+        if (godStrings.size()%2 == 0){
+            colLimit = godStrings.size()/2;
+        }
+        else colLimit = godStrings.size()/2 + 1;
         for (int i = 0; i < godStrings.size(); i++) {
             ArrayList<String> s = new ArrayList<>();
             s.addAll(Arrays.asList(godStrings.get(i).split(" ")));
-            String indexGod = s.get(0).split(new String(")"))[0];
+            String indexGod = s.get(0).split(Pattern.quote(")"))[0];
             String nameGod = s.get(1).split(":")[0];
             String descriptionGod = s.get(2);
             GodCard godCard = new GodCard();
@@ -50,7 +55,7 @@ public class PickGodsController {
             godCard.setGraphic(new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Images/godCards/"+nameGod+".png"))));
             godSelectionPane.add(godCard, row, i);
             godCard.setOnAction(e -> selectGod(godCard));
-            if (i > colLimit){
+            if (i >= colLimit){
                 row++;
             }
         }
