@@ -49,7 +49,6 @@ public class Controller implements Observer {
     public void CreateMatch(boolean resume) {
         if (!resume) {
             this.match = new Match(lobby.getPlayers());
-            serverMultiplexer.ConnectObserver(match);
             this.match.StartGame();
             setState(State.SETUP);
         } else {
@@ -61,6 +60,7 @@ public class Controller implements Observer {
             }
             setState(State.STARTTURN);
         }
+        serverMultiplexer.ConnectObserver(match);
     }
 
     /**

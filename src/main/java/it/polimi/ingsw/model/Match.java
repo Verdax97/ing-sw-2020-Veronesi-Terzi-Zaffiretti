@@ -493,7 +493,7 @@ public class Match extends Observable {
             NextTurn();
         }
         playerTurn = setup.getPlayers().get(nPlayer);
-        //TODO aggiungere salvataggio per partita
+        GameSaver.saveGame(this);
     }
 
     /**

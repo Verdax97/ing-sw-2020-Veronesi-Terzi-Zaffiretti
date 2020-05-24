@@ -15,8 +15,7 @@ public class GameSaver {
         ArrayList<String> players = new ArrayList<>(lobby.getPlayers());
         Collections.sort(players);
         StringBuilder fileName = new StringBuilder();
-        for (String player :
-                players) {
+        for (String player : players) {
             fileName.append(player);
             if (!player.equals(players.get(players.size() - 1)))
                 fileName.append("-");
@@ -38,7 +37,7 @@ public class GameSaver {
         }
     }
 
-    public void saveGame(Match match) {
+    public static void saveGame(Match match) {
         try {
             FileWriter fileWriter = new FileWriter(saveFile);
             ArrayList<Player> players = match.getSetup().getPlayers();
@@ -67,7 +66,7 @@ public class GameSaver {
             fileWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred when saving the game.");
             e.printStackTrace();
         }
     }
@@ -87,7 +86,7 @@ public class GameSaver {
         return match;
     }
 
-    private String PrintBoard(ArrayList<Player> players, Board board) {
+    private static String PrintBoard(ArrayList<Player> players, Board board) {
         StringBuilder s = new StringBuilder();
         //prints the debuffs
         int[] debuffed = new int[players.size()];
