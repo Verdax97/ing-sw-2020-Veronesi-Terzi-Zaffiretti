@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class LauncherApp extends Application{
 
-    public ChangeWindow changeWindow = new ChangeWindow();
+    ChangeWindow changeWindow = new ChangeWindow();
 /*
     Scene connectionScene, lobbyScene, matchScene;
 
@@ -83,8 +83,6 @@ public class LauncherApp extends Application{
         changeWindow.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
         ((ClientInputGUI) clientMain.getClientInput()).setChangeWindow(changeWindow);
         changeWindow.getFirstWindow();
-        //Scene firstScene = changeWindow.getFirstWindow();
-        //primaryStage.setScene(firstScene);
         stage.setTitle("Santorini Game Launcher");
         stage.show();
     }

@@ -50,6 +50,9 @@ public class PickGodsController {
             godCard.setGraphic(new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Images/godCards/"+nameGod+".png"))));
             godSelectionPane.add(godCard, row, i);
             godCard.setOnAction(e -> selectGod(godCard));
+            if (i > colLimit){
+                row++;
+            }
         }
     }
 

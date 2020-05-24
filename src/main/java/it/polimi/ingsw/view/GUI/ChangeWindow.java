@@ -22,9 +22,9 @@ public class ChangeWindow{
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
+
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
-    private static Stage modifiedStage = new Stage();
 
     public void getFirstWindow() throws IOException {
         FXMLLoader loaderLauncher = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
@@ -47,10 +47,6 @@ public class ChangeWindow{
         LauncherApp.primaryStage.setTitle("Lobby");
     }
 
-    public void changeToNickname() throws  IOException {
-        //TODO
-    }
-
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         Parent rootMatch = (Parent) loaderMatch.load();
@@ -58,8 +54,8 @@ public class ChangeWindow{
         pickGodsController.setClientMain(clientMain);
         ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
         matchScene = new Scene(rootMatch);
-        modifiedStage.setScene(matchScene);
-        modifiedStage.setTitle("Match");
+        LauncherApp.primaryStage.setScene(matchScene);
+        LauncherApp.primaryStage.setTitle("Match");
     }
 
     public void changeToSantoriniMatch() throws IOException {

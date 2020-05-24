@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.client;
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.view.GUI.ChangeWindow;
+import it.polimi.ingsw.view.GUI.LauncherController;
 import it.polimi.ingsw.view.GUI.LobbyController;
 import it.polimi.ingsw.view.GUI.PickGodsController;
 import javafx.scene.control.Alert;
@@ -11,15 +12,24 @@ import java.io.IOException;
 
 public class ClientInputGUI extends ClientInput {
 
-    private ChangeWindow changeWindow;
+    private ChangeWindow changeWindow = null;
+
+    /*public LauncherController getLauncherController() {
+        return launcherController;
+    }
+
+    public void setLauncherController(LauncherController launcherController) {
+        this.launcherController = launcherController;
+    }
+
+    //private LauncherApp launcherApp;
+    private LauncherController launcherController;*/
+    private LobbyController lobbyController = null;
+    private PickGodsController pickGodsController = null;
 
     public ChangeWindow getChangeWindow() { return changeWindow; }
 
     public void setChangeWindow(ChangeWindow changeWindow) { this.changeWindow = changeWindow; }
-
-    //private LauncherApp launcherApp;
-    private LobbyController lobbyController;
-    private PickGodsController pickGodsController;
 
     /*public LauncherApp getLauncherApp() { return launcherApp; }
 
@@ -37,9 +47,7 @@ public class ClientInputGUI extends ClientInput {
         return pickGodsController;
     }
 
-    public void setPickGodsController(PickGodsController pickGodsController) {
-        this.pickGodsController = pickGodsController;
-    }
+    public void setPickGodsController(PickGodsController pickGodsController) { this.pickGodsController = pickGodsController; }
 
     public ClientInputGUI(ClientMain clientMain) {
         super(clientMain);
@@ -47,6 +55,7 @@ public class ClientInputGUI extends ClientInput {
 
     @Override
     public void ParseMsg(MsgPacket msgPacket) {
+
         String msg = msgPacket.msg;
 
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
@@ -59,14 +68,16 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.lobby)) {
             try {
                 changeWindow.changeToLobby();
-                } catch (IOException e) {
-                e.printStackTrace();
-            }
+                } catch (IOException e) { e.printStackTrace(); }
             lobbyController.showNumberPlayers();
         }
 
         if (msg.equalsIgnoreCase(Messages.nickname)) {
             lobbyController.showNicknames();
+        }
+
+        if (msg.equalsIgnoreCase(Messages.start)) {
+            //System.out.println("Starting the game");
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
@@ -78,12 +89,101 @@ public class ClientInputGUI extends ClientInput {
             //launcherApp.validNickname();
             Reply(-5, -5, -5, -5);
         }
+
+
+        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
+            /*System.out.println("Place your workers.");
+            for (int i = 0; i < 2; i++) {
+                System.out.println("Place worker " + i + ":");
+                while (true) {
+                    int[] worker = SelectCell();
+                    if (worker[0] >= 0 && worker[0] < 5 && worker[1] >= 0 && worker[1] < 5) {
+                        arr[2 * i] = worker[0];
+                        arr[2 * i + 1] = worker[1];
+                        break;
+                    } else {
+                        System.out.println("Selected cell is not valid");
+                    }
+                }
+            }*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.startTurn)) {
+            /*System.out.println("Your Turn");
+            Reply(-5, -5, -5, -5);
+            return;*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.selectWorker)) {
+            /*System.out.println("Select your worker by inserting corresponding value");
+            System.out.println(msgPacket.altMsg);
+            arr[0] = ReadIntInput();*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.beforeMove)) {
+            /*System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
+            System.out.println(msgPacket.altMsg);
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                System.out.println("Insert value");
+                arr[0] = ReadIntInput();
+            } else {
+                arr[1] = 0;
+            }
+            System.out.println("Insert a valid input");*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.moveAgain)) {
+            /*System.out.println("You have the possibility to make another move phase.");
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                msg = Messages.build;//to make another move action
+            } else {
+                arr[1] = 0;
+            }*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.move)) {
+            /*System.out.println("You must move.\nAll the possible moves your worker can do");
+            System.out.println(msgPacket.altMsg);
+            arr[0] = ReadIntInput();*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.buildAgain)) {
+            /*System.out.println("You have the possibility to make another build phase.");
+            if (Confirm("Do you want to do it? (y/n)")) {
+                arr[1] = 1;
+                msg = Messages.build;//to make another move action
+            } else {
+                arr[1] = 0;
+            }*/
+        }
+
+        if (msg.equalsIgnoreCase(Messages.build)) {
+            /*System.out.println("You must build.\nAll the possible build your worker can do");
+            System.out.println(msgPacket.altMsg);
+            arr[0] = ReadIntInput();
+
+            int i;
+            for (i = 0; i < msgPacket.board.players.size(); i++) {
+                if (clientMain.getNick().equals(msgPacket.board.players.get(i)))
+                    break;
+            }
+            if (msgPacket.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
+                System.out.println("You have the power to build a dome here");
+                if (Confirm("Do you want to do it? (y/n)")) {
+                    arr[2] = 1;
+                }
+            }*/
+        }
     }
 
+//check if this works
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
     }
+
 }
