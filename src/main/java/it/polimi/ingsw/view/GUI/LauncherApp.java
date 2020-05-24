@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 
 public class LauncherApp extends Application{
 
-    ChangeWindow changeWindow = new ChangeWindow();
+    public ChangeWindow changeWindow = new ChangeWindow();
 /*
     Scene connectionScene, lobbyScene, matchScene;
 
     Button buttonConnect, buttonLobby;
-
-    ClientMain clientMain = new ClientMain();
 */
+    ClientMain clientMain = new ClientMain();
+
     public static Stage primaryStage;
 
     @Override
@@ -78,8 +78,13 @@ public class LauncherApp extends Application{
         });*/
         //show first scene
         primaryStage = stage;
-        Scene firstScene = changeWindow.getFirstWindow();
-        primaryStage.setScene(firstScene);
+        changeWindow.setClientMain(clientMain);
+        clientMain.setClientInput((ClientInput) new ClientInputGUI(clientMain));
+        changeWindow.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
+        ((ClientInputGUI) clientMain.getClientInput()).setChangeWindow(changeWindow);
+        changeWindow.getFirstWindow();
+        //Scene firstScene = changeWindow.getFirstWindow();
+        //primaryStage.setScene(firstScene);
         stage.setTitle("Santorini Game Launcher");
         stage.show();
     }
@@ -90,13 +95,14 @@ public class LauncherApp extends Application{
         primaryStage.setTitle("Match");
     }
 */
+/*
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
     }
-
+*/
     @Override
     public void stop(){
         System.exit(0);

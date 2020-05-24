@@ -12,19 +12,28 @@ import java.io.IOException;
 public class ChangeWindow{
 
     Scene connectionScene, lobbyScene, matchScene;
+    private ClientMain clientMain = null;
+    private ClientInputGUI clientInputGUI = null;
 
-    ClientMain clientMain = new ClientMain();
+    public ClientMain getClientMain() {
+        return clientMain;
+    }
+
+    public void setClientMain(ClientMain clientMain) {
+        this.clientMain = clientMain;
+    }
+    public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
     private static Stage modifiedStage = new Stage();
 
-    public Scene getFirstWindow() throws IOException {
+    public void getFirstWindow() throws IOException {
         FXMLLoader loaderLauncher = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
         Parent rootLauncher = (Parent) loaderLauncher.load();
         LauncherController launcherController = loaderLauncher.getController();
         launcherController.setClientMain(clientMain);
         //((ClientInputGUI) clientMain.getClientInput()).setLauncherController(launcherController);
         connectionScene = new Scene(rootLauncher);
-        return connectionScene;
+        LauncherApp.primaryStage.setScene(connectionScene);
     }
 
     public void changeToLobby() throws IOException {
