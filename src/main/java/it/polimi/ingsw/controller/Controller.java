@@ -1,9 +1,13 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.GameSaver;
+import it.polimi.ingsw.model.Lobby;
+import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.view.ServerView;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -42,11 +46,21 @@ public class Controller implements Observer {
     /**
      * Method CreateMatch instantiate and initialize match and send first message to the players
      */
-    public void CreateMatch() {
-        this.match = new Match(lobby.getPlayers());
-        serverMultiplexer.ConnectObserver(match);
-        this.match.StartGame();
-        setState(State.SETUP);
+    public void CreateMatch(boolean resume) {
+        if (!resume) {
+            this.match = new Match(lobby.getPlayers());
+            serverMultiplexer.ConnectObserver(match);
+            this.match.StartGame();
+            setState(State.SETUP);
+        } else {
+            try {
+                this.match = GameSaver.loadGame();
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+                System.exit(-1);
+            }
+            setState(State.STARTTURN);
+        }
     }
 
     /**
@@ -64,7 +78,7 @@ public class Controller implements Observer {
         switch (state) {
             case LOBBY://
                 lobby = serverMultiplexer.getLobby();
-                CreateMatch();
+                CreateMatch(false);
                 break;
             case SETUP:
                 match.PickGod(msgPacket);
@@ -127,7 +141,6 @@ public class Controller implements Observer {
                 //TODO all this thing
                 //save record data
                 //delete game data ()
-                //close connections
                 break;
             default:
                 System.out.println("Error of received message");

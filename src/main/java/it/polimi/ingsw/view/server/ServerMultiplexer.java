@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Lobby;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,13 +27,15 @@ public class ServerMultiplexer extends Observable implements Runnable {
     private final Lobby lobby;
     private int nConnectionPlayer = 0;
 
+    private volatile boolean resumeGame = false;
+
     public ServerMultiplexer(Controller controller) {
         this.controller = controller;
         this.playersThread = new ArrayList<>();
         this.lobby = new Lobby();
     }
 
-    public void startServer() throws IOException {
+    public void startServer() {
         //It creates threads when necessary, otherwise it re-uses existing one when possible
         executor = Executors.newCachedThreadPool();
         System.out.println("Insert server port:");
@@ -97,7 +96,12 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 //break; //In case the serverSocket gets closed
             }
         }
-        //todo check if there are other games with same players
+
+        //check if there are other games with same players
+        if (GameSaver.checkForGames(lobby)) {
+            resumeGame = playersThread.get(0).AskForResume();
+        }
+
 
         //start all thread
         for (ServerThread thread : playersThread) {
@@ -105,7 +109,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
         }
         //create the game
         controller.setLobby(lobby);
-        controller.CreateMatch();
+        controller.CreateMatch(resumeGame);
     }
 
     public void CloseConnection() {
@@ -149,11 +153,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
 
     @Override
     public void run() {
-        try {
-            startServer();
-        } catch (IOException e) {
-            System.out.println("Server Ended");
-        }
+        startServer();
     }
 
     /**

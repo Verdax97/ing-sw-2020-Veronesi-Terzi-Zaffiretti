@@ -5,7 +5,9 @@ import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Objects;
 import java.util.Observable;
@@ -97,7 +99,7 @@ public class ServerThread extends Thread implements Observer {
      */
     private void SetupLobbySize() {
         if (pos == 0) {
-            String mess = "Lobby";
+            String mess = Messages.lobby;
             String err = "";
             while (true) {
                 //insert player number
@@ -122,7 +124,7 @@ public class ServerThread extends Thread implements Observer {
      */
     private void SetupNickname() {
         System.out.println("Waiting for player " + pos + " nickname");
-        String mess = "Insert nickname";
+        String mess = Messages.nickname;
         String err = "";
         while (true) {
             //insert player nickname
@@ -138,6 +140,19 @@ public class ServerThread extends Thread implements Observer {
         }
     }
 
+    public boolean AskForResume() {
+        String mess = Messages.resume;
+        String err = "";
+        while (true) {
+            //insert player number
+            SendMsg(new MsgPacket(nick, err + mess, "", null));
+
+            //read response
+            MsgToServer msgToServer = ReceiveMsg();
+            assert msgToServer != null;
+            return (msgToServer.x == 1);
+        }
+    }
 
     /**
      * Method SendMsg for sending objects via socket
