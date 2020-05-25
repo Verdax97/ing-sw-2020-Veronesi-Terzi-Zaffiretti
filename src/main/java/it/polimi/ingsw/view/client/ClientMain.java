@@ -43,6 +43,13 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
         while (!end) {
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             end = clientLogic();
         }
         EndAll();
@@ -73,6 +80,11 @@ public class ClientMain implements Runnable {
         return true;
     }
 
+    /**
+     * Method clientLogic ...
+     *
+     * @return boolean
+     */
     private boolean clientLogic() {
         //wait to have reply msg ready
         if (!isReadyToRecive()) {
@@ -98,6 +110,7 @@ public class ClientMain implements Runnable {
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
+            //update the view for all other players
             clientInput.updateNotYourTurn();
         }
         return false;
@@ -161,13 +174,14 @@ public class ClientMain implements Runnable {
      * Method EndAll close all thread
      */
     public void EndAll() {
-        System.out.println("Game is ended.\nClosing the application");
+        clientInput.closeGame();
         try {
             threadInput.interrupt();
             threadInput.join(300);
         } catch (InterruptedException e) {
             System.out.println(threadInput.getName());
         }
+        //close all
         System.exit(1);
         end = true;
     }

@@ -43,10 +43,12 @@ public class LineClient extends Thread implements Observer {
 
                 clientMain.setReceivedMsg(msg);
                 clientMain.setReadyToReceive(true);
+                synchronized (clientMain) {
+                    clientMain.notify();
+                }
                 if (msg.msg.equalsIgnoreCase("end"))
                     break;
             } else {
-                //System.out.println("null message");
                 System.out.println("the game is ended");
                 clientMain.EndAll();
                 break;

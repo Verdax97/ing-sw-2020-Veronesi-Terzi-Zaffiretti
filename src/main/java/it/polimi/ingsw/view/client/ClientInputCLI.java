@@ -317,4 +317,12 @@ public class ClientInputCLI extends ClientInput {
     public void updateEndGame() {
         System.out.println(clientMain.getReceivedMsg().altMsg);
     }
+
+    /**
+     * @see ClientInput#closeGame()
+     */
+    @Override
+    public void closeGame() {
+        System.out.println("Game is ended.\nClosing the application");
+    }
 }
