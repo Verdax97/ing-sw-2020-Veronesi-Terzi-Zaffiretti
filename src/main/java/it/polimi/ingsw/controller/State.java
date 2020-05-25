@@ -6,6 +6,7 @@ package it.polimi.ingsw.controller;
  * Created on 20/05/2020
  */
 public enum State {
+        START,
         SETUP,
         SELECT,
         PLACEWORKERS,

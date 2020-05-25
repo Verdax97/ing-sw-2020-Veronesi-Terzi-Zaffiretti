@@ -60,8 +60,8 @@ public class Controller implements Observer {
         }
         this.match = new Match(lobby.getPlayers());
         serverMultiplexer.ConnectObserver(match);
+        setState(State.START);
         this.match.StartGame();
-        setState(State.SETUP);
     }
 
     /**
@@ -80,6 +80,10 @@ public class Controller implements Observer {
             case LOBBY://
                 lobby = serverMultiplexer.getLobby();
                 CreateMatch(false);
+                break;
+            case START:
+                match.PickGod(msgPacket);
+                setState(State.SETUP);
                 break;
             case SETUP:
                 match.PickGod(msgPacket);

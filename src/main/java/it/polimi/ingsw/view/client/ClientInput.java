@@ -64,4 +64,10 @@ public class ClientInput extends Observable {
      */
     public void updateEndGame() {
     }
+
+    /**
+     * Method closeGame notify the player that the game is closing
+     */
+    public void closeGame() {
+    }
 }
