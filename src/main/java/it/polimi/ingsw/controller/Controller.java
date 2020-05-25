@@ -47,20 +47,21 @@ public class Controller implements Observer {
      * Method CreateMatch instantiate and initialize match and send first message to the players
      */
     public void CreateMatch(boolean resume) {
-        if (!resume) {
-            this.match = new Match(lobby.getPlayers());
-            this.match.StartGame();
-            setState(State.SETUP);
-        } else {
+        if (resume) {
             try {
                 this.match = GameSaver.loadGame();
+                serverMultiplexer.ConnectObserver(match);
             } catch (FileNotFoundException e) {
                 System.out.println("File not found");
                 System.exit(-1);
             }
             setState(State.STARTTURN);
+            return;
         }
+        this.match = new Match(lobby.getPlayers());
         serverMultiplexer.ConnectObserver(match);
+        this.match.StartGame();
+        setState(State.SETUP);
     }
 
     /**
