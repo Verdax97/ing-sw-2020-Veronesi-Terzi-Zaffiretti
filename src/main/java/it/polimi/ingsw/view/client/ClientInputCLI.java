@@ -323,6 +323,8 @@ public class ClientInputCLI extends ClientInput {
      */
     @Override
     public void closeGame() {
-        System.out.println("Game is ended.\nClosing the application");
+        System.out.println("Game is ended.\nPress enter to end the program");
+        scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 }
