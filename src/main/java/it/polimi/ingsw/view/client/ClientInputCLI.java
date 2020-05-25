@@ -10,14 +10,19 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Class ClientInputCLI extends the ClientInput class for the cli
+ */
 public class ClientInputCLI extends ClientInput {
 
     protected Scanner scanner = new Scanner(System.in);
 
+    /** @see ClientInput#ClientInput(ClientMain) */
     public ClientInputCLI(ClientMain clientMain) {
         super(clientMain);
     }
 
+    /** @see ClientInput#ParseMsg(MsgPacket) */
     @Override
     public void ParseMsg(MsgPacket msgPacket) {
         String msg = msgPacket.msg;
@@ -158,13 +163,22 @@ public class ClientInputCLI extends ClientInput {
     }
 
 
+    /**
+     * Method ReadStringInput read the next string inserted
+     *
+     * @return String
+     */
     public String ReadStringInput() {
         scanner = new Scanner(System.in);
         System.out.print(">");
-        String a = scanner.nextLine();
-        return a;
+        return scanner.nextLine();
     }
 
+    /**
+     * Method ReadIntInput read the next int inserted
+     *
+     * @return int
+     */
     public int ReadIntInput() {
         int a;
         while (true) {
@@ -181,6 +195,11 @@ public class ClientInputCLI extends ClientInput {
         return a;
     }
 
+    /**
+     * Method SelectCell let the player select a cell on the board
+     *
+     * @return int[]
+     */
     private int[] SelectCell() {
         while (true) {
             int x, y;
@@ -202,6 +221,12 @@ public class ClientInputCLI extends ClientInput {
         }
     }
 
+    /**
+     * Method Confirm asks for confirm to the player before doing something
+     *
+     * @param message of type String
+     * @return boolean
+     */
     private boolean Confirm(String message) {
         System.out.println(message);
         while (true) {
@@ -215,6 +240,7 @@ public class ClientInputCLI extends ClientInput {
         }
     }
 
+    /** @see ClientInput#printBoard(SimpleBoard) */
     @Override
     public void printBoard(SimpleBoard board) {
         if (board == null)
@@ -269,8 +295,26 @@ public class ClientInputCLI extends ClientInput {
                 }
             }
             System.out.println();
-        }//todo print board
+        }
         System.out.println("Y|---------");
         System.out.println("X 0 1 2 3 4\n");
+    }
+
+    /**
+     * @see ClientInput#updateNotYourTurn()
+     */
+    @Override
+    public void updateNotYourTurn() {
+        System.out.println(Colors.ANSI_YELLOW + clientMain.getReceivedMsg().nickname + "'s turn, wait" + Colors.ANSI_RESET);
+        System.out.println(clientMain.getReceivedMsg().altMsg);
+        Reply(-5, -5, -5, -5);
+    }
+
+    /**
+     * @see ClientInput#updateEndGame()
+     */
+    @Override
+    public void updateEndGame() {
+        System.out.println(clientMain.getReceivedMsg().altMsg);
     }
 }

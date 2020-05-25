@@ -1,7 +1,10 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Messages;
+import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.Colors;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,7 +88,7 @@ public class ClientMain implements Runnable {
 
         //exit if the game ends
         if (getReceivedMsg().msg.equalsIgnoreCase(Messages.End)) {
-            System.out.println(getReceivedMsg().altMsg);
+            clientInput.updateEndGame();
             return true;
         }
 
@@ -95,9 +98,7 @@ public class ClientMain implements Runnable {
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
-            System.out.println(Colors.ANSI_YELLOW + receivedMsg.nickname + "'s turn, wait" + Colors.ANSI_RESET);
-            System.out.println(getReceivedMsg().altMsg);
-            clientInput.Reply(-5, -5, -5, -5);
+            clientInput.updateNotYourTurn();
         }
         return false;
     }
