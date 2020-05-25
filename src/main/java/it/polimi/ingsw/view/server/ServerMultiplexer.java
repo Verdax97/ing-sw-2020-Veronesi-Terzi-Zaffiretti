@@ -98,6 +98,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
         }
 
         //check if there are other games with same players
+
         if (GameSaver.checkForGames(lobby)) {
             resumeGame = playersThread.get(0).AskForResume();
         }
@@ -106,12 +107,18 @@ public class ServerMultiplexer extends Observable implements Runnable {
         //start all thread
         for (ServerThread thread : playersThread) {
             thread.waitForStart = true;
+            synchronized (thread) {
+                thread.notify();
+            }
         }
         //create the game
         controller.setLobby(lobby);
         controller.CreateMatch(resumeGame);
     }
 
+    /**
+     * Method CloseConnection closes all connections and close itself
+     */
     public void CloseConnection() {
         for (ServerThread thread :
                 playersThread) {
@@ -125,6 +132,12 @@ public class ServerMultiplexer extends Observable implements Runnable {
         System.exit(1);
     }
 
+    /**
+     * Method SetNickname try to set the nickname in the lobby
+     *
+     * @param name of type String
+     * @return boolean
+     */
     public synchronized boolean SetNickname(String name) {
         for (String s : lobby.getPlayers()) {
             if (name.equalsIgnoreCase(s)) {
