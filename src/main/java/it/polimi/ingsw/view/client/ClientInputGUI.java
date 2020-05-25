@@ -14,6 +14,16 @@ public class ClientInputGUI extends ClientInput {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
+    public SantoriniMatchController getSantoriniMatchController() {
+        return santoriniMatchController;
+    }
+
+    public void setSantoriniMatchController(SantoriniMatchController santoriniMatchController) {
+        this.santoriniMatchController = santoriniMatchController;
+    }
+
+    private SantoriniMatchController santoriniMatchController = null;
+
     public ChangeWindow getChangeWindow() { return changeWindow; }
 
     public void setChangeWindow(ChangeWindow changeWindow) { this.changeWindow = changeWindow; }
@@ -35,7 +45,7 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
             //launcherApp.error old version
-            error("Error", msg.split("\n", 2)[0]);
+            //error("Error", msg.split("\n", 2)[0]);
             //(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
         }
@@ -63,15 +73,19 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.start)) {
             Platform.runLater(()-> {
                 try {
-                    changeWindow.changeToPickGods();
+                    changeWindow.changeToPickGods(msgPacket.altMsg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
-            pickGodsController.getDescriptionGod(msgPacket.altMsg);
+        if (msg.equalsIgnoreCase(Messages.choseGods)) {
+            changeWindow.showGods(msgPacket.altMsg);
+        }
+
+        if (msg.equalsIgnoreCase(Messages.choseYourGod)){
+
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
@@ -169,11 +183,12 @@ public class ClientInputGUI extends ClientInput {
     }
 
 //check if this works
+    /*
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
     }
-
+*/
 }
