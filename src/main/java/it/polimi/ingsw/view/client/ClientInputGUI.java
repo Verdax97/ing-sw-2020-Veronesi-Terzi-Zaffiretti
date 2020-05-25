@@ -4,13 +4,12 @@ import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.view.GUI.*;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
 public class ClientInputGUI extends ClientInput {
 
-    private ChangeWindow changeWindow = null;
+    private ControllerGUI controllerGui = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
@@ -24,9 +23,9 @@ public class ClientInputGUI extends ClientInput {
 
     private SantoriniMatchController santoriniMatchController = null;
 
-    public ChangeWindow getChangeWindow() { return changeWindow; }
+    public ControllerGUI getControllerGui() { return controllerGui; }
 
-    public void setChangeWindow(ChangeWindow changeWindow) { this.changeWindow = changeWindow; }
+    public void setControllerGui(ControllerGUI controllerGui) { this.controllerGui = controllerGui; }
 
     public LobbyController getLobbyController() { return lobbyController; }
 
@@ -53,7 +52,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.lobby)) {
             Platform.runLater(()-> {
             try {
-                    changeWindow.changeToLobby(true);
+                    controllerGui.changeToLobby(true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -63,7 +62,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.nickname)) {
             Platform.runLater(()-> {
                 try {
-                    changeWindow.changeToLobby(false);
+                    controllerGui.changeToLobby(false);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -73,27 +72,21 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.start)) {
             Platform.runLater(()-> {
                 try {
-                    changeWindow.changeToPickGods(msgPacket.altMsg);
+                    controllerGui.changeToPickGods();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseGods)) {
-            changeWindow.showGods(msgPacket.altMsg);
-        }
-
-        if (msg.equalsIgnoreCase(Messages.choseYourGod)){
-
+        if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
+            controllerGui.showGods(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
-            //launcherApp set in this way throws Exception in thread "Thread-6" java.lang.IllegalStateException: Not on FX application thread; currentThread = Thread-6
-            //launcherApp.validNickname();
+            controllerGui.waitYourTurn();
             Reply(-5, -5, -5, -5);
         }
-
 
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             /*System.out.println("Place your workers.");

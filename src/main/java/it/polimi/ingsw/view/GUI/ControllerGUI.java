@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChangeWindow{
+public class ControllerGUI {
 
     Scene connectionScene, lobbyScene, pickGodScene, santoriniMatchScene;
     private ClientMain clientMain = null;
@@ -69,7 +69,7 @@ public class ChangeWindow{
         else lobbyController.showNicknames();
     }
 
-    public void changeToPickGods(String msg) throws IOException {
+    public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         Parent rootMatch = (Parent) loaderPickGod.load();
         pickGodsController = loaderPickGod.getController();
@@ -95,5 +95,9 @@ public class ChangeWindow{
         santoriniMatchScene = new Scene(rootSantoriniMatch);
         primaryStage.setScene(santoriniMatchScene);
         primaryStage.setTitle("Santorini Board Game");
+    }
+
+    public void waitYourTurn(){
+        return;
     }
 }
