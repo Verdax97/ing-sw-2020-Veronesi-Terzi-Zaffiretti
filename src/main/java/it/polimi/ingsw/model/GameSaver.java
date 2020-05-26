@@ -164,7 +164,7 @@ public class GameSaver {
 
     private static God godFromName(String name, Match match){
         for (int index = 0; index < match.getSetup().getGodList().size(); index++){
-            if (match.getSetup().getGodList().get(index).name.equals(name)){return match.getSetup().PickGod(index);}
+            if (match.getSetup().getGodList().get(index).name.equals(name)){return match.getSetup().getGodList().get(index);}
         }
         return null;
     }
