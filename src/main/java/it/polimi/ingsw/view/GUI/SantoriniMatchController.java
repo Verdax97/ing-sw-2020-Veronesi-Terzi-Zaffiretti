@@ -7,9 +7,10 @@ import javafx.scene.control.Button;
 
 public class SantoriniMatchController {
 
-    @FXML
-    private Button confirmButton;
+    @FXML private Button confirmButton;
 
+    private ClientMain clientMain;
+    private ClientInput clientInputGUI;
     private int[] reply;
 
     public ClientInput getClientInputGUI() {
@@ -28,9 +29,6 @@ public class SantoriniMatchController {
         this.clientMain = clientMain;
     }
 
-    private ClientMain clientMain;
-    private ClientInput clientInputGUI;
-
     public void setReplyValue(CellButton cellButton){
 
     }
@@ -38,6 +36,10 @@ public class SantoriniMatchController {
     public void sendReply(){
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         reply = new int[] {-5, -5, -5, -5};
+    }
+
+    public void confirmAction(){
+        //put info into reply
     }
 
     public void updateBoard(){
