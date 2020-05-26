@@ -46,8 +46,11 @@ public class ClientInputGUI extends ClientInput {
         String msg = msgPacket.msg;
 
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
-            //error("Error", msg.split("\n", 2)[0]);
+            String errorMsg = msg.split("\n", 2)[0];
             msg = msg.split("\n", 2)[1];
+            Platform.runLater(()-> {
+                controllerGui.error("Error", errorMsg);
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.lobby)) {

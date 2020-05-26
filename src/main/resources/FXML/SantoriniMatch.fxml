@@ -12,73 +12,169 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane id="test" alignment="CENTER" stylesheets="@SantoriniMatch.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0">
-      <children>
-         <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="34.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../Images/godCards/Zeus.png" />
-            </image>
-         </ImageView>
-         <Text layoutX="243.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-            <font>
-               <Font size="17.0" />
-            </font>
-         </Text>
-         <Circle fill="DODGERBLUE" layoutX="294.0" layoutY="211.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-         <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="42.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../Images/godCards/Zeus.png" />
-            </image>
-         </ImageView>
-         <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="42.0" layoutY="765.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../Images/godCards/Zeus.png" />
-            </image>
-         </ImageView>
-         <Text layoutX="243.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-            <font>
-               <Font size="17.0" />
-            </font>
-         </Text>
-         <Text layoutX="251.0" layoutY="826.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-            <font>
-               <Font size="17.0" />
-            </font>
-         </Text>
-         <Circle fill="DODGERBLUE" layoutX="304.0" layoutY="558.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-         <Circle fill="DODGERBLUE" layoutX="294.0" layoutY="920.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-         <GridPane gridLinesVisible="true" layoutX="470.0" layoutY="91.0" prefHeight="900.0" prefWidth="900.0">
-           <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" prefWidth="171.0" />
-             <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" prefWidth="191.0" />
-             <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="0.0" prefWidth="192.0" />
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" prefWidth="193.0" />
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" prefWidth="157.0" />
-           </columnConstraints>
-           <rowConstraints>
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-           </rowConstraints>
-         </GridPane>
-         <Button fx:id="confirmButton" layoutX="1557.0" layoutY="890.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="82.0" prefWidth="180.0" text="Confirm" />
-         <Text layoutX="1513.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Legenda" wrappingWidth="176.7294921875" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="31.0" layoutX="1632.0" layoutY="553.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="31.0" layoutX="1633.0" layoutY="648.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="31.0" layoutX="1470.0" layoutY="639.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="41.0" layoutX="1470.0" layoutY="535.0" stroke="BLACK" strokeType="INSIDE" width="24.0" />
-         <Text layoutX="1576.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Message to user" />
-         <Text layoutX="1528.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         <Text layoutX="1704.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         <Button layoutX="1588.0" layoutY="309.0" mnemonicParsing="false" text="Use power God" />
-      </children></AnchorPane>
-    <columnConstraints>
-        <ColumnConstraints />
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints />
-    </rowConstraints>
-</GridPane>
+
+ <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
+   <children>
+      <Rectangle fill="#fc0fc0" height="352.0" layoutX="1426.0" layoutY="432.0" stroke="BLACK" width="432.0" />
+      <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/godCards/Zeus.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="255.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Circle fill="DODGERBLUE" layoutX="305.0" layoutY="213.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="404.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/godCards/Zeus.png" />
+         </image>
+      </ImageView>
+      <ImageView id="myGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="49.0" layoutY="709.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/godCards/Zeus.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="255.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="255.0" layoutY="826.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Circle fill="DODGERBLUE" layoutX="305.0" layoutY="558.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="DODGERBLUE" layoutX="309.0" layoutY="887.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
+      <GridPane gridLinesVisible="true" layoutX="470.0" layoutY="91.0" prefHeight="900.0" prefWidth="900.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="171.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="191.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="0.0" percentWidth="20.0" prefWidth="192.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" percentWidth="20.0" prefWidth="193.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" percentWidth="20.0" prefWidth="157.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <Button fx:id="confirmButton" layoutX="1556.0" layoutY="878.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="82.0" prefWidth="180.0" text="Confirm Action" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Text layoutX="1476.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Legenda" wrappingWidth="176.7294921875">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1641.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1642.0" layoutY="639.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1452.0" layoutY="637.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1452.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Text layoutX="1453.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Turn / Nickname player Turn">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <Text layoutX="1474.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What you got to do in your turn">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text layoutX="1474.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textbox for power god usage">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Button layoutX="1557.0" layoutY="319.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="179.0" text="Use power God" />
+      <Text layoutX="432.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="431.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="432.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="431.0" layoutY="732.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="431.0" layoutY="913.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="549.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="732.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="913.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="1094.0" layoutY="1039.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="1268.0" layoutY="1040.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="184.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="1512.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="1514.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 1">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="1719.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 2">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="1720.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 3">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="1632.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dome">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="1558.0" layoutY="724.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
