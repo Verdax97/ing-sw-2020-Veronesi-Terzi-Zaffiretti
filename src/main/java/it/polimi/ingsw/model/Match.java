@@ -111,7 +111,6 @@ public class Match extends Observable {
         lastAction = 1;
         if (getSetup().getGodPicked().size() == setup.getPlayers().size()) {
             NextPlayer();
-
             CreateMsgPacket(Messages.choseYourGod, PrintGods(setup.getGodPicked()));
             return;
         }
@@ -209,6 +208,7 @@ public class Match extends Observable {
         if (lastAction < -1)
             msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.startTurn;
         CreateMsgPacket(msgError, alt);
+        GameSaver.saveGame(this);
     }
 
 
@@ -497,7 +497,7 @@ public class Match extends Observable {
             NextTurn();
         }
         playerTurn = setup.getPlayers().get(nPlayer);
-        GameSaver.saveGame(this);
+        //GameSaver.saveGame(this);
     }
 
     /**
