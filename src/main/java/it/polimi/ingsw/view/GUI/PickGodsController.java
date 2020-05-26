@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
@@ -47,6 +46,8 @@ public class PickGodsController {
     public void getDescriptionGod(String msg, boolean yourTurn) {
         confirmGod.setVisible(yourTurn);
         ArrayList<String> godStrings = new ArrayList<>();
+        pickableGod.clear();
+        listOfGod.getItems().clear();
         godStrings.addAll(Arrays.asList(msg.split("\n")));
         for (int i = 0; i < godStrings.size(); i++) {
             ArrayList<String> s = new ArrayList<>(Arrays.asList(godStrings.get(i).split(" ", 3)));
@@ -68,10 +69,22 @@ public class PickGodsController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void selectGod(){
-        /*
+    public void selectGod() {
+        if (listOfGod.getValue() == null)
+            return;
+        GodCard godCard = getGodCard(listOfGod.getValue().toString());
+        if (godCard == null)
+            return;
         godImage.setImage(godCard.image);
         godEffect.setText(godCard.description);
-        reply[0] = Integer.parseInt(godCard.id);*/
+        reply[0] = Integer.parseInt(godCard.id);
+    }
+
+    private GodCard getGodCard(String name) {
+        for (GodCard card : pickableGod) {
+            if (card.name.equals(name))
+                return card;
+        }
+        return null;
     }
 }

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.view.GUI;
-
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
-public class GodCard extends Button {
+public class GodCard {
 
     public String id;
     public String name;
