@@ -22,10 +22,10 @@ public class GameSaver {
         }
         fileName.append(".txt");
         // Creates Directory savedGames if missing
-        File directory = new File("src/main/resources/savedGames");
+        File directory = new File("savedGames");
         if (!directory.exists()){directory.mkdir();}
         //Creates SaveGame if it doesn't already exist or returns true if it already exists
-        saveFile = new File("src/main/resources/savedGames/" + fileName.toString());
+        saveFile = new File("savedGames/" + fileName.toString());
         if (!saveFile.exists()) {
             System.out.println("File created: " + saveFile.getName());
             return false;
@@ -81,6 +81,50 @@ public class GameSaver {
 
         Match match = new Match(players);
 
+        String playerTurnName = scanner.nextLine();
+        Player playerTurn = null;
+        for (int e = 0; e < match.getPlayers().size(); e++ ){
+            if (playerTurnName == match.getPlayers().get(e).getNickname()){playerTurn = match.getPlayers().get(e);}
+        }
+
+        s = scanner.nextLine();
+        int playerN = 0;
+        for (String name : s.split("-")){
+            match.getPlayers().get(playerN).setGodPower(godFromName(name, match));
+        }
+
+        s = scanner.nextLine();
+        int i = 0;
+        ArrayList<Integer> playerDebuffed = new ArrayList<>();
+        for (String name : s.split("-")){
+            playerDebuffed.add((int) name.charAt(0));
+        }
+
+
+        Worker worker;
+        s = scanner.nextLine();
+        for (int y = 0; y < 5; y++){
+            for (int x = 0; x < 5; x++){
+                String cell = s.split(" ")[x];
+                match.getBoard().getCell(x,y).setBuilding(cell.charAt(0));
+                if (cell.length() == 2){
+                    if (cell.charAt(1) != 'D') {
+                        i = cell.charAt(1);
+                        worker = new Worker();
+                        worker.setPlayer(match.getPlayers().get(i));
+                        match.getBoard().getCell(x, y).setWorker(worker);
+                        if (playerDebuffed.get(i) == 1){worker.setDebuff(true);}
+                    }
+                    else match.getBoard().getCell(x, y).setDome(true);
+                }
+            }
+            s = scanner.nextLine();
+        }
+
+        match.setnPlayer(match.getSetup().getPlayers().size() - 1);
+        match.setPlayerTurn(playerTurn);
+
+
         //todo setup nplayer and playerTurn
         return match;
     }
@@ -89,6 +133,14 @@ public class GameSaver {
         StringBuilder s = new StringBuilder();
         //prints the debuffs
         int[] debuffed = new int[players.size()];
+        //prints the debuffs
+        for (int i = 0; i < players.size(); i++) {
+            s.append(debuffed[i]);
+            if (i == players.size() - 1)
+                s.append("\n");
+            else
+                s.append("-");
+        }
         //prints the board valBuilding-Dome-player
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -107,14 +159,13 @@ public class GameSaver {
             }
             s.append("\n");
         }
-        //prints the debuffs
-        for (int i = 0; i < players.size(); i++) {
-            s.append(debuffed[i]);
-            if (i == players.size() - 1)
-                s.append("\n");
-            else
-                s.append("-");
-        }
         return s.toString();
+    }
+
+    private static God godFromName(String name, Match match){
+        for (int index = 0; index < match.getSetup().getGodList().size(); index++){
+            if (match.getSetup().getGodList().get(index).name.equals(name)){return match.getSetup().PickGod(index);}
+        }
+        return null;
     }
 }

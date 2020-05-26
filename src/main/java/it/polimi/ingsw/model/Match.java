@@ -22,9 +22,18 @@ public class Match extends Observable {
         return playerTurn;
     }
 
+    public void setPlayerTurn(Player playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
     private Player playerTurn;
     private Player winner = null;
     private final ErrorHandler errorHandler = new ErrorHandler();
+
+    public void setnPlayer(int nPlayer) {
+        this.nPlayer = nPlayer;
+    }
+
     private int nPlayer = 0;
     private int lastAction = 0;//0 all right < 0 some problem
 
