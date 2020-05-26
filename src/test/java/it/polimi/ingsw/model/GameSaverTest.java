@@ -39,6 +39,11 @@ public class GameSaverTest {
         match.PlaceWorker(msg);
         msg = new MsgToServer(match.getPlayerTurn().getNickname(),4,4,3,3);
         match.PlaceWorker(msg);
+        match.getBoard().getCell(2,2).setDome(true);
+        match.getBoard().getCell(2,4).setBuilding(3);
+        match.getBoard().getCell(4,4).setBuilding(2);
+        match.getBoard().getCell(0,0).getWorker().setDebuff(true);
+        match.getBoard().getCell(1,1).getWorker().setDebuff(true);
         GameSaver.saveGame(match);
         Assertions.assertTrue(true);
     }

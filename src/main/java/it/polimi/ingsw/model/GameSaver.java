@@ -103,10 +103,10 @@ public class GameSaver {
                         }
                     }
                 }
+                s.append(" ");
             }
-
+            s.append("\n");
         }
-        s.append("\n");
         //prints the debuffs
         for (int i = 0; i < players.size(); i++) {
             s.append(debuffed[i]);
