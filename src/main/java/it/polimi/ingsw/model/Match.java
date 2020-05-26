@@ -10,7 +10,7 @@ public class Match extends Observable {
     private Board board;
     private final Turn turn;
     private final SetupMatch setup;
-
+    private boolean firstTime = true;
     /**
      * Method getPlayerTurn returns the playerTurn of this Match object.
      *
@@ -57,7 +57,8 @@ public class Match extends Observable {
     public void StartGame() {
         nPlayer = setup.getPlayers().size() - 1;
         playerTurn = setup.getPlayers().get(nPlayer);
-        CreateMsgPacket(Messages.choseGods, PrintGods(setup.getGodList()));
+        //CreateMsgPacket(Messages.choseGods, PrintGods(setup.getGodList()));
+        CreateMsgPacket(Messages.start, "Starting the game");
     }
 
     /**
@@ -97,7 +98,10 @@ public class Match extends Observable {
     public void PickGod(MsgToServer msgPacket) {
         int value = msgPacket.x;
         if (value < 0 || value >= setup.getGodList().size()) {
-            msgError = "Error Can't pick that god, try another value\n";
+            if (firstTime) {
+                firstTime = false;
+                msgError = "";
+            } else msgError = "Error Can't pick that god, try another value\n";
             lastAction = -1;
             CreateMsgPacket(msgError + Messages.choseGods, PrintGods(setup.getGodList()));
             return;
@@ -493,7 +497,7 @@ public class Match extends Observable {
             NextTurn();
         }
         playerTurn = setup.getPlayers().get(nPlayer);
-        //TODO aggiungere salvataggio per partita
+        GameSaver.saveGame(this);
     }
 
     /**

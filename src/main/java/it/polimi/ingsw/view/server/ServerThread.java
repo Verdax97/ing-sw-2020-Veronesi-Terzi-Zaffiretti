@@ -59,7 +59,13 @@ public class ServerThread extends Thread implements Observer {
 
             Setup();
             while (!waitForStart) {
-                Thread.yield();
+                synchronized (this) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             while (going) {
                 MsgToServer msgToServer = ReceiveMsg();
@@ -140,18 +146,21 @@ public class ServerThread extends Thread implements Observer {
         }
     }
 
+    /**
+     * Method AskForResume ask the player who created the lobby if he wants to resume an old game
+     *
+     * @return boolean
+     */
     public boolean AskForResume() {
         String mess = Messages.resume;
         String err = "";
-        while (true) {
-            //insert player number
-            SendMsg(new MsgPacket(nick, err + mess, "", null));
+        //send msg asking for resume
+        SendMsg(new MsgPacket(nick, err + mess, "", null));
 
-            //read response
-            MsgToServer msgToServer = ReceiveMsg();
-            assert msgToServer != null;
-            return (msgToServer.x == 1);
-        }
+        //read response
+        MsgToServer msgToServer = ReceiveMsg();
+        assert msgToServer != null;
+        return (msgToServer.x == 1);
     }
 
     /**

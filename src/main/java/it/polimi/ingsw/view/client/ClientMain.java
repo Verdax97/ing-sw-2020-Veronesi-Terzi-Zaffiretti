@@ -1,7 +1,10 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Messages;
+import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.Colors;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,6 +43,13 @@ public class ClientMain implements Runnable {
         colors.add(Colors.ANSI_GREEN);
         colors.add(Colors.ANSI_BLUE);
         while (!end) {
+            synchronized (this) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             end = clientLogic();
         }
         EndAll();
@@ -70,6 +80,11 @@ public class ClientMain implements Runnable {
         return true;
     }
 
+    /**
+     * Method clientLogic ...
+     *
+     * @return boolean
+     */
     private boolean clientLogic() {
         //wait to have reply msg ready
         if (!isReadyToRecive()) {
@@ -85,7 +100,7 @@ public class ClientMain implements Runnable {
 
         //exit if the game ends
         if (getReceivedMsg().msg.equalsIgnoreCase(Messages.End)) {
-            System.out.println(getReceivedMsg().altMsg);
+            clientInput.updateEndGame();
             return true;
         }
 
@@ -95,9 +110,8 @@ public class ClientMain implements Runnable {
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
-            System.out.println(Colors.ANSI_YELLOW + receivedMsg.nickname + "'s turn, wait" + Colors.ANSI_RESET);
-            System.out.println(getReceivedMsg().altMsg);
-            clientInput.Reply(-5, -5, -5, -5);
+            //update the view for all other players
+            clientInput.updateNotYourTurn(getReceivedMsg());
         }
         return false;
     }
@@ -160,13 +174,14 @@ public class ClientMain implements Runnable {
      * Method EndAll close all thread
      */
     public void EndAll() {
-        System.out.println("Game is ended.\nClosing the application");
+        clientInput.closeGame();
         try {
             threadInput.interrupt();
             threadInput.join(300);
         } catch (InterruptedException e) {
             System.out.println(threadInput.getName());
         }
+        //close all
         System.exit(1);
         end = true;
     }
