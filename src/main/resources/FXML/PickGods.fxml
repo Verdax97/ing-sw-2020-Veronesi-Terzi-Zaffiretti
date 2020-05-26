@@ -1,39 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.PickGodsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.PickGodsController">
    <children>
-      <Text fx:id="godEffect" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="397.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="God Effect: " textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="507.2003479003906" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="395.3989562988281" />
-      <GridPane fx:id="godSelectionPane" alignment="CENTER" prefHeight="409.0" prefWidth="1198.0" AnchorPane.bottomAnchor="278.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="113.0">
-          <columnConstraints>
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" percentWidth="14.28" prefWidth="100.0" />
-              <ColumnConstraints />
-          </columnConstraints>
-          <rowConstraints>
-              <RowConstraints />
-            <RowConstraints percentHeight="50.0" />
-            <RowConstraints percentHeight="50.0" valignment="CENTER" />
-          </rowConstraints>
-      </GridPane>
-      <Text layoutX="577.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select God cart">
+      <Text fx:id="godEffect" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="120.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="God Effect: " textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="507.2003479003906" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="122.79965209960938" />
+      <Text layoutX="297.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select God card">
          <font>
-            <Font size="20.0" />
+            <Font size="20.0"/>
          </font>
       </Text>
-      <Button fx:id="confirmGod" layoutX="590.0" layoutY="676.0" mnemonicParsing="false" onAction="#sendReply" prefHeight="45.0" prefWidth="140.0" text="Confirm" textAlignment="CENTER" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="569.5" AnchorPane.rightAnchor="569.5993041992188" />
+      <ChoiceBox fx:id="listOfGod" layoutX="180.0" layoutY="249.0" prefWidth="150.0" onAction="#selectGod"/>
+      <ImageView fx:id="godImage" fitHeight="150.0" fitWidth="124.0" layoutX="491.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="confirmGod" layoutX="306.0" layoutY="459.0" mnemonicParsing="false" prefHeight="54.0"
+              prefWidth="135.0" text="Confirm God" visible="false" onAction="#sendReply"/>
    </children>
 </AnchorPane>

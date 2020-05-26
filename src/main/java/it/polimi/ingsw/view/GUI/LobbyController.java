@@ -52,8 +52,6 @@ public class LobbyController{
         lobby.setVisible(false);
     }
 
-
-    @FXML
     public void setNumberPlayer() {
         int val;
         String number = numberPlayer.getValue().toString();

@@ -86,7 +86,7 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
             Platform.runLater(() -> {
-                controllerGui.showGods(msgPacket.altMsg);
+                controllerGui.showGods(msgPacket.altMsg, true);
             });
         }
 
@@ -200,7 +200,7 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
             Platform.runLater(() -> {
-                controllerGui.showGods(msgPacket.altMsg);
+                controllerGui.showGods(msgPacket.altMsg, false);
             });
         }
 
