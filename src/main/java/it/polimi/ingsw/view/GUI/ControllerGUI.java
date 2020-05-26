@@ -2,7 +2,6 @@ package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -98,7 +97,7 @@ public class ControllerGUI {
     }
 
     public void waitYourTurn(){
-        return;
+        lobbyController.waitForStart();
     }
 
     public void itIsYourTurn() {return;}

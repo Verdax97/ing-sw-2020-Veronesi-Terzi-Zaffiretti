@@ -111,7 +111,7 @@ public class ClientMain implements Runnable {
             threadInput.start();
         } else {
             //update the view for all other players
-            clientInput.updateNotYourTurn();
+            clientInput.updateNotYourTurn(getReceivedMsg());
         }
         return false;
     }

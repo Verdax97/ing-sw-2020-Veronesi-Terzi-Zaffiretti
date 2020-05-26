@@ -35,19 +35,26 @@ public class LobbyController{
     @FXML
     private ChoiceBox numberPlayer;
 
-    public void showNumberPlayers(){
+    public void showNumberPlayers() {
         numberPlayer.setVisible(true);
         confirm.setVisible(true);
     }
 
-    public void showNicknames(){
+    public void showNicknames() {
         nicknameMessage.setVisible(true);
         nickname.setVisible(true);
         lobby.setVisible(true);
     }
 
+    public void waitForStart() {
+        nicknameMessage.setText("Wait for other players to connect");
+        nickname.setVisible(false);
+        lobby.setVisible(false);
+    }
+
+
     @FXML
-    public void setNumberPlayer(){
+    public void setNumberPlayer() {
         int val;
         String number = numberPlayer.getValue().toString();
         if (number.equalsIgnoreCase("2 Players")) {

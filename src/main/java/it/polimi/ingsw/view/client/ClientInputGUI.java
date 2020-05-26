@@ -2,7 +2,10 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
-import it.polimi.ingsw.view.GUI.*;
+import it.polimi.ingsw.view.GUI.ControllerGUI;
+import it.polimi.ingsw.view.GUI.LobbyController;
+import it.polimi.ingsw.view.GUI.PickGodsController;
+import it.polimi.ingsw.view.GUI.SantoriniMatchController;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -43,9 +46,7 @@ public class ClientInputGUI extends ClientInput {
         String msg = msgPacket.msg;
 
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
-            //launcherApp.error old version
             //error("Error", msg.split("\n", 2)[0]);
-            //(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
         }
 
@@ -73,6 +74,7 @@ public class ClientInputGUI extends ClientInput {
             Platform.runLater(()-> {
                 try {
                     controllerGui.changeToPickGods();
+                    Reply(-5, -5, -5, -5);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -80,7 +82,9 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
-            controllerGui.showGods(msgPacket.altMsg);
+            Platform.runLater(() -> {
+                controllerGui.showGods(msgPacket.altMsg);
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
@@ -171,5 +175,32 @@ public class ClientInputGUI extends ClientInput {
                 }
             }*/
         }
+    }
+
+    @Override
+    public void updateNotYourTurn(MsgPacket msgPacket) {
+        String msg = msgPacket.msg;
+
+        if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
+            msg = msg.split("\n", 2)[1];
+        }
+
+        if (msg.equalsIgnoreCase(Messages.start)) {
+            Platform.runLater(() -> {
+                try {
+                    controllerGui.changeToPickGods();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
+            Platform.runLater(() -> {
+                controllerGui.showGods(msgPacket.altMsg);
+            });
+        }
+
+        Reply(-5, -5, -5, -5);
     }
 }

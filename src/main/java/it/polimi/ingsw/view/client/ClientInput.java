@@ -3,7 +3,6 @@ package it.polimi.ingsw.view.client;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.model.SimpleBoard;
-import it.polimi.ingsw.view.GUI.SantoriniMatchController;
 
 import java.util.Observable;
 
@@ -56,7 +55,7 @@ public class ClientInput extends Observable {
     /**
      * Method updateNotYourTurn show that is not your turn
      */
-    public void updateNotYourTurn() {
+    public void updateNotYourTurn(MsgPacket msgPacket) {
 
     }
 

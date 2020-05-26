@@ -300,11 +300,12 @@ public class ClientInputCLI extends ClientInput {
         System.out.println("X 0 1 2 3 4\n");
     }
 
+
     /**
-     * @see ClientInput#updateNotYourTurn()
+     * @see ClientInput#updateNotYourTurn(MsgPacket)
      */
     @Override
-    public void updateNotYourTurn() {
+    public void updateNotYourTurn(MsgPacket msgPacket) {
         System.out.println(Colors.ANSI_YELLOW + clientMain.getReceivedMsg().nickname + "'s turn, wait" + Colors.ANSI_RESET);
         System.out.println(clientMain.getReceivedMsg().altMsg);
         Reply(-5, -5, -5, -5);
