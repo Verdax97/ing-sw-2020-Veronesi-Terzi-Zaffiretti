@@ -23,8 +23,11 @@ public class GameSaver {
         }
         fileName.append(".txt");
         try {
-            saveFile = new File("/savedGames/" + fileName.toString());
-            if (saveFile.createNewFile()) {
+            File directory = new File("src/main/resources/savedGames");
+            if (!directory.exists()){directory.mkdir();}
+            saveFile = new File("src/main/resources/savedGames/" + fileName.toString());
+            if (!saveFile.exists()) {
+                saveFile.createNewFile();
                 System.out.println("File created: " + saveFile.getName());
                 return false;
             } else {
