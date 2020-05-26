@@ -68,9 +68,10 @@ public class PickGodsController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void selectGod(GodCard godCard){
+    public void selectGod(){
+        /*
         godImage.setImage(godCard.image);
         godEffect.setText(godCard.description);
-        reply[0] = Integer.parseInt(godCard.id);
+        reply[0] = Integer.parseInt(godCard.id);*/
     }
 }

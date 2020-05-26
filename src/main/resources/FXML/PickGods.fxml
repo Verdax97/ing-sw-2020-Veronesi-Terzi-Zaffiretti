@@ -15,7 +15,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="listOfGod" layoutX="180.0" layoutY="249.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="listOfGod" layoutX="180.0" layoutY="249.0" prefWidth="150.0" onAction="#selectGod"/>
       <ImageView fx:id="godImage" fitHeight="150.0" fitWidth="124.0" layoutX="491.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="confirmGod" layoutX="306.0" layoutY="459.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="135.0" text="Confirm God" visible="false" />
    </children>
