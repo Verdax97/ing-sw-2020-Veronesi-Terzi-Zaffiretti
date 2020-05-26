@@ -49,6 +49,13 @@ public class ClientInputCLI extends ClientInput {
             System.out.println("Starting the game");
         }
 
+        if (msg.equalsIgnoreCase(Messages.resume)) {
+            System.out.println("A game with the same players already exists");
+            if (Confirm("Do you want to continue?(y/n)"))
+                arr[0] = 1;
+            else arr[0] = 0;
+        }
+
         if (msg.equalsIgnoreCase(Messages.choseGods)) {
             System.out.println("Chose gods for all players by inserting corresponding value (one at the time)");
             System.out.println(msgPacket.altMsg);
