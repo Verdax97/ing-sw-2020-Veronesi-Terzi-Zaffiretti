@@ -106,15 +106,13 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.startTurn)) {
-            /*System.out.println("Your Turn");
+            controllerGui.itIsYourTurn();
             Reply(-5, -5, -5, -5);
-            return;*/
+            return;
         }
 
         if (msg.equalsIgnoreCase(Messages.selectWorker)) {
-            /*System.out.println("Select your worker by inserting corresponding value");
-            System.out.println(msgPacket.altMsg);
-            arr[0] = ReadIntInput();*/
+            controllerGui.selectWorker();
         }
 
         if (msg.equalsIgnoreCase(Messages.beforeMove)) {
@@ -174,14 +172,4 @@ public class ClientInputGUI extends ClientInput {
             }*/
         }
     }
-
-//check if this works
-    /*
-    public void error(String header, String content){
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText(header);
-        errorAlert.setContentText(content);
-        errorAlert.showAndWait();
-    }
-*/
 }

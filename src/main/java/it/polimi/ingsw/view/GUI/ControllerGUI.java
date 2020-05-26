@@ -100,4 +100,12 @@ public class ControllerGUI {
     public void waitYourTurn(){
         return;
     }
+
+    public void itIsYourTurn() {return;}
+
+    public void selectWorker() {
+        santoriniMatchController.waitWorker();
+    }
+
+
 }
