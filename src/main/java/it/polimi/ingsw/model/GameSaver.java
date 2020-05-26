@@ -21,7 +21,6 @@ public class GameSaver {
                 fileName.append("-");
         }
         fileName.append(".txt");
-        /*
         try {
             File directory = new File("src/main/resources/savedGames");
             if (!directory.exists()){directory.mkdir();}
@@ -38,7 +37,7 @@ public class GameSaver {
             System.out.println("An error occurred.");
             e.printStackTrace();
             return false;
-        }*/
+        }
         return false;
     }
 
