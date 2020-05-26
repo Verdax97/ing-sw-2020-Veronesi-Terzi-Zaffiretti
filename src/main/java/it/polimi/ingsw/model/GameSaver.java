@@ -21,28 +21,23 @@ public class GameSaver {
                 fileName.append("-");
         }
         fileName.append(".txt");
-        try {
-            File directory = new File("src/main/resources/savedGames");
-            if (!directory.exists()){directory.mkdir();}
-            saveFile = new File("src/main/resources/savedGames/" + fileName.toString());
-            if (!saveFile.exists()) {
-                saveFile.createNewFile();
-                System.out.println("File created: " + saveFile.getName());
-                return false;
-            } else {
-                System.out.println("File already exists.");
-                return true;
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        // Creates Directory savedGames if missing
+        File directory = new File("src/main/resources/savedGames");
+        if (!directory.exists()){directory.mkdir();}
+        //Creates SaveGame if it doesn't already exist or returns true if it already exists
+        saveFile = new File("src/main/resources/savedGames/" + fileName.toString());
+        if (!saveFile.exists()) {
+            System.out.println("File created: " + saveFile.getName());
             return false;
+        } else {
+            System.out.println("File already exists.");
+            return true;
         }
-        return false;
     }
 
     public static void saveGame(Match match) {
         try {
+            if (!saveFile.exists()){saveFile.createNewFile();}
             FileWriter fileWriter = new FileWriter(saveFile);
             ArrayList<Player> players = match.getSetup().getPlayers();
             //prints the players in turn order
