@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
@@ -19,10 +20,9 @@ public class PickGodsController {
     ClientInputGUI clientInputGUI = null;
     int[] reply = new int[] {-5, -5, -5, -5};
 
+    private ArrayList<GodCard> pickableGod = new ArrayList<>();
 
     boolean masterChoose = false;
-    boolean masterPick = false;
-    boolean firstTime = true;
 
     @FXML
     private ChoiceBox listOfGod;
@@ -53,12 +53,12 @@ public class PickGodsController {
             String indexGod = s.get(0).split(Pattern.quote(")"))[0];
             String nameGod = s.get(1).split(":")[0];
             String descriptionGod = s.get(2).split("\n")[0];
-            GodCard godCard = new GodCard();
+            listOfGod.getItems().add(nameGod);
+            GodCard godCard = new GodCard(nameGod);
             godCard.id = indexGod;
-            godCard.name = nameGod;
             godCard.description = descriptionGod;
             godCard.image = new Image("Images/godCards/" + nameGod + ".png");
-            listOfGod.getItems().add(godCard);
+            pickableGod.add(godCard);
         }
     }
 
@@ -68,10 +68,9 @@ public class PickGodsController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void selectGod(){
-            GodCard godCard = (GodCard) listOfGod.getValue();
-            godImage.setImage(godCard.image);
-            godEffect.setText(godCard.description);
-            reply[0] = Integer.parseInt(godCard.id);
+    public void selectGod(GodCard godCard){
+        godImage.setImage(godCard.image);
+        godEffect.setText(godCard.description);
+        reply[0] = Integer.parseInt(godCard.id);
     }
 }

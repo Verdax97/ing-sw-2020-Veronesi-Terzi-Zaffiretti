@@ -15,8 +15,8 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Button fx:id="confirmGod" layoutX="590.0" layoutY="676.0" mnemonicParsing="false" onAction="#sendReply" prefHeight="45.0" prefWidth="140.0" text="Confirm" textAlignment="CENTER" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="569.5" AnchorPane.rightAnchor="569.5993041992188" />
-      <ChoiceBox fx:id="listOfGod" layoutX="180.0" layoutY="249.0" onMouseClicked="#selectGod" prefWidth="150.0" />
+      <ChoiceBox fx:id="listOfGod" layoutX="180.0" layoutY="249.0" prefWidth="150.0" />
       <ImageView fx:id="godImage" fitHeight="150.0" fitWidth="124.0" layoutX="491.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="confirmGod" layoutX="306.0" layoutY="459.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="135.0" text="Confirm God" visible="false" />
    </children>
 </AnchorPane>
