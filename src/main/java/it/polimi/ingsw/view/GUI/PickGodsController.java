@@ -2,15 +2,11 @@ package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -48,7 +44,8 @@ public class PickGodsController {
         this.clientMain = clientMain;
     }
 
-    public void getDescriptionGod(String msg) {
+    public void getDescriptionGod(String msg, boolean yourTurn) {
+        confirmGod.setVisible(yourTurn);
         ArrayList<String> godStrings = new ArrayList<>();
         godStrings.addAll(Arrays.asList(msg.split("\n")));
         for (int i = 0; i < godStrings.size(); i++) {
@@ -72,14 +69,9 @@ public class PickGodsController {
     }
 
     public void selectGod(){
-        if (firstTime){
-            firstTime = false;
-        }
-        else {
             GodCard godCard = (GodCard) listOfGod.getValue();
             godImage.setImage(godCard.image);
             godEffect.setText(godCard.description);
             reply[0] = Integer.parseInt(godCard.id);
-        }
     }
 }

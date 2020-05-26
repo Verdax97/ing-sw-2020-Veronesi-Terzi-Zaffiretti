@@ -81,8 +81,8 @@ public class ControllerGUI {
         primaryStage.setTitle("Match");
     }
 
-    public void showGods(String msg){
-        pickGodsController.getDescriptionGod(msg);
+    public void showGods(String msg, boolean yourTurn) {
+        pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
     public void changeToSantoriniMatch() throws IOException {
