@@ -21,6 +21,7 @@ public class GameSaver {
                 fileName.append("-");
         }
         fileName.append(".txt");
+        /*
         try {
             saveFile = new File("/savedGames/" + fileName.toString());
             if (saveFile.createNewFile()) {
@@ -34,7 +35,8 @@ public class GameSaver {
             System.out.println("An error occurred.");
             e.printStackTrace();
             return false;
-        }
+        }*/
+        return false;
     }
 
     public static void saveGame(Match match) {

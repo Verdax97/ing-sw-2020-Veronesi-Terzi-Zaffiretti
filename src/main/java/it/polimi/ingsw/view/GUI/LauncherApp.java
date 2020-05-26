@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.GUI;
 
-import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Application;
@@ -9,7 +8,7 @@ import javafx.stage.Stage;
 
 public class LauncherApp extends Application{
 
-    ChangeWindow changeWindow = new ChangeWindow();
+    ControllerGUI controllerGUI = new ControllerGUI();
 
     ClientMain clientMain = new ClientMain();
 
@@ -19,12 +18,12 @@ public class LauncherApp extends Application{
     public void start(Stage stage) throws Exception {
         //set first window
         primaryStage = stage;
-        changeWindow.setPrimaryStage(primaryStage);
-        changeWindow.setClientMain(clientMain);
+        controllerGUI.setPrimaryStage(primaryStage);
+        controllerGUI.setClientMain(clientMain);
         clientMain.setClientInput(new ClientInputGUI(clientMain));
-        changeWindow.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
-        ((ClientInputGUI) clientMain.getClientInput()).setChangeWindow(changeWindow);
-        changeWindow.getFirstWindow();
+        controllerGUI.setClientInputGUI((ClientInputGUI) clientMain.getClientInput());
+        ((ClientInputGUI) clientMain.getClientInput()).setControllerGui(controllerGUI);
+        controllerGUI.getFirstWindow();
         stage.setTitle("Santorini Game Launcher");
         stage.show();
     }

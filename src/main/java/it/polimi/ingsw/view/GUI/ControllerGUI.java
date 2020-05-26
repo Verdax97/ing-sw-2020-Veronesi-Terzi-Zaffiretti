@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,14 +10,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChangeWindow{
+public class ControllerGUI {
 
-    Scene connectionScene, lobbyScene, matchScene;
+    Scene connectionScene, lobbyScene, pickGodScene, santoriniMatchScene;
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
     //public LauncherController launcherController = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
+    private SantoriniMatchController santoriniMatchController = null;
 
     public ClientMain getClientMain() {
         return clientMain;
@@ -68,19 +70,42 @@ public class ChangeWindow{
     }
 
     public void changeToPickGods() throws IOException {
-        FXMLLoader loaderMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
-        Parent rootMatch = (Parent) loaderMatch.load();
-        pickGodsController = loaderMatch.getController();
+        FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
+        Parent rootMatch = (Parent) loaderPickGod.load();
+        pickGodsController = loaderPickGod.getController();
         pickGodsController.setClientMain(clientMain);
         pickGodsController.setClientInputGUI(clientInputGUI);
         ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
-        matchScene = new Scene(rootMatch);
-        primaryStage.setScene(matchScene);
+        pickGodScene = new Scene(rootMatch);
+        primaryStage.setScene(pickGodScene);
         primaryStage.setTitle("Match");
-        clientInputGUI.Reply(-5,-5,-5,-5);
+    }
+
+    public void showGods(String msg){
+        pickGodsController.getDescriptionGod(msg);
     }
 
     public void changeToSantoriniMatch() throws IOException {
-        //TODO
+        FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
+        Parent rootSantoriniMatch = loaderSantoriniMatch.load();
+        santoriniMatchController = loaderSantoriniMatch.getController();
+        santoriniMatchController.setClientMain(clientMain);
+        santoriniMatchController.setClientInputGUI(clientInputGUI);
+        ((ClientInputGUI) clientMain.getClientInput()).setSantoriniMatchController(santoriniMatchController);
+        santoriniMatchScene = new Scene(rootSantoriniMatch);
+        primaryStage.setScene(santoriniMatchScene);
+        primaryStage.setTitle("Santorini Board Game");
     }
+
+    public void waitYourTurn(){
+        return;
+    }
+
+    public void itIsYourTurn() {return;}
+
+    public void selectWorker() {
+        santoriniMatchController.waitWorker();
+    }
+
+
 }

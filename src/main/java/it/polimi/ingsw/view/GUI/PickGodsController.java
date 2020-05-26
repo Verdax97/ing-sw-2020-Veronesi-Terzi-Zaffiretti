@@ -3,11 +3,10 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -18,11 +17,17 @@ public class PickGodsController {
     ClientInputGUI clientInputGUI = null;
     int[] reply = new int[] {-5, -5, -5, -5};
 
+    boolean masterChoose = false;
+    boolean masterPick = false;
+
     @FXML
     private GridPane godSelectionPane;
 
     @FXML
     private Text godEffect;
+
+    @FXML
+    private Button confirmGod;
 
     public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
@@ -52,7 +57,13 @@ public class PickGodsController {
             godCard.name = nameGod;
             godCard.description = descriptionGod;
             godCard.setId(indexGod);
-            godCard.setGraphic(new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("Images/godCards/"+nameGod+".png"))));
+            godCard.setMinSize(200, 250);
+            godCard.setMaxSize(200, 250);
+            Image image = new Image("Images/godCards/"+nameGod+".png", godCard.getWidth(), godCard.getHeight(), false, true, true);
+            BackgroundImage bImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    new BackgroundSize(godCard.getWidth(), godCard.getHeight(), true, true, true, false));
+            Background backGround = new Background(bImage);
+            godCard.setBackground(backGround);
             godSelectionPane.add(godCard, row, i);
             godCard.setOnAction(e -> selectGod(godCard));
             if (i >= colLimit){
@@ -63,7 +74,7 @@ public class PickGodsController {
 
     public void sendReply(){
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
-        reply = new int[] {-5, -5, -5, -5};
+        reply = new int[]{-5, -5, -5, -5};
     }
 
     public void selectGod(GodCard godCard){
