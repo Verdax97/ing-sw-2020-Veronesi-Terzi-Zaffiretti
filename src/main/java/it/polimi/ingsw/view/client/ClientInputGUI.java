@@ -121,60 +121,33 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.beforeMove)) {
-            /*System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
-            System.out.println(msgPacket.altMsg);
-            if (Confirm("Do you want to do it? (y/n)")) {
-                arr[1] = 1;
-                System.out.println("Insert value");
-                arr[0] = ReadIntInput();
-            } else {
-                arr[1] = 0;
-            }
-            System.out.println("Insert a valid input");*/
+            controllerGui.beforeMovePower();
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
-            /*System.out.println("You have the possibility to make another move phase.");
-            if (Confirm("Do you want to do it? (y/n)")) {
-                arr[1] = 1;
-                msg = Messages.build;//to make another move action
-            } else {
-                arr[1] = 0;
-            }*/
+            controllerGui.moveAgain();
         }
 
         if (msg.equalsIgnoreCase(Messages.move)) {
-            /*System.out.println("You must move.\nAll the possible moves your worker can do");
-            System.out.println(msgPacket.altMsg);
-            arr[0] = ReadIntInput();*/
+            controllerGui.move();
         }
 
         if (msg.equalsIgnoreCase(Messages.buildAgain)) {
-            /*System.out.println("You have the possibility to make another build phase.");
-            if (Confirm("Do you want to do it? (y/n)")) {
-                arr[1] = 1;
-                msg = Messages.build;//to make another move action
-            } else {
-                arr[1] = 0;
-            }*/
+            controllerGui.buildAgain();
         }
 
         if (msg.equalsIgnoreCase(Messages.build)) {
-            /*System.out.println("You must build.\nAll the possible build your worker can do");
-            System.out.println(msgPacket.altMsg);
-            arr[0] = ReadIntInput();
-
+            boolean atlas = false;
             int i;
             for (i = 0; i < msgPacket.board.players.size(); i++) {
-                if (clientMain.getNick().equals(msgPacket.board.players.get(i)))
+                if (clientMain.getNick().equals(msgPacket.board.players.get(i))){
                     break;
+                }
             }
             if (msgPacket.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
-                System.out.println("You have the power to build a dome here");
-                if (Confirm("Do you want to do it? (y/n)")) {
-                    arr[2] = 1;
-                }
-            }*/
+                atlas = true;
+            }
+            controllerGui.build(atlas);
         }
     }
 

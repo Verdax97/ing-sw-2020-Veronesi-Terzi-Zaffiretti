@@ -79,19 +79,42 @@ public class SantoriniMatchController {
             thirdPlayerGodImage.setVisible(false);
             thirdPlayerColor.setVisible(false);
         }
+        initializeBoard(simpleBoard);
     }
 
-    public void hideConfirmButton(){
-        confirmButton.setVisible(false);
+    private void initializeBoard(SimpleBoard simpleBoard){
+
     }
+
+    public void hideConfirmButton(){ confirmButton.setVisible(false); }
 
     public void showConfirmButton(){
         confirmButton.setVisible(true);
     }
 
-    public void waitWorker(){
+    public void selectWorker(){
         messageBox.setText("Select the worker with which you want to play");
         waitWorker = true;
+    }
+
+    public void beforeMovePower(){
+
+    }
+
+
+    public void moveAgain(){
+
+    }
+
+    public void move(){
+    }
+
+    public void buildAgain(){
+
+    }
+
+    public void build(Boolean atlas) {
+
     }
 
     public void sendReply(){
@@ -117,7 +140,7 @@ public class SantoriniMatchController {
         errorAlert.showAndWait();
     }
 
-    public void updateBoard(){
+    public void updateBoard(SimpleBoard board){
 
     }
 }

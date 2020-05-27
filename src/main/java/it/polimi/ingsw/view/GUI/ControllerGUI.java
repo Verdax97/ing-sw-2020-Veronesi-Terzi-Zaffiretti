@@ -72,6 +72,10 @@ public class ControllerGUI {
         else lobbyController.showNicknames();
     }
 
+    public void resume(){
+
+    }
+
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         Parent rootMatch = (Parent) loaderPickGod.load();
@@ -111,11 +115,31 @@ public class ControllerGUI {
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
     public void selectWorker() {
-        santoriniMatchController.waitWorker();
+        santoriniMatchController.selectWorker();
     }
 
-    public void resume(){
+    public void beforeMovePower(){
+        santoriniMatchController.beforeMovePower();
+    }
 
+    public void moveAgain(){
+        santoriniMatchController.moveAgain();
+    }
+
+    public void move(){
+        santoriniMatchController.move();
+    }
+
+    public void buildAgain(){
+        santoriniMatchController.buildAgain();
+    }
+
+    public void build(Boolean atlas){
+        santoriniMatchController.build(atlas);
+    }
+
+    public void receiveUpdate(SimpleBoard board){
+        santoriniMatchController.updateBoard(board);
     }
 
     public void error(String header, String content){

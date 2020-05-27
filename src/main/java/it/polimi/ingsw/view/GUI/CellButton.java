@@ -1,8 +1,17 @@
 package it.polimi.ingsw.view.GUI;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public class CellButton extends Button {
+
+    String position;
+    public Image worker;
+    public Color building;
+    public Image dome;
+
+    private int valReply = -5;
 
     public int getValReply() {
         return valReply;
@@ -12,10 +21,7 @@ public class CellButton extends Button {
         this.valReply = valReply;
     }
 
-    private int valReply = -5;
-
-    //valore boolean se ha worker on it
-    //set different layers for different levels of build
-    //set dome image
-    //set worker image
+    CellButton(String position){
+        this.position = position;
+    }
 }
