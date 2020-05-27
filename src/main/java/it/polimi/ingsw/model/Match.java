@@ -76,7 +76,6 @@ public class Match extends Observable {
     public void StartGame() {
         nPlayer = setup.getPlayers().size() - 1;
         playerTurn = setup.getPlayers().get(nPlayer);
-        //CreateMsgPacket(Messages.choseGods, PrintGods(setup.getGodList()));
         CreateMsgPacket(Messages.start, "Starting the game");
     }
 
@@ -94,7 +93,6 @@ public class Match extends Observable {
             printable.append(gods.get(i).description);
             printable.append("\n");
         }
-        //printable.append("\n");
         return printable.toString();
     }
 
@@ -126,7 +124,6 @@ public class Match extends Observable {
             return;
         }
         setup.AddGodPicked(setup.getGodList().get(value));
-        //setup.getGodList().remove(value);
         lastAction = 1;
         if (getSetup().getGodPicked().size() == setup.getPlayers().size()) {
             NextPlayer();
@@ -516,7 +513,6 @@ public class Match extends Observable {
             NextTurn();
         }
         playerTurn = setup.getPlayers().get(nPlayer);
-        //GameSaver.saveGame(this);
     }
 
     /**
@@ -620,14 +616,25 @@ public class Match extends Observable {
         ArrayList<int[]> workers = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (board.getCell(i, j).getWorker() != null) {
-                    if (board.getCell(i, j).getWorker().getPlayer().getNickname().equals(player)) {
-                        workers.add(new int[]{i, j});
-                    }
-                }
+                if (PlayersWorker(board.getCell(i, j), player))
+                    workers.add(new int[]{i, j});
             }
         }
         return workers;
+    }
+
+    /**
+     * Method PlayersWorker return true if there is a worker on the cell and it has the corresponding player
+     *
+     * @param cell   of type Cell
+     * @param player of type String
+     * @return boolean
+     */
+    public boolean PlayersWorker(Cell cell, String player) {
+        if (cell.getWorker() != null) {
+            return cell.getWorker().getPlayer().getNickname().equals(player);
+        }
+        return false;
     }
 
     /**
@@ -663,14 +670,10 @@ public class Match extends Observable {
      */
     //remove player from players list and worker from the board
     public void killPlayer(Player player) {
-        // ArrayList<Player> players = getSetup().getPlayers();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (getBoard().getCell(i, j).getWorker() != null) {
-                    if (getBoard().getCell(i, j).getWorker().getPlayer().getNickname().equals(player.getNickname())) {
-                        getBoard().getCell(i, j).setWorker(null);
-                    }
-                }
+                if (getBoard().getCell(i, j).getWorker() != null && getBoard().getCell(i, j).getWorker().getPlayer().getNickname().equals(player.getNickname()))
+                    getBoard().getCell(i, j).setWorker(null);
             }
         }
         getSetup().getPlayers().remove(player);

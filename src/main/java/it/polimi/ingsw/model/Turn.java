@@ -81,7 +81,6 @@ public class Turn {
         this.selectedCell = selectedCell;
     }
 
-    //todo modify with thew new system
     public boolean CheckLostMove(Player player, Board board, ArrayList<int[]> workers) {
         for (int[] coords : workers) {
             int i = coords[0];
