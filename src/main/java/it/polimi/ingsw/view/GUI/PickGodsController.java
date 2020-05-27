@@ -21,8 +21,6 @@ public class PickGodsController {
 
     private ArrayList<GodCard> pickableGod = new ArrayList<>();
 
-    boolean masterChoose = false;
-
     @FXML
     private ChoiceBox listOfGod;
 

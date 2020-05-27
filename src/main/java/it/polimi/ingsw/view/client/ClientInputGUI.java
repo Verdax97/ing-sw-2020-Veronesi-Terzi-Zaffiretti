@@ -84,6 +84,10 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
+        if (msg.equalsIgnoreCase(Messages.resume)) {
+            controllerGui.resume();
+        }
+
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
             Platform.runLater(() -> {
                 controllerGui.showGods(msgPacket.altMsg, true);
@@ -96,20 +100,14 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
-            /*System.out.println("Place your workers.");
-            for (int i = 0; i < 2; i++) {
-                System.out.println("Place worker " + i + ":");
-                while (true) {
-                    int[] worker = SelectCell();
-                    if (worker[0] >= 0 && worker[0] < 5 && worker[1] >= 0 && worker[1] < 5) {
-                        arr[2 * i] = worker[0];
-                        arr[2 * i + 1] = worker[1];
-                        break;
-                    } else {
-                        System.out.println("Selected cell is not valid");
-                    }
+            Platform.runLater(()-> {
+                try {
+                    controllerGui.changeToSantoriniMatch(msgPacket.board);
+                    controllerGui.itIsYourTurn();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }*/
+            });
         }
 
         if (msg.equalsIgnoreCase(Messages.startTurn)) {
@@ -201,6 +199,16 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
             Platform.runLater(() -> {
                 controllerGui.showGods(msgPacket.altMsg, false);
+            });
+        }
+
+        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
+            Platform.runLater(()-> {
+                try {
+                    controllerGui.changeToSantoriniMatch(msgPacket.board);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
         }
 

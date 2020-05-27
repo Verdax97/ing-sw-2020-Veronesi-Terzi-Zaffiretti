@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,8 @@ public class ControllerGUI {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
     private SantoriniMatchController santoriniMatchController = null;
+
+    private int firstTime = 0;
 
     public ClientMain getClientMain() {
         return clientMain;
@@ -78,14 +81,14 @@ public class ControllerGUI {
         ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
         pickGodScene = new Scene(rootMatch);
         primaryStage.setScene(pickGodScene);
-        primaryStage.setTitle("Match");
+        primaryStage.setTitle("Pick God Cards");
     }
 
     public void showGods(String msg, boolean yourTurn) {
         pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
-    public void changeToSantoriniMatch() throws IOException {
+    public void changeToSantoriniMatch(SimpleBoard simpleBoard) throws IOException {
         FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
         Parent rootSantoriniMatch = loaderSantoriniMatch.load();
         santoriniMatchController = loaderSantoriniMatch.getController();
@@ -95,16 +98,24 @@ public class ControllerGUI {
         santoriniMatchScene = new Scene(rootSantoriniMatch);
         primaryStage.setScene(santoriniMatchScene);
         primaryStage.setTitle("Santorini Board Game");
+        santoriniMatchController.initializeAll(simpleBoard);
     }
 
     public void waitYourTurn(){
-        lobbyController.waitForStart();
+        if (santoriniMatchController == null) {
+            lobbyController.waitForStart();
+            return;
+        } else santoriniMatchController.hideConfirmButton();
     }
 
-    public void itIsYourTurn() {return;}
+    public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
     public void selectWorker() {
         santoriniMatchController.waitWorker();
+    }
+
+    public void resume(){
+
     }
 
     public void error(String header, String content){
@@ -113,5 +124,4 @@ public class ControllerGUI {
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
     }
-
 }
