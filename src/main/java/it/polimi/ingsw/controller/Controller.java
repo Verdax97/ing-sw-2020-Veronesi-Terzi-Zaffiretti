@@ -55,8 +55,8 @@ public class Controller implements Observer {
                 System.out.println("File not found");
                 System.exit(-1);
             }
-            setState(State.STARTTURN);
-            match.CreateMsgPacket("Resuming", "Resuming the game");
+            setState(State.SELECTWORKER);
+            match.SelectWorker(new MsgToServer("", -5, -5, -5, -5));
             return;
         }
         this.match = new Match(lobby.getPlayers());

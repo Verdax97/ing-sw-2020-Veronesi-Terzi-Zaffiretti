@@ -266,7 +266,12 @@ public class Match extends Observable {
             return;
         }
         lastAction = -1;
-        msgError = "Error the inserted value is not valid\n" + Messages.selectWorker;
+        if (firstTime) {
+            firstTime = false;
+            msgError = "";
+        } else
+            msgError = "Error the inserted value is not valid\n";
+        msgError += Messages.selectWorker;
         CreateMsgPacket(msgError, PrintPossibilities(workers));
     }
 
