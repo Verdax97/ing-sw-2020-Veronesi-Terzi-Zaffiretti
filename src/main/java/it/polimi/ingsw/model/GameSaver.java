@@ -174,9 +174,9 @@ public class GameSaver {
                     for (int k = 0; k < players.size(); k++) {
                         if (players.get(k) == board.getCell(i, j).getWorker().getPlayer()) {
                             s.append(k);
-                            if (board.getCell(i, j).getWorker().getPlayer().getGodPower().name.equals("Athena") &&
-                                board.getCell(i, j).getWorker().getLastMovement() == 1){
-                                debuffed = s.toString();
+                            if (board.getCell(i, j).getWorker().getPlayer().getGodPower().getName().equals("Athena") &&
+                                    board.getCell(i, j).getWorker().getLastMovement() == 1) {
+                                debuffed = i + Integer.toString(j);
                             }
                         }
                     }
