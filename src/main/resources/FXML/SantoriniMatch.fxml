@@ -20,7 +20,7 @@
       <Rectangle fx:id="currentOne" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
       <Rectangle fx:id="currentTwo" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="398.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
       <Rectangle fx:id="currentThree" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="706.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
-      <Rectangle fill="#fc0fc0" height="353.0" layoutX="1429.0" layoutY="440.0" stroke="BLACK" width="405.0" />
+      <Rectangle fill="#fa0fbf76" height="353.0" layoutX="1429.0" layoutY="440.0" stroke="BLACK" width="405.0" />
       <ImageView fx:id="firstPlayerGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/godCards/Zeus.png" />
@@ -81,25 +81,25 @@
          </font>
       </Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1641.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1642.0" layoutY="639.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1452.0" layoutY="637.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1452.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-      <Text layoutX="708.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Turn / Nickname player Turn" textAlignment="CENTER" wrappingWidth="450.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00101e" height="25.0" layoutX="1642.0" layoutY="639.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="25.0" layoutX="1452.0" layoutY="637.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="1452.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
+      <Text fx:id="whosTurn" layoutX="708.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Turn / Nickname player Turn" textAlignment="CENTER" wrappingWidth="450.0">
          <font>
             <Font size="26.0" />
          </font>
       </Text>
-      <Text layoutX="1462.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What you got to do in your turn">
+      <Text fx:id="messageBox" layoutX="1462.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What you got to do in your turn">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text layoutX="1474.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textbox for power god usage">
+      <Text fx:id="godUsageMessageBox" layoutX="1474.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textbox for power god usage">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Button layoutX="1524.0" layoutY="341.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="179.0" text="Use power God">
+      <Button layoutX="1563.0" layoutY="333.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="179.0" text="Use power God">
          <font>
             <Font size="19.0" />
          </font></Button>
@@ -184,7 +184,7 @@
          </font>
       </Text>
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="1558.0" layoutY="724.0" pickOnBounds="true" preserveRatio="true" />
-      <CheckBox layoutX="1526.0" layoutY="264.0" mnemonicParsing="false" text="Build Dome">
+      <CheckBox fx:id="domeTruth" layoutX="1526.0" layoutY="264.0" mnemonicParsing="false" text="Build Dome">
          <font>
             <Font size="20.0" />
          </font>

@@ -28,7 +28,7 @@ public class SantoriniMatchController {
     @FXML private Rectangle currentTwo;
     @FXML private Rectangle currentThree;
     @FXML private Button confirmButton;
-    @FXML private TextField messageBox;
+    @FXML private Text messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
