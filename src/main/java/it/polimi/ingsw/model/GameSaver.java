@@ -8,9 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+/**
+ * Class GameSaver save/loads old games not finished
+ */
 public class GameSaver {
     private static File saveFile;
 
+    /**
+     * Method checkForGames true if there is another game with the same players
+     *
+     * @param lobby of type Lobby
+     * @return boolean
+     */
     public static boolean checkForGames(Lobby lobby) {
         ArrayList<String> players = new ArrayList<>(lobby.getPlayers());
         Collections.sort(players);
@@ -35,9 +44,16 @@ public class GameSaver {
         }
     }
 
+    /**
+     * Method saveGame saves the game on a file
+     *
+     * @param match of type Match
+     */
     public static void saveGame(Match match) {
         try {
-            if (!saveFile.exists()){saveFile.createNewFile();}
+            if (!saveFile.exists()) {
+                saveFile.createNewFile();
+            }
             FileWriter fileWriter = new FileWriter(saveFile);
             ArrayList<Player> players = match.getSetup().getPlayers();
             //prints the players in turn order
@@ -70,6 +86,12 @@ public class GameSaver {
         }
     }
 
+    /**
+     * Method loadGame loads the old game
+     *
+     * @return Match
+     * @throws FileNotFoundException when
+     */
     public static Match loadGame() throws FileNotFoundException {
         Scanner scanner = new Scanner(saveFile);
         String s = scanner.nextLine();
@@ -99,7 +121,7 @@ public class GameSaver {
         }
 
         s = scanner.nextLine();
-        int i = 0;
+        int i;
         ArrayList<Integer> playerDebuffed = new ArrayList<>();
         for (String name : s.split("-")){
             playerDebuffed.add(Integer.parseInt(name));
@@ -110,7 +132,7 @@ public class GameSaver {
         for (int x = 0; x < 5; x++){
             s = scanner.nextLine();
             for (int y = 0; y < 5; y++){
-                String cell = s.split(" ")[x];
+                String cell = s.split(" ")[y];
                 match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
                 if (cell.length() == 2){
                     if (cell.charAt(1) != 'D') {
@@ -119,8 +141,7 @@ public class GameSaver {
                         worker.setPlayer(match.getPlayers().get(i));
                         match.getBoard().getCell(x, y).setWorker(worker);
                         if (playerDebuffed.get(i) == 1){worker.setDebuff(true);}
-                    }
-                    else match.getBoard().getCell(x, y).setDome(true);
+                    } else match.getBoard().getCell(x, y).setDome(true);
                 }
             }
         }
@@ -132,6 +153,13 @@ public class GameSaver {
         return match;
     }
 
+    /**
+     * Method PrintBoard print the board on the file
+     *
+     * @param players of type ArrayList<Player>
+     * @param board   of type Board
+     * @return String
+     */
     private static String PrintBoard(ArrayList<Player> players, Board board) {
         StringBuilder s = new StringBuilder();
         //prints the debuffs
@@ -165,9 +193,18 @@ public class GameSaver {
         return s.toString();
     }
 
-    private static God godFromName(String name, Match match){
-        for (int index = 0; index < match.getSetup().getGodList().size(); index++){
-            if (match.getSetup().getGodList().get(index).name.equals(name)){return match.getSetup().getGodList().get(index);}
+    /**
+     * Method godFromName gets the god from the name
+     *
+     * @param name  of type String
+     * @param match of type Match
+     * @return God
+     */
+    private static God godFromName(String name, Match match) {
+        for (int index = 0; index < match.getSetup().getGodList().size(); index++) {
+            if (match.getSetup().getGodList().get(index).name.equals(name)) {
+                return match.getSetup().getGodList().get(index);
+            }
         }
         return null;
     }
