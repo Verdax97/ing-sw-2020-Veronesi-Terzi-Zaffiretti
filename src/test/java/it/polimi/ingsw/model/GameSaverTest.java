@@ -45,6 +45,8 @@ public class GameSaverTest {
         match.getBoard().getCell(4,4).setBuilding(2);
         match.getBoard().getCell(0,0).getWorker().setDebuff(true);
         match.getBoard().getCell(1,1).getWorker().setDebuff(true);
+        match.NextTurn();
+        match.NextPlayer();
         GameSaver.saveGame(match);
         Assertions.assertTrue(true);
         GameSaver.loadGame();

@@ -83,8 +83,12 @@ public class GameSaver {
 
         String playerTurnName = scanner.nextLine();
         Player playerTurn = null;
+        int nPlayer = 0;
         for (int e = 0; e < match.getPlayers().size(); e++ ){
-            if (playerTurnName.equals(match.getPlayers().get(e).getNickname())){playerTurn = match.getPlayers().get(e);}
+            if (playerTurnName.equals(match.getPlayers().get(e).getNickname())){
+                nPlayer = e;
+                playerTurn = match.getPlayers().get(e);
+            }
         }
 
         s = scanner.nextLine();
@@ -103,9 +107,9 @@ public class GameSaver {
 
 
         Worker worker;
-        for (int y = 0; y < 5; y++){
+        for (int x = 0; x < 5; x++){
             s = scanner.nextLine();
-            for (int x = 0; x < 5; x++){
+            for (int y = 0; y < 5; y++){
                 String cell = s.split(" ")[x];
                 match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
                 if (cell.length() == 2){
@@ -121,11 +125,10 @@ public class GameSaver {
             }
         }
 
-        match.setnPlayer(match.getSetup().getPlayers().size() - 1);
         match.setPlayerTurn(playerTurn);
+        match.setnPlayer(nPlayer);
 
 
-        //todo setup nplayer and playerTurn
         return match;
     }
 
