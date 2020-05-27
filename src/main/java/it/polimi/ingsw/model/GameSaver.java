@@ -207,4 +207,13 @@ public class GameSaver {
         }
         return null;
     }
+
+    /**
+     * Method closeFile delete the file of the game
+     */
+    public static void deleteGameData() {
+        if (saveFile.delete())
+            System.out.println("File deleted successfully!");
+        else System.out.println("Cannot delete file");
+    }
 }

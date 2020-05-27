@@ -142,9 +142,11 @@ public class Controller implements Observer {
                     setState(State.ENDMATCH);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
-                //TODO all this thing
-                //save record data
-                //delete game data ()
+                //save record data....maybe
+                //delete game data
+                GameSaver.deleteGameData();
+                System.out.println("Player " + match.getPlayerTurn() + " won!!!");
+                System.out.println("Shutdown server");
                 break;
             default:
                 System.out.println("Error of received message");
