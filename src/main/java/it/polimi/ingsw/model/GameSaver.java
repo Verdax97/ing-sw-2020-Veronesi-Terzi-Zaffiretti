@@ -84,32 +84,33 @@ public class GameSaver {
         String playerTurnName = scanner.nextLine();
         Player playerTurn = null;
         for (int e = 0; e < match.getPlayers().size(); e++ ){
-            if (playerTurnName == match.getPlayers().get(e).getNickname()){playerTurn = match.getPlayers().get(e);}
+            if (playerTurnName.equals(match.getPlayers().get(e).getNickname())){playerTurn = match.getPlayers().get(e);}
         }
 
         s = scanner.nextLine();
         int playerN = 0;
         for (String name : s.split("-")){
             match.getPlayers().get(playerN).setGodPower(godFromName(name, match));
+            playerN++;
         }
 
         s = scanner.nextLine();
         int i = 0;
         ArrayList<Integer> playerDebuffed = new ArrayList<>();
         for (String name : s.split("-")){
-            playerDebuffed.add((int) name.charAt(0));
+            playerDebuffed.add(Integer.parseInt(name));
         }
 
 
         Worker worker;
-        s = scanner.nextLine();
         for (int y = 0; y < 5; y++){
+            s = scanner.nextLine();
             for (int x = 0; x < 5; x++){
                 String cell = s.split(" ")[x];
-                match.getBoard().getCell(x,y).setBuilding(cell.charAt(0));
+                match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
                 if (cell.length() == 2){
                     if (cell.charAt(1) != 'D') {
-                        i = cell.charAt(1);
+                        i = Integer.parseInt(cell)%10;
                         worker = new Worker();
                         worker.setPlayer(match.getPlayers().get(i));
                         match.getBoard().getCell(x, y).setWorker(worker);
@@ -118,7 +119,6 @@ public class GameSaver {
                     else match.getBoard().getCell(x, y).setDome(true);
                 }
             }
-            s = scanner.nextLine();
         }
 
         match.setnPlayer(match.getSetup().getPlayers().size() - 1);

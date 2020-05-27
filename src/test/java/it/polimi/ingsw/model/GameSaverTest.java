@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class GameSaverTest {
@@ -20,7 +21,7 @@ public class GameSaverTest {
     }
 
     @Test
-    public void saveGame(){
+    public void saveAndLoadGameTest() throws FileNotFoundException {
         ArrayList<String> players = new ArrayList<>();
         players.add("GinoTest");
         players.add("PinoTest");
@@ -46,6 +47,7 @@ public class GameSaverTest {
         match.getBoard().getCell(1,1).getWorker().setDebuff(true);
         GameSaver.saveGame(match);
         Assertions.assertTrue(true);
+        GameSaver.loadGame();
     }
 
 
