@@ -113,5 +113,15 @@ public class SetupMatch {
         for (String elem : player) {
             players.add(new Player(elem));
         }
+        if (player.size() < 3)
+            return;
+
+        //search for Chrono to be removed
+        for (God god : godList) {
+            if (god instanceof Chrono) {
+                godList.remove(god);
+                return;
+            }
+        }
     }
 }
