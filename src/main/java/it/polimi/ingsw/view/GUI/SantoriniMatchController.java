@@ -83,7 +83,9 @@ public class SantoriniMatchController {
     }
 
     private void initializeBoard(SimpleBoard simpleBoard){
-
+        //fill the gridpanel with stuff from server
+        //new CellButton on each position
+        // CellButton get is "position" like a string obtained from x, y from board
     }
 
     public void hideConfirmButton(){ confirmButton.setVisible(false); }
