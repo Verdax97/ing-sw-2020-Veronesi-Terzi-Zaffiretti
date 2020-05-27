@@ -10,7 +10,6 @@ public class Pan extends God {
     public Pan(){
         this.name = "Pan";
         this.description = "Win Condition: you also win if your worker moves down two or more levels";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

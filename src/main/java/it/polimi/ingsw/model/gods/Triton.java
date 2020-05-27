@@ -15,7 +15,6 @@ public class Triton extends MultipleActionGod {
     public Triton() {
         this.name = "Triton";
         this.description = "Your Move: Each time your Worker moves into a perimeter space, it may immediately move again.";
-        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 1;
     }
 

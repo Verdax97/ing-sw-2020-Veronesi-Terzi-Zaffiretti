@@ -18,7 +18,6 @@ public class Artemis extends MultipleActionGod {
     public Artemis() {
         this.name = "Artemis";
         this.description = "Your move: Your worker may move one additional time, but not back to the space it started on.";
-        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

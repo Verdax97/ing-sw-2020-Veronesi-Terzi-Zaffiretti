@@ -10,7 +10,6 @@ public class Chrono extends God{
     public Chrono(){
         this.name = "Chrono";
         this.description = "Win Condition: you also win where there are al least five Complete Towers on the board";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

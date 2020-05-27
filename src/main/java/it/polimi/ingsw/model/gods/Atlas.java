@@ -15,7 +15,6 @@ public class Atlas extends God {
     public Atlas() {
         this.name = "Atlas";
         this.description = "Your Build: your worker may build a dome at any level including the ground";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     /** @see God#Building(Board, Cell, int, int, int, int) */

@@ -15,7 +15,6 @@ public class Hestia extends MultipleActionGod {
     public Hestia() {
         this.name = "Hestia";
         this.description = "Your Build: Your Worker may build one additional time, but this cannot be on a perimeter space.";
-        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

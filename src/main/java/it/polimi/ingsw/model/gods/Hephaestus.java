@@ -22,7 +22,6 @@ public class Hephaestus extends MultipleActionGod {
     public Hephaestus() {
         this.name = "Hephaestus";
         this.description = "Your Build: your worker may build one additional block (not dome) on top of your first block";
-        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

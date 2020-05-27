@@ -7,13 +7,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class SantoriniMatchController {
+
+    @FXML private AnchorPane santoriniMatch;
 
     @FXML private Text firstPlayerNick;
     @FXML private Text secondPlayerNick;
@@ -60,17 +64,17 @@ public class SantoriniMatchController {
         for (int i=0; i<simpleBoard.players.size(); i++){
             if (i == 0) {
                 firstPlayerNick.setText(simpleBoard.players.get(i));
-                firstPlayerGodImage.setImage(simpleBoard.gods.get(i).getImg());
+                firstPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 firstPlayerColor.setFill(Color.RED);
             }
             if (i == 1){
                 secondPlayerNick.setText(simpleBoard.players.get(i));
-                secondPlayerGodImage.setImage(simpleBoard.gods.get(i).getImg());
+                secondPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 secondPlayerColor.setFill(Color.GREEN);
             }
             if (i == 2){
                 thirdPlayerNick.setText(simpleBoard.players.get(i));
-                thirdPlayerGodImage.setImage(simpleBoard.gods.get(i).getImg());
+                thirdPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 thirdPlayerColor.setFill(Color.BLUE);
             }
         }

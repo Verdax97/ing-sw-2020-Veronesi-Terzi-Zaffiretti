@@ -14,7 +14,6 @@ public class Athena extends DebuffGod {
     public Athena() {
         this.name = "Athena";
         this.description = "Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     /** @see it.polimi.ingsw.model.God#EnemyTurn(Board, Player, Player) */

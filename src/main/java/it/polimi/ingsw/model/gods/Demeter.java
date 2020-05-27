@@ -19,7 +19,6 @@ public class Demeter extends MultipleActionGod {
     public Demeter() {
         this.name = "Demeter";
         this.description = "Your Build: your worker may build one additional time, but not on the same space";
-        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

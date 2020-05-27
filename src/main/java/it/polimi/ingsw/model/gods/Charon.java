@@ -9,7 +9,6 @@ public class Charon extends MoveEnemyGods {
     public Charon() {
         this.name = "Charon";
         this.description = "Before your worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if the space is unoccupied";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

@@ -594,7 +594,7 @@ public class Match extends Observable {
             players.add(pl.getNickname());
             SimpleGod tempGod = new SimpleGod();
             if (pl.getGodPower() != null) {
-                tempGod.setSimpleGod(pl.getGodPower().getName(), pl.getGodPower().description, pl.getGodPower().img);
+                tempGod.setSimpleGod(pl.getGodPower().getName(), pl.getGodPower().description);
                 gods.add(tempGod);
             }
             ArrayList<int[]> temp = FindWorkers(pl.getNickname());

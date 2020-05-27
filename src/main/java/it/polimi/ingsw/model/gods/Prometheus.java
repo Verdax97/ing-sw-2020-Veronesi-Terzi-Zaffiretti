@@ -10,7 +10,6 @@ public class Prometheus extends DebuffGod
     {
         this.name = "Prometheus";
         this.description = "Your Turn: If your Worker does not move up, it may build both before and after moving";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

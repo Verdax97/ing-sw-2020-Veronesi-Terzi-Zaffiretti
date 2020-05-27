@@ -10,19 +10,16 @@ import java.io.Serializable;
 public class SimpleGod implements Serializable {
     protected String name;
     protected String description;
-    protected Image img = null;
 
     /**
      * Method setSimpleGod initializes the values
      *
      * @param name        of type String
      * @param description of type String
-     * @param img         of type Image
      */
-    public void setSimpleGod(String name, String description, Image img) {
+    public void setSimpleGod(String name, String description) {
         this.name = name;
         this.description = description;
-        this.img = img;
     }
 
 
@@ -49,7 +46,4 @@ public class SimpleGod implements Serializable {
      *
      * @return the img (type Image) of this SimpleGod object.
      */
-    public Image getImg() {
-        return img;
-    }
 }

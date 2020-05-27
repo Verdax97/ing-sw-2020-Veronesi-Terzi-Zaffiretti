@@ -10,7 +10,6 @@ public class Minotaur extends ForceMovementGods
     {
         this.name = "Minotaur";
         this.description = "Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

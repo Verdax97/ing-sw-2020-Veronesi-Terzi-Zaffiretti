@@ -15,12 +15,6 @@ public class GodTest {
     }
 
     @Test
-    public void getImgTest() {
-        God god = new God();
-        Assertions.assertNull(god.getImg());
-    }
-
-    @Test
     public void getDescriptionTest() {
         God athena = new Athena();
         Assertions.assertEquals("Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.", athena.getDescription());

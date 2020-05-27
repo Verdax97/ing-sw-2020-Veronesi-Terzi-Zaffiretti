@@ -14,7 +14,6 @@ public class Apollo extends ForceMovementGods {
     public Apollo() {
         this.name = "Apollo";
         this.description = "Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.";
-        img = new Image("Images/godCards/" + name + ".png");
     }
 
     /**
