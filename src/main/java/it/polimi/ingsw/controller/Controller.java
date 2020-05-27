@@ -56,6 +56,7 @@ public class Controller implements Observer {
                 System.exit(-1);
             }
             setState(State.STARTTURN);
+            match.CreateMsgPacket("Resuming", "Resuming the game");
             return;
         }
         this.match = new Match(lobby.getPlayers());

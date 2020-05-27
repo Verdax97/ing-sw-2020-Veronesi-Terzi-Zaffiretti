@@ -22,6 +22,11 @@ public class Match extends Observable {
         return playerTurn;
     }
 
+    /**
+     * Method setPlayerTurn sets the playerTurn of this Match object.
+     *
+     * @param playerTurn the playerTurn of this Match object.
+     */
     public void setPlayerTurn(Player playerTurn) {
         this.playerTurn = playerTurn;
     }
@@ -30,6 +35,11 @@ public class Match extends Observable {
     private Player winner = null;
     private final ErrorHandler errorHandler = new ErrorHandler();
 
+    /**
+     * Method setnPlayer sets the nPlayer of this Match object.
+     *
+     * @param nPlayer the nPlayer of this Match object.
+     */
     public void setnPlayer(int nPlayer) {
         this.nPlayer = nPlayer;
     }
