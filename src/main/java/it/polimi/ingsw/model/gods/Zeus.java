@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model.gods;
-import it.polimi.ingsw.model.*;
 
-public class Zeus extends God{
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.God;
+import javafx.scene.image.Image;
 
-    public Zeus(){
+public class Zeus extends God {
+
+    public Zeus() {
         this.name = "Zeus";
         this.description = "Your Build: your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level";
+        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

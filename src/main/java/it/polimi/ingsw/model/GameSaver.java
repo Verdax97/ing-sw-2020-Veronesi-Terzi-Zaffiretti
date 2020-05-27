@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.view.Colors;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -52,7 +54,8 @@ public class GameSaver {
     public static void saveGame(Match match) {
         try {
             if (!saveFile.exists()) {
-                saveFile.createNewFile();
+                if (saveFile.createNewFile())
+                    throw new IOException();
             }
             FileWriter fileWriter = new FileWriter(saveFile);
             ArrayList<Player> players = match.getSetup().getPlayers();
@@ -77,12 +80,11 @@ public class GameSaver {
 
             fileWriter.write(PrintBoard(players, match.getBoard()));
 
-
             fileWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
             System.out.println("An error occurred when saving the game.");
-            e.printStackTrace();
+            System.out.println(Colors.ANSI_RED + e.toString() + Colors.ANSI_RESET);
         }
     }
 
@@ -174,9 +176,9 @@ public class GameSaver {
                     for (int k = 0; k < players.size(); k++) {
                         if (players.get(k) == board.getCell(i, j).getWorker().getPlayer()) {
                             s.append(k);
-                            if (board.getCell(i, j).getWorker().getPlayer().getGodPower().name.equals("Athena") &&
-                                board.getCell(i, j).getWorker().getLastMovement() == 1){
-                                debuffed = s.toString();
+                            if (board.getCell(i, j).getWorker().getPlayer().getGodPower().getName().equals("Athena") &&
+                                    board.getCell(i, j).getWorker().getLastMovement() == 1) {
+                                debuffed = i + Integer.toString(j);
                             }
                         }
                     }
@@ -204,5 +206,14 @@ public class GameSaver {
             }
         }
         return null;
+    }
+
+    /**
+     * Method closeFile delete the file of the game
+     */
+    public static void deleteGameData() {
+        if (saveFile.delete())
+            System.out.println("File deleted successfully!");
+        else System.out.println("Cannot delete file");
     }
 }

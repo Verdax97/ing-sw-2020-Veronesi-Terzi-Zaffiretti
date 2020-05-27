@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
+import javafx.scene.image.Image;
 
 /**
  * Class Hestia implements Hestia functionalities
@@ -14,6 +15,7 @@ public class Hestia extends MultipleActionGod {
     public Hestia() {
         this.name = "Hestia";
         this.description = "Your Build: Your Worker may build one additional time, but this cannot be on a perimeter space.";
+        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

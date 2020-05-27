@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
+import javafx.scene.image.Image;
 
 /**
  * Class Hephaestus implements Hephaestus functionalities
@@ -21,6 +22,7 @@ public class Hephaestus extends MultipleActionGod {
     public Hephaestus() {
         this.name = "Hephaestus";
         this.description = "Your Build: your worker may build one additional block (not dome) on top of your first block";
+        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 2;
     }
 

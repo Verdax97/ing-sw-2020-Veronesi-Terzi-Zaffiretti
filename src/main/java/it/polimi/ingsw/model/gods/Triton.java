@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
+import javafx.scene.image.Image;
 
 /**
  * Class Triton implements Triton functionalities
@@ -14,6 +15,7 @@ public class Triton extends MultipleActionGod {
     public Triton() {
         this.name = "Triton";
         this.description = "Your Move: Each time your Worker moves into a perimeter space, it may immediately move again.";
+        img = new Image("Images/godCards/" + name + ".png");
         this.useLimit = 1;
     }
 

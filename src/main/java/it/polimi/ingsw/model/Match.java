@@ -206,22 +206,22 @@ public class Match extends Observable {
         if (lastAction == 0)//the game must go on
         {
             workers = FindWorkers(playerTurn.getNickname());
+            for (int[] worker : workers) {
+                board.getCell(worker[0], worker[1]).getWorker().setLastMovement(0);
+            }
             alt = PrintPossibilities(workers);
             msgError = Messages.selectWorker;
-        }
-        if (lastAction == 1)//you won
+        } else if (lastAction == 1)//you won
         {
             msgError = "EndGame Winner winner chicken dinner!";
             PlayerWin(playerTurn.getNickname());
             return;
-        }
-        if (lastAction == -1)//you lose
+        } else if (lastAction == -1)//you lose
         {
             PlayerLost("Error You Lost (can't move worker)", playerTurn.getNickname() + "" +
                     " lost because he can't move his workers");
             return;
-        }
-        if (lastAction < -1)
+        } else
             msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.startTurn;
         CreateMsgPacket(msgError, alt);
         GameSaver.saveGame(this);
@@ -266,11 +266,8 @@ public class Match extends Observable {
             return;
         }
         lastAction = -1;
-        if (firstTime) {
-            firstTime = false;
-            msgError = "";
-        } else
-            msgError = "Error the inserted value is not valid\n";
+
+        msgError = "Error the inserted value is not valid\n";
         msgError += Messages.selectWorker;
         CreateMsgPacket(msgError, PrintPossibilities(workers));
     }

@@ -14,8 +14,6 @@ import java.util.Observer;
 /**
  * Class Controller initialize the match and redirect the messages based on current state
  *
- * @author Davide
- * Created on 20/05/2020
  */
 public class Controller implements Observer {
 
@@ -56,7 +54,7 @@ public class Controller implements Observer {
                 System.exit(-1);
             }
             setState(State.SELECTWORKER);
-            match.SelectWorker(new MsgToServer("", -5, -5, -5, -5));
+            match.StartTurn();
             return;
         }
         this.match = new Match(lobby.getPlayers());
@@ -144,9 +142,11 @@ public class Controller implements Observer {
                     setState(State.ENDMATCH);
                 break;
             case ENDMATCH://we have a winner winner chicken dinner
-                //TODO all this thing
-                //save record data
-                //delete game data ()
+                //save record data....maybe
+                //delete game data
+                GameSaver.deleteGameData();
+                System.out.println("Player " + match.getPlayerTurn() + " won!!!");
+                System.out.println("Shutdown server");
                 break;
             default:
                 System.out.println("Error of received message");

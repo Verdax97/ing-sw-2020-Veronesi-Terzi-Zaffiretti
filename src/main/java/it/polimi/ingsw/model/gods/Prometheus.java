@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
+import javafx.scene.image.Image;
 
 public class Prometheus extends DebuffGod
 {
@@ -9,6 +10,7 @@ public class Prometheus extends DebuffGod
     {
         this.name = "Prometheus";
         this.description = "Your Turn: If your Worker does not move up, it may build both before and after moving";
+        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override
