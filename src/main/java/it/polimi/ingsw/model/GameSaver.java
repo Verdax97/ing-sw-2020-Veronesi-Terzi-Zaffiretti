@@ -120,13 +120,6 @@ public class GameSaver {
             playerN++;
         }
 
-        s = scanner.nextLine();
-        int i;
-        ArrayList<Integer> playerDebuffed = new ArrayList<>();
-        for (String name : s.split("-")){
-            playerDebuffed.add(Integer.parseInt(name));
-        }
-
 
         Worker worker;
         for (int x = 0; x < 5; x++){
@@ -136,14 +129,19 @@ public class GameSaver {
                 match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
                 if (cell.length() == 2){
                     if (cell.charAt(1) != 'D') {
-                        i = Integer.parseInt(cell)%10;
+                        int i = Integer.parseInt(cell) % 10;
                         worker = new Worker();
                         worker.setPlayer(match.getPlayers().get(i));
                         match.getBoard().getCell(x, y).setWorker(worker);
-                        if (playerDebuffed.get(i) == 1){worker.setDebuff(true);}
                     } else match.getBoard().getCell(x, y).setDome(true);
                 }
             }
+        }
+
+        s = scanner.nextLine();
+        if (s.length() == 2){
+            int pos = Integer.parseInt(s);
+            match.getBoard().getCell(pos/10, pos%10).getWorker().setLastMovement(1);
         }
 
         match.setPlayerTurn(playerTurn);
@@ -163,15 +161,9 @@ public class GameSaver {
     private static String PrintBoard(ArrayList<Player> players, Board board) {
         StringBuilder s = new StringBuilder();
         //prints the debuffs
-        int[] debuffed = new int[players.size()];
+        String debuffed = "5";
         //prints the debuffs
-        for (int i = 0; i < players.size(); i++) {
-            s.append(debuffed[i]);
-            if (i == players.size() - 1)
-                s.append("\n");
-            else
-                s.append("-");
-        }
+
         //prints the board valBuilding-Dome-player
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -182,7 +174,10 @@ public class GameSaver {
                     for (int k = 0; k < players.size(); k++) {
                         if (players.get(k) == board.getCell(i, j).getWorker().getPlayer()) {
                             s.append(k);
-                            debuffed[k] = board.getCell(i, j).getWorker().isDebuff() ? 1 : 0;
+                            if (board.getCell(i, j).getWorker().getPlayer().getGodPower().name.equals("Athena") &&
+                                board.getCell(i, j).getWorker().getLastMovement() == 1){
+                                debuffed = s.toString();
+                            }
                         }
                     }
                 }
@@ -190,6 +185,8 @@ public class GameSaver {
             }
             s.append("\n");
         }
+        s.append(debuffed);
+
         return s.toString();
     }
 

@@ -31,9 +31,10 @@ public class GameSaverTest {
         lobby.AddPlayer(players.get(1));
         GameSaver.checkForGames(lobby);
         match.StartGame();
-        MsgToServer msg = new MsgToServer(match.getPlayerTurn().getNickname(),0,-5,-5,-5);
+        MsgToServer msg = new MsgToServer(match.getPlayerTurn().getNickname(),2,-5,-5,-5);
         match.PickGod(msg);
         match.PickGod(msg);
+        msg = new MsgToServer(match.getPlayerTurn().getNickname(),0,-5,-5,-5);
         match.SelectPlayerGod(msg);
         match.SelectPlayerGod(msg);
         msg = new MsgToServer(match.getPlayerTurn().getNickname(),0,0,1,1);
@@ -43,14 +44,16 @@ public class GameSaverTest {
         match.getBoard().getCell(2,2).setDome(true);
         match.getBoard().getCell(2,4).setBuilding(3);
         match.getBoard().getCell(4,4).setBuilding(2);
-        match.getBoard().getCell(0,0).getWorker().setDebuff(true);
-        match.getBoard().getCell(1,1).getWorker().setDebuff(true);
+        match.getBoard().getCell(0,0).getWorker().setLastMovement(1);
+        match.getBoard().getCell(4,4).getWorker().setLastMovement(1);
         match.NextTurn();
         match.NextPlayer();
         GameSaver.saveGame(match);
         Assertions.assertTrue(true);
-        GameSaver.loadGame();
+        match = GameSaver.loadGame();
+        Assertions.assertEquals(1, match.getBoard().getCell(0,0).getWorker().getLastMovement());
     }
+
 
 
 }
