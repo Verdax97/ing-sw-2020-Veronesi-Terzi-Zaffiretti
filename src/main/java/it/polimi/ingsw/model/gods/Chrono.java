@@ -3,12 +3,14 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
+import javafx.scene.image.Image;
 
 public class Chrono extends God{
 
     public Chrono(){
         this.name = "Chrono";
         this.description = "Win Condition: you also win where there are al least five Complete Towers on the board";
+        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override

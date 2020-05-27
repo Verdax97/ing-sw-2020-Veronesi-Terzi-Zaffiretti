@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.God;
+import javafx.scene.image.Image;
 
 /**
  * Class Atlas implements Atlas functionalities
@@ -14,6 +15,7 @@ public class Atlas extends God {
     public Atlas() {
         this.name = "Atlas";
         this.description = "Your Build: your worker may build a dome at any level including the ground";
+        img = new Image("Images/godCards/" + name + ".png");
     }
 
     /** @see God#Building(Board, Cell, int, int, int, int) */

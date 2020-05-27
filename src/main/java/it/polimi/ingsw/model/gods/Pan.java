@@ -3,12 +3,14 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
+import javafx.scene.image.Image;
 
 public class Pan extends God {
 
     public Pan(){
         this.name = "Pan";
         this.description = "Win Condition: you also win if your worker moves down two or more levels";
+        img = new Image("Images/godCards/" + name + ".png");
     }
 
     @Override
