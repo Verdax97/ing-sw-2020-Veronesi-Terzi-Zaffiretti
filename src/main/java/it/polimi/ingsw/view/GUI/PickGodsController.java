@@ -33,6 +33,9 @@ public class PickGodsController {
     @FXML
     private Button confirmGod;
 
+    @FXML
+    private Text sceneTitle;
+
     public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
@@ -43,10 +46,19 @@ public class PickGodsController {
 
     public void getDescriptionGod(String msg, boolean yourTurn) {
         confirmGod.setVisible(yourTurn);
-        ArrayList<String> godStrings = new ArrayList<>();
+
+        if (yourTurn)
+            sceneTitle.setText("Pick a god");
+        else
+            sceneTitle.setText("Wait for your turn");
+
+        //reset all
         pickableGod.clear();
+        godEffect.setText("Select a god");
+        godImage.setImage(null);
         listOfGod.getItems().clear();
-        godStrings.addAll(Arrays.asList(msg.split("\n")));
+        ArrayList<String> godStrings = new ArrayList<>(Arrays.asList(msg.split("\n")));
+        //create godCards
         for (int i = 0; i < godStrings.size(); i++) {
             ArrayList<String> s = new ArrayList<>(Arrays.asList(godStrings.get(i).split(" ", 3)));
             String indexGod = s.get(0).split(Pattern.quote(")"))[0];
@@ -64,6 +76,7 @@ public class PickGodsController {
     public void sendReply () {
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         godEffect.setText("Select a god");
+        godImage.setImage(null);
         reply = new int[]{-5, -5, -5, -5};
     }
 
