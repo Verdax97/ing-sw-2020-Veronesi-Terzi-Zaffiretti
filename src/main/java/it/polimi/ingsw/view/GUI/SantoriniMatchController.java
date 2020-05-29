@@ -1,13 +1,11 @@
 package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.model.SimpleBoard;
-import it.polimi.ingsw.view.Colors;
 import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,13 +16,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SantoriniMatchController {
 
     @FXML
+    private AnchorPane santoriniMatch;
+    @FXML
     private GridPane board;
-
     @FXML
     private Text firstPlayerNick;
     @FXML
@@ -66,7 +64,6 @@ public class SantoriniMatchController {
 
     private ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private int nPlayers;
-    private int indexWorkers;
     private boolean active = true;
 
     private boolean first = false, second = false, third = false;
@@ -89,11 +86,10 @@ public class SantoriniMatchController {
         this.clientMain = clientMain;
     }
 
-    public void setReplyValue(CellButton cellButton) {
-
-    }
+    public void setReplyValue(CellButton cellButton) { }
 
     public void initializeAll(SimpleBoard simpleBoard) {
+        santoriniMatch.setStyle("-fx-background-image: url('/Images/SantoriniBoard.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         for (int i = 0; i < simpleBoard.players.size(); i++) {
             if (i == 0) {
                 firstPlayerNick.setText(simpleBoard.players.get(i));
@@ -108,7 +104,6 @@ public class SantoriniMatchController {
                 secondPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 secondPlayerColor.setFill(Color.GREEN);
                 nPlayers = 2;
-                indexWorkers = 3;
                 if (myName == simpleBoard.players.get(i)) {
                     second = true;
                 }
@@ -118,7 +113,6 @@ public class SantoriniMatchController {
                 thirdPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 thirdPlayerColor.setFill(Color.BLUE);
                 nPlayers = 3;
-                indexWorkers = 5;
                 if (myName == simpleBoard.players.get(i)) {
                     third = true;
                 }
@@ -182,9 +176,7 @@ public class SantoriniMatchController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void confirmAction() {
-        sendReply();
-    }
+    public void confirmAction() { sendReply(); }
 
     private void selectedCell() {
         //show in a particular text box info about current selected cell
@@ -210,13 +202,16 @@ public class SantoriniMatchController {
         System.out.println("Winner");
     }
 
-    private void loser(SimpleBoard simpleBoard) {
+    private void loser(SimpleBoard simpleBoard, boolean me) {
         //removes himself from visible players
         //throw lose window
         //ask if he wants to spectate
         //debug message
         //yes spectator true
         //no spectator false
+        if (me == false){
+            //should remove from visible player that got eliminated
+        }
         System.out.println("Loser");
         updateBoard(simpleBoard, true);
     }
@@ -230,14 +225,13 @@ public class SantoriniMatchController {
             } else {
                 for (int i = 0; i < nPlayers - 1; i++) {
                     if (myName == simpleBoard.players.get(i)) {
-                        active = true;
+                        loser(simpleBoard, false);
                     } else active = false;
                 }
             }
             if (active == false) {
                 nPlayers--;
-                indexWorkers--;
-                loser(simpleBoard);
+                loser(simpleBoard, true);
             }
         } else {
             if (active == true || spectator == true) {

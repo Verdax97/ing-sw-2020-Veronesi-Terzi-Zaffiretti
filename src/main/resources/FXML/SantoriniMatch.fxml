@@ -22,7 +22,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <AnchorPane fx:id="santoriniMatch" prefHeight="1076.0" prefWidth="1886.0" stylesheets="@SantoriniMatch.css">
+      <AnchorPane fx:id="santoriniMatch" prefHeight="1076.0" prefWidth="1886.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb4ff1a" height="1050.0" layoutX="1404.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="460.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb4ff1a" height="1038.0" layoutX="15.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="386.0" />

@@ -2,18 +2,20 @@ package it.polimi.ingsw.view.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-
-import java.io.Serializable;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 public class CellButton extends Button{
 
-    public String position;
+    //TODO CREATE IMAGES FOR GUI
 
+    public String position;
     private int valReply = -5;
 
     CellButton(String position){
         this.position = position;
-        this.setStyle("-fx-background-color: Blue");
+        //memo to change this into a Level 0 structure
+        this.setStyle("-fx-background-image: url('/Images/Logo.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         this.setAlignment(Pos.CENTER);
         this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
@@ -77,13 +79,6 @@ public class CellButton extends Button{
     }
 
     public void setDome() {
-        //TODO create images
-        /*
-        BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("Image/Buildings/DomeTemp/.png").toExternalForm()),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
-        this.setBackground(background);
-         */
         this.setStyle("-fx-background-color: Black");
     }
 
