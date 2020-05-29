@@ -30,7 +30,7 @@ public class ForceMovementGods extends MoveEnemyGods {
             }
             board.getCell(x, y).setWorker(playerWorker);
             playerWorker.setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
-            if (board.getCell(targetPosX, targetPosY) != selectedCell || targetedWorker == null)
+            if (targetedWorker == null || board.getCell(targetPosX, targetPosY) != selectedCell)
                 selectedCell.setWorker(null);
         }
         return moved;

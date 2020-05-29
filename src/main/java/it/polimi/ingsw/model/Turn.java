@@ -82,15 +82,19 @@ public class Turn {
     }
 
     public boolean CheckLostMove(Player player, Board board, ArrayList<int[]> workers) {
+        boolean flag = false;
         for (int[] coords : workers) {
             int i = coords[0];
             int j = coords[1];
             if (CheckAround(board, i, j, player.getGodPower(), 0).size() == 0) {
                 if (CheckAround(board, i, j, player.getGodPower(), 1).size() == 0)
-                    return true;
-            }
+                    flag = true;
+                else
+                    return false;
+            } else
+                return false;
         }
-        return false;
+        return flag;
     }
 
     public boolean CheckLostBuild(Board board) {
