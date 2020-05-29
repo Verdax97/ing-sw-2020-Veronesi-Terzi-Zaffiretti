@@ -14,10 +14,16 @@ public class ServerMain implements Runnable {
      */
     @Override
     public void run() {
+        newGame();
+    }
+
+    public void newGame() {
+        System.out.println("Starting new game.");
         Controller controller = new Controller();
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller);
         controller.setServerMultiplexer(serverMultiplexer);
         serverMultiplexer.addObserver(controller);
+        serverMultiplexer.serverMain = this;
         serverMultiplexer.run();
     }
 }
