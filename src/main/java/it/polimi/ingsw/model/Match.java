@@ -645,6 +645,9 @@ public class Match extends Observable {
      * @param player of type String
      */
     public void PlayerWin(String player) {
+        GameSaver.deleteGameData();
+        System.out.println("Player " + getPlayerTurn().getNickname() + " won!!!");
+        System.out.println("Shutdown server");
         SendPacket(player, Messages.End, player + " Won", null);
     }
 

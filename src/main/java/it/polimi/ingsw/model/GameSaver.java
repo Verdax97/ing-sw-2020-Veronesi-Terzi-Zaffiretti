@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class GameSaver {
     private static File saveFile;
-
+    private static StringBuilder fileName;
     /**
      * Method checkForGames true if there is another game with the same players
      *
@@ -25,7 +25,7 @@ public class GameSaver {
     public static boolean checkForGames(Lobby lobby) {
         ArrayList<String> players = new ArrayList<>(lobby.getPlayers());
         Collections.sort(players);
-        StringBuilder fileName = new StringBuilder();
+        fileName = new StringBuilder();
         for (String player : players) {
             fileName.append(player);
             if (!player.equals(players.get(players.size() - 1)))
@@ -149,7 +149,7 @@ public class GameSaver {
         match.setPlayerTurn(playerTurn);
         match.setnPlayer(nPlayer);
 
-
+        scanner.close();
         return match;
     }
 
@@ -212,6 +212,7 @@ public class GameSaver {
      * Method closeFile delete the file of the game
      */
     public static void deleteGameData() {
+        saveFile = new File("savedGames/" + fileName.toString());
         if (saveFile.delete())
             System.out.println("File deleted successfully!");
         else System.out.println("Cannot delete file");

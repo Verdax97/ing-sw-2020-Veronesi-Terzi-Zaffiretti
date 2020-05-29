@@ -145,9 +145,10 @@ public class Controller implements Observer {
                 //save record data....maybe
                 //delete game data
                 GameSaver.deleteGameData();
-                System.out.println("Player " + match.getPlayerTurn() + " won!!!");
+                System.out.println("Player " + match.getPlayerTurn().getNickname() + " won!!!");
                 System.out.println("Shutdown server");
-                break;
+                serverMultiplexer.CloseConnection();
+                return;
             default:
                 System.out.println("Error of received message");
                 match.CreateMsgPacket(match.getMsgError(), "Wait");
