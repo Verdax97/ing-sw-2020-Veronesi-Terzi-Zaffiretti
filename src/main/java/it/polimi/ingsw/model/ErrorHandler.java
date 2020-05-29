@@ -8,6 +8,7 @@ public class ErrorHandler {
             case -1 -> "You Lost";
             case 1 -> "You Won!!";
             case 0 -> "";
+            case -7 -> Messages.error + " No space to move the worker";
             default -> Messages.error + " generic";
         };
     }

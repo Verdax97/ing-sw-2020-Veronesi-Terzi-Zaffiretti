@@ -1,7 +1,10 @@
 package it.polimi.ingsw.view.server;
 
+import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.GameSaver;
+import it.polimi.ingsw.model.Lobby;
+import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -19,6 +22,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
     private ServerSocket serverSocket;
     private ExecutorService executor;
     public ArrayList<ServerThread> playersThread;
+    public ServerMain serverMain;
 
     public synchronized Lobby getLobby() {
         return lobby;
@@ -29,13 +33,26 @@ public class ServerMultiplexer extends Observable implements Runnable {
 
     private volatile boolean resumeGame = false;
 
+
+    private volatile boolean ending = false;
+
+    public synchronized boolean isEnding() {
+        return ending;
+    }
+
+    public synchronized void setEnding(boolean ending) {
+        this.ending = ending;
+    }
+
+    private Thread threadInput = null;
+
     public ServerMultiplexer(Controller controller) {
         this.controller = controller;
         this.playersThread = new ArrayList<>();
         this.lobby = new Lobby();
     }
 
-    public void startServer() {
+    public void startServer() throws IOException {
         //It creates threads when necessary, otherwise it re-uses existing one when possible
         executor = Executors.newCachedThreadPool();
         System.out.println("Insert server port:");
@@ -55,21 +72,13 @@ public class ServerMultiplexer extends Observable implements Runnable {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             System.err.println(e.getMessage()); //port not available
-            System.out.println("asdasd");
+            System.out.println("port not available");
             return;
         }
         System.out.println("Server ready on port " + port);
-        Runnable runnable = () ->
-        {
-            scanner.set(new Scanner(System.in));
-            while (!scanner.get().nextLine().equalsIgnoreCase("quit")) {
-            }
-            System.exit(1);
-        };
-        Thread threadInput = new Thread(runnable);
-        threadInput.start();
+
         boolean entered = false;
-        while (true) {
+        while (!ending) {
             try {
                 if (nConnectionPlayer == 0 && !entered) {
                     System.out.println("Waiting for first player");
@@ -96,6 +105,10 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 //break; //In case the serverSocket gets closed
             }
         }
+        if (ending) {
+            CloseConnection();
+            return;
+        }
 
         //check if there are other games with same players
 
@@ -120,15 +133,20 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * Method CloseConnection closes all connections and close itself
      */
     public void CloseConnection() {
-        for (ServerThread thread :
-                playersThread) {
-            thread.update(new Match(lobby.getPlayers()), new MsgPacket("", "end", "end connection from server", null));
-        }
+        if (isEnding())
+            return;
+        setEnding(true);
         try {
             serverSocket.close();
         } catch (IOException e) {
             //ok
         }
+        for (ServerThread thread : playersThread) {
+            thread.CloseConnection();
+            thread.interrupt();
+        }
+        executor.shutdownNow();
+        //serverMain.newGame();
         System.exit(1);
     }
 
@@ -166,7 +184,11 @@ public class ServerMultiplexer extends Observable implements Runnable {
 
     @Override
     public void run() {
-        startServer();
+        try {
+            startServer();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**

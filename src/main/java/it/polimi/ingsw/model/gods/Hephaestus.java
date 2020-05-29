@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
-import javafx.scene.image.Image;
 
 /**
  * Class Hephaestus implements Hephaestus functionalities
@@ -65,7 +64,9 @@ public class Hephaestus extends MultipleActionGod {
         if (x == lastX && y == lastY) {
             if (!(board.getCell(x, y).getBuilding() < 3))
                 return -6;//Building is > 2
+            else
+                return CheckUse();
         }
-        return CheckUse();
+        return -1;
     }
 }

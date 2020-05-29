@@ -109,7 +109,6 @@ public class ClientInputCLI extends ClientInput {
             } else {
                 arr[1] = 0;
             }
-            System.out.println("Insert a valid input");
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {

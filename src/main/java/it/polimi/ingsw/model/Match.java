@@ -246,6 +246,7 @@ public class Match extends Observable {
                     if (movePossibilities.size() == 0) {
                         lastAction = -1;
                         msgError = "Error no moves available for this worker, select the other one\n" + Messages.selectWorker;
+                        alt = PrintPossibilities(workers);
                     } else {
                         lastAction = 2;
                         alt = PrintPossibilities(movePossibilities);
@@ -449,12 +450,14 @@ public class Match extends Observable {
             return;
         }
 
-        alt = "there was a 0 return value in move... why??!!!";
+        alt = "there was a 0 return value in build... why??!!!";
         if (lastAction == 1) {//turn is ended, go to the next player
             NextPlayer();
             msgError = Messages.startTurn;
+            alt = "Next player turn";
         } else if (lastAction == 2) {//build again
             msgError = Messages.buildAgain;
+            buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
             alt = PrintPossibilities(buildPossibilities);
         }
         //notify view

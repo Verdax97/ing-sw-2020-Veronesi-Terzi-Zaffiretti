@@ -48,6 +48,7 @@ public class ClientMain implements Runnable {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
             end = clientLogic();

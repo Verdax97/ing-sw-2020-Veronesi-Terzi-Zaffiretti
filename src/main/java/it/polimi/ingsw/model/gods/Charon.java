@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
-import javafx.scene.image.Image;
 
 public class Charon extends MoveEnemyGods {
 
@@ -16,6 +15,7 @@ public class Charon extends MoveEnemyGods {
         int ret = CheckPlayerTurn(board, selectedCell, x, y);
         if (ret <= 0)
             return ret;
+
         return MoveEnemy(board.getCell(x, y).getWorker(), board, selectedCell, x, y);
     }
 
@@ -32,6 +32,8 @@ public class Charon extends MoveEnemyGods {
         targetPosY = selectedCell.getPos()[1] + dy;
         if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4)
             return -7; //target space is out of board
+        if ((board.getCell(targetPosX, targetPosY).getWorker() != null || board.getCell(targetPosX, targetPosY).getDome()) && (selectedCell != board.getCell(targetPosX, targetPosY)))
+            return -5;//no space to move enemy worker
         return 1;
     }
 }

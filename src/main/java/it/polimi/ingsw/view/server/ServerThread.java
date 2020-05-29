@@ -51,42 +51,40 @@ public class ServerThread extends Thread implements Observer {
      * Method run for invoking thread
      */
     public void run() {
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
-        ) {
-            socketOut = objectOutputStream;
-            socketIn = objectInputStream;
+        try {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
+            ) {
+                socketOut = objectOutputStream;
+                socketIn = objectInputStream;
 
-            Setup();
-            while (!waitForStart) {
-                synchronized (this) {
-                    try {
+                Setup();
+                while (!waitForStart) {
+                    synchronized (this) {
                         wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
+                while (going) {
+                    MsgToServer msgToServer = ReceiveMsg();
+                    if (msgToServer == null)
+                        break;
+                    server.ReceiveMsg(msgToServer);
+                    fired = false;
+                }
+            } catch (IOException e) {
+                //System.out.println(e.toString());
+                System.out.println("Connection ended with " + this.nick);
             }
-            while (going) {
-                MsgToServer msgToServer = ReceiveMsg();
-                if (msgToServer == null)
-                    break;
-                server.ReceiveMsg(msgToServer);
-                fired = false;
-                while (fired)
-                    Thread.yield();
-            }
-        } catch (IOException e) {
-            System.out.println(e.toString());
-            System.out.println("qui");
-            CloseConnection();
+        } catch (InterruptedException e) {
+            System.out.println("Interrupted thread " + this.getName());
         }
+        CloseConnection();
     }
 
     /**
      * Method Setup initializes lobby size and nickname
      */
-    private void Setup() {
+    private void Setup() throws IOException {
         SetupLobbySize();
 
         SetupNickname();
@@ -103,7 +101,7 @@ public class ServerThread extends Thread implements Observer {
     /**
      * Method SetupLobbySize for setting the number of players
      */
-    private void SetupLobbySize() {
+    private void SetupLobbySize() throws IOException {
         if (pos == 0) {
             String mess = Messages.lobby;
             String err = "";
@@ -113,7 +111,6 @@ public class ServerThread extends Thread implements Observer {
 
                 //read response
                 MsgToServer msgToServer = ReceiveMsg();
-                assert msgToServer != null;
                 int n = msgToServer.x;
                 if (n == 2 || n == 3) {
                     server.getLobby().setnPlayer(n);
@@ -128,7 +125,7 @@ public class ServerThread extends Thread implements Observer {
     /**
      * Method SetupNickname check if the nickname is available on the server
      */
-    private void SetupNickname() {
+    private void SetupNickname() throws IOException {
         System.out.println("Waiting for player " + pos + " nickname");
         String mess = Messages.nickname;
         String err = "";
@@ -151,7 +148,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @return boolean
      */
-    public boolean AskForResume() {
+    public boolean AskForResume() throws IOException {
         String mess = Messages.resume;
         String err = "";
         //send msg asking for resume
@@ -159,7 +156,6 @@ public class ServerThread extends Thread implements Observer {
 
         //read response
         MsgToServer msgToServer = ReceiveMsg();
-        assert msgToServer != null;
         return (msgToServer.x == 1);
     }
 
@@ -168,7 +164,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @param msg of type MsgPacket
      */
-    private void SendMsg(MsgPacket msg) {
+    private void SendMsg(MsgPacket msg) throws IOException {
         try {
             //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
             //socketOut.reset();
@@ -177,6 +173,7 @@ public class ServerThread extends Thread implements Observer {
         } catch (IOException e) {
             System.out.println("Can't send message");
             going = false;
+            throw e;
         }
     }
 
@@ -185,21 +182,24 @@ public class ServerThread extends Thread implements Observer {
      *
      * @return MsgToServer
      */
-    private MsgToServer ReceiveMsg() {
+    private MsgToServer ReceiveMsg() throws IOException {
         try {
             return (MsgToServer) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
-            System.out.println("connection crashed");
-            CloseConnection();
+            System.out.println("No more received packets");
+            //CloseConnection();
             going = false;
+            if (e instanceof IOException)
+                throw (IOException) e;
+            else throw new IOException();
         }
-        return null;
+        //return null;
     }
 
     /**
      * Method CloseConnection close the connection to the client
      */
-    private void CloseConnection() {
+    public void CloseConnection() {
         try {
             socketIn.close();
             socketOut.close();
@@ -227,8 +227,12 @@ public class ServerThread extends Thread implements Observer {
         if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
             going = false;
 
-        //
-        SendMsg((MsgPacket) arg);
-        fired = true;
+        //send the message
+        try {
+            SendMsg((MsgPacket) arg);
+            fired = true;
+        } catch (IOException e) {
+            CloseConnection();
+        }
     }
 }
