@@ -80,6 +80,7 @@ public class LobbyController{
         if (nickname != null) {
             clientMain.setNick(nickname.getText());
             clientInputGUI.Reply(-5,-5, -5, -5);
+            clientInputGUI.setMyName(nickname.getText());
             return true;
         }
         else {

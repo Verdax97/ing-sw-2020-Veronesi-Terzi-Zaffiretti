@@ -19,6 +19,17 @@ public class ClientInputGUI extends ClientInput {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
+    }
+
+    private String myName;
+
+
     /**
      * Method setSantoriniMatchController sets the santoriniMatchController of this ClientInputGUI object.
      *

@@ -1,67 +1,78 @@
 package it.polimi.ingsw.view.GUI;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
-public class CellButton extends Button {
+import java.io.Serializable;
 
-    String position;
-    int color;
+public class CellButton extends Button{
+
+    public String position;
+
+    private int valReply = -5;
 
     CellButton(String position){
         this.position = position;
+        this.setStyle("-fx-background-color: Blue");
+        this.setAlignment(Pos.CENTER);
+        this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
-    public void setWorker() {
-        if (color == 0){
-            /*
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("Image/Buildings/DomeTemp/.png").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            Background background = new Background(backgroundImage);
-            this.setBackground(background);
-             */
-        }
-        if (color == 1){
-            /*
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("Image/Buildings/DomeTemp/.png").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            Background background = new Background(backgroundImage);
-            this.setBackground(background);
-             */
-        }
-        if (color == 2){
-            /*
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("Image/Buildings/DomeTemp/.png").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            Background background = new Background(backgroundImage);
-            this.setBackground(background);
-             */
-        }
-        if (color == 3){
-            /*
-            BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource("Image/Buildings/DomeTemp/.png").toExternalForm()),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            Background background = new Background(backgroundImage);
-            this.setBackground(background);
-             */
-        }
-    }
 
-    public void setBuilding(int value) {
+    public void refresh(int value, int worker) {
         if (value == 0){
-            this.setStyle("-fx-background-color: MediumSeaGreen");
-            this.color = 0;
+            if (worker == 0){
+
+            }
+            if (worker == 1){
+
+            }
+            if (worker == 2){
+
+            }
+            else
+                {this.setStyle("-fx-background-color: MediumSeaGreen");
+            }
+
         }
         if (value == 1){
+            if (worker == 0){
+
+            }
+            if (worker == 1){
+
+            }
+            if (worker == 2){
+
+            }
             this.setStyle("-fx-background-color: Red");
-            this.color = 1;
         }
         if (value == 2){
+            if (worker == 0){
+
+            }
+            if (worker == 1){
+
+            }
+            if (worker == 2){
+
+            }
             this.setStyle("-fx-background-color: Blue");
-            this.color = 2;
         }
         if (value == 3){
+            if (worker == 0){
+
+            }
+            if (worker == 1){
+
+            }
+            if (worker == 2){
+
+            }
             this.setStyle("-fx-background-color: Pink");
-            this.color = 3;
+        }
+        if (value == 4) {
+            setDome();
         }
     }
 
@@ -75,8 +86,6 @@ public class CellButton extends Button {
          */
         this.setStyle("-fx-background-color: Black");
     }
-
-    private int valReply = -5;
 
     public int getValReply() {
         return valReply;

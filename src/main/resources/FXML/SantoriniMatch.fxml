@@ -63,7 +63,7 @@
             </Text>
             <Circle fx:id="secondPlayerColor" fill="DODGERBLUE" layoutX="309.0" layoutY="561.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="thirdPlayerColor" fill="DODGERBLUE" layoutX="309.0" layoutY="894.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-            <GridPane gridLinesVisible="true" layoutX="470.0" layoutY="91.0" prefHeight="900.0" prefWidth="900.0">
+            <GridPane fx:id="board" gridLinesVisible="true" layoutX="470.0" layoutY="91.0" prefHeight="900.0" prefWidth="900.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="171.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="191.0" />
