@@ -13,7 +13,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -79,7 +78,7 @@
                 <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Button fx:id="confirmButton" layoutX="1550.0" layoutY="889.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="82.0" prefWidth="180.0" text="Confirm Action" textAlignment="CENTER">
+            <Button fx:id="confirmButton" layoutX="1550.0" layoutY="889.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="82.0" prefWidth="180.0" text="Confirm Action" textAlignment="CENTER" visible="false">
                <font>
                   <Font size="20.0" />
                </font>

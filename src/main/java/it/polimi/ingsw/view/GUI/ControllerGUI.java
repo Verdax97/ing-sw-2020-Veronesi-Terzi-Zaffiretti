@@ -107,17 +107,15 @@ public class ControllerGUI {
     }
 
     public void waitYourTurn(){
+        //TODO check why this is skipped during wait for selectWorker of others
         if (santoriniMatchController == null) {
             lobbyController.waitForStart();
-            return;
         } else santoriniMatchController.hideConfirmButton();
     }
 
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
-    public void selectWorker() {
-        santoriniMatchController.selectWorker();
-    }
+    public void selectWorker() { santoriniMatchController.selectWorker(); }
 
     public void beforeMovePower(){
         santoriniMatchController.beforeMovePower();

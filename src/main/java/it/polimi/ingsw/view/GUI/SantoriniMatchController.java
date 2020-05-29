@@ -6,6 +6,7 @@ import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -50,23 +51,27 @@ public class SantoriniMatchController {
     @FXML
     private Button confirmButton;
     @FXML
+    private Text whosTurn;
+    @FXML
+    private Text godUsageMessageBox;
+    @FXML
+    private CheckBox domeTrue;
+    @FXML
     private Text messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
     private int[] reply;
 
-    public void setMyName(String myName) {
-        this.myName = myName;
-    }
-
-    private String myName;
-
     private ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private int nPlayers;
     private boolean active = true;
 
+    private String myName;
+    //i discover who i am
     private boolean first = false, second = false, third = false;
+    //1 red, 2 green, 3 blue
+    private int myColor;
 
     private boolean waitWorker = false;
 
@@ -86,7 +91,9 @@ public class SantoriniMatchController {
         this.clientMain = clientMain;
     }
 
-    public void setReplyValue(CellButton cellButton) { }
+    public void setMyName(String myName) {
+        this.myName = myName;
+    }
 
     public void initializeAll(SimpleBoard simpleBoard) {
         santoriniMatch.setStyle("-fx-background-image: url('/Images/SantoriniBoard.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
@@ -97,6 +104,7 @@ public class SantoriniMatchController {
                 firstPlayerColor.setFill(Color.RED);
                 if (myName == simpleBoard.players.get(i)) {
                     first = true;
+                    myColor = 0;
                 }
             }
             if (i == 1) {
@@ -106,6 +114,7 @@ public class SantoriniMatchController {
                 nPlayers = 2;
                 if (myName == simpleBoard.players.get(i)) {
                     second = true;
+                    myColor = 1;
                 }
             }
             if (i == 2) {
@@ -115,6 +124,7 @@ public class SantoriniMatchController {
                 nPlayers = 3;
                 if (myName == simpleBoard.players.get(i)) {
                     third = true;
+                    myColor = 2;
                 }
             }
         }
@@ -139,10 +149,13 @@ public class SantoriniMatchController {
     }
 
     public void hideConfirmButton() {
+        whosTurn.setText("Please wait your turn");
+        godUsageMessageBox.setText("");
         confirmButton.setVisible(false);
     }
 
     public void showConfirmButton() {
+        whosTurn.setText("It is Your Turn");
         confirmButton.setVisible(true);
     }
 
@@ -152,37 +165,46 @@ public class SantoriniMatchController {
     }
 
     public void beforeMovePower() {
-
+        godUsageMessageBox.setText("Ciaoo");
     }
 
 
     public void moveAgain() {
-
+        godUsageMessageBox.setText("Ciaoo muoviti ancora");
     }
 
     public void move() {
+        messageBox.setText("Movat");
     }
 
     public void buildAgain() {
-
+        godUsageMessageBox.setText("Ciaoo costruisci ancora");
     }
 
     public void build(Boolean atlas) {
-
+        if (atlas){
+            domeTrue.setVisible(true);
+            if (domeTrue.isSelected()){
+                //vuole la cupola
+            }
+            //normale costruizione
+        }
+        messageBox.setText("Costruisci");
     }
 
-    public void sendReply() {
+    public void sendReply(String msg) {
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void confirmAction() { sendReply(); }
+    public void confirmAction() { sendReply("memo impostami"); }
 
     private void selectedCell() {
         //show in a particular text box info about current selected cell
         //prepare message to send to the server
-        if (waitWorker == true) {
+        if (waitWorker) {
             //should save and show two different selected cells
+            waitWorker = false;
         } else {
             //normal stuff
         }
