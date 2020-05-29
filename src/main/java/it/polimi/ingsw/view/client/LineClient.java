@@ -44,7 +44,7 @@ public class LineClient extends Thread implements Observer {
                 clientMain.setReceivedMsg(msg);
                 clientMain.setReadyToReceive(true);
                 synchronized (clientMain) {
-                    clientMain.notify();
+                    clientMain.notifyAll();
                 }
                 if (msg.msg.equalsIgnoreCase("end"))
                     break;
@@ -73,6 +73,8 @@ public class LineClient extends Thread implements Observer {
         } catch (ClassNotFoundException | IOException e) {
             if (!(e instanceof IOException))
                 System.out.println("The format of the message to receive is incorrect");
+            else
+                clientMain.EndAll();
         }
         return null;
     }
