@@ -214,8 +214,7 @@ public class SantoriniMatchController {
             }
         else {
             //show in a particular text box info about current selected cell
-            String info = cellButton.toString();
-            selectedCell.setText("Selected cell:" + info);
+
             //prepare message to send to the server
             reply[0]=cellButton.x;
             reply[1]=cellButton.y;

@@ -20,6 +20,8 @@ public class ClientInputGUI extends ClientInput {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
+    private boolean resume;
+
     public String getMyName() {
         return myName;
     }
@@ -135,6 +137,7 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.resume)) {
             controllerGui.resume();
+            resume = true;
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
@@ -142,11 +145,10 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
-            if (controllerGui.getSantoriniMatchController() == null){
+            if (controllerGui.getSantoriniMatchController() == null && resume){
                 Platform.runLater(()-> {
                     try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
-                        controllerGui.itIsYourTurn();
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -168,11 +170,10 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.startTurn)) {
-            if (controllerGui.getSantoriniMatchController() == null){
+            if (controllerGui.getSantoriniMatchController() == null && resume){
                 Platform.runLater(()-> {
                     try {
                         controllerGui.changeToSantoriniMatch(msgPacket.board, true);
-                        controllerGui.itIsYourTurn();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
