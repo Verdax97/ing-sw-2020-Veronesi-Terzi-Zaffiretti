@@ -44,11 +44,10 @@ public class SantoriniMatchController {
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
-    private int[] reply;
+    private int[] reply = {-5, -5, -5, -5};
 
     private ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private int nPlayers;
-    private boolean active = true;
 
     private String myName;
     //i discover who i am
@@ -59,6 +58,7 @@ public class SantoriniMatchController {
     private ArrayList<String> players = new ArrayList<>();
 
     private int waitWorker;
+    private boolean placeWorkersPhase = false;
     private ArrayList<Integer> startWorkerPos = new ArrayList<>();
 
     public ClientInput getClientInputGUI() {
@@ -149,6 +149,7 @@ public class SantoriniMatchController {
     public void placeWorkers(){
         messageBox.setText("Select two different cell where you want to put your workers");
         waitWorker = 2;
+        placeWorkersPhase = true;
     }
 
     public void selectWorker() {
@@ -183,23 +184,22 @@ public class SantoriniMatchController {
         messageBox.setText("Costruisci");
     }
 
-    public void sendReply(String msg) {
+    public void sendReply() {
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         reply = new int[]{-5, -5, -5, -5};
     }
 
     public void confirmAction() {
-        if (startWorkerPos != null && startWorkerPos.size() == 4){
+        if (placeWorkersPhase){
             //0 -> x first worker, 1 -> y first worker
             //2 -> x second worker, 3 -> y second worker
+            for (int i=0; i< startWorkerPos.size(); i++) {
+                reply[i] = startWorkerPos.get(i);
+            }
             startWorkerPos.clear();
-            String msg = null;
-            sendReply(msg);
+            placeWorkersPhase = false;
         }
-        else if (startWorkerPos != null && startWorkerPos.size() != 4){
-            error("Worker position not set", "Please select your second worker position");
-        }
-        sendReply("memo impostami");
+        sendReply();
     }
 
     private void selectedCell(CellButton cellButton) {
