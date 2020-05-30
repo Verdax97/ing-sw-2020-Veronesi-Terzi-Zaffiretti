@@ -12,7 +12,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.LobbyController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -41,6 +40,9 @@
                    </items>
                </ChoiceBox>
             <Button fx:id="confirm" layoutX="203.0" layoutY="249.0" mnemonicParsing="false" onAction="#setNumberPlayer" text="Confirm" visible="false" />
+            <Text fx:id="resumeText" layoutX="77.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="There is a game saved do you want to resume it?" visible="false" />
+            <Button fx:id="yes" layoutX="153.0" layoutY="186.0" mnemonicParsing="false" onAction="#resume" prefHeight="33.0" prefWidth="52.0" text="Yes" visible="false" />
+            <Button fx:id="no" layoutX="274.0" layoutY="186.0" mnemonicParsing="false" onAction="#dontResume" prefHeight="33.0" prefWidth="52.0" text="No" visible="false" />
            </children>
        </AnchorPane>
    </children>

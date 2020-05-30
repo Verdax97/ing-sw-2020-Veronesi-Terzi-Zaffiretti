@@ -11,13 +11,11 @@ public class CellButton extends Button{
 
     public int x;
     public int y;
-    public boolean worker;
     private int valReply = -5;
 
     CellButton(int x, int y){
         this.x = x;
         this.y = y;
-        this.worker = false;
         //memo to change this into a Level 0 structure
         this.setStyle("-fx-background-image: url('/Images/Logo.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         this.setAlignment(Pos.CENTER);

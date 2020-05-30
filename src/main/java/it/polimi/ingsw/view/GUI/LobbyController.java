@@ -20,20 +20,19 @@ public class LobbyController{
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
 
-    @FXML
-    private Text nicknameMessage;
+    @FXML private Text nicknameMessage;
 
-    @FXML
-    private TextField nickname;
+    @FXML private TextField nickname;
 
-    @FXML
-    private Button lobby;
+    @FXML private Button lobby;
 
-    @FXML
-    private Button confirm;
+    @FXML private Button confirm;
 
-    @FXML
-    private ChoiceBox numberPlayer;
+    @FXML private ChoiceBox numberPlayer;
+
+    @FXML private Text resumeText;
+    @FXML private Button yes;
+    @FXML private Button no;
 
     public void showNumberPlayers() {
         numberPlayer.setVisible(true);
@@ -88,6 +87,28 @@ public class LobbyController{
             return false;
         }
     }
+
+    public void showResume(){
+        resumeText.setVisible(true);
+        yes.setVisible(true);
+        no.setVisible(true);
+    }
+
+    @FXML
+    public void resume(){
+        clientInputGUI.Reply(1, -5, -5, -5);
+        yes.setVisible(false);
+        no.setVisible(false);
+    }
+
+    @FXML
+    public void dontResume(){
+        clientInputGUI.Reply(0, -5, -5, -5);
+        yes.setVisible(false);
+        no.setVisible(false);
+    }
+
+
 
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);

@@ -19,6 +19,11 @@ public class ControllerGUI {
     //public LauncherController launcherController = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
+
+    public SantoriniMatchController getSantoriniMatchController() {
+        return santoriniMatchController;
+    }
+
     private SantoriniMatchController santoriniMatchController = null;
 
     private int firstTime = 0;
@@ -72,9 +77,7 @@ public class ControllerGUI {
         else lobbyController.showNicknames();
     }
 
-    public void resume(){
-
-    }
+    public void resume(){ lobbyController.showResume(); }
 
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
@@ -119,7 +122,9 @@ public class ControllerGUI {
 
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
-    public void selectWorker() { santoriniMatchController.selectWorker(); }
+    public void selectWorker() {
+        santoriniMatchController.selectWorker();
+    }
 
     public void beforeMovePower(){
         santoriniMatchController.beforeMovePower();

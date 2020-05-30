@@ -88,7 +88,7 @@ public class SantoriniMatchController {
                 firstPlayerNick.setText(simpleBoard.players.get(i));
                 firstPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 firstPlayerColor.setFill(Color.RED);
-                if (myName == simpleBoard.players.get(i)) {
+                if (myName.equals(simpleBoard.players.get(i))) {
                     first = true;
                     myColor = 0;
                 }
@@ -98,7 +98,7 @@ public class SantoriniMatchController {
                 secondPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 secondPlayerColor.setFill(Color.GREEN);
                 nPlayers = 2;
-                if (myName == simpleBoard.players.get(i)) {
+                if (myName.equals(simpleBoard.players.get(i))) {
                     second = true;
                     myColor = 1;
                 }
@@ -108,7 +108,7 @@ public class SantoriniMatchController {
                 thirdPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
                 thirdPlayerColor.setFill(Color.BLUE);
                 nPlayers = 3;
-                if (myName == simpleBoard.players.get(i)) {
+                if (myName.equals(simpleBoard.players.get(i))) {
                     third = true;
                     myColor = 2;
                 }
@@ -120,10 +120,10 @@ public class SantoriniMatchController {
             thirdPlayerGodImage.setVisible(false);
             thirdPlayerColor.setVisible(false);
         }
-        initializeBoard();
+        initializeBoard(simpleBoard);
     }
 
-    private void initializeBoard() {
+    private void initializeBoard(SimpleBoard simpleBoard) {
         for (int j = 4; j >= 0; j--) {
             for (int i = 0; i < 5; i++) {
                 CellButton cellButton = new CellButton(i , j);
@@ -132,6 +132,7 @@ public class SantoriniMatchController {
                 cellButtonBoard.add(cellButton);
             }
         }
+        updateBoard(simpleBoard);
     }
 
     public void hideConfirmButton() {
@@ -159,10 +160,7 @@ public class SantoriniMatchController {
         godUsageMessageBox.setText("Ciaoo");
     }
 
-
-    public void moveAgain() {
-        godUsageMessageBox.setText("Ciaoo muoviti ancora");
-    }
+    public void moveAgain() { godUsageMessageBox.setText("Ciaoo muoviti ancora"); }
 
     public void move() {
         messageBox.setText("Movat");
@@ -176,9 +174,12 @@ public class SantoriniMatchController {
         if (atlas){
             domeTruth.setVisible(true);
             if (domeTruth.isSelected()){
-                //vuole la cupola
+                //build the dome
+                return;
             }
-            //normale costruizione
+            //normal building
+            domeTruth.setVisible(false);
+            return;
         }
         messageBox.setText("Costruisci");
     }
@@ -202,10 +203,8 @@ public class SantoriniMatchController {
     }
 
     private void selectedCell(CellButton cellButton) {
-        //show in a particular text box info about current selected cell
-        //prepare message to send to the server
 
-        //make the button light up when pressed
+        //TODO make the button light up when pressed
 
         if (waitWorker > 0) {
             //should save and show two different selected cells
@@ -214,7 +213,12 @@ public class SantoriniMatchController {
             waitWorker--;
             }
         else {
-            //normal stuff
+            //show in a particular text box info about current selected cell
+            String info = cellButton.toString();
+            selectedCell.setText("Selected cell:" + info);
+            //prepare message to send to the server
+            reply[0]=cellButton.x;
+            reply[1]=cellButton.y;
         }
     }
 
@@ -248,7 +252,7 @@ public class SantoriniMatchController {
     private void thisManLose(String loser){
         int index = -1;
         for (int i = 0; i < players.size(); i++){
-            if (loser == players.get(i)){
+            if (loser.equals(players.get(i))){
                 index = i;
                 break;
             }

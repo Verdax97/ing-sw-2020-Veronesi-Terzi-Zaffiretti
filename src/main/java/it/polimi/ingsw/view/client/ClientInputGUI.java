@@ -142,6 +142,16 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
+            if (controllerGui.getSantoriniMatchController() == null){
+                Platform.runLater(()-> {
+                    try {
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
+                        controllerGui.itIsYourTurn();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
             controllerGui.waitYourTurn();
             Reply(-5, -5, -5, -5);
         }
@@ -158,6 +168,16 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.startTurn)) {
+            if (controllerGui.getSantoriniMatchController() == null){
+                Platform.runLater(()-> {
+                    try {
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
+                        controllerGui.itIsYourTurn();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
             controllerGui.itIsYourTurn();
             Reply(-5, -5, -5, -5);
             return;
