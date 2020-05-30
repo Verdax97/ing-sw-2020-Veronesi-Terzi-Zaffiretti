@@ -17,48 +17,30 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SantoriniMatchController {
 
-    @FXML
-    private AnchorPane santoriniMatch;
-    @FXML
-    private GridPane board;
-    @FXML
-    private Text firstPlayerNick;
-    @FXML
-    private Text secondPlayerNick;
-    @FXML
-    private Text thirdPlayerNick;
-    @FXML
-    private ImageView firstPlayerGodImage;
-    @FXML
-    private ImageView secondPlayerGodImage;
-    @FXML
-    private ImageView thirdPlayerGodImage;
-    @FXML
-    private Circle firstPlayerColor;
-    @FXML
-    private Circle secondPlayerColor;
-    @FXML
-    private Circle thirdPlayerColor;
-    @FXML
-    private Rectangle currentOne;
-    @FXML
-    private Rectangle currentTwo;
-    @FXML
-    private Rectangle currentThree;
-    @FXML
-    private Button confirmButton;
-    @FXML
-    private Text whosTurn;
-    @FXML
-    private Text godUsageMessageBox;
-    @FXML
-    private CheckBox domeTrue;
-    @FXML
-    private Text messageBox;
+    @FXML private AnchorPane santoriniMatch;
+    @FXML private GridPane board;
+    @FXML private Text firstPlayerNick;
+    @FXML private Text secondPlayerNick;
+    @FXML private Text thirdPlayerNick;
+    @FXML private ImageView firstPlayerGodImage;
+    @FXML private ImageView secondPlayerGodImage;
+    @FXML private ImageView thirdPlayerGodImage;
+    @FXML private Circle firstPlayerColor;
+    @FXML private Circle secondPlayerColor;
+    @FXML private Circle thirdPlayerColor;
+    @FXML private Rectangle currentOne;
+    @FXML private Rectangle currentTwo;
+    @FXML private Rectangle currentThree;
+    @FXML private Button confirmButton;
+    @FXML private Text whosTurn;
+    @FXML private Text godUsageMessageBox;
+    @FXML private CheckBox domeTruth;
+    @FXML private Text messageBox;
+    //TODO
+    @FXML private Text selectedCell;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -165,6 +147,7 @@ public class SantoriniMatchController {
     }
 
     public void placeWorkers(){
+        messageBox.setText("Select two different cell where you want to put your workers");
         waitWorker = 2;
     }
 
@@ -191,8 +174,8 @@ public class SantoriniMatchController {
 
     public void build(Boolean atlas) {
         if (atlas){
-            domeTrue.setVisible(true);
-            if (domeTrue.isSelected()){
+            domeTruth.setVisible(true);
+            if (domeTruth.isSelected()){
                 //vuole la cupola
             }
             //normale costruizione
@@ -222,6 +205,9 @@ public class SantoriniMatchController {
     private void selectedCell(CellButton cellButton) {
         //show in a particular text box info about current selected cell
         //prepare message to send to the server
+
+        //make the button light up when pressed
+
         if (waitWorker > 0) {
             //should save and show two different selected cells
             startWorkerPos.add(cellButton.x);
@@ -292,11 +278,14 @@ public class SantoriniMatchController {
         int activePlayers = simpleBoard.players.size();
         ArrayList<String> temp = (ArrayList<String>) players.clone();
         if (activePlayers != nPlayers) {
-            temp.removeAll(simpleBoard.players);
-            if (myName == temp.get(0)){
-                loser();
+            if (myName == simpleBoard.players.get(0) && simpleBoard.players.size() == 1){
+                winner();
+            } else {
+                temp.removeAll(simpleBoard.players);
+                if (myName == temp.get(0)){
+                    loser();
+                } else thisManLose(temp.get(0));
             }
-            else thisManLose(temp.get(0));
         } else {
             for (int i = 0; i < nPlayers; i++) {
                 if (myName == simpleBoard.players.get(i)) {
