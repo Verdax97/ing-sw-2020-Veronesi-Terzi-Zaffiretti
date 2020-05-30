@@ -327,8 +327,10 @@ public class SantoriniMatchController {
                                     break;
                                 }
                             }
-                            if (!found)
+                            if (!found) {
                                 cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
+                            }
+                            cell++;
                         }
                     }
                 }
