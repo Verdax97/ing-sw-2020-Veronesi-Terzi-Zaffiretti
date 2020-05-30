@@ -124,10 +124,9 @@ public class SantoriniMatchController {
     }
 
     private void initializeBoard() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int j = 4; j >= 0; j--) {
+            for (int i = 0; i < 5; i++) {
                 CellButton cellButton = new CellButton(i , j);
-                System.out.printf("x: %d y: %d", i,  j);
                 cellButton.setOnAction(e -> selectedCell(cellButton));
                 board.add(cellButton, i, j);
                 cellButtonBoard.add(cellButton);
@@ -274,60 +273,63 @@ public class SantoriniMatchController {
     }
 
     public void updateBoard(SimpleBoard simpleBoard) {
-        int cell = 0;
-        int activePlayers = simpleBoard.players.size();
-        ArrayList<String> temp = (ArrayList<String>) players.clone();
-        if (activePlayers != nPlayers) {
-            if (myName == simpleBoard.players.get(0) && simpleBoard.players.size() == 1){
-                winner();
+        if (simpleBoard != null) {
+            int cell = 0;
+            int activePlayers = simpleBoard.players.size();
+            ArrayList<String> temp = (ArrayList<String>) players.clone();
+            if (activePlayers != nPlayers) {
+                if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
+                    winner();
+                } else {
+                    temp.removeAll(simpleBoard.players);
+                    if (myName.equals(temp.get(0))) {
+                        loser();
+                    } else thisManLose(temp.get(0));
+                }
             } else {
-                temp.removeAll(simpleBoard.players);
-                if (myName == temp.get(0)){
-                    loser();
-                } else thisManLose(temp.get(0));
-            }
-        } else {
-            for (int i = 0; i < nPlayers; i++) {
-                if (myName == simpleBoard.players.get(i)) {
-                    if (i == 0 && first == true) {
-                        currentOne.setVisible(true);
-                        currentTwo.setVisible(false);
-                        currentThree.setVisible(false);
-                    }
-                    if (i == 1 && second == true) {
-                        currentOne.setVisible(false);
-                        currentTwo.setVisible(true);
-                        currentThree.setVisible(false);
-                    }
-                    if (i == 2 && third == true) {
-                        currentOne.setVisible(false);
-                        currentTwo.setVisible(false);
-                        currentThree.setVisible(true);
+                for (int i = 0; i < nPlayers; i++) {
+                    if (myName.equals(simpleBoard.players.get(i))) {
+                        //light up rectangle of current player
+                        if (i == 0 && first == true) {
+                            currentOne.setVisible(true);
+                            currentTwo.setVisible(false);
+                            currentThree.setVisible(false);
+                        }
+                        if (i == 1 && second == true) {
+                            currentOne.setVisible(false);
+                            currentTwo.setVisible(true);
+                            currentThree.setVisible(false);
+                        }
+                        if (i == 2 && third == true) {
+                            currentOne.setVisible(false);
+                            currentTwo.setVisible(false);
+                            currentThree.setVisible(true);
+                        }
                     }
                 }
-            }
-            for (int j = 4; j >= 0; j--) {
-                for (int i = 0; i < 5; i++) {
-                    if (simpleBoard.board[i][j] == 4) {
-                        cellButtonBoard.get(cell).setDome();
-                    } else //search for worker on that cell
-                    {
-                        int index;
-                        boolean found = false;
-                        for (index = 0; index < simpleBoard.workers.size(); index++) {
-                            if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
-                                int val = 0;
-                                if (index >= 2 && index < 4)
-                                    val = 1;
-                                else if (index >= 4 && index < 6)
-                                    val = 2;
-                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], val);
-                                found = true;
-                                break;
+                for (int j = 4; j >= 0; j--) {
+                    for (int i = 0; i < 5; i++) {
+                        if (simpleBoard.board[i][j] == 4) {
+                            cellButtonBoard.get(cell).setDome();
+                        } else //search for worker on that cell
+                        {
+                            int index;
+                            boolean found = false;
+                            for (index = 0; index < simpleBoard.workers.size(); index++) {
+                                if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
+                                    int val = 0;
+                                    if (index >= 2 && index < 4)
+                                        val = 1;
+                                    else if (index >= 4 && index < 6)
+                                        val = 2;
+                                    cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
+                                    found = true;
+                                    break;
+                                }
                             }
+                            if (!found)
+                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
                         }
-                        if (!found)
-                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], -1); //no worker and no dome
                     }
                 }
             }

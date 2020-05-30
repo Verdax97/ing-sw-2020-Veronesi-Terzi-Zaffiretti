@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.GUI.ControllerGUI;
 import it.polimi.ingsw.view.GUI.LobbyController;
 import it.polimi.ingsw.view.GUI.PickGodsController;
@@ -232,5 +233,10 @@ public class ClientInputGUI extends ClientInput {
         }
 
         Reply(-5, -5, -5, -5);
+    }
+
+    @Override
+    public void printBoard(SimpleBoard board) {
+        controllerGui.receiveUpdate(board);
     }
 }

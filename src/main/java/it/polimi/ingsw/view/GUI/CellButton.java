@@ -25,66 +25,37 @@ public class CellButton extends Button{
     }
 
 
-    public void refresh(int value, int worker) {
+    public void refresh(int value, boolean worker) {
         if (value == 0){
-            if (worker == 0){
-
+            if (worker == true){
+                this.setStyle("-fx-background-color: White");
             }
-            if (worker == 1){
-
-            }
-            if (worker == 2){
-
-            }
-            else
-                {this.setStyle("-fx-background-color: MediumSeaGreen");
-            }
-
+            this.setStyle("-fx-background-color: Grey");
         }
         if (value == 1){
-            if (worker == 0){
-
+            if (worker == true){
+                this.setStyle("-fx-background-color: Brown");
             }
-            if (worker == 1){
-
-            }
-            if (worker == 2){
-
-            }
-            this.setStyle("-fx-background-color: Red");
+            this.setStyle("-fx-background-color: Orange");
         }
         if (value == 2){
-            if (worker == 0){
-
+            if (worker == true){
+                this.setStyle("-fx-background-color: Blue");
             }
-            if (worker == 1){
-
-            }
-            if (worker == 2){
-
-            }
-            this.setStyle("-fx-background-color: Blue");
+            this.setStyle("-fx-background-color: Black");
         }
         if (value == 3){
-            if (worker == 0){
-
+            if (worker == true){
+                this.setStyle("-fx-background-color: Pink");
             }
-            if (worker == 1){
-
-            }
-            if (worker == 2){
-
-            }
-            this.setStyle("-fx-background-color: Pink");
+            this.setStyle("-fx-background-color: Red");
         }
         if (value == 4) {
             setDome();
         }
     }
 
-    public void setDome() {
-        this.setStyle("-fx-background-color: Black");
-    }
+    public void setDome() { this.setStyle("-fx-background-color: Black"); }
 
     public int getValReply() {
         return valReply;

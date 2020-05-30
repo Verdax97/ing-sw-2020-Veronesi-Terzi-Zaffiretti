@@ -142,7 +142,9 @@ public class ControllerGUI {
     }
 
     public void receiveUpdate(SimpleBoard board){
-        santoriniMatchController.updateBoard(board);
+        if (santoriniMatchController != null) {
+            santoriniMatchController.updateBoard(board);
+        }
     }
 
     public void error(String header, String content){
