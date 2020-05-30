@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SantoriniMatchController {
 
@@ -73,7 +74,10 @@ public class SantoriniMatchController {
     //1 red, 2 green, 3 blue
     private int myColor;
 
-    private boolean waitWorker = false;
+    private ArrayList<String> players = new ArrayList<>();
+
+    private int waitWorker;
+    private ArrayList<Integer> startWorkerPos = new ArrayList<>();
 
     public ClientInput getClientInputGUI() {
         return clientInputGUI;
@@ -127,6 +131,7 @@ public class SantoriniMatchController {
                     myColor = 2;
                 }
             }
+            players.add(simpleBoard.players.get(i));
         }
         if (simpleBoard.players.size() == 2) {
             thirdPlayerNick.setVisible(false);
@@ -139,9 +144,9 @@ public class SantoriniMatchController {
     private void initializeBoard() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                String position = new String(Integer.toString(i) + "d" + Integer.toString(j));
-                CellButton cellButton = new CellButton(position);
-                cellButton.setOnAction(e -> selectedCell());
+                CellButton cellButton = new CellButton(i , j);
+                System.out.printf("x: %d y: %d", i,  j);
+                cellButton.setOnAction(e -> selectedCell(cellButton));
                 board.add(cellButton, i, j);
                 cellButtonBoard.add(cellButton);
             }
@@ -159,9 +164,12 @@ public class SantoriniMatchController {
         confirmButton.setVisible(true);
     }
 
+    public void placeWorkers(){
+        waitWorker = 2;
+    }
+
     public void selectWorker() {
-        messageBox.setText("Select two different cells, your workers will be put on them");
-        waitWorker = true;
+        messageBox.setText("Select worker you want to perform your turn");
     }
 
     public void beforeMovePower() {
@@ -197,15 +205,30 @@ public class SantoriniMatchController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
-    public void confirmAction() { sendReply("memo impostami"); }
+    public void confirmAction() {
+        if (startWorkerPos != null && startWorkerPos.size() == 4){
+            //0 -> x first worker, 1 -> y first worker
+            //2 -> x second worker, 3 -> y second worker
+            startWorkerPos.clear();
+            String msg = null;
+            sendReply(msg);
+        }
+        else if (startWorkerPos != null && startWorkerPos.size() != 4){
+            error("Worker position not set", "Please select your second worker position");
+        }
+        sendReply("memo impostami");
+    }
 
-    private void selectedCell() {
+    private void selectedCell(CellButton cellButton) {
         //show in a particular text box info about current selected cell
         //prepare message to send to the server
-        if (waitWorker) {
+        if (waitWorker > 0) {
             //should save and show two different selected cells
-            waitWorker = false;
-        } else {
+            startWorkerPos.add(cellButton.x);
+            startWorkerPos.add(cellButton.y);
+            waitWorker--;
+            }
+        else {
             //normal stuff
         }
     }
@@ -221,88 +244,104 @@ public class SantoriniMatchController {
         //throws winner windows
         //if button is pressed program exit
         //debug message
-        System.out.println("Winner");
+        Alert winAlert = new Alert(Alert.AlertType.INFORMATION);
+        winAlert.setHeaderText("You Win");
+        winAlert.setContentText("Really Really Congrats");
+        winAlert.setTitle("Winner winner");
     }
 
-    private void loser(SimpleBoard simpleBoard, boolean me) {
+    private void loser() {
         //removes himself from visible players
         //throw lose window
-        //ask if he wants to spectate
         //debug message
-        //yes spectator true
-        //no spectator false
-        if (me == false){
-            //should remove from visible player that got eliminated
-        }
-        System.out.println("Loser");
-        updateBoard(simpleBoard, true);
+        //should remove from visible player that got eliminated
+        Alert loseAlert = new Alert(Alert.AlertType.INFORMATION);
+        loseAlert.setHeaderText("You lose");
+        loseAlert.setContentText("Press ok and continue to spectate the game");
     }
 
-    public void updateBoard(SimpleBoard simpleBoard, boolean spectator) {
+    private void thisManLose(String loser){
+        int index = -1;
+        for (int i = 0; i < players.size(); i++){
+            if (loser == players.get(i)){
+                index = i;
+                break;
+            }
+        }
+        players.remove(loser);
+        nPlayers--;
+        if (index == 0){
+            firstPlayerNick.setVisible(false);
+            firstPlayerGodImage.setVisible(false);
+            firstPlayerColor.setVisible(false);
+        }
+        if (index == 1){
+            secondPlayerNick.setVisible(false);
+            secondPlayerGodImage.setVisible(false);
+            secondPlayerColor.setVisible(false);
+        }
+        if(index == 2){
+            thirdPlayerNick.setVisible(false);
+            thirdPlayerGodImage.setVisible(false);
+            thirdPlayerColor.setVisible(false);
+        }
+    }
+
+    public void updateBoard(SimpleBoard simpleBoard) {
         int cell = 0;
         int activePlayers = simpleBoard.players.size();
-        if (activePlayers != nPlayers && spectator == false) {
-            if (activePlayers == 1 && myName == simpleBoard.players.get(0)) {
-                winner();
-            } else {
-                for (int i = 0; i < nPlayers - 1; i++) {
-                    if (myName == simpleBoard.players.get(i)) {
-                        loser(simpleBoard, false);
-                    } else active = false;
-                }
+        ArrayList<String> temp = (ArrayList<String>) players.clone();
+        if (activePlayers != nPlayers) {
+            temp.removeAll(simpleBoard.players);
+            if (myName == temp.get(0)){
+                loser();
             }
-            if (active == false) {
-                nPlayers--;
-                loser(simpleBoard, true);
-            }
+            else thisManLose(temp.get(0));
         } else {
-            if (active == true || spectator == true) {
-                for (int i = 0; i < nPlayers; i++) {
-                    if (myName == simpleBoard.players.get(i)) {
-                        if (i == 0 && first == true) {
-                            currentOne.setVisible(true);
-                            currentTwo.setVisible(false);
-                            currentThree.setVisible(false);
-                        }
-                        if (i == 1 && second == true) {
-                            currentOne.setVisible(false);
-                            currentTwo.setVisible(true);
-                            currentThree.setVisible(false);
-                        }
-                        if (i == 2 && third == true) {
-                            currentOne.setVisible(false);
-                            currentTwo.setVisible(false);
-                            currentThree.setVisible(true);
-                        }
+            for (int i = 0; i < nPlayers; i++) {
+                if (myName == simpleBoard.players.get(i)) {
+                    if (i == 0 && first == true) {
+                        currentOne.setVisible(true);
+                        currentTwo.setVisible(false);
+                        currentThree.setVisible(false);
                     }
-                }
-                for (int j = 4; j >= 0; j--) {
-                    for (int i = 0; i < 5; i++) {
-                        if (simpleBoard.board[i][j] == 4) {
-                            cellButtonBoard.get(cell).setDome();
-                        } else //search for worker on that cell
-                        {
-                            int index;
-                            boolean found = false;
-                            for (index = 0; index < simpleBoard.workers.size(); index++) {
-                                if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
-                                    int val = 0;
-                                    if (index >= 2 && index < 4)
-                                        val = 1;
-                                    else if (index >= 4 && index < 6)
-                                        val = 2;
-                                    cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], val);
-                                    found = true;
-                                    break;
-                                }
-                            }
-                            if (!found)
-                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], -1); //no worker and no dome
-                        }
+                    if (i == 1 && second == true) {
+                        currentOne.setVisible(false);
+                        currentTwo.setVisible(true);
+                        currentThree.setVisible(false);
+                    }
+                    if (i == 2 && third == true) {
+                        currentOne.setVisible(false);
+                        currentTwo.setVisible(false);
+                        currentThree.setVisible(true);
                     }
                 }
             }
-            else { System.exit(0); }
+            for (int j = 4; j >= 0; j--) {
+                for (int i = 0; i < 5; i++) {
+                    if (simpleBoard.board[i][j] == 4) {
+                        cellButtonBoard.get(cell).setDome();
+                    } else //search for worker on that cell
+                    {
+                        int index;
+                        boolean found = false;
+                        for (index = 0; index < simpleBoard.workers.size(); index++) {
+                            if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
+                                int val = 0;
+                                if (index >= 2 && index < 4)
+                                    val = 1;
+                                else if (index >= 4 && index < 6)
+                                    val = 2;
+                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], val);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found)
+                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], -1); //no worker and no dome
+                    }
+                }
+            }
         }
     }
 }

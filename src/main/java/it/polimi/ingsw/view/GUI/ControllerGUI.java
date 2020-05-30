@@ -92,22 +92,26 @@ public class ControllerGUI {
         pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
-    public void changeToSantoriniMatch(SimpleBoard simpleBoard) throws IOException {
-        FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
-        Parent rootSantoriniMatch = loaderSantoriniMatch.load();
-        santoriniMatchController = loaderSantoriniMatch.getController();
-        santoriniMatchController.setClientMain(clientMain);
-        santoriniMatchController.setClientInputGUI(clientInputGUI);
-        ((ClientInputGUI) clientMain.getClientInput()).setSantoriniMatchController(santoriniMatchController);
-        santoriniMatchScene = new Scene(rootSantoriniMatch);
-        primaryStage.setScene(santoriniMatchScene);
-        primaryStage.setTitle("Santorini Board Game");
-        santoriniMatchController.setMyName(clientInputGUI.getMyName());
-        santoriniMatchController.initializeAll(simpleBoard);
+    public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn) throws IOException {
+        if (santoriniMatchController == null) {
+            FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
+            Parent rootSantoriniMatch = loaderSantoriniMatch.load();
+            santoriniMatchController = loaderSantoriniMatch.getController();
+            santoriniMatchController.setClientMain(clientMain);
+            santoriniMatchController.setClientInputGUI(clientInputGUI);
+            ((ClientInputGUI) clientMain.getClientInput()).setSantoriniMatchController(santoriniMatchController);
+            santoriniMatchScene = new Scene(rootSantoriniMatch);
+            primaryStage.setScene(santoriniMatchScene);
+            primaryStage.setTitle("Santorini Board Game");
+            santoriniMatchController.setMyName(clientInputGUI.getMyName());
+            santoriniMatchController.initializeAll(simpleBoard);
+        }
+        if (yourTurn){
+            santoriniMatchController.placeWorkers();
+        }
     }
 
     public void waitYourTurn(){
-        //TODO check why this is skipped during wait for selectWorker of others
         if (santoriniMatchController == null) {
             lobbyController.waitForStart();
         } else santoriniMatchController.hideConfirmButton();

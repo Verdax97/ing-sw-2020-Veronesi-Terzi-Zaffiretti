@@ -148,7 +148,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             Platform.runLater(()-> {
                 try {
-                    controllerGui.changeToSantoriniMatch(msgPacket.board);
+                    controllerGui.changeToSantoriniMatch(msgPacket.board, true);
                     controllerGui.itIsYourTurn();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -223,7 +223,8 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             Platform.runLater(()-> {
                 try {
-                    controllerGui.changeToSantoriniMatch(msgPacket.board);
+                    controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                    controllerGui.waitYourTurn();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
