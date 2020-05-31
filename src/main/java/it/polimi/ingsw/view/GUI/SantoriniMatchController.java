@@ -12,7 +12,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class SantoriniMatchController {
 
@@ -42,6 +45,7 @@ public class SantoriniMatchController {
     private int waitWorker;
     private boolean placeWorkersPhase = false;
     private ArrayList<Integer> startWorkerPos = new ArrayList<>();
+    private ArrayList<String> listOfPossibilities = new ArrayList<>();
 
     public ClientInput getClientInputGUI() {
         return clientInputGUI;
@@ -131,13 +135,20 @@ public class SantoriniMatchController {
     }
 
     public void lightUpBoard(String msg){
-        //should scroll array of buttons, if value corresponds, the button should light up
-        int number = 0;
-        for (int i = 0; i < cellButtonBoard.size(); i++){
-            if (/*logic to check if cellButton is in the altMsg*/true){
-                cellButtonBoard.get(i).setIdFromList(number);
-                cellButtonBoard.get(i).lighten();
-                number++;
+        //should parse message of possibilities
+        ArrayList<String> temp = new ArrayList<>(Arrays.asList(msg.split("\n")));
+        for (int p = 0; p < temp.size(); p++){
+            ArrayList<String> s = new ArrayList<>(Arrays.asList(temp.get(p).split(" ")));
+            String index = s.get(0).split(Pattern.quote(")"))[0];
+            String almostX = s.get(1).split(Pattern.quote(","))[0];
+            String x = almostX.replaceAll(Pattern.quote("("), "");
+            String y = s.get(2).split(Pattern.quote(")"))[0];
+            //should scroll array of buttons, if value corresponds, the button should light up
+            for (int i = 0; i < cellButtonBoard.size(); i++){
+                if (cellButtonBoard.get(i).x == Integer.parseInt(x) && cellButtonBoard.get(i).y == Integer.parseInt(y)){
+                    cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
+                    cellButtonBoard.get(i).lighten(true);
+                }
             }
         }
     }
@@ -210,7 +221,7 @@ public class SantoriniMatchController {
             return;
         }
         if (placeWorkersPhase) {
-            cellButton.lighten();
+            cellButton.lighten(false);
             if (waitWorker > 0) {
                 //should save and show two different selected cells
                 startWorkerPos.add(cellButton.x);
@@ -218,7 +229,7 @@ public class SantoriniMatchController {
                 waitWorker--;
             }
         } else {
-            cellButton.lighten();
+            cellButton.lighten(false);
             reply[0] = cellButton.getIdFromList();
         }
     }

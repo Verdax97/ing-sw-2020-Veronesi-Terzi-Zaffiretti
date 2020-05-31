@@ -19,7 +19,7 @@
 
 <AnchorPane style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
    <children>
-      <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-image: asd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox fx:id="playersInfo" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>

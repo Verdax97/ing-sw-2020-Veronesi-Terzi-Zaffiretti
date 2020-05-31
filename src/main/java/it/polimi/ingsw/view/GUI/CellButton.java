@@ -38,6 +38,7 @@ public class CellButton extends Button{
         if (value == 0){
             if (worker){
                 this.setStyle("-fx-background-color: White");
+                this.ground = false;
                 return;
             }
             this.setStyle("-fx-background-color: transparent;");
@@ -51,7 +52,7 @@ public class CellButton extends Button{
         }
         if (value == 2){
             if (worker){
-                this.setStyle("-fx-background-color: Blue");
+                this.setStyle("-fx-background-color: Pink");
                 return;
             }
             this.setStyle("-fx-background-color: Black");
@@ -70,19 +71,23 @@ public class CellButton extends Button{
 
     public void setDome() { this.setStyle("-fx-background-color: Blue"); }
 
-    public void lighten() {
+    public void lighten(boolean selectable) {
         //apply a layer on the button giving back a feedback about being pressed
-        if (this.ground){
-            this.setStyle("-fx-background-color: white;");
+        if (selectable){
+            this.setStyle("-fx-background-color: blue;");
             this.setOpacity(0.5);
-        } else this.setOpacity(0.5);
+        }else {
+            if (this.ground) {
+                this.setStyle("-fx-background-color: white;");
+                this.setOpacity(0.5);
+            } else this.setOpacity(0.5);
+        }
     }
 
     public void turnOff() {
         //reset aspect of board to default
         if (this.ground){
             this.setStyle("-fx-background-color: transparent;");
-            this.setOpacity(0);
         } else this.setOpacity(1);
     }
 
