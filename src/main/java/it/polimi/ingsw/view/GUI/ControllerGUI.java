@@ -98,7 +98,7 @@ public class ControllerGUI {
     public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn) throws IOException {
         if (santoriniMatchController == null) {
             FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
-            Parent rootSantoriniMatch = loaderSantoriniMatch.load();
+            Parent rootSantoriniMatch =(Parent) loaderSantoriniMatch.load();
             santoriniMatchController = loaderSantoriniMatch.getController();
             santoriniMatchController.setClientMain(clientMain);
             santoriniMatchController.setClientInputGUI(clientInputGUI);
@@ -122,28 +122,28 @@ public class ControllerGUI {
 
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
-    public void selectWorker() {
-        santoriniMatchController.selectWorker();
+    public void selectWorker(String msg) {
+        santoriniMatchController.selectWorker(msg);
     }
 
-    public void beforeMovePower(){
-        santoriniMatchController.beforeMovePower();
+    public void beforeMovePower(String msg){
+        santoriniMatchController.beforeMovePower(msg);
     }
 
     public void moveAgain(){
         santoriniMatchController.moveAgain();
     }
 
-    public void move(){
-        santoriniMatchController.move();
+    public void move(String msg){
+        santoriniMatchController.move(msg);
     }
 
     public void buildAgain(){
         santoriniMatchController.buildAgain();
     }
 
-    public void build(Boolean atlas){
-        santoriniMatchController.build(atlas);
+    public void build(String msg, Boolean atlas){
+        santoriniMatchController.build(msg, atlas);
     }
 
     public void receiveUpdate(SimpleBoard board){

@@ -7,13 +7,22 @@ import javafx.scene.layout.*;
 
 public class CellButton extends Button{
 
-    //TODO CREATE IMAGES FOR GUI
+    public int getIdFromList() {
+        return idFromList;
+    }
 
+    public void setIdFromList(int idFromList) {
+        this.idFromList = idFromList;
+    }
+
+    //TODO CREATE IMAGES FOR GUI
+    private int idFromList;
     public int x;
     public int y;
     private int valReply = -5;
 
     CellButton(int x, int y){
+        this.idFromList = -1;
         this.x = x;
         this.y = y;
         //memo to change this into a Level 0 structure
@@ -54,6 +63,10 @@ public class CellButton extends Button{
     }
 
     public void setDome() { this.setStyle("-fx-background-color: Black"); }
+
+    public void lighten() {
+        this.setStyle("-fx-background-color: fc0fc0");
+    }
 
     public int getValReply() {
         return valReply;

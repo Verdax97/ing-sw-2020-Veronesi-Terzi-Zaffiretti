@@ -145,15 +145,6 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.waitTurn)){
-            if (controllerGui.getSantoriniMatchController() == null && resume){
-                Platform.runLater(()-> {
-                    try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
             controllerGui.waitYourTurn();
             Reply(-5, -5, -5, -5);
         }
@@ -170,26 +161,26 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.startTurn)) {
-            if (controllerGui.getSantoriniMatchController() == null && resume){
-                Platform.runLater(()-> {
-                    try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
             controllerGui.itIsYourTurn();
             Reply(-5, -5, -5, -5);
             return;
         }
 
         if (msg.equalsIgnoreCase(Messages.selectWorker)) {
-            controllerGui.selectWorker();
+            if (controllerGui.getSantoriniMatchController() == null && resume){
+                Platform.runLater(()-> {
+                    try {
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            controllerGui.selectWorker(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.beforeMove)) {
-            controllerGui.beforeMovePower();
+            controllerGui.beforeMovePower(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
@@ -197,7 +188,7 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.move)) {
-            controllerGui.move();
+            controllerGui.move(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.buildAgain)) {
@@ -215,7 +206,7 @@ public class ClientInputGUI extends ClientInput {
             if (msgPacket.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
                 atlas = true;
             }
-            controllerGui.build(atlas);
+            controllerGui.build(msgPacket.altMsg, atlas);
         }
     }
 
@@ -251,6 +242,18 @@ public class ClientInputGUI extends ClientInput {
                     e.printStackTrace();
                 }
             });
+        }
+
+        if (msg.equalsIgnoreCase(Messages.selectWorker)) {
+            if (controllerGui.getSantoriniMatchController() == null && resume){
+                Platform.runLater(()-> {
+                    try {
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
         }
 
         Reply(-5, -5, -5, -5);
