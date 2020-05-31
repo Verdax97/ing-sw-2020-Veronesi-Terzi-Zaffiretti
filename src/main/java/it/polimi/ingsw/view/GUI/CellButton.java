@@ -81,7 +81,7 @@ public class CellButton extends Button{
     public void turnOff() {
         //reset aspect of board to default
         if (this.ground){
-            this.setStyle("-fx-background-color: white;");
+            this.setStyle("-fx-background-color: transparent;");
             this.setOpacity(0);
         } else this.setOpacity(1);
     }
