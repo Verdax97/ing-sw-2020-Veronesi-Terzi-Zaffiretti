@@ -59,18 +59,15 @@ public class LobbyController{
             clientInputGUI.Reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
-            return;
         }
         else if (number.equalsIgnoreCase("3 Players")) {
             val = 3;
             clientInputGUI.Reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
-            return;
         }
         else {
             error("Number of players not selected", "Please select number of players");
-            return;
         }
     }
 
@@ -89,6 +86,7 @@ public class LobbyController{
     }
 
     public void showResume(){
+        nicknameMessage.setVisible(false);
         resumeText.setVisible(true);
         yes.setVisible(true);
         no.setVisible(true);

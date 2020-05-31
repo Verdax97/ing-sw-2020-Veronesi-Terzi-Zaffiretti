@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -37,10 +38,10 @@ public class SantoriniMatchController {
     @FXML private Button confirmButton;
     @FXML private Text whosTurn;
     @FXML private Text godUsageMessageBox;
+    @FXML private ChoiceBox godPowerUse;
     @FXML private CheckBox domeTruth;
     @FXML private Text messageBox;
-    //TODO
-    @FXML private Text selectedCell;
+    @FXML private Text selectedCellBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -157,31 +158,37 @@ public class SantoriniMatchController {
     }
 
     public void beforeMovePower() {
-        godUsageMessageBox.setText("Ciaoo");
+        godUsageMessageBox.setText("You can perform an action before your move");
+        godPowerUse.setVisible(true);
     }
 
-    public void moveAgain() { godUsageMessageBox.setText("Ciaoo muoviti ancora"); }
-
-    public void move() {
-        messageBox.setText("Movat");
+    public void moveAgain() {
+        godUsageMessageBox.setText("You can move again");
+        godPowerUse.setVisible(true);
     }
 
     public void buildAgain() {
-        godUsageMessageBox.setText("Ciaoo costruisci ancora");
+        godUsageMessageBox.setText("You could build again");
+        godPowerUse.setVisible(true);
+    }
+
+    public void godPowerUsed(){
+        String choice = godPowerUse.getValue().toString();
+        if (choice.equalsIgnoreCase("Yes")){
+            reply[0] = 1;
+        }
+        if (choice.equalsIgnoreCase("No")){
+            reply[0] = 0;
+        }
+        godPowerUse.setVisible(false);
+    }
+
+    public void move() {
+        messageBox.setText("Select cell you want to move to");
     }
 
     public void build(Boolean atlas) {
-        if (atlas){
-            domeTruth.setVisible(true);
-            if (domeTruth.isSelected()){
-                //build the dome
-                return;
-            }
-            //normal building
-            domeTruth.setVisible(false);
-            return;
-        }
-        messageBox.setText("Costruisci");
+        messageBox.setText("Select cell you want to build on");
     }
 
     public void sendReply() {
@@ -193,7 +200,7 @@ public class SantoriniMatchController {
         if (placeWorkersPhase){
             //0 -> x first worker, 1 -> y first worker
             //2 -> x second worker, 3 -> y second worker
-            for (int i=0; i< startWorkerPos.size(); i++) {
+            for (int i=0; i < startWorkerPos.size(); i++) {
                 reply[i] = startWorkerPos.get(i);
             }
             startWorkerPos.clear();
@@ -203,9 +210,10 @@ public class SantoriniMatchController {
     }
 
     private void selectedCell(CellButton cellButton) {
-
-        //TODO make the button light up when pressed
-
+        //TODO make the button light up when pressed and eventually light off
+        cellButton.setStyle("-fx-background-color: #333333");
+        String temp = String.format("%d cose %d", cellButton.x, cellButton.y);
+        selectedCellBox.setText(temp);
         if (waitWorker > 0) {
             //should save and show two different selected cells
             startWorkerPos.add(cellButton.x);
@@ -276,66 +284,73 @@ public class SantoriniMatchController {
     }
 
     public void updateBoard(SimpleBoard simpleBoard) {
-        if (simpleBoard != null) {
-            int cell = 0;
-            int activePlayers = simpleBoard.players.size();
-            ArrayList<String> temp = (ArrayList<String>) players.clone();
-            if (activePlayers != nPlayers) {
-                if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
-                    winner();
-                } else {
-                    temp.removeAll(simpleBoard.players);
-                    if (myName.equals(temp.get(0))) {
-                        loser();
-                    } else thisManLose(temp.get(0));
-                }
+        if (simpleBoard == null){
+            return;
+        }
+        if (simpleBoard.players.size() == 0){
+            return;
+        }
+        int cell = 0;
+        int activePlayers = simpleBoard.players.size();
+        ArrayList<String> temp = (ArrayList<String>) players.clone();
+        if (activePlayers != nPlayers) {
+            if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
+                winner();
             } else {
-                for (int i = 0; i < nPlayers; i++) {
-                    if (myName.equals(simpleBoard.players.get(i))) {
-                        //light up rectangle of current player
-                        if (i == 0 && first == true) {
-                            currentOne.setVisible(true);
-                            currentTwo.setVisible(false);
-                            currentThree.setVisible(false);
-                        }
-                        if (i == 1 && second == true) {
-                            currentOne.setVisible(false);
-                            currentTwo.setVisible(true);
-                            currentThree.setVisible(false);
-                        }
-                        if (i == 2 && third == true) {
-                            currentOne.setVisible(false);
-                            currentTwo.setVisible(false);
-                            currentThree.setVisible(true);
-                        }
+                temp.removeAll(simpleBoard.players);
+                if (myName.equals(temp.get(0))) {
+                    loser();
+                } else thisManLose(temp.get(0));
+            }
+        } else {
+            for (int i = 0; i < nPlayers; i++) {
+                if (myName.equals(simpleBoard.players.get(i))) {
+                    //light up rectangle of current player
+                    if (i == 0 && first) {
+                        currentOne.setVisible(true);
+                        currentTwo.setVisible(false);
+                        currentThree.setVisible(false);
+                    }
+                    if (i == 1 && second) {
+                        currentOne.setVisible(false);
+                        currentTwo.setVisible(true);
+                        currentThree.setVisible(false);
+                    }
+                    if (i == 2 && third) {
+                        currentOne.setVisible(false);
+                        currentTwo.setVisible(false);
+                        currentThree.setVisible(true);
                     }
                 }
-                for (int j = 4; j >= 0; j--) {
-                    for (int i = 0; i < 5; i++) {
-                        if (simpleBoard.board[i][j] == 4) {
-                            cellButtonBoard.get(cell).setDome();
-                        } else //search for worker on that cell
-                        {
-                            int index;
-                            boolean found = false;
-                            for (index = 0; index < simpleBoard.workers.size(); index++) {
-                                if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
-                                    int val = 0;
-                                    if (index >= 2 && index < 4)
-                                        val = 1;
-                                    else if (index >= 4 && index < 6)
-                                        val = 2;
-                                    cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
-                                    found = true;
-                                    break;
-                                }
+            }
+            if (simpleBoard.board == null){
+                return;
+            }
+            for (int j = 4; j >= 0; j--) {
+                for (int i = 0; i < 5; i++) {
+                    if (simpleBoard.board[i][j] == 4) {
+                        cellButtonBoard.get(cell).setDome();
+                    } else //search for worker on that cell
+                    {
+                        int index;
+                        boolean found = false;
+                        for (index = 0; index < simpleBoard.workers.size(); index++) {
+                            if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
+                                int val = 0;
+                                if (index >= 2 && index < 4)
+                                    val = 1;
+                                else if (index >= 4 && index < 6)
+                                    val = 2;
+                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
+                                found = true;
+                                break;
                             }
-                            if (!found) {
-                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
-                            }
-                            cell++;
+                        }
+                        if (!found) {
+                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
                         }
                     }
+                    cell++;
                 }
             }
         }

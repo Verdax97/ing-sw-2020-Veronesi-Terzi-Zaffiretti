@@ -25,25 +25,25 @@ public class CellButton extends Button{
 
     public void refresh(int value, boolean worker) {
         if (value == 0){
-            if (worker == true){
+            if (worker){
                 this.setStyle("-fx-background-color: White");
             }
             this.setStyle("-fx-background-color: Grey");
         }
         if (value == 1){
-            if (worker == true){
+            if (worker){
                 this.setStyle("-fx-background-color: Brown");
             }
             this.setStyle("-fx-background-color: Orange");
         }
         if (value == 2){
-            if (worker == true){
+            if (worker){
                 this.setStyle("-fx-background-color: Blue");
             }
             this.setStyle("-fx-background-color: Black");
         }
         if (value == 3){
-            if (worker == true){
+            if (worker){
                 this.setStyle("-fx-background-color: Pink");
             }
             this.setStyle("-fx-background-color: Red");
