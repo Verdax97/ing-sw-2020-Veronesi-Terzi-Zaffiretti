@@ -22,10 +22,10 @@ public class SantoriniMatchController {
     @FXML private AnchorPane secondPlayerPane;
     @FXML private AnchorPane thirdPlayerPane;
     @FXML private Button confirmButton;
-    @FXML private Label whosTurn;
-    @FXML private Label godMessageBox;
+    @FXML private Text whosTurn;
+    @FXML private Text godMessageBox;
     @FXML private CheckBox powerGodUse;
-    @FXML private Label messageBox;
+    @FXML private Text messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -38,6 +38,7 @@ public class SantoriniMatchController {
 
     private ArrayList<String> players = new ArrayList<>();
 
+    private boolean turn;
     private int waitWorker;
     private boolean placeWorkersPhase = false;
     private ArrayList<Integer> startWorkerPos = new ArrayList<>();
@@ -120,11 +121,13 @@ public class SantoriniMatchController {
         whosTurn.setText("Please wait your turn");
         godMessageBox.setText("");
         confirmButton.setVisible(false);
+        turn = false;
     }
 
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
         confirmButton.setVisible(true);
+        turn = true;
     }
 
     public void lightUpBoard(String msg){
@@ -186,17 +189,19 @@ public class SantoriniMatchController {
     }
 
     public void confirmAction() {
-        if (placeWorkersPhase){
-            //0 -> x first worker, 1 -> y first worker
-            //2 -> x second worker, 3 -> y second worker
-            for (int i=0; i < startWorkerPos.size(); i++) {
-                reply[i] = startWorkerPos.get(i);
+        if (turn) {
+            if (placeWorkersPhase) {
+                //0 -> x first worker, 1 -> y first worker
+                //2 -> x second worker, 3 -> y second worker
+                for (int i = 0; i < startWorkerPos.size(); i++) {
+                    reply[i] = startWorkerPos.get(i);
+                }
+                startWorkerPos.clear();
+                placeWorkersPhase = false;
             }
-            startWorkerPos.clear();
-            placeWorkersPhase = false;
+            sendReply();
+            resetLighten();
         }
-        sendReply();
-        resetLighten();
     }
 
     private void selectedCell(CellButton cellButton) {

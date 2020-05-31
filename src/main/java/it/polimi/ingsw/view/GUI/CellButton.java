@@ -19,14 +19,16 @@ public class CellButton extends Button{
     private int idFromList;
     public int x;
     public int y;
+    private boolean ground;
     private int valReply = -5;
 
     CellButton(int x, int y){
         this.idFromList = -1;
         this.x = x;
         this.y = y;
+        this.ground = true;
         //memo to change this into a Level 0 structure
-        this.setStyle("-fx-background-image: url('/Images/Logo.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
+        this.setStyle("-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         this.setAlignment(Pos.CENTER);
         this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
@@ -36,24 +38,28 @@ public class CellButton extends Button{
         if (value == 0){
             if (worker){
                 this.setStyle("-fx-background-color: White");
+                return;
             }
             this.setStyle("-fx-background-color: transparent;");
         }
         if (value == 1){
             if (worker){
                 this.setStyle("-fx-background-color: Brown");
+                return;
             }
             this.setStyle("-fx-background-color: Orange");
         }
         if (value == 2){
             if (worker){
                 this.setStyle("-fx-background-color: Blue");
+                return;
             }
             this.setStyle("-fx-background-color: Black");
         }
         if (value == 3){
             if (worker){
                 this.setStyle("-fx-background-color: Pink");
+                return;
             }
             this.setStyle("-fx-background-color: Red");
         }
@@ -62,14 +68,22 @@ public class CellButton extends Button{
         }
     }
 
-    public void setDome() { this.setStyle("-fx-background-color: Black"); }
+    public void setDome() { this.setStyle("-fx-background-color: Blue"); }
 
     public void lighten() {
-        this.setStyle("-fx-background-color: #333333");
+        //apply a layer on the button giving back a feedback about being pressed
+        if (this.ground){
+            this.setStyle("-fx-background-color: white;");
+            this.setOpacity(0.5);
+        } else this.setOpacity(0.5);
     }
 
     public void turnOff() {
-        this.setStyle("-fx-background-color: Red");
+        //reset aspect of board to default
+        if (this.ground){
+            this.setStyle("-fx-background-color: white;");
+            this.setOpacity(0);
+        } else this.setOpacity(1);
     }
 
     public int getValReply() {
