@@ -125,12 +125,17 @@ public class SantoriniMatchController {
     }
 
     private void initializeBoard(SimpleBoard simpleBoard) {
+        int k = 0, z = 0;
         for (int j = 4; j >= 0; j--) {
             for (int i = 0; i < 5; i++) {
                 CellButton cellButton = new CellButton(i , j);
                 cellButton.setOnAction(e -> selectedCell(cellButton));
-                board.add(cellButton, i, j);
+                board.add(cellButton, k, z);
                 cellButtonBoard.add(cellButton);
+                if (k==4){
+                    k=0;
+                    z++;
+                } else k++;
             }
         }
         updateBoard(simpleBoard);
