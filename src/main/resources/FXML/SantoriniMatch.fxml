@@ -159,6 +159,8 @@
                   <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
                      <children>
                         <CheckBox fx:id="powerGodUse" layoutX="81.0" layoutY="51.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="58.0" />
+                        <Label fx:id="messageBox" layoutX="79.0" layoutY="33.0" prefHeight="15.0" prefWidth="83.0" text="messageBox" />
+                        <Label fx:id="godMessageBox" layoutX="79.0" layoutY="71.0" text="info god box" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

@@ -23,9 +23,9 @@ public class SantoriniMatchController {
     @FXML private AnchorPane thirdPlayerPane;
     @FXML private Button confirmButton;
     @FXML private Label whosTurn;
-    @FXML private Text godUsageMessageBox;
+    @FXML private Label godMessageBox;
     @FXML private CheckBox powerGodUse;
-    @FXML private Text messageBox;
+    @FXML private Label messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -118,7 +118,7 @@ public class SantoriniMatchController {
 
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
-        //godUsageMessageBox.setText("");
+        godMessageBox.setText("");
         confirmButton.setVisible(false);
     }
 
@@ -140,7 +140,7 @@ public class SantoriniMatchController {
     }
 
     public void placeWorkers(){
-        //messageBox.setText("Select two different cell where you want to put your workers");
+        messageBox.setText("Select two different cell where you want to put your workers");
         waitWorker = 2;
         placeWorkersPhase = true;
     }
@@ -151,18 +151,18 @@ public class SantoriniMatchController {
     }
 
     public void beforeMovePower(String msg) {
-        godUsageMessageBox.setText("You can perform an action before your move");
+        godMessageBox.setText("You can perform an action before your move");
         powerGodUse.setVisible(true);
         lightUpBoard(msg);
     }
 
     public void moveAgain() {
-        godUsageMessageBox.setText("You can move again");
+        godMessageBox.setText("You can move again");
         powerGodUse.setVisible(true);
     }
 
     public void buildAgain() {
-        godUsageMessageBox.setText("You could build again");
+        godMessageBox.setText("You could build again");
         powerGodUse.setVisible(true);
     }
 
@@ -196,25 +196,32 @@ public class SantoriniMatchController {
             placeWorkersPhase = false;
         }
         sendReply();
+        resetLighten();
     }
 
     private void selectedCell(CellButton cellButton) {
-        //TODO make the button light up when pressed and eventually light off
-        if (cellButton.getIdFromList() == -1) {
+        resetLighten();
+        if (cellButton.getIdFromList() == -1 && !placeWorkersPhase) {
             return;
         }
         if (placeWorkersPhase) {
-            cellButton.setStyle("-fx-background-color: #333333");
+            cellButton.lighten();
             if (waitWorker > 0) {
                 //should save and show two different selected cells
                 startWorkerPos.add(cellButton.x);
                 startWorkerPos.add(cellButton.y);
                 waitWorker--;
-            } else {
-                //prepare message to send to the server
-                reply[0] = cellButton.getIdFromList();
             }
-        } reply[0] = cellButton.getIdFromList();
+        } else {
+            cellButton.lighten();
+            reply[0] = cellButton.getIdFromList();
+        }
+    }
+
+    public void resetLighten(){
+        for (int i = 0; i < cellButtonBoard.size(); i++){
+            cellButtonBoard.get(i).turnOff();
+        }
     }
 
     private void error(String header, String content) {

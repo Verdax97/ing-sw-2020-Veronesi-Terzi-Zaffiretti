@@ -37,7 +37,7 @@ public class CellButton extends Button{
             if (worker){
                 this.setStyle("-fx-background-color: White");
             }
-            this.setStyle("-fx-background-color: Grey");
+            this.setStyle("-fx-background-color: transparent;");
         }
         if (value == 1){
             if (worker){
@@ -65,7 +65,11 @@ public class CellButton extends Button{
     public void setDome() { this.setStyle("-fx-background-color: Black"); }
 
     public void lighten() {
-        this.setStyle("-fx-background-color: fc0fc0");
+        this.setStyle("-fx-background-color: #333333");
+    }
+
+    public void turnOff() {
+        this.setStyle("-fx-background-color: Red");
     }
 
     public int getValReply() {
