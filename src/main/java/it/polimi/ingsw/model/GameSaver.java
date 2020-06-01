@@ -22,7 +22,7 @@ public class GameSaver {
      * @param lobby of type Lobby
      * @return boolean
      */
-    public static boolean checkForGames(Lobby lobby) {
+    public static boolean checkForGames(Lobby lobby) throws IOException {
         ArrayList<String> players = new ArrayList<>(lobby.getPlayers());
         Collections.sort(players);
         fileName = new StringBuilder();
@@ -38,6 +38,7 @@ public class GameSaver {
         //Creates SaveGame if it doesn't already exist or returns true if it already exists
         saveFile = new File("savedGames/" + fileName.toString());
         if (!saveFile.exists()) {
+            saveFile.createNewFile();
             System.out.println("File created: " + saveFile.getName());
             return false;
         } else {
@@ -54,7 +55,7 @@ public class GameSaver {
     public static void saveGame(Match match) {
         try {
             if (!saveFile.exists()) {
-                if (saveFile.createNewFile())
+                if (!saveFile.createNewFile())
                     throw new IOException();
             }
             FileWriter fileWriter = new FileWriter(saveFile);
