@@ -124,6 +124,7 @@ public class SantoriniMatchController {
                     cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
                     cellButtonBoard.get(i).lighten(true);
                 }
+                else cellButtonBoard.get(i).setIdFromList(-5);
             }
         }
     }
@@ -204,10 +205,10 @@ public class SantoriniMatchController {
     }
 
     private void selectedCell(CellButton cellButton) {
-        resetLighten();
         if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
             return;
         }
+        resetLighten();
         if (placeWorkersPhase) {
             cellButton.lighten(false);
             if (waitWorker > 0) {
