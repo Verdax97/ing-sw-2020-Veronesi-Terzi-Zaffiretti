@@ -121,8 +121,11 @@ public class MatchTest {
     @Test
     public void StartTurnTest(){
         ArrayList<String> players = new ArrayList<>();
+        Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
+        lobby.AddPlayer(players.get(0));
+        lobby.AddPlayer(players.get(1));
         Match match = new Match(players);
         match.StartGame();
         God god = new God();
@@ -133,6 +136,7 @@ public class MatchTest {
         match.PlaceWorker(msg);
         msg = new MsgToServer("Pino", 4, 4, 3, 3);
         match.PlaceWorker(msg);
+        GameSaver.checkForGames(lobby);
         match.StartTurn();
         Assertions.assertEquals(0, match.getLastAction());
         match.getBoard().getCell(1, 0).setBuilding(3);
@@ -151,8 +155,11 @@ public class MatchTest {
     @Test
     public void MoveTest(){
         ArrayList<String> players = new ArrayList<>();
+        Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
+        lobby.AddPlayer(players.get(0));
+        lobby.AddPlayer(players.get(1));
         Match match = new Match(players);
         match.StartGame();
         MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
@@ -166,6 +173,7 @@ public class MatchTest {
         match.getBoard().getCell(1, 1).setWorker(worker);
         match.getPlayers().get(0).setGodPower(god);
         match.getBoard().getCell(3, 3).setWorker(worker1);
+        GameSaver.checkForGames(lobby);
         match.StartTurn();
         match.SelectWorker(msgPacket);
         msgPacket = new MsgToServer("Pino", 4, -5, 1, 1);
@@ -188,8 +196,11 @@ public class MatchTest {
     @Test
     public void BuildTest() {
         ArrayList<String> players = new ArrayList<>();
+        Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
+        lobby.AddPlayer(players.get(0));
+        lobby.AddPlayer(players.get(1));
         Match match = new Match(players);
         match.StartGame();
         MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
@@ -203,6 +214,7 @@ public class MatchTest {
         match.getBoard().getCell(1, 1).setWorker(worker);
         match.getPlayers().get(0).setGodPower(god);
         match.getBoard().getCell(3,3).setWorker(worker1);
+        GameSaver.checkForGames(lobby);
         match.StartTurn();
         match.SelectWorker(msgPacket);
         match.Build(msgPacket);

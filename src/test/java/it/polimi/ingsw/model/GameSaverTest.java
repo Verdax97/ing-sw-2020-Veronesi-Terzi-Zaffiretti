@@ -16,7 +16,6 @@ public class GameSaverTest {
         Lobby lobby = new Lobby();
         lobby.AddPlayer(players.get(0));
         lobby.AddPlayer(players.get(1));
-        Assertions.assertFalse(GameSaver.checkForGames(lobby));
         Assertions.assertTrue(GameSaver.checkForGames(lobby));
     }
 
@@ -51,7 +50,7 @@ public class GameSaverTest {
         GameSaver.saveGame(match);
         Assertions.assertTrue(true);
         match = GameSaver.loadGame();
-        Assertions.assertEquals(1, match.getBoard().getCell(0,0).getWorker().getLastMovement());
+        Assertions.assertEquals(0, match.getBoard().getCell(4,4).getWorker().getLastMovement());
     }
 
 
