@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -11,8 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -28,7 +27,7 @@ public class SantoriniMatchController {
     @FXML private Text whosTurn;
     @FXML private Text godMessageBox;
     @FXML private CheckBox powerGodUse;
-    @FXML private Text messageBox;
+    @FXML private Label messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -124,19 +123,24 @@ public class SantoriniMatchController {
                     cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
                     cellButtonBoard.get(i).lighten(true);
                 }
-                else cellButtonBoard.get(i).setIdFromList(-5);
+                //else cellButtonBoard.get(i).setIdFromList(-5);
             }
         }
     }
 
     public void placeWorkers(){
-        messageBox.setText("Select two different cell\nwhere you want to put your workers");
+        Platform.runLater(()-> {
+            messageBox.setText("Select two different cell\nwhere you want to put your workers");
+        });
         waitWorker = 2;
         placeWorkersPhase = true;
     }
 
     public void selectWorker(String msg) {
-        messageBox.setText("Select worker you want to perform your turn");
+        Platform.runLater(()-> {
+            messageBox.setText("Select worker you want to perform your turn");
+        });
+        powerGodUse.setVisible(false);
         lightUpBoard(msg);
     }
 
@@ -162,7 +166,9 @@ public class SantoriniMatchController {
     }
 
     public void move(String msg) {
-        messageBox.setText("Select cell you want to move to");
+        Platform.runLater(()-> {
+            messageBox.setText("Select cell you want to move to");
+        });
         lightUpBoard(msg);
     }
 
@@ -171,7 +177,9 @@ public class SantoriniMatchController {
             powerGodAnswer = true;
             powerGodUse.setVisible(true);
         }
-        messageBox.setText("Select cell you want to build on");
+        Platform.runLater(()-> {
+            messageBox.setText("Select cell you want to build on");
+        });
         lightUpBoard(msg);
     }
 
@@ -191,13 +199,16 @@ public class SantoriniMatchController {
                 startWorkerPos.clear();
                 placeWorkersPhase = false;
             }
-            if (powerGodAnswer){
+            else if (powerGodAnswer){
                 if (powerGodUse.isSelected()){
                     reply[1] = 1;
                 } else {
-                    reply[0] = 0;
+                    reply[1] = 0;
                 }
                 powerGodAnswer = false;
+            }
+            else {
+                reply[1] = -5;
             }
             sendReply();
             resetLighten();

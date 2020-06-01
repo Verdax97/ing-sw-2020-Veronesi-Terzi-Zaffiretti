@@ -78,8 +78,8 @@ public class CellButton extends Button{
     public void lighten(boolean selectable) {
         //apply a layer on the button giving back a feedback about being pressed
         if (selectable){
-            this.setStyle("-fx-border-color: #fc0fc0; -fx-border-width: 10px;");
-        }else {
+            this.setStyle("-fx-border-color: #fc0fc0; -fx-border-width: 5px;");
+        } else{
             if (this.ground) {
                 this.setStyle("-fx-background-color: white;");
                 this.setOpacity(0.5);

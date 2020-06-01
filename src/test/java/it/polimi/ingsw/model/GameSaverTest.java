@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameSaverTest {
 
     @Test
-    public void checkForGames(){
+    public void checkForGames() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         players.add("GinoTest");
         players.add("PinoTest");
@@ -20,7 +21,7 @@ public class GameSaverTest {
     }
 
     @Test
-    public void saveAndLoadGameTest() throws FileNotFoundException {
+    public void saveAndLoadGameTest() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         players.add("GinoTest");
         players.add("PinoTest");

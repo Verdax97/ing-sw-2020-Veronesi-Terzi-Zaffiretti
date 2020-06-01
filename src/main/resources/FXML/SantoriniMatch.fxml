@@ -74,7 +74,7 @@
                         <Rectangle2D height="1080.0" minX="482.0" width="1920.0" />
                      </viewport>
                   </ImageView>
-                  <Text fx:id="whosTurn" text="Your Turn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Text fx:id="whosTurn" layoutX="196.0" layoutY="39.0" text="Your Turn" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="196.25" AnchorPane.topAnchor="22.2919921875">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -160,7 +160,8 @@
                   <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
                      <children>
                         <CheckBox fx:id="powerGodUse" layoutX="81.0" layoutY="51.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox" textFill="WHITE" visible="false" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="58.0" />
-                        <Text fx:id="messageBox" layoutX="79.0" layoutY="33.0" text="messageBox" />
+                        <Label fx:id="messageBox" layoutX="103.0" layoutY="98.0" text="Label" textFill="WHITE" />
+                        <Text fill="WHITE" layoutX="79.0" layoutY="20.0" text="messageBox" textAlignment="CENTER" wrappingWidth="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="13.0" />
                         <Text fx:id="godMessageBox" fill="WHITE" layoutX="79.0" layoutY="71.0" text="info god box" />
                      </children>
                   </AnchorPane>

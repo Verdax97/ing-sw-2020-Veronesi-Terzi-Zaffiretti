@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.model.gods.Triton;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Assertions;
@@ -119,7 +120,7 @@ public class MatchTest {
     }
 
     @Test
-    public void StartTurnTest(){
+    public void StartTurnTest() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         Lobby lobby = new Lobby();
         players.add("Gino");
@@ -153,7 +154,7 @@ public class MatchTest {
     }
 
     @Test
-    public void MoveTest(){
+    public void MoveTest() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         Lobby lobby = new Lobby();
         players.add("Gino");
@@ -194,7 +195,7 @@ public class MatchTest {
     }
 
     @Test
-    public void BuildTest() {
+    public void BuildTest() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         Lobby lobby = new Lobby();
         players.add("Gino");
