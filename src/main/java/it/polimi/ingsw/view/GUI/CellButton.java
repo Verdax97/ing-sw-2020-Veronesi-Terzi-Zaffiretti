@@ -35,6 +35,7 @@ public class CellButton extends Button{
 
 
     public void refresh(int value, boolean worker) {
+        this.idFromList = -5;
         if (value == 0){
             if (worker){
                 this.setStyle("-fx-background-color: White");
@@ -44,6 +45,7 @@ public class CellButton extends Button{
             this.setStyle("-fx-background-color: transparent;");
         }
         if (value == 1){
+            this.ground = false;
             if (worker){
                 this.setStyle("-fx-background-color: Brown");
                 return;
@@ -51,6 +53,7 @@ public class CellButton extends Button{
             this.setStyle("-fx-background-color: Orange");
         }
         if (value == 2){
+            this.ground = false;
             if (worker){
                 this.setStyle("-fx-background-color: Pink");
                 return;
@@ -58,6 +61,7 @@ public class CellButton extends Button{
             this.setStyle("-fx-background-color: Black");
         }
         if (value == 3){
+            this.ground = false;
             if (worker){
                 this.setStyle("-fx-background-color: Pink");
                 return;
@@ -87,7 +91,10 @@ public class CellButton extends Button{
         //reset aspect of board to default
         if (this.ground){
             this.setStyle("-fx-background-color: transparent;");
-        } else this.setOpacity(1);
+        } else {
+            this.setStyle("-fx-border-width: 0px;");
+            this.setOpacity(1);
+        }
     }
 
     public int getValReply() {
