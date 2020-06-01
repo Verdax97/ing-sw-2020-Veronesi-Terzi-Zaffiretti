@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 
 import it.polimi.ingsw.model.gods.Hephaestus;
+import it.polimi.ingsw.model.gods.Hestia;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.model.gods.Triton;
 import org.junit.jupiter.api.Test;
@@ -129,8 +130,8 @@ public class MatchTest {
         lobby.AddPlayer(players.get(1));
         Match match = new Match(players);
         match.StartGame();
-        God god = new God();
-        God god1 = new God();
+        God god = new Hestia();
+        God god1 = new Hestia();
         match.getPlayers().get(0).setGodPower(god);
         match.getPlayers().get(1).setGodPower(god1);
         MsgToServer msg = new MsgToServer("Pino", 0, 0, 2, 2);
@@ -169,10 +170,10 @@ public class MatchTest {
         Worker worker1 = new Worker();
         worker1.setPlayer(match.getPlayers().get(0));
         Triton triton = new Triton();
-        God god = new God();
-        match.getPlayerTurn().setGodPower(god);
+        Hephaestus hephaestus = new Hephaestus();
+        match.getPlayerTurn().setGodPower(hephaestus);
         match.getBoard().getCell(1, 1).setWorker(worker);
-        match.getPlayers().get(0).setGodPower(god);
+        match.getPlayers().get(0).setGodPower(hephaestus);
         match.getBoard().getCell(3, 3).setWorker(worker1);
         GameSaver.checkForGames(lobby);
         match.StartTurn();
@@ -210,7 +211,7 @@ public class MatchTest {
         Worker worker1 = new Worker();
         worker1.setPlayer(match.getPlayers().get(0));
         Hephaestus hephaestus = new Hephaestus();
-        God god = new God();
+        God god = new Hestia();
         match.getPlayerTurn().setGodPower(hephaestus);
         match.getBoard().getCell(1, 1).setWorker(worker);
         match.getPlayers().get(0).setGodPower(god);
