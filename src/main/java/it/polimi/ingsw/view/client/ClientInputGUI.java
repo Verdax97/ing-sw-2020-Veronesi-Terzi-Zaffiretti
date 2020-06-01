@@ -184,7 +184,7 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.moveAgain)) {
-            controllerGui.moveAgain();
+            controllerGui.moveAgain(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.move)) {
@@ -192,7 +192,7 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.buildAgain)) {
-            controllerGui.buildAgain();
+            controllerGui.buildAgain(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.build)) {

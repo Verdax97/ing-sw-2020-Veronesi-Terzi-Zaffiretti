@@ -23,7 +23,7 @@ public class CellButton extends Button{
     private int valReply = -5;
 
     CellButton(int x, int y){
-        this.idFromList = -1;
+        this.idFromList = -5;
         this.x = x;
         this.y = y;
         this.ground = true;
@@ -74,8 +74,7 @@ public class CellButton extends Button{
     public void lighten(boolean selectable) {
         //apply a layer on the button giving back a feedback about being pressed
         if (selectable){
-            this.setStyle("-fx-background-color: blue;");
-            this.setOpacity(0.5);
+            this.setStyle("-fx-border-color: #fc0fc0; -fx-border-width: 10px;");
         }else {
             if (this.ground) {
                 this.setStyle("-fx-background-color: white;");

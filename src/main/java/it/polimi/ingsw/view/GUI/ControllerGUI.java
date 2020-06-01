@@ -130,16 +130,16 @@ public class ControllerGUI {
         santoriniMatchController.beforeMovePower(msg);
     }
 
-    public void moveAgain(){
-        santoriniMatchController.moveAgain();
+    public void moveAgain(String msg){
+        santoriniMatchController.moveAgain(msg);
     }
 
     public void move(String msg){
         santoriniMatchController.move(msg);
     }
 
-    public void buildAgain(){
-        santoriniMatchController.buildAgain();
+    public void buildAgain(String msg){
+        santoriniMatchController.buildAgain(msg);
     }
 
     public void build(String msg, Boolean atlas){
