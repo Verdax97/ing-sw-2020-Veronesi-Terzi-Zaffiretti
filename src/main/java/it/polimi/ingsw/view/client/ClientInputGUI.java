@@ -256,6 +256,10 @@ public class ClientInputGUI extends ClientInput {
             }
         }
 
+        if (msg.equalsIgnoreCase(Messages.startTurn)) {
+            controllerGui.waitYourTurn();
+        }
+
         Reply(-5, -5, -5, -5);
     }
 

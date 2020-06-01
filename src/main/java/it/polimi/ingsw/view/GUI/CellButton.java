@@ -35,7 +35,7 @@ public class CellButton extends Button{
 
 
     public void refresh(int value, boolean worker) {
-        this.idFromList = -5;
+        //this.idFromList = -5;
         if (value == 0){
             if (worker){
                 this.setStyle("-fx-background-color: White");
@@ -89,11 +89,11 @@ public class CellButton extends Button{
 
     public void turnOff() {
         //reset aspect of board to default
+        this.setOpacity(1);
         if (this.ground){
             this.setStyle("-fx-background-color: transparent;");
         } else {
             this.setStyle("-fx-border-width: 0px;");
-            this.setOpacity(1);
         }
     }
 

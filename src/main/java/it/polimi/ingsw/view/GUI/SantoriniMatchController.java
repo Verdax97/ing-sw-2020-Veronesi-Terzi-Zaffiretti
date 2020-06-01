@@ -103,6 +103,7 @@ public class SantoriniMatchController {
 
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
+        godMessageBox.setText("");
         confirmButton.setVisible(true);
         turn = true;
     }
