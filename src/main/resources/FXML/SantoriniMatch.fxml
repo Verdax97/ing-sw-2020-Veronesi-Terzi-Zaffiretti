@@ -1,212 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ChoiceBox?>
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-   </rowConstraints>
+<AnchorPane style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
    <children>
-      <AnchorPane fx:id="santoriniMatch" prefHeight="1076.0" prefWidth="1886.0">
+      <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb4ff1a" height="1050.0" layoutX="1404.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="460.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fb4ff1a" height="1038.0" layoutX="15.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="386.0" />
-            <Rectangle fx:id="currentOne" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
-            <Rectangle fx:id="currentTwo" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="398.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
-            <Rectangle fx:id="currentThree" arcHeight="5.0" arcWidth="5.0" fill="#17e09366" height="300.0" layoutX="21.0" layoutY="706.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="400.0" />
-            <Rectangle fill="#fa0fbf76" height="353.0" layoutX="1429.0" layoutY="440.0" stroke="BLACK" width="405.0" />
-            <ImageView fx:id="firstPlayerGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/godCards/Zeus.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="firstPlayerNick" layoutX="246.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Circle fx:id="firstPlayerColor" fill="DODGERBLUE" layoutX="309.0" layoutY="238.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView id="myGodImage" fx:id="secondPlayerGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/godCards/Zeus.png" />
-               </image>
-            </ImageView>
-            <ImageView id="myGodImage" fx:id="thirdPlayerGodImage" fitHeight="275.0" fitWidth="250.0" layoutX="50.0" layoutY="719.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/godCards/Zeus.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="secondPlayerNick" layoutX="246.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text fx:id="thirdPlayerNick" layoutX="246.0" layoutY="791.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My nickname" wrappingWidth="148.7294921875">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Circle fx:id="secondPlayerColor" fill="DODGERBLUE" layoutX="309.0" layoutY="561.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fx:id="thirdPlayerColor" fill="DODGERBLUE" layoutX="309.0" layoutY="894.0" radius="31.0" stroke="BLACK" strokeType="INSIDE" />
-            <GridPane fx:id="board" alignment="CENTER" gridLinesVisible="true" layoutX="470.0" layoutY="91.0" prefHeight="900.0" prefWidth="900.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="171.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="512.0" minWidth="10.0" percentWidth="20.0" prefWidth="191.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="0.0" percentWidth="20.0" prefWidth="192.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" percentWidth="20.0" prefWidth="193.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="694.0" minWidth="10.0" percentWidth="20.0" prefWidth="157.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <Button fx:id="confirmButton" layoutX="1550.0" layoutY="889.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="82.0" prefWidth="180.0" text="Confirm Action" textAlignment="CENTER" visible="false">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
-            <Text layoutX="1476.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Legenda" wrappingWidth="176.7294921875">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Text>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="1641.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00101e" height="25.0" layoutX="1642.0" layoutY="639.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="25.0" layoutX="1452.0" layoutY="637.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="25.0" layoutX="1452.0" layoutY="536.0" stroke="BLACK" strokeType="INSIDE" width="25.0" />
-            <Text fx:id="whosTurn" layoutX="708.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Turn / Nickname player Turn" textAlignment="CENTER" wrappingWidth="450.0">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Text>
-            <Text fx:id="messageBox" layoutX="1462.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What you got to do in your turn">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <Text fx:id="godUsageMessageBox" layoutX="1474.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textbox for power god usage">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <ChoiceBox fx:id="godPowerUse" layoutX="1563.0" layoutY="333.0" prefHeight="53.0" prefWidth="179.0" onAction="#godPowerUsed">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Wanna use?" />
-                     <String fx:value="Yes" />
-                     <String fx:value="No" />
-                  </FXCollections>
-               </items>
-            </ChoiceBox>
-            <Text layoutX="432.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="431.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="432.0" layoutY="544.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="431.0" layoutY="732.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="431.0" layoutY="913.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="549.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="732.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="913.0" layoutY="1038.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="1094.0" layoutY="1039.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="1268.0" layoutY="1040.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Text>
-            <Text layoutX="163.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Players">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Text>
-            <Text layoutX="1512.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 0">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="1514.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 1">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="1719.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 2">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="1720.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Level 3">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="1632.0" layoutY="742.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dome">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="1558.0" layoutY="724.0" pickOnBounds="true" preserveRatio="true" />
-            <CheckBox fx:id="domeTruth" layoutX="1526.0" layoutY="264.0" mnemonicParsing="false" text="Build Dome">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </CheckBox>
-            <Text fx:id="selectedCellBox" layoutX="483.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <VBox fx:id="playersInfo" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <AnchorPane fx:id="firstPlayerPane" prefHeight="180.0" prefWidth="240.0" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="180.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="270.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                        <ImageView fitHeight="170.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../Images/godCards/Zeus.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
+                        <Circle fill="RED" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="secondPlayerPane" layoutX="10.0" layoutY="10.0" prefHeight="180.0" prefWidth="240.0" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="180.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="270.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                        <ImageView fitHeight="170.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../Images/godCards/Zeus.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
+                        <Circle fill="LIME" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="thirdPlayerPane" layoutX="10.0" layoutY="280.0" prefHeight="180.0" prefWidth="240.0" style="-fx-background-color: black;">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="180.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="270.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
+                        <ImageView fitHeight="170.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <image>
+                              <Image url="@../Images/godCards/Zeus.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
+                        <Circle fill="BLUE" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="480.0" HBox.hgrow="NEVER">
+               <children>
+                  <ImageView fitHeight="541.0" fitWidth="1028.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/SantoriniBoard.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D height="1080.0" minX="482.0" width="1920.0" />
+                     </viewport>
+                  </ImageView>
+                  <Text fx:id="whosTurn" text="Your Turn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <VBox layoutY="73.0" prefHeight="400.0" prefWidth="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="73.0">
+                     <children>
+                        <AnchorPane prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" text="4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" text="3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="90.0" prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" text="2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="170.0" prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" text="1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="250.0" prefHeight="80.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" text="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <GridPane fx:id="board" gridLinesVisible="true" layoutX="40.0" layoutY="73.0" prefHeight="400.0" prefWidth="400.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <HBox layoutX="39.0" layoutY="473.0" prefHeight="40.0" prefWidth="400.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="473.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="80.0">
+                           <children>
+                              <Label alignment="CENTER" text="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="80.0">
+                           <children>
+                              <Label alignment="CENTER" text="1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="90.0" layoutY="10.0" prefHeight="200.0" prefWidth="80.0">
+                           <children>
+                              <Label alignment="CENTER" text="2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="170.0" layoutY="10.0" prefHeight="200.0" prefWidth="80.0">
+                           <children>
+                              <Label alignment="CENTER" text="3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="250.0" layoutY="10.0" prefHeight="200.0" prefWidth="80.0">
+                           <children>
+                              <Label alignment="CENTER" text="4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="240.0" style="-fx-background-color: black;" HBox.hgrow="ALWAYS">
+               <children>
+                  <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <CheckBox fx:id="powerGodUse" layoutX="81.0" layoutY="51.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="58.0" />
+                        <Text fx:id="messageBox" layoutX="79.0" layoutY="33.0" text="messageBox" />
+                        <Text fx:id="godMessageBox" fill="WHITE" layoutX="79.0" layoutY="71.0" text="info god box" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62" prefHeight="184.0" prefWidth="224.0" style="-fx-background-color: purple;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="124.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="confirmButton" layoutX="56.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="56.0" prefWidth="131.0" text="Confirm" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="53.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
          </children>
-      </AnchorPane>
+      </HBox>
    </children>
-</GridPane>
+</AnchorPane>

@@ -4,44 +4,31 @@ import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class SantoriniMatchController {
 
-    @FXML private AnchorPane santoriniMatch;
+    @FXML private VBox playersInfo;
     @FXML private GridPane board;
-    @FXML private Text firstPlayerNick;
-    @FXML private Text secondPlayerNick;
-    @FXML private Text thirdPlayerNick;
-    @FXML private ImageView firstPlayerGodImage;
-    @FXML private ImageView secondPlayerGodImage;
-    @FXML private ImageView thirdPlayerGodImage;
-    @FXML private Circle firstPlayerColor;
-    @FXML private Circle secondPlayerColor;
-    @FXML private Circle thirdPlayerColor;
-    @FXML private Rectangle currentOne;
-    @FXML private Rectangle currentTwo;
-    @FXML private Rectangle currentThree;
+    @FXML private AnchorPane firstPlayerPane;
+    @FXML private AnchorPane secondPlayerPane;
+    @FXML private AnchorPane thirdPlayerPane;
     @FXML private Button confirmButton;
     @FXML private Text whosTurn;
-    @FXML private Text godUsageMessageBox;
-    @FXML private ChoiceBox godPowerUse;
-    @FXML private CheckBox domeTruth;
+    @FXML private Text godMessageBox;
+    @FXML private CheckBox powerGodUse;
     @FXML private Text messageBox;
-    @FXML private Text selectedCellBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
@@ -49,26 +36,14 @@ public class SantoriniMatchController {
 
     private ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private int nPlayers;
-
     private String myName;
-    //i discover who i am
-    private boolean first = false, second = false, third = false;
-    //1 red, 2 green, 3 blue
-    private int myColor;
-
     private ArrayList<String> players = new ArrayList<>();
 
-    private int waitWorker;
+    private boolean turn = false;
+    private int waitWorker = 0;
     private boolean placeWorkersPhase = false;
     private ArrayList<Integer> startWorkerPos = new ArrayList<>();
-
-    public ClientInput getClientInputGUI() {
-        return clientInputGUI;
-    }
-
-    public void setClientInputGUI(ClientInput clientInputGUI) {
-        this.clientInputGUI = clientInputGUI;
-    }
+    private boolean powerGodAnswer = false;
 
     public ClientMain getClientMain() {
         return clientMain;
@@ -78,48 +53,25 @@ public class SantoriniMatchController {
         this.clientMain = clientMain;
     }
 
+    public void setClientInputGUI(ClientInput clientInputGUI) {
+        this.clientInputGUI = clientInputGUI;
+    }
+
     public void setMyName(String myName) {
         this.myName = myName;
     }
 
     public void initializeAll(SimpleBoard simpleBoard) {
-        santoriniMatch.setStyle("-fx-background-image: url('/Images/SantoriniBoard.png'); -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         for (int i = 0; i < simpleBoard.players.size(); i++) {
-            if (i == 0) {
-                firstPlayerNick.setText(simpleBoard.players.get(i));
-                firstPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
-                firstPlayerColor.setFill(Color.RED);
-                if (myName.equals(simpleBoard.players.get(i))) {
-                    first = true;
-                    myColor = 0;
-                }
+            for (int j = 0; j < simpleBoard.players.size(); j++) {
+                AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(i);
+                ((ImageView) temp.getChildren().get(1)).setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
+                ((Label) temp.getChildren().get(2)).setText(simpleBoard.players.get(i));
+                ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(i).getDescription());
             }
-            if (i == 1) {
-                secondPlayerNick.setText(simpleBoard.players.get(i));
-                secondPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
-                secondPlayerColor.setFill(Color.GREEN);
-                nPlayers = 2;
-                if (myName.equals(simpleBoard.players.get(i))) {
-                    second = true;
-                    myColor = 1;
-                }
-            }
-            if (i == 2) {
-                thirdPlayerNick.setText(simpleBoard.players.get(i));
-                thirdPlayerGodImage.setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
-                thirdPlayerColor.setFill(Color.BLUE);
-                nPlayers = 3;
-                if (myName.equals(simpleBoard.players.get(i))) {
-                    third = true;
-                    myColor = 2;
-                }
-            }
-            players.add(simpleBoard.players.get(i));
         }
         if (simpleBoard.players.size() == 2) {
-            thirdPlayerNick.setVisible(false);
-            thirdPlayerGodImage.setVisible(false);
-            thirdPlayerColor.setVisible(false);
+            thirdPlayerPane.setVisible(false);
         }
         initializeBoard(simpleBoard);
     }
@@ -132,6 +84,7 @@ public class SantoriniMatchController {
                 cellButton.setOnAction(e -> selectedCell(cellButton));
                 board.add(cellButton, k, z);
                 cellButtonBoard.add(cellButton);
+                //grid pane works opposite than matrix
                 if (k==4){
                     k=0;
                     z++;
@@ -143,57 +96,81 @@ public class SantoriniMatchController {
 
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
-        godUsageMessageBox.setText("");
+        godMessageBox.setText("");
         confirmButton.setVisible(false);
+        turn = false;
     }
 
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
         confirmButton.setVisible(true);
+        turn = true;
+    }
+
+    public void lightUpBoard(String msg){
+        //should parse message of possibilities
+        ArrayList<String> temp = new ArrayList<>(Arrays.asList(msg.split("\n")));
+        for (int p = 0; p < temp.size(); p++){
+            //still parsing that message
+            ArrayList<String> s = new ArrayList<>(Arrays.asList(temp.get(p).split(" ")));
+            String index = s.get(0).split(Pattern.quote(")"))[0];
+            String almostX = s.get(1).split(Pattern.quote(","))[0];
+            String x = almostX.replaceAll(Pattern.quote("("), "");
+            String y = s.get(2).split(Pattern.quote(")"))[0];
+            //should scroll array of buttons, if value corresponds, the button should light up
+            for (int i = 0; i < cellButtonBoard.size(); i++){
+                if (cellButtonBoard.get(i).x == Integer.parseInt(x) && cellButtonBoard.get(i).y == Integer.parseInt(y)){
+                    cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
+                    cellButtonBoard.get(i).lighten(true);
+                }
+            }
+        }
     }
 
     public void placeWorkers(){
-        messageBox.setText("Select two different cell where you want to put your workers");
+        messageBox.setText("Select two different cell\nwhere you want to put your workers");
         waitWorker = 2;
         placeWorkersPhase = true;
     }
 
-    public void selectWorker() {
+    public void selectWorker(String msg) {
         messageBox.setText("Select worker you want to perform your turn");
+        lightUpBoard(msg);
     }
 
-    public void beforeMovePower() {
-        godUsageMessageBox.setText("You can perform an action before your move");
-        godPowerUse.setVisible(true);
+    public void beforeMovePower(String msg) {
+        godMessageBox.setText("You can perform an action before your move");
+        powerGodUse.setVisible(true);
+        powerGodAnswer = true;
+        lightUpBoard(msg);
     }
 
-    public void moveAgain() {
-        godUsageMessageBox.setText("You can move again");
-        godPowerUse.setVisible(true);
+    public void moveAgain(String msg) {
+        godMessageBox.setText("You can move again");
+        powerGodUse.setVisible(true);
+        powerGodAnswer = true;
+        lightUpBoard(msg);
     }
 
-    public void buildAgain() {
-        godUsageMessageBox.setText("You could build again");
-        godPowerUse.setVisible(true);
+    public void buildAgain(String msg) {
+        godMessageBox.setText("You could build again");
+        powerGodUse.setVisible(true);
+        powerGodAnswer = true;
+        lightUpBoard(msg);
     }
 
-    public void godPowerUsed(){
-        String choice = godPowerUse.getValue().toString();
-        if (choice.equalsIgnoreCase("Yes")){
-            reply[0] = 1;
-        }
-        if (choice.equalsIgnoreCase("No")){
-            reply[0] = 0;
-        }
-        godPowerUse.setVisible(false);
-    }
-
-    public void move() {
+    public void move(String msg) {
         messageBox.setText("Select cell you want to move to");
+        lightUpBoard(msg);
     }
 
-    public void build(Boolean atlas) {
+    public void build(String msg, Boolean atlas) {
+        if (atlas){
+            powerGodAnswer = true;
+            powerGodUse.setVisible(true);
+        }
         messageBox.setText("Select cell you want to build on");
+        lightUpBoard(msg);
     }
 
     public void sendReply() {
@@ -202,43 +179,84 @@ public class SantoriniMatchController {
     }
 
     public void confirmAction() {
-        if (placeWorkersPhase){
-            //0 -> x first worker, 1 -> y first worker
-            //2 -> x second worker, 3 -> y second worker
-            for (int i=0; i < startWorkerPos.size(); i++) {
-                reply[i] = startWorkerPos.get(i);
+        if (turn) {
+            if (placeWorkersPhase) {
+                //0 -> x first worker, 1 -> y first worker
+                //2 -> x second worker, 3 -> y second worker
+                for (int i = 0; i < startWorkerPos.size(); i++) {
+                    reply[i] = startWorkerPos.get(i);
+                }
+                startWorkerPos.clear();
+                placeWorkersPhase = false;
             }
-            startWorkerPos.clear();
-            placeWorkersPhase = false;
+            if (powerGodAnswer){
+                if (powerGodUse.isSelected()){
+                    reply[1] = 1;
+                } else {
+                    reply[0] = 0;
+                }
+                powerGodAnswer = false;
+            }
+            sendReply();
+            resetLighten();
         }
-        sendReply();
     }
 
     private void selectedCell(CellButton cellButton) {
-        //TODO make the button light up when pressed and eventually light off
-        cellButton.setStyle("-fx-background-color: #333333");
-        String temp = String.format("%d cose %d", cellButton.x, cellButton.y);
-        selectedCellBox.setText(temp);
-        if (waitWorker > 0) {
-            //should save and show two different selected cells
-            startWorkerPos.add(cellButton.x);
-            startWorkerPos.add(cellButton.y);
-            waitWorker--;
+        resetLighten();
+        if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
+            return;
+        }
+        if (placeWorkersPhase) {
+            cellButton.lighten(false);
+            if (waitWorker > 0) {
+                //should save and show two different selected cells
+                startWorkerPos.add(cellButton.x);
+                startWorkerPos.add(cellButton.y);
+                waitWorker--;
             }
-        else {
-            //show in a particular text box info about current selected cell
-
-            //prepare message to send to the server
-            reply[0]=cellButton.x;
-            reply[1]=cellButton.y;
+        } else {
+            cellButton.lighten(false);
+            reply[0] = cellButton.getIdFromList();
         }
     }
 
+    public void resetLighten(){
+        for (int i = 0; i < cellButtonBoard.size(); i++){
+            cellButtonBoard.get(i).turnOff();
+        }
+    }
+
+    //check usage
     private void error(String header, String content) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
+    }
+
+    //check usage
+    public void enlightenPlayer(int val){
+        for (int i= 0; i<nPlayers; i++){
+            if (i == val){
+                playersInfo.getChildren().get(i).setStyle("-fx-background-color: #6495ed");
+            } else playersInfo.getChildren().get(i).setStyle("-fx-background-color: Black");
+        }
+    }
+
+    //simply refreshes players in case someone has lost
+    public void refreshPlayers(SimpleBoard simpleBoard){
+        for (int i = 0; i < simpleBoard.players.size(); i++) {
+            for (int j = 0; j < simpleBoard.players.size(); j++) {
+                AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(i);
+                ((ImageView) temp.getChildren().get(1)).setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
+                ((Label) temp.getChildren().get(2)).setText(simpleBoard.players.get(i));
+                ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(i).getDescription());
+            }
+        }
+        if (simpleBoard.players.size() == 2) {
+            thirdPlayerPane.setVisible(false);
+        }
     }
 
     private void winner() {
@@ -251,43 +269,6 @@ public class SantoriniMatchController {
         winAlert.setTitle("Winner winner");
     }
 
-    private void loser() {
-        //removes himself from visible players
-        //throw lose window
-        //debug message
-        //should remove from visible player that got eliminated
-        Alert loseAlert = new Alert(Alert.AlertType.INFORMATION);
-        loseAlert.setHeaderText("You lose");
-        loseAlert.setContentText("Press ok and continue to spectate the game");
-    }
-
-    private void thisManLose(String loser){
-        int index = -1;
-        for (int i = 0; i < players.size(); i++){
-            if (loser.equals(players.get(i))){
-                index = i;
-                break;
-            }
-        }
-        players.remove(loser);
-        nPlayers--;
-        if (index == 0){
-            firstPlayerNick.setVisible(false);
-            firstPlayerGodImage.setVisible(false);
-            firstPlayerColor.setVisible(false);
-        }
-        if (index == 1){
-            secondPlayerNick.setVisible(false);
-            secondPlayerGodImage.setVisible(false);
-            secondPlayerColor.setVisible(false);
-        }
-        if(index == 2){
-            thirdPlayerNick.setVisible(false);
-            thirdPlayerGodImage.setVisible(false);
-            thirdPlayerColor.setVisible(false);
-        }
-    }
-
     public void updateBoard(SimpleBoard simpleBoard) {
         if (simpleBoard == null){
             return;
@@ -298,65 +279,42 @@ public class SantoriniMatchController {
         int cell = 0;
         int activePlayers = simpleBoard.players.size();
         ArrayList<String> temp = (ArrayList<String>) players.clone();
+        //check if someone has lost
         if (activePlayers != nPlayers) {
             if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
                 winner();
-            } else {
-                temp.removeAll(simpleBoard.players);
-                if (myName.equals(temp.get(0))) {
-                    loser();
-                } else thisManLose(temp.get(0));
-            }
-        } else {
-            for (int i = 0; i < nPlayers; i++) {
-                if (myName.equals(simpleBoard.players.get(i))) {
-                    //light up rectangle of current player
-                    if (i == 0 && first) {
-                        currentOne.setVisible(true);
-                        currentTwo.setVisible(false);
-                        currentThree.setVisible(false);
-                    }
-                    if (i == 1 && second) {
-                        currentOne.setVisible(false);
-                        currentTwo.setVisible(true);
-                        currentThree.setVisible(false);
-                    }
-                    if (i == 2 && third) {
-                        currentOne.setVisible(false);
-                        currentTwo.setVisible(false);
-                        currentThree.setVisible(true);
-                    }
-                }
-            }
-            if (simpleBoard.board == null){
-                return;
-            }
-            for (int j = 4; j >= 0; j--) {
-                for (int i = 0; i < 5; i++) {
-                    if (simpleBoard.board[i][j] == 4) {
-                        cellButtonBoard.get(cell).setDome();
-                    } else //search for worker on that cell
-                    {
-                        int index;
-                        boolean found = false;
-                        for (index = 0; index < simpleBoard.workers.size(); index++) {
-                            if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
-                                int val = 0;
-                                if (index >= 2 && index < 4)
-                                    val = 1;
-                                else if (index >= 4 && index < 6)
-                                    val = 2;
-                                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
+            } else refreshPlayers(simpleBoard);
+            nPlayers = activePlayers;
+        }
+        if (simpleBoard.board == null){
+            return;
+        }
+        //updates the board itself
+        for (int j = 4; j >= 0; j--) {
+            for (int i = 0; i < 5; i++) {
+                if (simpleBoard.board[i][j] == 4) {
+                    cellButtonBoard.get(cell).setDome();
+                } else //search for worker on that cell
+                {
+                    int index;
+                    boolean found = false;
+                    for (index = 0; index < simpleBoard.workers.size(); index++) {
+                        if (simpleBoard.workers.get(index)[0] == i && simpleBoard.workers.get(index)[1] == j) {
+                            int val = 0;
+                            if (index >= 2 && index < 4)
+                                val = 1;
+                            else if (index >= 4 && index < 6)
+                                val = 2;
+                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
+                            found = true;
+                            break;
                         }
                     }
-                    cell++;
+                    if (!found) {
+                        cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
+                    }
                 }
+                cell++;
             }
         }
     }
