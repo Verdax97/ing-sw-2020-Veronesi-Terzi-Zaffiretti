@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -27,25 +28,31 @@ public class SantoriniMatchController {
     @FXML private AnchorPane firstPlayerPane;
     @FXML private AnchorPane secondPlayerPane;
     @FXML private AnchorPane thirdPlayerPane;
-    @FXML private Button confirmButton;
-    @FXML private Text whosTurn;
-    @FXML private Text godMessageBox;
-    @FXML private CheckBox powerGodUse;
-    @FXML private Label messageBox;
+    @FXML
+    private Button confirmButton;
+    @FXML
+    private Text whosTurn;
+    @FXML
+    private Text godMessageBox;
+    @FXML
+    private CheckBox powerGodUse;
+    @FXML
+    private Label messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;
     private int[] reply = {-5, -5, -5, -5};
 
-    private ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
+    private final ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
+    private final ArrayList<Circle> cellWorker = new ArrayList<>();
     private int nPlayers;
     private String myName;
-    private ArrayList<String> players = new ArrayList<>();
+    private final ArrayList<String> players = new ArrayList<>();
 
     private boolean turn = false;
     private int waitWorker = 0;
     private boolean placeWorkersPhase = false;
-    private ArrayList<Integer> startWorkerPos = new ArrayList<>();
+    private final ArrayList<Integer> startWorkerPos = new ArrayList<>();
     private boolean powerGodAnswer = false;
 
     public ClientMain getClientMain() {
@@ -65,6 +72,7 @@ public class SantoriniMatchController {
     }
 
     public void initializeAll(SimpleBoard simpleBoard) {
+        //set all players color gods and descriptions
         for (int i = 0; i < simpleBoard.players.size(); i++) {
             for (int j = 0; j < simpleBoard.players.size(); j++) {
                 AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(i);
@@ -73,9 +81,11 @@ public class SantoriniMatchController {
                 ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(i).getDescription());
             }
         }
+        //check if there is the 3rd player
         if (simpleBoard.players.size() == 2) {
             thirdPlayerPane.setVisible(false);
         }
+        //setup all the board
         initializeBoard(simpleBoard);
     }
 
@@ -83,13 +93,20 @@ public class SantoriniMatchController {
         int k = 0, z = 0;
         for (int j = 4; j >= 0; j--) {
             for (int i = 0; i < 5; i++) {
-                CellButton cellButton = new CellButton(i , j);
+                //create and set the custom button
+                CellButton cellButton = new CellButton(i, j);
                 cellButton.setOnAction(e -> selectedCell(cellButton));
                 board.add(cellButton, k, z);
+                //create the "worker" placeholder
+                Circle worker = new Circle();
+                worker.setRadius(15.0);
+                board.add(worker, k, z);
+                //add the button and the worker to the list
                 cellButtonBoard.add(cellButton);
+                cellWorker.add(worker);
                 //grid pane works opposite than matrix
-                if (k==4){
-                    k=0;
+                if (k == 4) {
+                    k = 0;
                     z++;
                 } else k++;
             }
@@ -229,7 +246,7 @@ public class SantoriniMatchController {
         if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
             return;
         }
-        resetLighten();
+        //resetLighten();
         if (placeWorkersPhase) {
             cellButton.lighten(false);
             if (waitWorker > 0) {
@@ -242,12 +259,12 @@ public class SantoriniMatchController {
             cellButton.lighten(false);
             reply[0] = cellButton.getIdFromList();
         }
+        cellButton.setStyle("-fx-border-color: black");
     }
 
     public void resetLighten() {
         for (CellButton cellButton : cellButtonBoard) {
             cellButton.turnOff();
-            cellButton.setIdFromList(-5);
         }
     }
 
@@ -294,6 +311,7 @@ public class SantoriniMatchController {
     }
 
     public void updateBoard(SimpleBoard simpleBoard) {
+        //nothing to show
         if (simpleBoard == null){
             return;
         }
@@ -330,17 +348,40 @@ public class SantoriniMatchController {
                             else if (index >= 4 && index < 6)
                                 val = 2;
                             cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
+                            cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(val) + "; -fx-stroke: black");
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
                         cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
+                        cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(5) + "; -fx-stroke: transparent");
                     }
                 }
                 cell++;
             }
         }
+    }
+
+    private String pickColor(int val) {
+        switch (val) {
+            case 0 -> {
+                return "red";
+            }
+            case 1 -> {
+                return "green";
+            }
+            case 2 -> {
+                return "blue";
+            }
+            default -> {
+                return "transparent";
+            }
+        }
+    }
+
+    public void resume() {
+        //todo
     }
 }
 

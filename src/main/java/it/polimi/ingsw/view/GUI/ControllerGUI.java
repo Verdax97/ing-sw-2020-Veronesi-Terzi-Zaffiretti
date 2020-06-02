@@ -95,10 +95,10 @@ public class ControllerGUI {
         pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
-    public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn) throws IOException {
+    public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn, boolean resume) throws IOException {
         if (santoriniMatchController == null) {
             FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
-            Parent rootSantoriniMatch =(Parent) loaderSantoriniMatch.load();
+            Parent rootSantoriniMatch = (Parent) loaderSantoriniMatch.load();
             santoriniMatchController = loaderSantoriniMatch.getController();
             santoriniMatchController.setClientMain(clientMain);
             santoriniMatchController.setClientInputGUI(clientInputGUI);
@@ -109,7 +109,9 @@ public class ControllerGUI {
             santoriniMatchController.setMyName(clientInputGUI.getMyName());
             santoriniMatchController.initializeAll(simpleBoard);
         }
-        if (yourTurn){
+        if (resume)
+            santoriniMatchController.resume();
+        if (yourTurn) {
             santoriniMatchController.placeWorkers();
         }
     }

@@ -149,7 +149,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             Platform.runLater(()-> {
                 try {
-                    controllerGui.changeToSantoriniMatch(msgPacket.board, true);
+                    controllerGui.changeToSantoriniMatch(msgPacket.board, true, false);
                     controllerGui.itIsYourTurn();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -167,7 +167,7 @@ public class ClientInputGUI extends ClientInput {
             if (controllerGui.getSantoriniMatchController() == null) {
                 Platform.runLater(() -> {
                     try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, true, true);
                         controllerGui.selectWorker(msgPacket.altMsg);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -234,7 +234,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
             Platform.runLater(()-> {
                 try {
-                    controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                    controllerGui.changeToSantoriniMatch(msgPacket.board, false, false);
                     controllerGui.waitYourTurn();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -246,7 +246,7 @@ public class ClientInputGUI extends ClientInput {
             if (controllerGui.getSantoriniMatchController() == null) {
                 Platform.runLater(() -> {
                     try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, false, true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -264,5 +264,15 @@ public class ClientInputGUI extends ClientInput {
     @Override
     public void printBoard(SimpleBoard board) {
         controllerGui.receiveUpdate(board);
+    }
+
+    @Override
+    public void updateEndGame() {
+        Platform.runLater(() -> controllerGui.error("EndGame", clientMain.getReceivedMsg().altMsg));
+    }
+
+    @Override
+    public void closeGame() {
+        Platform.runLater(() -> controllerGui.error("Closing", "The app is closing"));
     }
 }

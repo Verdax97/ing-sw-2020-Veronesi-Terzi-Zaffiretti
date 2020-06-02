@@ -2,8 +2,6 @@ package it.polimi.ingsw.view.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
 
 public class CellButton extends Button{
 
@@ -37,35 +35,18 @@ public class CellButton extends Button{
     public void refresh(int value, boolean worker) {
         //this.idFromList = -5;
         if (value == 0){
-            if (worker){
-                this.setStyle("-fx-background-color: White");
-                this.ground = false;
-                return;
-            }
             this.setStyle("-fx-background-color: transparent;");
         }
         if (value == 1){
             this.ground = false;
-            if (worker){
-                this.setStyle("-fx-background-color: Brown");
-                return;
-            }
             this.setStyle("-fx-background-color: Orange");
         }
         if (value == 2){
             this.ground = false;
-            if (worker){
-                this.setStyle("-fx-background-color: Pink");
-                return;
-            }
             this.setStyle("-fx-background-color: Black");
         }
         if (value == 3){
             this.ground = false;
-            if (worker){
-                this.setStyle("-fx-background-color: Pink");
-                return;
-            }
             this.setStyle("-fx-background-color: Red");
         }
         if (value == 4) {
@@ -80,10 +61,7 @@ public class CellButton extends Button{
         if (selectable){
             this.setStyle("-fx-border-color: #fc0fc0; -fx-border-width: 5px;");
         } else{
-            if (this.ground) {
-                this.setStyle("-fx-background-color: white;");
-                this.setOpacity(0.5);
-            } else this.setOpacity(0.5);
+            this.setStyle("-fx-border-width: 0px;");
         }
     }
 

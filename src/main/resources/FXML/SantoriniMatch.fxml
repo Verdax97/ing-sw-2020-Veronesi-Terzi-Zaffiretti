@@ -7,16 +7,24 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
+<AnchorPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
    <children>
-      <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0"
+            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            AnchorPane.topAnchor="0.0">
          <children>
-            <VBox fx:id="playersInfo" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
+            <VBox fx:id="playersInfo" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="540.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane fx:id="firstPlayerPane" prefHeight="180.0" prefWidth="240.0" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+                  <AnchorPane fx:id="firstPlayerPane" prefHeight="180.0" prefWidth="240.0"
+                              style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="180.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="270.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" />
-                        <ImageView fitHeight="170.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="180.0" stroke="BLACK"
+                                   strokeType="INSIDE" visible="false" width="270.0" AnchorPane.leftAnchor="5.0"
+                                   AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"/>
+                        <ImageView fitHeight="170.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
+                                   AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <image>
                               <Image url="@../Images/godCards/Zeus.png" />
                            </image>
@@ -152,8 +160,8 @@
                   <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
                      <children>
                         <CheckBox fx:id="powerGodUse" alignment="CENTER" layoutX="81.0" layoutY="51.0"
-                                  mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox"
-                                  textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="5.0"
+                                  mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" textFill="WHITE"
+                                  visible="false" wrapText="true" AnchorPane.bottomAnchor="5.0"
                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
                         <Label fx:id="messageBox" alignment="CENTER" prefHeight="43.0" prefWidth="240.0" text="Label"
                                textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="0.0"
