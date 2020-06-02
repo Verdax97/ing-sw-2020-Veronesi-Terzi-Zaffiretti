@@ -5,13 +5,17 @@ import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -96,6 +100,7 @@ public class SantoriniMatchController {
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
         godMessageBox.setText("");
+        powerGodUse.setVisible(false);
         confirmButton.setVisible(false);
         turn = false;
     }
@@ -123,7 +128,6 @@ public class SantoriniMatchController {
                     cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
                     cellButtonBoard.get(i).lighten(true);
                 }
-                //else cellButtonBoard.get(i).setIdFromList(-5);
             }
         }
     }
@@ -147,6 +151,7 @@ public class SantoriniMatchController {
     public void beforeMovePower(String msg) {
         godMessageBox.setText("You can perform an action before your move");
         powerGodUse.setVisible(true);
+        godMessageBox.setText("Do you want to make an action before the move?");
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -154,6 +159,7 @@ public class SantoriniMatchController {
     public void moveAgain(String msg) {
         godMessageBox.setText("You can move again");
         powerGodUse.setVisible(true);
+        godMessageBox.setText("Do you want to move again?");
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -161,22 +167,26 @@ public class SantoriniMatchController {
     public void buildAgain(String msg) {
         godMessageBox.setText("You could build again");
         powerGodUse.setVisible(true);
+        godMessageBox.setText("Do you want to build again?");
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
 
     public void move(String msg) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             messageBox.setText("Select cell you want to move to");
         });
+        powerGodUse.setVisible(false);
         lightUpBoard(msg);
     }
 
     public void build(String msg, Boolean atlas) {
-        if (atlas){
+        if (atlas) {
             powerGodAnswer = true;
             powerGodUse.setVisible(true);
-        }
+            godMessageBox.setText("Do you want to build a dome?");
+        } else
+            powerGodUse.setVisible(false);
         Platform.runLater(()-> {
             messageBox.setText("Select cell you want to build on");
         });
@@ -234,9 +244,10 @@ public class SantoriniMatchController {
         }
     }
 
-    public void resetLighten(){
-        for (int i = 0; i < cellButtonBoard.size(); i++){
-            cellButtonBoard.get(i).turnOff();
+    public void resetLighten() {
+        for (CellButton cellButton : cellButtonBoard) {
+            cellButton.turnOff();
+            cellButton.setIdFromList(-5);
         }
     }
 

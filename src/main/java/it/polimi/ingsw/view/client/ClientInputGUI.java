@@ -20,8 +20,6 @@ public class ClientInputGUI extends ClientInput {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
-    private boolean resume;
-
     public String getMyName() {
         return myName;
     }
@@ -137,7 +135,6 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.resume)) {
             controllerGui.resume();
-            resume = true;
         }
 
         if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
@@ -167,16 +164,17 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.selectWorker)) {
-            if (controllerGui.getSantoriniMatchController() == null && resume){
-                Platform.runLater(()-> {
+            if (controllerGui.getSantoriniMatchController() == null) {
+                Platform.runLater(() -> {
                     try {
-                        controllerGui.changeToSantoriniMatch(msgPacket.board, false);
+                        controllerGui.changeToSantoriniMatch(msgPacket.board, true);
+                        controllerGui.selectWorker(msgPacket.altMsg);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
-            }
-            controllerGui.selectWorker(msgPacket.altMsg);
+            } else
+                controllerGui.selectWorker(msgPacket.altMsg);
         }
 
         if (msg.equalsIgnoreCase(Messages.beforeMove)) {
@@ -245,8 +243,8 @@ public class ClientInputGUI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.selectWorker)) {
-            if (controllerGui.getSantoriniMatchController() == null && resume){
-                Platform.runLater(()-> {
+            if (controllerGui.getSantoriniMatchController() == null) {
+                Platform.runLater(() -> {
                     try {
                         controllerGui.changeToSantoriniMatch(msgPacket.board, false);
                     } catch (IOException e) {

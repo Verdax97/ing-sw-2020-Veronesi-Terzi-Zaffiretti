@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 <AnchorPane style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.GUI.SantoriniMatchController">
    <children>
       <HBox layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -74,9 +64,11 @@
                         <Rectangle2D height="1080.0" minX="482.0" width="1920.0" />
                      </viewport>
                   </ImageView>
-                  <Text fx:id="whosTurn" layoutX="196.0" layoutY="39.0" text="Your Turn" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="196.25" AnchorPane.topAnchor="22.2919921875">
+                  <Text fx:id="whosTurn" layoutX="196.0" layoutY="41.423828125" text="Your Turn" textAlignment="CENTER"
+                        wrappingWidth="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                        AnchorPane.topAnchor="15.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                      </font>
                   </Text>
                   <VBox layoutY="73.0" prefHeight="400.0" prefWidth="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="73.0">
@@ -159,15 +151,24 @@
                <children>
                   <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <CheckBox fx:id="powerGodUse" layoutX="81.0" layoutY="51.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox" textFill="WHITE" visible="false" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="58.0" />
-                        <Label fx:id="messageBox" layoutX="103.0" layoutY="98.0" text="Label" textFill="WHITE" />
-                        <Text fill="WHITE" layoutX="79.0" layoutY="20.0" text="messageBox" textAlignment="CENTER" wrappingWidth="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="13.0" />
-                        <Text fx:id="godMessageBox" fill="WHITE" layoutX="79.0" layoutY="71.0" text="info god box" />
+                        <CheckBox fx:id="powerGodUse" alignment="CENTER" layoutX="81.0" layoutY="51.0"
+                                  mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" text="CheckBox"
+                                  textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="5.0"
+                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+                        <Label fx:id="messageBox" alignment="CENTER" prefHeight="43.0" prefWidth="240.0" text="Label"
+                               textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="0.0"
+                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0"/>
+                        <Text fx:id="godMessageBox" fill="WHITE" layoutX="79.0" layoutY="58.0" text="info god box"
+                              textAlignment="CENTER" wrappingWidth="240.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0"/>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62" prefHeight="184.0" prefWidth="224.0" style="-fx-background-color: purple;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62" prefHeight="218.0" prefWidth="179.0"
+                                    style="-fx-background-color: purple;" AnchorPane.bottomAnchor="10.0"
+                                    AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                    AnchorPane.topAnchor="10.0"/>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="124.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
