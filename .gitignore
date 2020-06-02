@@ -1,7 +1,8 @@
 # Default ignored files
-/.idea/workspace.xml
 .idea/
 ing-sw-2020-Veronesi-Terzi-Zaffiretti.iml
 out/
-META-INF/
-.txt
+src/**/META-INF
+*.txt
+*.iml
+target/
