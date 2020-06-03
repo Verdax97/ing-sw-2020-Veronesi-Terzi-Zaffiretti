@@ -166,7 +166,48 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62" prefHeight="218.0" prefWidth="179.0" style="-fx-background-color: purple;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62" prefHeight="218.0" prefWidth="179.0" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="63.0" layoutY="14.0" text="Legenda: " textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                              </Label>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                 <children>
+                                    <AnchorPane VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label layoutX="45.0" layoutY="29.0" prefWidth="49.0" text="Ground" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="5.0" />
+                                          <AnchorPane layoutX="138.0" layoutY="29.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label layoutX="58.0" layoutY="29.0" text="Label" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="5.0" />
+                                          <AnchorPane layoutX="138.0" layoutY="29.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="10.0" layoutY="157.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label layoutX="58.0" layoutY="29.0" text="Label" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="5.0" />
+                                          <AnchorPane layoutX="138.0" layoutY="29.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="10.0" layoutY="157.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label layoutX="58.0" layoutY="29.0" text="Label" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="5.0" />
+                                          <AnchorPane layoutX="138.0" layoutY="29.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="10.0" layoutY="157.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Label layoutX="58.0" layoutY="29.0" text="Label" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="126.0" AnchorPane.topAnchor="5.0" />
+                                          <AnchorPane layoutX="138.0" layoutY="29.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="124.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
