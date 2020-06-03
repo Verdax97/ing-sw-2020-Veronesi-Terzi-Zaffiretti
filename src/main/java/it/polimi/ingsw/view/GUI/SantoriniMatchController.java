@@ -222,20 +222,9 @@ public class SantoriniMatchController {
                 }
                 startWorkerPos.clear();
                 placeWorkersPhase = false;
-            }
-            else if (powerGodAnswer){
-                if (powerGodUse.isSelected()){
-                    if (atlas){
-                        reply[2]=1;
-                        this.atlas = false;
-                    }
-                    else reply[1] = 1;
-                } else {
-                    reply[1] = 0;
-                }
-                powerGodAnswer = false;
-            }
-            else {
+            } else if (powerGodAnswer) {
+                isThisAtlasBuilding();
+            } else {
                 reply[1] = -5;
             }
             sendReply();
@@ -243,12 +232,32 @@ public class SantoriniMatchController {
         }
     }
 
+    private void isThisAtlasBuilding() {
+        powerGodAnswer = false;
+        if (powerGodUse.isSelected()) {
+            if (atlas) {
+                reply[2] = 1;
+                this.atlas = false;
+                return;
+            }
+
+            reply[1] = 1;
+            return;
+        }
+        if (atlas) {
+            reply[2] = 0;
+            this.atlas = false;
+            return;
+        }
+        reply[1] = 0;
+    }
+
     private void selectedCell(CellButton cellButton) {
         if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
             return;
         }
         if (placeWorkersPhase) {
-            if (waitWorker == 0){
+            if (waitWorker == 0) {
                 return;
             }
             cellButton.lighten(false);
