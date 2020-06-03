@@ -18,7 +18,6 @@ public class CellButton extends Button{
     public int x;
     public int y;
     private boolean ground;
-    private int valReply = -5;
 
     CellButton(int x, int y){
         this.idFromList = -5;
@@ -32,8 +31,7 @@ public class CellButton extends Button{
     }
 
 
-    public void refresh(int value, boolean worker) {
-        //this.idFromList = -5;
+    public void refresh(int value) {
         if (value == 0){
             this.setStyle("-fx-background-color: transparent;");
         }
@@ -73,13 +71,5 @@ public class CellButton extends Button{
         } else {
             this.setStyle("-fx-border-width: 0px;");
         }
-    }
-
-    public int getValReply() {
-        return valReply;
-    }
-
-    public void setValReply(int valReply) {
-        this.valReply = valReply;
     }
 }

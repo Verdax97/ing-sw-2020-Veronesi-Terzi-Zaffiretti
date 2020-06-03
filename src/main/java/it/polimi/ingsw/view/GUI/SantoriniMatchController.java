@@ -73,18 +73,7 @@ public class SantoriniMatchController {
 
     public void initializeAll(SimpleBoard simpleBoard) {
         //set all players color gods and descriptions
-        for (int i = 0; i < simpleBoard.players.size(); i++) {
-            for (int j = 0; j < simpleBoard.players.size(); j++) {
-                AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(i);
-                ((ImageView) temp.getChildren().get(1)).setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
-                ((Label) temp.getChildren().get(2)).setText(simpleBoard.players.get(i));
-                ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(i).getDescription());
-            }
-        }
-        //check if there is the 3rd player
-        if (simpleBoard.players.size() == 2) {
-            thirdPlayerPane.setVisible(false);
-        }
+        refreshPlayers(simpleBoard);
         //setup all the board
         initializeBoard(simpleBoard);
     }
@@ -130,6 +119,10 @@ public class SantoriniMatchController {
     }
 
     public void lightUpBoard(String msg){
+        //reset to default
+        for (CellButton cellButton : cellButtonBoard) {
+            cellButton.setIdFromList(-5);
+        }
         //should parse message of possibilities
         ArrayList<String> temp = new ArrayList<>(Arrays.asList(msg.split("\n")));
         for (int p = 0; p < temp.size(); p++){
@@ -140,10 +133,11 @@ public class SantoriniMatchController {
             String x = almostX.replaceAll(Pattern.quote("("), "");
             String y = s.get(2).split(Pattern.quote(")"))[0];
             //should scroll array of buttons, if value corresponds, the button should light up
-            for (int i = 0; i < cellButtonBoard.size(); i++){
-                if (cellButtonBoard.get(i).x == Integer.parseInt(x) && cellButtonBoard.get(i).y == Integer.parseInt(y)){
-                    cellButtonBoard.get(i).setIdFromList(Integer.parseInt(index));
-                    cellButtonBoard.get(i).lighten(true);
+            for (CellButton cellButton : cellButtonBoard) {
+                if (cellButton.x == Integer.parseInt(x) && cellButton.y == Integer.parseInt(y)) {
+                    cellButton.setIdFromList(Integer.parseInt(index));
+                    cellButton.lighten(true);
+                    break;
                 }
             }
         }
@@ -246,8 +240,10 @@ public class SantoriniMatchController {
         if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
             return;
         }
-        //resetLighten();
         if (placeWorkersPhase) {
+            if (waitWorker == 0){
+                return;
+            }
             cellButton.lighten(false);
             if (waitWorker > 0) {
                 //should save and show two different selected cells
@@ -347,14 +343,14 @@ public class SantoriniMatchController {
                                 val = 1;
                             else if (index >= 4 && index < 6)
                                 val = 2;
-                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], true);
+                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j]);
                             cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(val) + "; -fx-stroke: black");
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
-                        cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j], false); //no worker and no dome
+                        cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j]); //no worker and no dome
                         cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(5) + "; -fx-stroke: transparent");
                     }
                 }
@@ -382,6 +378,7 @@ public class SantoriniMatchController {
 
     public void resume() {
         //todo
+        waitWorker = 0;
     }
 }
 
