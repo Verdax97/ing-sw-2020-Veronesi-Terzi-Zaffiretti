@@ -54,6 +54,7 @@ public class SantoriniMatchController {
     private boolean placeWorkersPhase = false;
     private final ArrayList<Integer> startWorkerPos = new ArrayList<>();
     private boolean powerGodAnswer = false;
+    private boolean atlas = false;
 
     public ClientMain getClientMain() {
         return clientMain;
@@ -194,6 +195,7 @@ public class SantoriniMatchController {
 
     public void build(String msg, Boolean atlas) {
         if (atlas) {
+            this.atlas = true;
             powerGodAnswer = true;
             powerGodUse.setVisible(true);
             godMessageBox.setText("Do you want to build a dome?");
@@ -223,7 +225,11 @@ public class SantoriniMatchController {
             }
             else if (powerGodAnswer){
                 if (powerGodUse.isSelected()){
-                    reply[1] = 1;
+                    if (atlas){
+                        reply[2]=1;
+                        this.atlas = false;
+                    }
+                    else reply[1] = 1;
                 } else {
                     reply[1] = 0;
                 }
@@ -256,7 +262,8 @@ public class SantoriniMatchController {
             cellButton.lighten(false);
             reply[0] = cellButton.getIdFromList();
         }
-        cellButton.setStyle("-fx-border-color: black");
+        cellButton.getStyleClass().clear();
+        cellButton.getStyleClass().add("selected");
     }
 
     public void resetLighten() {
@@ -264,14 +271,6 @@ public class SantoriniMatchController {
             cellButton.turnOff();
             cellButton.setIdFromList(-5);
         }
-    }
-
-    //check usage
-    private void error(String header, String content) {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText(header);
-        errorAlert.setContentText(content);
-        errorAlert.showAndWait();
     }
 
     //check usage
@@ -378,9 +377,10 @@ public class SantoriniMatchController {
         }
     }
 
-    public void resume() {
+    public void resume(boolean yourTurn) {
         //todo
         waitWorker = 0;
+        turn = yourTurn;
     }
 }
 

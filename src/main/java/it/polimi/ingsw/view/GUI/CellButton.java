@@ -49,9 +49,13 @@ public class CellButton extends Button{
         this.x = x;
         this.y = y;
         this.ground = true;
-        //memo to change this into a Level 0 structure
+        /*
         this.setStyle("-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
         this.setAlignment(Pos.CENTER);
+         */
+        this.getStylesheets().add("CSS/Ground.css");
+        this.getStyleClass().clear();
+        this.getStyleClass().add("normal");
         this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
@@ -62,20 +66,21 @@ public class CellButton extends Button{
      * @param value the value
      */
     public void refresh(int value) {
+        getStylesheets().clear();
         if (value == 0){
-            this.setStyle("-fx-background-color: transparent;");
+            getStylesheets().add("CSS/Ground.css");
         }
         if (value == 1){
             this.ground = false;
-            this.setStyle("-fx-background-color: Orange");
+            getStylesheets().add("CSS/Level1.css");
         }
         if (value == 2){
             this.ground = false;
-            this.setStyle("-fx-background-color: Black");
+            getStylesheets().add("CSS/Level2.css");
         }
         if (value == 3){
             this.ground = false;
-            this.setStyle("-fx-background-color: Red");
+            getStylesheets().add("CSS/Level3.css");
         }
         if (value == 4) {
             setDome();
@@ -85,7 +90,7 @@ public class CellButton extends Button{
     /**
      * Sets dome.
      */
-    public void setDome() { this.setStyle("-fx-background-color: Blue"); }
+    public void setDome() { this.setStyle("-fx-background-color: dodgerblue"); }
 
     /**
      * Lighten.
@@ -93,11 +98,12 @@ public class CellButton extends Button{
      * @param selectable the selectable
      */
     public void lighten(boolean selectable) {
-        //apply a layer on the button giving back a feedback about being pressed
+        getStyleClass().clear();
+        //apply a border on the button giving back a feedback about being pressed
         if (selectable){
-            this.setStyle("-fx-border-color: #fc0fc0; -fx-border-width: 5px;");
+            getStyleClass().add("selectable");
         } else{
-            this.setStyle("-fx-border-width: 0px;");
+            getStyleClass().add("normal");
         }
     }
 
@@ -106,11 +112,7 @@ public class CellButton extends Button{
      */
     public void turnOff() {
         //reset aspect of board to default
-        this.setOpacity(1);
-        if (this.ground){
-            this.setStyle("-fx-background-color: transparent;");
-        } else {
-            this.setStyle("-fx-border-width: 0px;");
-        }
+        getStyleClass().clear();
+        getStyleClass().add("normal");
     }
 }

@@ -110,8 +110,8 @@ public class ControllerGUI {
             santoriniMatchController.initializeAll(simpleBoard);
         }
         if (resume)
-            santoriniMatchController.resume();
-        if (yourTurn) {
+            santoriniMatchController.resume(yourTurn);
+        else if (yourTurn) {
             santoriniMatchController.placeWorkers();
         }
     }
@@ -147,6 +147,8 @@ public class ControllerGUI {
     public void build(String msg, Boolean atlas){
         santoriniMatchController.build(msg, atlas);
     }
+
+    public void activePlayer(int val){ santoriniMatchController.enlightenPlayer(val);}
 
     public void receiveUpdate(SimpleBoard board){
         if (santoriniMatchController != null) {
