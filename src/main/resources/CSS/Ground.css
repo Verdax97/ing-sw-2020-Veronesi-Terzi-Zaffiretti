@@ -8,7 +8,7 @@
 }
 .selected {
     -fx-background-color: antiquewhite;
-    -fx-opacity: 0.5;
+    -fx-opacity: 0.8;
     -fx-border-color: #fc0fc0;
     -fx-border-width: 0px;
     -fx-alignment: center;
