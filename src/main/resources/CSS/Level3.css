@@ -1,8 +1,8 @@
 .normal {
     -fx-background-color: darkslategray;
     -fx-opacity: 1;
-    -fx-border-color: #fc0fc0;
-    -fx-border-width: 0px;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
     -fx-alignment: center;
     -fx-background-size: 100% 100%;
 }
