@@ -3,22 +3,47 @@ package it.polimi.ingsw.view.GUI;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
+/**
+ * The type Cell button.
+ */
 public class CellButton extends Button{
 
+    /**
+     * Gets id from list.
+     *
+     * @return the id from list
+     */
     public int getIdFromList() {
         return idFromList;
     }
 
+    /**
+     * Sets id from list.
+     *
+     * @param idFromList the id from list
+     */
     public void setIdFromList(int idFromList) {
         this.idFromList = idFromList;
     }
 
     //TODO CREATE IMAGES FOR GUI
     private int idFromList;
+    /**
+     * The X.
+     */
     public int x;
+    /**
+     * The Y.
+     */
     public int y;
     private boolean ground;
 
+    /**
+     * Instantiates a new Cell button.
+     *
+     * @param x the x
+     * @param y the y
+     */
     CellButton(int x, int y){
         this.idFromList = -5;
         this.x = x;
@@ -31,6 +56,11 @@ public class CellButton extends Button{
     }
 
 
+    /**
+     * Refresh.
+     *
+     * @param value the value
+     */
     public void refresh(int value) {
         if (value == 0){
             this.setStyle("-fx-background-color: transparent;");
@@ -52,8 +82,16 @@ public class CellButton extends Button{
         }
     }
 
+    /**
+     * Sets dome.
+     */
     public void setDome() { this.setStyle("-fx-background-color: Blue"); }
 
+    /**
+     * Lighten.
+     *
+     * @param selectable the selectable
+     */
     public void lighten(boolean selectable) {
         //apply a layer on the button giving back a feedback about being pressed
         if (selectable){
@@ -63,6 +101,9 @@ public class CellButton extends Button{
         }
     }
 
+    /**
+     * Turn off.
+     */
     public void turnOff() {
         //reset aspect of board to default
         this.setOpacity(1);

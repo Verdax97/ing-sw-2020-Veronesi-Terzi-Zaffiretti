@@ -88,6 +88,7 @@ public class SantoriniMatchController {
                 board.add(cellButton, k, z);
                 //create the "worker" placeholder
                 Circle worker = new Circle();
+                worker.setMouseTransparent(true);
                 worker.setRadius(15.0);
                 board.add(worker, k, z);
                 //add the button and the worker to the list
@@ -261,6 +262,7 @@ public class SantoriniMatchController {
     public void resetLighten() {
         for (CellButton cellButton : cellButtonBoard) {
             cellButton.turnOff();
+            cellButton.setIdFromList(-5);
         }
     }
 
