@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.GUI;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
@@ -66,24 +67,26 @@ public class CellButton extends Button{
      * @param value the value
      */
     public void refresh(int value) {
-        getStylesheets().clear();
-        if (value == 0){
-            getStylesheets().add("CSS/Ground.css");
-        }
-        if (value == 1){
-            this.ground = false;
-            getStylesheets().add("CSS/Level1.css");
-        }
-        if (value == 2){
-            this.ground = false;
-            getStylesheets().add("CSS/Level2.css");
-        }
-        if (value == 3){
-            this.ground = false;
-            getStylesheets().add("CSS/Level3.css");
-        }
-        if (value == 4) {
-            setDome();
+        synchronized (getStylesheets()) {
+            getStylesheets().clear();
+            if (value == 0) {
+                getStylesheets().add("CSS/Ground.css");
+            }
+            if (value == 1) {
+                this.ground = false;
+                getStylesheets().add("CSS/Level1.css");
+            }
+            if (value == 2) {
+                this.ground = false;
+                getStylesheets().add("CSS/Level2.css");
+            }
+            if (value == 3) {
+                this.ground = false;
+                getStylesheets().add("CSS/Level3.css");
+            }
+            if (value == 4) {
+                setDome();
+            }
         }
     }
 
