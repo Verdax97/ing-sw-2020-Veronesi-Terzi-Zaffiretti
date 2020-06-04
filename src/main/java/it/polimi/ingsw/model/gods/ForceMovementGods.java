@@ -50,7 +50,7 @@ public class ForceMovementGods extends MoveEnemyGods {
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
         int result = 0;
         int moved = super.CheckMove(board, selectedCell, x, y);
-        if (moved > 0 || (moved == -4 && !selectedCell.getDome())) {
+        if (moved > 0 || (moved == -4 && !board.getCell(x, y).getDome())) {
             Worker worker = board.getCell(x, y).getWorker();
             if (worker != null) {
                 if (worker.getPlayer().getNickname().equals(selectedCell.getWorker().getPlayer().getNickname()))//try to move your other worker
