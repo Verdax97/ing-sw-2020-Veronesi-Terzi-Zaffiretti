@@ -342,6 +342,7 @@ public class SantoriniMatchController {
             for (int i = 0; i < 5; i++) {
                 if (simpleBoard.board[i][j] == 4) {
                     cellButtonBoard.get(cell).setDome();
+                    cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(5) + "; -fx-stroke: transparent");
                 } else //search for worker on that cell
                 {
                     int index;
