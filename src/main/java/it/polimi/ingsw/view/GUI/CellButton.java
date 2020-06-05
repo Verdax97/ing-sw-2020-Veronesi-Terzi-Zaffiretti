@@ -1,12 +1,11 @@
 package it.polimi.ingsw.view.GUI;
 
-import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 /**
  * The type Cell button.
- */
+ * @author Stefano
+ * */
 public class CellButton extends Button{
 
     /**

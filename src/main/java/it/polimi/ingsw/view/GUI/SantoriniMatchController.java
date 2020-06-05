@@ -16,11 +16,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+/**
+ * The type Santorini match controller.
+ */
 public class SantoriniMatchController {
 
     @FXML private VBox playersInfo;
@@ -56,22 +58,47 @@ public class SantoriniMatchController {
     private boolean powerGodAnswer = false;
     private boolean atlas = false;
 
+    /**
+     * Gets client main.
+     *
+     * @return the client main
+     */
     public ClientMain getClientMain() {
         return clientMain;
     }
 
+    /**
+     * Sets client main.
+     *
+     * @param clientMain the client main
+     */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
+    /**
+     * Sets client input gui.
+     *
+     * @param clientInputGUI the client input gui
+     */
     public void setClientInputGUI(ClientInput clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
 
+    /**
+     * Sets my name.
+     *
+     * @param myName the my name
+     */
     public void setMyName(String myName) {
         this.myName = myName;
     }
 
+    /**
+     * Initialize all.
+     *
+     * @param simpleBoard the simple board
+     */
     public void initializeAll(SimpleBoard simpleBoard) {
         //set all players color gods and descriptions
         refreshPlayers(simpleBoard);
@@ -105,6 +132,9 @@ public class SantoriniMatchController {
         updateBoard(simpleBoard);
     }
 
+    /**
+     * Hide confirm button.
+     */
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
         godMessageBox.setText("");
@@ -113,6 +143,9 @@ public class SantoriniMatchController {
         turn = false;
     }
 
+    /**
+     * Show confirm button.
+     */
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
         godMessageBox.setText("");
@@ -120,6 +153,11 @@ public class SantoriniMatchController {
         turn = true;
     }
 
+    /**
+     * Light up board.
+     *
+     * @param msg the msg
+     */
     public void lightUpBoard(String msg){
         //reset to default
         for (CellButton cellButton : cellButtonBoard) {
@@ -145,6 +183,9 @@ public class SantoriniMatchController {
         }
     }
 
+    /**
+     * Place workers.
+     */
     public void placeWorkers(){
         Platform.runLater(()-> {
             messageBox.setText("Select two different cell\nwhere you want to put your workers");
@@ -153,6 +194,11 @@ public class SantoriniMatchController {
         placeWorkersPhase = true;
     }
 
+    /**
+     * Select worker.
+     *
+     * @param msg the msg
+     */
     public void selectWorker(String msg) {
         Platform.runLater(()-> {
             messageBox.setText("Select worker you want to perform your turn");
@@ -161,6 +207,11 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Before move power.
+     *
+     * @param msg the msg
+     */
     public void beforeMovePower(String msg) {
         godMessageBox.setText("You can perform an action before your move");
         powerGodUse.setVisible(true);
@@ -169,6 +220,11 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Move again.
+     *
+     * @param msg the msg
+     */
     public void moveAgain(String msg) {
         godMessageBox.setText("You can move again");
         powerGodUse.setVisible(true);
@@ -177,6 +233,11 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Build again.
+     *
+     * @param msg the msg
+     */
     public void buildAgain(String msg) {
         godMessageBox.setText("You could build again");
         powerGodUse.setVisible(true);
@@ -185,6 +246,11 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Move.
+     *
+     * @param msg the msg
+     */
     public void move(String msg) {
         Platform.runLater(() -> {
             messageBox.setText("Select cell you want to move to");
@@ -193,6 +259,12 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Build.
+     *
+     * @param msg   the msg
+     * @param atlas the atlas
+     */
     public void build(String msg, Boolean atlas) {
         if (atlas) {
             this.atlas = true;
@@ -207,11 +279,17 @@ public class SantoriniMatchController {
         lightUpBoard(msg);
     }
 
+    /**
+     * Send reply.
+     */
     public void sendReply() {
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         reply = new int[]{-5, -5, -5, -5};
     }
 
+    /**
+     * Confirm action.
+     */
     public void confirmAction() {
         if (turn) {
             if (placeWorkersPhase) {
@@ -275,6 +353,9 @@ public class SantoriniMatchController {
         cellButton.getStyleClass().add("selected");
     }
 
+    /**
+     * Reset lighten.
+     */
     public void resetLighten() {
         for (CellButton cellButton : cellButtonBoard) {
             cellButton.turnOff();
@@ -282,7 +363,12 @@ public class SantoriniMatchController {
         }
     }
 
-    //check usage
+    /**
+     * Enlighten player.
+     *
+     * @param val the val
+     */
+//check usage
     public void enlightenPlayer(int val){
         for (int i= 0; i<nPlayers; i++){
             if (i == val){
@@ -291,7 +377,12 @@ public class SantoriniMatchController {
         }
     }
 
-    //simply refreshes players in case someone has lost
+    /**
+     * Refresh players.
+     *
+     * @param simpleBoard the simple board
+     */
+//simply refreshes players in case someone has lost
     public void refreshPlayers(SimpleBoard simpleBoard){
         for (int i = 0; i < simpleBoard.players.size(); i++) {
             for (int j = 0; j < simpleBoard.players.size(); j++) {
@@ -316,6 +407,11 @@ public class SantoriniMatchController {
         winAlert.setTitle("Winner winner");
     }
 
+    /**
+     * Update board.
+     *
+     * @param simpleBoard the simple board
+     */
     public void updateBoard(SimpleBoard simpleBoard) {
         //nothing to show
         if (simpleBoard == null){
@@ -387,6 +483,11 @@ public class SantoriniMatchController {
         }
     }
 
+    /**
+     * Resume.
+     *
+     * @param yourTurn the your turn
+     */
     public void resume(boolean yourTurn) {
         //todo
         waitWorker = 0;

@@ -5,13 +5,25 @@ import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-
+/**
+ * The type Launcher app.
+ * @author Stefano
+ */
 public class LauncherApp extends Application{
 
+    /**
+     * The Controller gui.
+     */
     ControllerGUI controllerGUI = new ControllerGUI();
 
+    /**
+     * The Client main.
+     */
     ClientMain clientMain = new ClientMain();
 
+    /**
+     * The constant primaryStage.
+     */
     public static Stage primaryStage;
 
     @Override
@@ -33,6 +45,11 @@ public class LauncherApp extends Application{
         System.exit(0);
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         try {
             Application.launch(LauncherApp.class, args);

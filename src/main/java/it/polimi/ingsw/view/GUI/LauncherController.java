@@ -7,10 +7,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * The type Launcher controller.
+ */
 public class LauncherController {
 
     private ClientMain clientMain = null;
 
+    /**
+     * Sets client main.
+     *
+     * @param clientMain the client main
+     */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
@@ -21,6 +29,9 @@ public class LauncherController {
     @FXML
     private TextField port;
 
+    /**
+     * Connection.
+     */
     @FXML
     public void connection() {
         String ipTry = ip.getText();

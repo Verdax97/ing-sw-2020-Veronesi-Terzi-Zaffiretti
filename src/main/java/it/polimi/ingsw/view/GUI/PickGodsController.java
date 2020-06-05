@@ -13,10 +13,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+/**
+ * The type Pick gods controller.
+ */
 public class PickGodsController {
 
+    /**
+     * The Client main.
+     */
     ClientMain clientMain = null;
+    /**
+     * The Client input gui.
+     */
     ClientInputGUI clientInputGUI = null;
+    /**
+     * The Reply.
+     */
     int[] reply = new int[] {-5, -5, -5, -5};
 
     private ArrayList<GodCard> pickableGod = new ArrayList<>();
@@ -36,14 +48,30 @@ public class PickGodsController {
     @FXML
     private Text sceneTitle;
 
+    /**
+     * Sets client input gui.
+     *
+     * @param clientInputGUI the client input gui
+     */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
 
+    /**
+     * Sets client main.
+     *
+     * @param clientMain the client main
+     */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
+    /**
+     * Gets description god.
+     *
+     * @param msg      the msg
+     * @param yourTurn the your turn
+     */
     public void getDescriptionGod(String msg, boolean yourTurn) {
         confirmGod.setVisible(yourTurn);
 
@@ -73,6 +101,9 @@ public class PickGodsController {
         }
     }
 
+    /**
+     * Send reply.
+     */
     public void sendReply () {
         clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
         godEffect.setText("Select a god");
@@ -80,6 +111,9 @@ public class PickGodsController {
         reply = new int[]{-5, -5, -5, -5};
     }
 
+    /**
+     * Select god.
+     */
     public void selectGod() {
         if (listOfGod.getValue() == null)
             return;

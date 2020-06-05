@@ -9,10 +9,23 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+/**
+ * The type Lobby controller.
+ */
 public class LobbyController{
 
+    /**
+     * Sets client input gui.
+     *
+     * @param clientInputGUI the client input gui
+     */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
+    /**
+     * Sets client main.
+     *
+     * @param clientMain the client main
+     */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
@@ -34,23 +47,35 @@ public class LobbyController{
     @FXML private Button yes;
     @FXML private Button no;
 
+    /**
+     * Show number players.
+     */
     public void showNumberPlayers() {
         numberPlayer.setVisible(true);
         confirm.setVisible(true);
     }
 
+    /**
+     * Show nicknames.
+     */
     public void showNicknames() {
         nicknameMessage.setVisible(true);
         nickname.setVisible(true);
         lobby.setVisible(true);
     }
 
+    /**
+     * Wait for start.
+     */
     public void waitForStart() {
         nicknameMessage.setText("Wait for other players to connect");
         nickname.setVisible(false);
         lobby.setVisible(false);
     }
 
+    /**
+     * Sets number player.
+     */
     public void setNumberPlayer() {
         int val;
         String number = numberPlayer.getValue().toString();
@@ -71,6 +96,11 @@ public class LobbyController{
         }
     }
 
+    /**
+     * Lobby boolean.
+     *
+     * @return the boolean
+     */
     @FXML
     public boolean lobby() {
         if (nickname != null) {
@@ -85,6 +115,9 @@ public class LobbyController{
         }
     }
 
+    /**
+     * Show resume.
+     */
     public void showResume(){
         nicknameMessage.setVisible(false);
         resumeText.setVisible(true);
@@ -92,6 +125,9 @@ public class LobbyController{
         no.setVisible(true);
     }
 
+    /**
+     * Resume.
+     */
     @FXML
     public void resume(){
         clientInputGUI.Reply(1, -5, -5, -5);
@@ -99,6 +135,9 @@ public class LobbyController{
         no.setVisible(false);
     }
 
+    /**
+     * Dont resume.
+     */
     @FXML
     public void dontResume(){
         clientInputGUI.Reply(0, -5, -5, -5);
@@ -107,7 +146,12 @@ public class LobbyController{
     }
 
 
-
+    /**
+     * Error.
+     *
+     * @param header  the header
+     * @param content the content
+     */
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);

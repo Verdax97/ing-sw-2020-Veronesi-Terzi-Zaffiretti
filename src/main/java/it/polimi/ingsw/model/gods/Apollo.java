@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.Cell;
 import javafx.scene.image.Image;
 
 /**
- * Class Apollo implements Artemis functionalities
+ * Class Apollo implements Apollo functionalities
  */
 public class Apollo extends ForceMovementGods {
     /**

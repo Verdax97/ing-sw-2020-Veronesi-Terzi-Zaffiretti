@@ -11,15 +11,36 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The type Controller gui.
+ * @author Stefano
+ */
 public class ControllerGUI {
 
-    Scene connectionScene, lobbyScene, pickGodScene, santoriniMatchScene;
+    /**
+     * The Connection scene.
+     */
+    Scene connectionScene, /**
+     * The Lobby scene.
+     */
+    lobbyScene, /**
+     * The Pick god scene.
+     */
+    pickGodScene, /**
+     * The Santorini match scene.
+     */
+    santoriniMatchScene;
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
     //public LauncherController launcherController = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
+    /**
+     * Gets santorini match controller.
+     *
+     * @return the santorini match controller
+     */
     public SantoriniMatchController getSantoriniMatchController() {
         return santoriniMatchController;
     }
@@ -28,20 +49,45 @@ public class ControllerGUI {
 
     private int firstTime = 0;
 
+    /**
+     * Gets client main.
+     *
+     * @return the client main
+     */
     public ClientMain getClientMain() {
         return clientMain;
     }
 
+    /**
+     * Sets client main.
+     *
+     * @param clientMain the client main
+     */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
+    /**
+     * Sets client input gui.
+     *
+     * @param clientInputGUI the client input gui
+     */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
+    /**
+     * Gets primary stage.
+     *
+     * @return the primary stage
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Sets primary stage.
+     *
+     * @param primaryStage the primary stage
+     */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -49,6 +95,11 @@ public class ControllerGUI {
     private Stage primaryStage = null;
 
 
+    /**
+     * Gets first window.
+     *
+     * @throws IOException the io exception
+     */
     public void getFirstWindow() throws IOException {
         FXMLLoader loaderLauncher = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
         Parent rootLauncher = (Parent) loaderLauncher.load();
@@ -59,6 +110,12 @@ public class ControllerGUI {
         LauncherApp.primaryStage.setScene(connectionScene);
     }
 
+    /**
+     * Change to lobby.
+     *
+     * @param master the master
+     * @throws IOException the io exception
+     */
     public void changeToLobby(boolean master) throws IOException {
         if (lobbyController == null){
             FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
@@ -77,8 +134,16 @@ public class ControllerGUI {
         else lobbyController.showNicknames();
     }
 
+    /**
+     * Resume.
+     */
     public void resume(){ lobbyController.showResume(); }
 
+    /**
+     * Change to pick gods.
+     *
+     * @throws IOException the io exception
+     */
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
         Parent rootMatch = (Parent) loaderPickGod.load();
@@ -91,10 +156,24 @@ public class ControllerGUI {
         primaryStage.setTitle("Pick God Cards");
     }
 
+    /**
+     * Show gods.
+     *
+     * @param msg      the msg
+     * @param yourTurn the your turn
+     */
     public void showGods(String msg, boolean yourTurn) {
         pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
+    /**
+     * Change to santorini match.
+     *
+     * @param simpleBoard the simple board
+     * @param yourTurn    the your turn
+     * @param resume      the resume
+     * @throws IOException the io exception
+     */
     public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn, boolean resume) throws IOException {
         if (santoriniMatchController == null) {
             FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
@@ -116,46 +195,99 @@ public class ControllerGUI {
         }
     }
 
+    /**
+     * Wait your turn.
+     */
     public void waitYourTurn(){
         if (santoriniMatchController == null) {
             lobbyController.waitForStart();
         } else santoriniMatchController.hideConfirmButton();
     }
 
+    /**
+     * It is your turn.
+     */
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
+    /**
+     * Select worker.
+     *
+     * @param msg the msg
+     */
     public void selectWorker(String msg) {
         santoriniMatchController.selectWorker(msg);
     }
 
+    /**
+     * Before move power.
+     *
+     * @param msg the msg
+     */
     public void beforeMovePower(String msg){
         santoriniMatchController.beforeMovePower(msg);
     }
 
+    /**
+     * Move again.
+     *
+     * @param msg the msg
+     */
     public void moveAgain(String msg){
         santoriniMatchController.moveAgain(msg);
     }
 
+    /**
+     * Move.
+     *
+     * @param msg the msg
+     */
     public void move(String msg){
         santoriniMatchController.move(msg);
     }
 
+    /**
+     * Build again.
+     *
+     * @param msg the msg
+     */
     public void buildAgain(String msg){
         santoriniMatchController.buildAgain(msg);
     }
 
+    /**
+     * Build.
+     *
+     * @param msg   the msg
+     * @param atlas the atlas
+     */
     public void build(String msg, Boolean atlas){
         santoriniMatchController.build(msg, atlas);
     }
 
+    /**
+     * Active player.
+     *
+     * @param val the val
+     */
     public void activePlayer(int val){ santoriniMatchController.enlightenPlayer(val);}
 
+    /**
+     * Receive update.
+     *
+     * @param board the board
+     */
     public void receiveUpdate(SimpleBoard board){
         if (santoriniMatchController != null) {
             santoriniMatchController.updateBoard(board);
         }
     }
 
+    /**
+     * Error.
+     *
+     * @param header  the header
+     * @param content the content
+     */
     public void error(String header, String content){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
