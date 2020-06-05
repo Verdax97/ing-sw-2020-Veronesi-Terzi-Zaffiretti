@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,10 +24,7 @@ public class ServerThread extends Thread implements Observer {
     private ObjectOutputStream socketOut;
 
     private final int pos;
-    public volatile boolean waitForStart;
     private volatile boolean going = true;
-
-    private volatile boolean fired;
 
     /**
      * Constructor ServerThread creates a new ServerThread instance.
@@ -51,47 +47,40 @@ public class ServerThread extends Thread implements Observer {
      * Method run for invoking thread
      */
     public void run() {
-        try {
-            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
-            ) {
-                socketOut = objectOutputStream;
-                socketIn = objectInputStream;
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())
+        ) {
+            socketOut = objectOutputStream;
+            socketIn = objectInputStream;
 
-                Setup();
-                while (!waitForStart) {
-                    synchronized (this) {
-                        wait();
-                    }
-                }
-                while (going) {
-                    MsgToServer msgToServer = ReceiveMsg();
-                    if (msgToServer == null)
-                        break;
-                    server.ReceiveMsg(msgToServer);
-                    fired = false;
-                }
-            } catch (IOException e) {
-                //System.out.println(e.toString());
-                System.out.println("Connection ended with " + this.nick);
+            setup();
+            while (going) {
+                MsgToServer msgToServer = receiveMsg();
+                if (msgToServer == null)
+                    throw new IOException("Received message was null");
+
+                server.receiveMsg(msgToServer);
             }
-        } catch (InterruptedException e) {
-            System.out.println("Interrupted thread " + this.getName());
+        } catch (IOException e) {
+            //System.out.println(e.toString());
+            System.out.println("Connection ended with " + this.nick);
         }
-        CloseConnection();
+        closeConnection();
     }
 
     /**
      * Method Setup initializes lobby size and nickname
      */
-    private void Setup() throws IOException {
-        SetupLobbySize();
+    private void setup() throws IOException {
+        setupLobbySize();
 
-        SetupNickname();
+        setupNickname();
 
         //
-        SendMsg(new MsgPacket(nick, Messages.waitTurn, "Waiting for players", null));
-        ReceiveMsg();
+        sendMsg(new MsgPacket(nick, Messages.waitTurn, "Waiting for players", null));
+        MsgToServer msgToServer = receiveMsg();
+        if (msgToServer == null)
+            throw new IOException("Received message was null");
 
         //add user to the number successfully connected
         System.out.println("Player " + nick + " has joined the game");
@@ -101,16 +90,18 @@ public class ServerThread extends Thread implements Observer {
     /**
      * Method SetupLobbySize for setting the number of players
      */
-    private void SetupLobbySize() throws IOException {
+    private void setupLobbySize() throws IOException {
         if (pos == 0) {
             String mess = Messages.lobby;
             String err = "";
             while (true) {
                 //insert player number
-                SendMsg(new MsgPacket(nick, err + mess, "", null));
+                sendMsg(new MsgPacket(nick, err + mess, "", null));
 
                 //read response
-                MsgToServer msgToServer = ReceiveMsg();
+                MsgToServer msgToServer = receiveMsg();
+                if (msgToServer == null)
+                    throw new IOException("Received message was null");
                 int n = msgToServer.x;
                 if (n == 2 || n == 3) {
                     server.getLobby().setnPlayer(n);
@@ -125,16 +116,19 @@ public class ServerThread extends Thread implements Observer {
     /**
      * Method SetupNickname check if the nickname is available on the server
      */
-    private void SetupNickname() throws IOException {
+    private void setupNickname() throws IOException {
         System.out.println("Waiting for player " + pos + " nickname");
         String mess = Messages.nickname;
         String err = "";
         while (true) {
             //insert player nickname
-            SendMsg(new MsgPacket(nick, err + mess, "", null));
+            sendMsg(new MsgPacket(nick, err + mess, "", null));
             //read response
-            nick = Objects.requireNonNull(ReceiveMsg()).nickname;
-            if (server.SetNickname(nick)) {
+            MsgToServer msgToServer = receiveMsg();
+            if (msgToServer == null)
+                throw new IOException("Received message was null");
+            nick = msgToServer.nickname;
+            if (server.setNicknameInLobby(nick)) {
                 break;
             } else {
                 err = "Error Nickname not valid\n";
@@ -145,18 +139,12 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method AskForResume ask the player who created the lobby if he wants to resume an old game
-     *
-     * @return boolean
      */
-    public boolean AskForResume() throws IOException {
+    public void askForResume() throws IOException {
         String mess = Messages.resume;
         String err = "";
         //send msg asking for resume
-        SendMsg(new MsgPacket(nick, err + mess, "", null));
-
-        //read response
-        MsgToServer msgToServer = ReceiveMsg();
-        return (msgToServer.x == 1);
+        sendMsg(new MsgPacket(nick, err + mess, "", null));
     }
 
     /**
@@ -164,7 +152,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @param msg of type MsgPacket
      */
-    private void SendMsg(MsgPacket msg) throws IOException {
+    private void sendMsg(MsgPacket msg) throws IOException {
         try {
             //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
             //socketOut.reset();
@@ -182,7 +170,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @return MsgToServer
      */
-    private MsgToServer ReceiveMsg() throws IOException {
+    private MsgToServer receiveMsg() throws IOException {
         try {
             return (MsgToServer) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
@@ -199,15 +187,16 @@ public class ServerThread extends Thread implements Observer {
     /**
      * Method CloseConnection close the connection to the client
      */
-    public void CloseConnection() {
+    public void closeConnection() {
+        going = false;
         try {
             socketIn.close();
             socketOut.close();
             socket.close();
         } catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString() + " error in closing the connection with " + nick);
         }
-        server.CloseConnection();
+        server.closeConnections();
     }
 
 
@@ -229,10 +218,9 @@ public class ServerThread extends Thread implements Observer {
 
         //send the message
         try {
-            SendMsg((MsgPacket) arg);
-            fired = true;
+            sendMsg((MsgPacket) arg);
         } catch (IOException e) {
-            CloseConnection();
+            going = false;
         }
     }
 }

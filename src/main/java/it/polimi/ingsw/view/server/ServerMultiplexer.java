@@ -13,141 +13,194 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Observable;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Class ServerMultiplexer creates the socket and performs the connection to the players
+ */
 public class ServerMultiplexer extends Observable implements Runnable {
     private final Controller controller;
     private ServerSocket serverSocket;
-    private ExecutorService executor;
     public ArrayList<ServerThread> playersThread;
     public ServerMain serverMain;
 
+    /**
+     * Method getLobby returns the lobby of this ServerMultiplexer object.
+     *
+     *
+     *
+     * @return the lobby (type Lobby) of this ServerMultiplexer object.
+     */
     public synchronized Lobby getLobby() {
         return lobby;
     }
 
-    private final Lobby lobby;
+    private Lobby lobby;
     private int nConnectionPlayer = 0;
 
+    private volatile boolean wantToResumeGame = true;
     private volatile boolean resumeGame = false;
-
-
     private volatile boolean ending = false;
+    private volatile boolean started = false;
+    Integer port = null;
 
+    /**
+     * Method isEnding returns the ending of this ServerMultiplexer object.
+     *
+     *
+     *
+     * @return the ending (type boolean) of this ServerMultiplexer object.
+     */
     public synchronized boolean isEnding() {
         return ending;
     }
 
+    /**
+     * Method setEnding sets the ending of this ServerMultiplexer object.
+     *
+     *
+     *
+     * @param ending the ending of this ServerMultiplexer object.
+     *
+     */
     public synchronized void setEnding(boolean ending) {
         this.ending = ending;
     }
 
-    private Thread threadInput = null;
-
+    /**
+     * Constructor ServerMultiplexer creates a new ServerMultiplexer instance.
+     *
+     * @param controller of type Controller
+     */
     public ServerMultiplexer(Controller controller) {
         this.controller = controller;
-        this.playersThread = new ArrayList<>();
-        this.lobby = new Lobby();
     }
 
-    public void startServer() throws IOException {
-        //It creates threads when necessary, otherwise it re-uses existing one when possible
-        executor = Executors.newCachedThreadPool();
-        System.out.println("Insert server port:");
+    /**
+     * Method startServer ask the port on which the server will start
+     */
+    public void startServer() {
+        //reset all values
+        this.lobby = new Lobby();
+        this.playersThread = new ArrayList<>();
+        resumeGame = false;
+        nConnectionPlayer = 0;
+        setEnding(false);
+        started = false;
+
         AtomicReference<Scanner> scanner = new AtomicReference<>(new Scanner(System.in));
-        int port;
-        while (true) {
-            try {
-                port = scanner.get().nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Insert a valid port");
-                scanner.set(new Scanner(System.in));
+        if (port == null) {
+            System.out.println("Insert server port:");
+            while (true) {
+                try {
+                    port = scanner.get().nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Insert a valid port");
+                    scanner.set(new Scanner(System.in));
+                }
             }
         }
 
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            System.err.println(e.getMessage()); //port not available
-            System.out.println("port not available");
-            return;
+        while (true) {
+            try {
+                serverSocket = new ServerSocket(port);
+                break;
+            } catch (IOException e) {
+                System.err.println(e.getMessage()); //port not available
+                System.out.println("port not available");
+                try {
+                    serverSocket.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
         }
-        System.out.println("Server ready on port " + port);
 
-        boolean entered = false;
+        System.out.println("Server ready on port " + port);
+        started = false;
+        waitForPlayers();
+    }
+
+    /**
+     * Method waitForPlayers opens the game on port
+     */
+    private void waitForPlayers() {
+        setEnding(false);
+
         while (!ending) {
             try {
-                if (nConnectionPlayer == 0 && !entered) {
-                    System.out.println("Waiting for first player");
-                    Socket socket = serverSocket.accept();
-                    playersThread.add(new ServerThread(socket, "temp", this, playersThread.size()));
-                    entered = true;
-                    //Run Thread
-                    executor.submit(playersThread.get(playersThread.size() - 1));
-                    System.out.println("First player connected");
+                if (nConnectionPlayer == 0 && playersThread.size() == 0) {
+                    connectNewPlayer();
                 } else if (playersThread.size() < lobby.getnPlayer()) {
-                    System.out.println("Wait for others player");
-                    Socket socket = serverSocket.accept();
-                    playersThread.add(new ServerThread(socket, "temp", this, playersThread.size()));
-                    //Run Thread
-                    executor.submit(playersThread.get(playersThread.size() - 1));
+                    connectNewPlayer();
                 } else if (getNConnectionPlayer() == lobby.getnPlayer() && getNConnectionPlayer() > 1) {
                     //cut the possibility to connect to the server
                     break;
-                }
-                //if all player are in game do nothing and wait for something to crash
+                } else Thread.yield();
             } catch (IOException e) {
-                CloseConnection();
-                return;
+                System.out.println(e.toString());
+                ending = true;
+                break;
                 //break; //In case the serverSocket gets closed
             }
         }
         if (ending) {
-            CloseConnection();
+            closeConnections();
             return;
         }
 
         //check if there are other games with same players
-
-        if (GameSaver.checkForGames(lobby)) {
-            resumeGame = playersThread.get(0).AskForResume();
+        wantToResumeGame = true;
+        try {
+            if (GameSaver.checkForGames(lobby))
+                while (wantToResumeGame) {
+                    playersThread.get(0).askForResume();
+                    synchronized (this) {
+                        wait();
+                    }
+                }
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.toString());
+            closeConnections();
+            return;
         }
 
-
-        //start all thread
-        for (ServerThread thread : playersThread) {
-            thread.waitForStart = true;
-            synchronized (thread) {
-                thread.notify();
-            }
-        }
-        //create the game
         controller.setLobby(lobby);
         controller.CreateMatch(resumeGame);
+        started = true;
+    }
+
+    /**
+     * Method connectNewPlayer wait for a new player to connect
+     *
+     * @throws IOException when
+     */
+    private void connectNewPlayer() throws IOException {
+        System.out.println("Wait for player " + playersThread.size());
+        Socket socket = serverSocket.accept();
+        playersThread.add(new ServerThread(socket, "temp", this, playersThread.size()));
+        //Run Thread
+        playersThread.get(playersThread.size() - 1).start();
     }
 
     /**
      * Method CloseConnection closes all connections and close itself
      */
-    public void CloseConnection() {
+    public void closeConnections() {
         if (isEnding())
             return;
         setEnding(true);
         try {
             serverSocket.close();
-        } catch (IOException e) {
-            //ok
+        } catch (IOException | NullPointerException e) {
+            System.out.println("cannot close server");
         }
         for (ServerThread thread : playersThread) {
-            thread.CloseConnection();
+            thread.closeConnection();
             thread.interrupt();
         }
-        executor.shutdownNow();
-        //serverMain.newGame();
-        System.exit(1);
+        startServer();
     }
 
     /**
@@ -156,7 +209,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * @param name of type String
      * @return boolean
      */
-    public synchronized boolean SetNickname(String name) {
+    public synchronized boolean setNicknameInLobby(String name) {
         for (String s : lobby.getPlayers()) {
             if (name.equalsIgnoreCase(s)) {
                 System.out.println(name + "-" + s);
@@ -182,13 +235,12 @@ public class ServerMultiplexer extends Observable implements Runnable {
         return nConnectionPlayer;
     }
 
+    /**
+     * Method run called by the server starter
+     */
     @Override
     public void run() {
-        try {
-            startServer();
-        } catch (IOException e) {
-            System.out.println(e.toString());
-        }
+        startServer();
     }
 
     /**
@@ -196,8 +248,16 @@ public class ServerMultiplexer extends Observable implements Runnable {
      *
      * @param msg of type MsgToServer
      */
-    public void ReceiveMsg(MsgToServer msg) {
-        //System.out.println("Received message from " + msg.nickname + " x=" + msg.x + ", y=" + msg.y + ", targX=" + msg.targetX + ", targY=" + msg.targetY);
+    public void receiveMsg(MsgToServer msg) {
+        if (wantToResumeGame) {
+            resumeGame = (msg.x == 1);
+            wantToResumeGame = false;
+            synchronized (this) {
+                notifyAll();
+            }
+        }
+        if (!started)
+            return;
         setChanged();
         notifyObservers(msg);
     }
@@ -207,7 +267,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
      *
      * @param observable of type Match
      */
-    public void ConnectObserver(Observable observable) {
+    public void connectObservers(Observable observable) {
         for (ServerThread observer : playersThread) {
             observable.addObserver(observer);
         }

@@ -48,7 +48,7 @@ public class Controller implements Observer {
         if (resume) {
             try {
                 this.match = GameSaver.loadGame();
-                serverMultiplexer.ConnectObserver(match);
+                serverMultiplexer.connectObservers(match);
             } catch (FileNotFoundException e) {
                 System.out.println("File not found");
                 System.exit(-1);
@@ -58,7 +58,7 @@ public class Controller implements Observer {
             return;
         }
         this.match = new Match(lobby.getPlayers());
-        serverMultiplexer.ConnectObserver(match);
+        serverMultiplexer.connectObservers(match);
         setState(State.START);
         this.match.StartGame();
     }
@@ -147,7 +147,7 @@ public class Controller implements Observer {
                 GameSaver.deleteGameData();
                 System.out.println("Player " + match.getPlayerTurn().getNickname() + " won!!!");
                 System.out.println("Shutdown server");
-                serverMultiplexer.CloseConnection();
+                serverMultiplexer.closeConnections();
                 return;
             default:
                 System.out.println("Error of received message");
