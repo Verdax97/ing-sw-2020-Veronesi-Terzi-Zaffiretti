@@ -96,14 +96,14 @@ public class ClientInputGUI extends ClientInput {
 
         String msg = msgPacket.msg;
 
-        if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
+        if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             String errorMsg = msg.split("\n", 2)[0];
             msg = msg.split("\n", 2)[1];
             Platform.runLater(() -> controllerGui.error("Error", errorMsg));
         }
 
-        if (msg.equalsIgnoreCase(Messages.lobby)) {
-            Platform.runLater(()-> {
+        if (msg.equalsIgnoreCase(Messages.LOBBY)) {
+            Platform.runLater(() -> {
                 try {
                     controllerGui.changeToLobby(true);
                 } catch (IOException e) {
@@ -112,8 +112,8 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.nickname)) {
-            Platform.runLater(()-> {
+        if (msg.equalsIgnoreCase(Messages.INSERT_NICKNAME)) {
+            Platform.runLater(() -> {
                 try {
                     controllerGui.changeToLobby(false);
                 } catch (IOException e) {
@@ -122,8 +122,8 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.start)) {
-            Platform.runLater(()-> {
+        if (msg.equalsIgnoreCase(Messages.START)) {
+            Platform.runLater(() -> {
                 try {
                     controllerGui.changeToPickGods();
                     Reply(-5, -5, -5, -5);
@@ -133,21 +133,20 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.resume)) {
+        if (msg.equalsIgnoreCase(Messages.RESUME)) {
             controllerGui.resume();
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
+        if (msg.equalsIgnoreCase(Messages.CHOSE_GODS) || msg.equalsIgnoreCase(Messages.CHOSE_YOUR_GOD)) {
             Platform.runLater(() -> controllerGui.showGods(msgPacket.altMsg, true));
         }
 
-        if (msg.equalsIgnoreCase(Messages.waitTurn)){
+        if (msg.equalsIgnoreCase(Messages.WAIT_TURN)) {
             controllerGui.waitYourTurn();
-            Reply(-5, -5, -5, -5);
         }
 
-        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
-            Platform.runLater(()-> {
+        if (msg.equalsIgnoreCase(Messages.PLACE_WORKERS)) {
+            Platform.runLater(() -> {
                 try {
                     controllerGui.changeToSantoriniMatch(msgPacket.board, true, false);
                     controllerGui.itIsYourTurn();
@@ -157,13 +156,13 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.startTurn)) {
+        if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.itIsYourTurn();
             Reply(-5, -5, -5, -5);
             return;
         }
 
-        if (msg.equalsIgnoreCase(Messages.selectWorker)) {
+        if (msg.equalsIgnoreCase(Messages.SELECT_WORKER)) {
             if (controllerGui.getSantoriniMatchController() == null) {
                 Platform.runLater(() -> {
                     try {
@@ -177,27 +176,27 @@ public class ClientInputGUI extends ClientInput {
                 controllerGui.selectWorker(msgPacket.altMsg);
         }
 
-        if (msg.equalsIgnoreCase(Messages.beforeMove)) {
+        if (msg.equalsIgnoreCase(Messages.BEFORE_MOVE)) {
             controllerGui.beforeMovePower(msgPacket.altMsg);
         }
 
-        if (msg.equalsIgnoreCase(Messages.moveAgain)) {
+        if (msg.equalsIgnoreCase(Messages.MOVE_AGAIN)) {
             controllerGui.moveAgain(msgPacket.altMsg);
         }
 
-        if (msg.equalsIgnoreCase(Messages.move)) {
+        if (msg.equalsIgnoreCase(Messages.MOVE)) {
             controllerGui.move(msgPacket.altMsg);
         }
 
-        if (msg.equalsIgnoreCase(Messages.buildAgain)) {
+        if (msg.equalsIgnoreCase(Messages.BUILD_AGAIN)) {
             controllerGui.buildAgain(msgPacket.altMsg);
         }
 
-        if (msg.equalsIgnoreCase(Messages.build)) {
+        if (msg.equalsIgnoreCase(Messages.BUILD)) {
             boolean atlas = false;
             int i;
             for (i = 0; i < msgPacket.board.players.size(); i++) {
-                if (clientMain.getNick().equals(msgPacket.board.players.get(i))){
+                if (clientMain.getNick().equals(msgPacket.board.players.get(i))) {
                     break;
                 }
             }
@@ -213,11 +212,11 @@ public class ClientInputGUI extends ClientInput {
     public void updateNotYourTurn(MsgPacket msgPacket) {
         String msg = msgPacket.msg;
 
-        if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
+        if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             msg = msg.split("\n", 2)[1];
         }
 
-        if (msg.equalsIgnoreCase(Messages.start)) {
+        if (msg.equalsIgnoreCase(Messages.START)) {
             Platform.runLater(() -> {
                 try {
                     controllerGui.changeToPickGods();
@@ -227,12 +226,12 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseGods) || msg.equalsIgnoreCase(Messages.choseYourGod)) {
+        if (msg.equalsIgnoreCase(Messages.CHOSE_GODS) || msg.equalsIgnoreCase(Messages.CHOSE_YOUR_GOD)) {
             Platform.runLater(() -> controllerGui.showGods(msgPacket.altMsg, false));
         }
 
-        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
-            Platform.runLater(()-> {
+        if (msg.equalsIgnoreCase(Messages.PLACE_WORKERS)) {
+            Platform.runLater(() -> {
                 try {
                     controllerGui.changeToSantoriniMatch(msgPacket.board, false, false);
                     controllerGui.waitYourTurn();
@@ -242,7 +241,7 @@ public class ClientInputGUI extends ClientInput {
             });
         }
 
-        if (msg.equalsIgnoreCase(Messages.selectWorker)) {
+        if (msg.equalsIgnoreCase(Messages.SELECT_WORKER)) {
             if (controllerGui.getSantoriniMatchController() == null) {
                 Platform.runLater(() -> {
                     try {
@@ -254,7 +253,7 @@ public class ClientInputGUI extends ClientInput {
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.startTurn)) {
+        if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.waitYourTurn();
         }
 

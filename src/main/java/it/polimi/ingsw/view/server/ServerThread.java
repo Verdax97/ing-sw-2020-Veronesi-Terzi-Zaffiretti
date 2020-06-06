@@ -62,7 +62,6 @@ public class ServerThread extends Thread implements Observer {
                 server.receiveMsg(msgToServer);
             }
         } catch (IOException e) {
-            //System.out.println(e.toString());
             System.out.println("Connection ended with " + this.nick);
         }
         closeConnection();
@@ -77,10 +76,11 @@ public class ServerThread extends Thread implements Observer {
         setupNickname();
 
         //
-        sendMsg(new MsgPacket(nick, Messages.waitTurn, "Waiting for players", null));
+        sendMsg(new MsgPacket(nick, Messages.WAIT_TURN, "Waiting for players", null));
+        /*
         MsgToServer msgToServer = receiveMsg();
         if (msgToServer == null)
-            throw new IOException("Received message was null");
+            throw new IOException("Received message was null");*/
 
         //add user to the number successfully connected
         System.out.println("Player " + nick + " has joined the game");
@@ -92,7 +92,7 @@ public class ServerThread extends Thread implements Observer {
      */
     private void setupLobbySize() throws IOException {
         if (pos == 0) {
-            String mess = Messages.lobby;
+            String mess = Messages.LOBBY;
             String err = "";
             while (true) {
                 //insert player number
@@ -118,7 +118,7 @@ public class ServerThread extends Thread implements Observer {
      */
     private void setupNickname() throws IOException {
         System.out.println("Waiting for player " + pos + " nickname");
-        String mess = Messages.nickname;
+        String mess = Messages.INSERT_NICKNAME;
         String err = "";
         while (true) {
             //insert player nickname
@@ -141,7 +141,7 @@ public class ServerThread extends Thread implements Observer {
      * Method AskForResume ask the player who created the lobby if he wants to resume an old game
      */
     public void askForResume() throws IOException {
-        String mess = Messages.resume;
+        String mess = Messages.RESUME;
         String err = "";
         //send msg asking for resume
         sendMsg(new MsgPacket(nick, err + mess, "", null));

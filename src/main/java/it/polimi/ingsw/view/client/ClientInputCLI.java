@@ -30,47 +30,47 @@ public class ClientInputCLI extends ClientInput {
         scanner = new Scanner(System.in);
         //wait for input only in particular cases
 
-        if (msg.split(" ")[0].equalsIgnoreCase(Messages.error)) {
+        if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             System.out.println(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
         }
 
-        if (msg.equalsIgnoreCase(Messages.lobby)) {
+        if (msg.equalsIgnoreCase(Messages.LOBBY)) {
             System.out.println("Select number of players (2/3)");
             arr[0] = ReadIntInput();
         }
 
-        if (msg.equalsIgnoreCase(Messages.nickname)) {
+        if (msg.equalsIgnoreCase(Messages.INSERT_NICKNAME)) {
             System.out.println("Insert your nickname");
             clientMain.setNick(ReadStringInput());
         }
 
-        if (msg.equalsIgnoreCase(Messages.start)) {
+        if (msg.equalsIgnoreCase(Messages.START)) {
             System.out.println("Starting the game");
         }
 
-        if (msg.equalsIgnoreCase(Messages.resume)) {
+        if (msg.equalsIgnoreCase(Messages.RESUME)) {
             System.out.println("A game with the same players already exists");
             if (Confirm("Do you want to continue?(y/n)"))
                 arr[0] = 1;
             else arr[0] = 0;
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseGods)) {
+        if (msg.equalsIgnoreCase(Messages.CHOSE_GODS)) {
             System.out.println("Chose gods for all players by inserting corresponding value (one at the time)");
             System.out.println(msgPacket.altMsg);
             arr[0] = ReadIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose gods for all players by inserting corresponding value (one at the time)");
         }
 
-        if (msg.equalsIgnoreCase(Messages.choseYourGod)) {
+        if (msg.equalsIgnoreCase(Messages.CHOSE_YOUR_GOD)) {
             System.out.println("Chose your god by inserting corresponding value");
             System.out.println(msgPacket.altMsg);
             arr[0] = ReadIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose your god by inserting corresponding value");
         }
 
-        if (msg.equalsIgnoreCase(Messages.placeWorkers)) {
+        if (msg.equalsIgnoreCase(Messages.PLACE_WORKERS)) {
             System.out.println("Place your workers.");
             for (int i = 0; i < 2; i++) {
                 System.out.println("Place worker " + i + ":");
@@ -87,19 +87,17 @@ public class ClientInputCLI extends ClientInput {
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.startTurn)) {
+        if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             System.out.println("Your Turn");
-            Reply(-5, -5, -5, -5);
-            return;
         }
 
-        if (msg.equalsIgnoreCase(Messages.selectWorker)) {
+        if (msg.equalsIgnoreCase(Messages.SELECT_WORKER)) {
             System.out.println("Select your worker by inserting corresponding value");
             System.out.println(msgPacket.altMsg);
             arr[0] = ReadIntInput();
         }
 
-        if (msg.equalsIgnoreCase(Messages.beforeMove)) {
+        if (msg.equalsIgnoreCase(Messages.BEFORE_MOVE)) {
             System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
             System.out.println(msgPacket.altMsg);
             if (Confirm("Do you want to do it? (y/n)")) {
@@ -111,33 +109,33 @@ public class ClientInputCLI extends ClientInput {
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.moveAgain)) {
+        if (msg.equalsIgnoreCase(Messages.MOVE_AGAIN)) {
             System.out.println("You have the possibility to make another move phase.");
             if (Confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
-                msg = Messages.move;//to make another move action
+                msg = Messages.MOVE;//to make another move action
             } else {
                 arr[1] = 0;
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.move)) {
+        if (msg.equalsIgnoreCase(Messages.MOVE)) {
             System.out.println("You must move.\nAll the possible moves your worker can do");
             System.out.println(msgPacket.altMsg);
             arr[0] = ReadIntInput();
         }
 
-        if (msg.equalsIgnoreCase(Messages.buildAgain)) {
+        if (msg.equalsIgnoreCase(Messages.BUILD_AGAIN)) {
             System.out.println("You have the possibility to make another build phase.");
             if (Confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
-                msg = Messages.build;//to make another move action
+                msg = Messages.BUILD;//to make another move action
             } else {
                 arr[1] = 0;
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.build)) {
+        if (msg.equalsIgnoreCase(Messages.BUILD)) {
             System.out.println("You must build.\nAll the possible build your worker can do");
             System.out.println(msgPacket.altMsg);
             arr[0] = ReadIntInput();
@@ -155,16 +153,11 @@ public class ClientInputCLI extends ClientInput {
             }
         }
 
-        if (msg.equalsIgnoreCase(Messages.waitTurn)) {
+        if (msg.equalsIgnoreCase(Messages.WAIT_TURN)) {
             System.out.println(msgPacket.altMsg);
+            return;
         }
-/*
-        try {
-            Thread.sleep(50);//dunno why but with this it works
-        } catch (InterruptedException e) {
-            //close all
-            clientMain.EndAll();
-        }*/
+
         Reply(arr[0], arr[1], arr[2], arr[3]);
     }
 
@@ -314,7 +307,6 @@ public class ClientInputCLI extends ClientInput {
     public void updateNotYourTurn(MsgPacket msgPacket) {
         System.out.println(Colors.ANSI_YELLOW + clientMain.getReceivedMsg().nickname + "'s turn, wait" + Colors.ANSI_RESET);
         System.out.println(clientMain.getReceivedMsg().altMsg);
-        Reply(-5, -5, -5, -5);
     }
 
     /**
@@ -333,5 +325,6 @@ public class ClientInputCLI extends ClientInput {
         System.out.println("Game is ended.\nPress enter to end the program");
         scanner = new Scanner(System.in);
         scanner.nextLine();
+        scanner.close();
     }
 }

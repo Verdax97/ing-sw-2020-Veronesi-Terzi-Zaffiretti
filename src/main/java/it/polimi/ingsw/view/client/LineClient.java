@@ -40,9 +40,7 @@ public class LineClient extends Thread implements Observer {
 
             //pass the message to the main client
             if (msg != null) {
-
                 clientMain.setReceivedMsg(msg);
-                clientMain.setReadyToReceive(true);
                 synchronized (clientMain) {
                     clientMain.notifyAll();
                 }

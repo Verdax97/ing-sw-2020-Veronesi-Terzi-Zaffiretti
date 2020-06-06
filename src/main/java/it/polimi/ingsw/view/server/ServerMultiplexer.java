@@ -107,12 +107,12 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 serverSocket = new ServerSocket(port);
                 break;
             } catch (IOException e) {
-                System.err.println(e.getMessage()); //port not available
+                //System.err.println(e.getMessage()); //port not available
                 System.out.println("port not available");
                 try {
                     serverSocket.close();
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    //ioException.printStackTrace();
                 }
             }
         }
@@ -139,7 +139,8 @@ public class ServerMultiplexer extends Observable implements Runnable {
                     break;
                 } else Thread.yield();
             } catch (IOException e) {
-                System.out.println(e.toString());
+                System.out.println("Closing connection before connecting to all players");
+                //System.out.println(e.toString());
                 ending = true;
                 break;
                 //break; //In case the serverSocket gets closed
@@ -161,13 +162,14 @@ public class ServerMultiplexer extends Observable implements Runnable {
                     }
                 }
         } catch (IOException | InterruptedException e) {
-            System.out.println(e.toString());
+            System.out.println("Cannot communicate if the player wants to resume");
+            //System.out.println(e.toString());
             closeConnections();
             return;
         }
 
         controller.setLobby(lobby);
-        controller.CreateMatch(resumeGame);
+        controller.createMatch(resumeGame);
         started = true;
     }
 
@@ -199,6 +201,13 @@ public class ServerMultiplexer extends Observable implements Runnable {
         for (ServerThread thread : playersThread) {
             thread.closeConnection();
             thread.interrupt();
+        }
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("Server can't sleep :(");
+            //e.printStackTrace();
         }
         startServer();
     }
