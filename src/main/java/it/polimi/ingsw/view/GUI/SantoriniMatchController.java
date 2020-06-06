@@ -137,6 +137,9 @@ public class SantoriniMatchController {
      */
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
+        Platform.runLater(()-> {
+            messageBox.setText("");
+        });
         godMessageBox.setText("");
         powerGodUse.setVisible(false);
         confirmButton.setVisible(false);
