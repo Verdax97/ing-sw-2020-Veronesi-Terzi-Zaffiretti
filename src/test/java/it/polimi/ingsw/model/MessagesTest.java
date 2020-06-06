@@ -1,8 +1,7 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MessagesTest {
     @Test
@@ -25,23 +24,23 @@ public class MessagesTest {
         String waitTurn = "Wait";
         String error = "Error";
         String End = "End";
-        Assertions.assertEquals(lobby, Messages.lobby);
-        Assertions.assertEquals(nickname, Messages.nickname);
-        Assertions.assertEquals(resume, Messages.resume);
-        Assertions.assertEquals(start, Messages.start);
-        Assertions.assertEquals(choseGods, Messages.choseGods);
-        Assertions.assertEquals(choseYourGod, Messages.choseYourGod);
-        Assertions.assertEquals(placeWorkers, Messages.placeWorkers);
-        Assertions.assertEquals(selectWorker, Messages.selectWorker);
-        Assertions.assertEquals(startTurn, Messages.startTurn);
-        Assertions.assertEquals(beforeMove, Messages.beforeMove);
-        Assertions.assertEquals(move, Messages.move);
-        Assertions.assertEquals(moveAgain, Messages.moveAgain);
-        Assertions.assertEquals(build, Messages.build);
-        Assertions.assertEquals(buildAgain, Messages.buildAgain);
-        Assertions.assertEquals(waitTurn, Messages.waitTurn);
-        Assertions.assertEquals(error, Messages.error);
-        Assertions.assertEquals(End, Messages.End);
+        Assertions.assertEquals(lobby, Messages.LOBBY);
+        Assertions.assertEquals(nickname, Messages.INSERT_NICKNAME);
+        Assertions.assertEquals(resume, Messages.RESUME);
+        Assertions.assertEquals(start, Messages.START);
+        Assertions.assertEquals(choseGods, Messages.CHOSE_GODS);
+        Assertions.assertEquals(choseYourGod, Messages.CHOSE_YOUR_GOD);
+        Assertions.assertEquals(placeWorkers, Messages.PLACE_WORKERS);
+        Assertions.assertEquals(selectWorker, Messages.SELECT_WORKER);
+        Assertions.assertEquals(startTurn, Messages.START_TURN);
+        Assertions.assertEquals(beforeMove, Messages.BEFORE_MOVE);
+        Assertions.assertEquals(move, Messages.MOVE);
+        Assertions.assertEquals(moveAgain, Messages.MOVE_AGAIN);
+        Assertions.assertEquals(build, Messages.BUILD);
+        Assertions.assertEquals(buildAgain, Messages.BUILD_AGAIN);
+        Assertions.assertEquals(waitTurn, Messages.WAIT_TURN);
+        Assertions.assertEquals(error, Messages.ERROR);
+        Assertions.assertEquals(End, Messages.END);
 
     }
 }

@@ -44,7 +44,7 @@ public class Controller implements Observer {
     /**
      * Method CreateMatch instantiate and initialize match and send first message to the players
      */
-    public void CreateMatch(boolean resume) {
+    public void createMatch(boolean resume) {
         if (resume) {
             try {
                 this.match = GameSaver.loadGame();
@@ -69,7 +69,7 @@ public class Controller implements Observer {
      * @param msgPacket         of type MsgToServer the message that is needed to make a move
      * @param serverMultiplexer of type ServerMultiplexer
      */
-    public void RedirectMessage(MsgToServer msgPacket, ServerMultiplexer serverMultiplexer) {
+    public void redirectMessage(MsgToServer msgPacket, ServerMultiplexer serverMultiplexer) {
         if (!msgPacket.nickname.equals(match.getPlayerTurn().getNickname())) {
             //do nothing
             return;
@@ -78,7 +78,7 @@ public class Controller implements Observer {
         switch (state) {
             case LOBBY://
                 lobby = serverMultiplexer.getLobby();
-                CreateMatch(false);
+                createMatch(false);
                 break;
             case START:
                 match.PickGod(msgPacket);
@@ -177,6 +177,6 @@ public class Controller implements Observer {
     public void update(Observable o, Object arg) {
         if (!(o instanceof ServerMultiplexer) || !(arg instanceof MsgToServer))
             throw new IllegalArgumentException();
-        RedirectMessage((MsgToServer) arg, (ServerMultiplexer) o);
+        redirectMessage((MsgToServer) arg, (ServerMultiplexer) o);
     }
 }

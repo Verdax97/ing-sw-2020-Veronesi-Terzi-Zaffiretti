@@ -101,7 +101,6 @@ public class LobbyController{
      *
      * @return the boolean
      */
-    @FXML
     public boolean lobby() {
         if (nickname != null) {
             clientMain.setNick(nickname.getText());

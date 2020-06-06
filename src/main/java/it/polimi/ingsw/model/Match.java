@@ -76,7 +76,7 @@ public class Match extends Observable {
     public void StartGame() {
         nPlayer = setup.getPlayers().size() - 1;
         playerTurn = setup.getPlayers().get(nPlayer);
-        CreateMsgPacket(Messages.start, "Starting the game");
+        CreateMsgPacket(Messages.START, "Starting the game");
     }
 
     /**
@@ -120,17 +120,17 @@ public class Match extends Observable {
                 msgError = "";
             } else msgError = "Error Can't pick that god, try another value\n";
             lastAction = -1;
-            CreateMsgPacket(msgError + Messages.choseGods, PrintGods(setup.getGodList()));
+            CreateMsgPacket(msgError + Messages.CHOSE_GODS, PrintGods(setup.getGodList()));
             return;
         }
         setup.AddGodPicked(setup.getGodList().get(value));
         lastAction = 1;
         if (getSetup().getGodPicked().size() == setup.getPlayers().size()) {
             NextPlayer();
-            CreateMsgPacket(Messages.choseYourGod, PrintGods(setup.getGodPicked()));
+            CreateMsgPacket(Messages.CHOSE_YOUR_GOD, PrintGods(setup.getGodPicked()));
             return;
         }
-        CreateMsgPacket(Messages.choseGods, PrintGods(setup.getGodList()));
+        CreateMsgPacket(Messages.CHOSE_GODS, PrintGods(setup.getGodList()));
     }
 
     /**
@@ -143,16 +143,16 @@ public class Match extends Observable {
         if (value < 0 || value >= setup.getGodPicked().size()) {
             msgError = "Error Can't pick that god, try another value\n";
             lastAction = -1;
-            CreateMsgPacket(msgError + Messages.choseYourGod, PrintGods(setup.getGodPicked()));
+            CreateMsgPacket(msgError + Messages.CHOSE_YOUR_GOD, PrintGods(setup.getGodPicked()));
             return;
         }
         playerTurn.setGodPower(setup.PickGod(value));
         lastAction = 1;
         NextPlayer();
         if (getSetup().getGodPicked().size() == 0)
-            CreateMsgPacket(Messages.placeWorkers, "Wait");
+            CreateMsgPacket(Messages.PLACE_WORKERS, "Wait");
         else
-            CreateMsgPacket(Messages.choseYourGod, PrintGods(setup.getGodPicked()));
+            CreateMsgPacket(Messages.CHOSE_YOUR_GOD, PrintGods(setup.getGodPicked()));
     }
 
     /**
@@ -167,7 +167,7 @@ public class Match extends Observable {
                 || (x2 < 0 || x2 > 4 || y2 < 0 || y2 > 4) || board.getCell(x2, y2).getWorker() != null
                 || (x == x2 && y == y2)) {
             msgError = "Error Can't place a worker here, try another value\n";
-            msgError += Messages.placeWorkers;
+            msgError += Messages.PLACE_WORKERS;
             lastAction = -1;
             CreateMsgPacket(msgError, "Wait");
             return;
@@ -186,9 +186,9 @@ public class Match extends Observable {
         NextPlayer();
         if (found == getSetup().getPlayers().size() * 2) {
             lastAction = 2;
-            msgError = Messages.startTurn;
+            msgError = Messages.START_TURN;
         } else {
-            msgError = Messages.placeWorkers;
+            msgError = Messages.PLACE_WORKERS;
             lastAction = 1;
         }
         CreateMsgPacket(msgError, playerTurn.getNickname() + " is positioning the workers UwU plz can you wait ... only if you want OwO");
@@ -210,7 +210,7 @@ public class Match extends Observable {
                 board.getCell(worker[0], worker[1]).getWorker().setLastMovement(0);
             }
             alt = PrintPossibilities(workers);
-            msgError = Messages.selectWorker;
+            msgError = Messages.SELECT_WORKER;
         } else if (lastAction == 1)//you won
         {
             msgError = "EndGame Winner winner chicken dinner!";
@@ -222,7 +222,7 @@ public class Match extends Observable {
                     " lost because he can't move his workers");
             return;
         } else
-            msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.startTurn;
+            msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.START_TURN;
         CreateMsgPacket(msgError, alt);
         GameSaver.saveGame(this);
     }
@@ -245,23 +245,23 @@ public class Match extends Observable {
                 if (beforeMovePossibilities.size() == 0) {
                     if (movePossibilities.size() == 0) {
                         lastAction = -1;
-                        msgError = "Error no moves available for this worker, select the other one\n" + Messages.selectWorker;
+                        msgError = "Error no moves available for this worker, select the other one\n" + Messages.SELECT_WORKER;
                         alt = PrintPossibilities(workers);
                     } else {
                         lastAction = 2;
                         alt = PrintPossibilities(movePossibilities);
                         turn.setSelectedCell(board.getCell(x, y));
-                        msgError = Messages.move;
+                        msgError = Messages.MOVE;
                     }
                 } else {
                     lastAction = 1;
                     alt = PrintPossibilities(beforeMovePossibilities);
                     turn.setSelectedCell(board.getCell(x, y));
-                    msgError = Messages.beforeMove;
+                    msgError = Messages.BEFORE_MOVE;
                 }
             } else {
                 lastAction = -2;
-                msgError = "Error Can't select that cell, try another one\n" + Messages.selectWorker;
+                msgError = "Error Can't select that cell, try another one\n" + Messages.SELECT_WORKER;
             }
             CreateMsgPacket(msgError, alt);
             return;
@@ -269,7 +269,7 @@ public class Match extends Observable {
         lastAction = -1;
 
         msgError = "Error the inserted value is not valid\n";
-        msgError += Messages.selectWorker;
+        msgError += Messages.SELECT_WORKER;
         CreateMsgPacket(msgError, PrintPossibilities(workers));
     }
 
@@ -296,7 +296,7 @@ public class Match extends Observable {
             lastAction = turn.BeforeMove(board, beforeMovePossibilities.get(sel)[0], beforeMovePossibilities.get(sel)[1]);
         else {
             lastAction = -1;
-            msgError = Messages.error + " value out of range" + "\n" + Messages.beforeMove;
+            msgError = Messages.ERROR + " value out of range" + "\n" + Messages.BEFORE_MOVE;
             alt = PrintPossibilities(beforeMovePossibilities);
             CreateMsgPacket(msgError, alt);
             return;
@@ -304,10 +304,10 @@ public class Match extends Observable {
         if (lastAction == 1)//the game must go on
         {
             ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
-            msgError = Messages.move;
+            msgError = Messages.MOVE;
             alt = PrintPossibilities(movePossibilities);
         } else if (lastAction < 0) {
-            msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.beforeMove;
+            msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.BEFORE_MOVE;
             alt = PrintPossibilities(beforeMovePossibilities);
         }
         CreateMsgPacket(msgError, alt);
@@ -326,12 +326,12 @@ public class Match extends Observable {
             lastAction = 1;
         else if (sel < 0 || sel >= movePossibilities.size()) {
             lastAction = -1;
-            msgError = Messages.error + " Value out of possibilities";
+            msgError = Messages.ERROR + " Value out of possibilities";
             alt = PrintPossibilities(movePossibilities);
             if (msgPacket.y == 1)
-                msgError += "\n" + Messages.moveAgain;
+                msgError += "\n" + Messages.MOVE_AGAIN;
             else
-                msgError += "\n" + Messages.move;
+                msgError += "\n" + Messages.MOVE;
             //notify view
             CreateMsgPacket(msgError, alt);
             return;
@@ -351,9 +351,9 @@ public class Match extends Observable {
             msgError = errorHandler.GetErrorMove(lastAction);
             alt = PrintPossibilities(movePossibilities);
             if (msgPacket.y == 1)
-                msgError += "\n" + Messages.moveAgain;
+                msgError += "\n" + Messages.MOVE_AGAIN;
             else
-                msgError += "\n" + Messages.move;
+                msgError += "\n" + Messages.MOVE;
             //notify view
             CreateMsgPacket(msgError, alt);
             return;
@@ -363,13 +363,13 @@ public class Match extends Observable {
         alt = "there was a 0 return value in move... why??!!!";
 
         if (lastAction == 1) {
-            msgError = Messages.build;
+            msgError = Messages.BUILD;
             ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
             alt = PrintPossibilities(buildPossibilities);
         } else if (lastAction == 2) {//move again
             movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
             alt = PrintPossibilities(movePossibilities);
-            msgError = Messages.moveAgain;
+            msgError = Messages.MOVE_AGAIN;
         }
         //notify view
         CreateMsgPacket(msgError, alt);
@@ -418,12 +418,12 @@ public class Match extends Observable {
             lastAction = 1;
         else if (sel < 0 || sel >= buildPossibilities.size()) {
             lastAction = -1;
-            msgError = Messages.error + " Value out of possibilities";
+            msgError = Messages.ERROR + " Value out of possibilities";
             alt = PrintPossibilities(buildPossibilities);
             if (msgPacket.y == 1)
-                msgError += "\n" + Messages.buildAgain;
+                msgError += "\n" + Messages.BUILD_AGAIN;
             else
-                msgError += "\n" + Messages.build;
+                msgError += "\n" + Messages.BUILD;
             //notify view
             CreateMsgPacket(msgError, alt);
             return;
@@ -441,9 +441,9 @@ public class Match extends Observable {
         //redo build
         if (lastAction < 0) {
             if (godPower == 1)
-                msgError += "\n" + Messages.buildAgain;
+                msgError += "\n" + Messages.BUILD_AGAIN;
             else
-                msgError += "\n" + Messages.build;
+                msgError += "\n" + Messages.BUILD;
             alt = PrintPossibilities(buildPossibilities);
             //notify view
             CreateMsgPacket(msgError, alt);
@@ -453,10 +453,10 @@ public class Match extends Observable {
         alt = "there was a 0 return value in build... why??!!!";
         if (lastAction == 1) {//turn is ended, go to the next player
             NextPlayer();
-            msgError = Messages.startTurn;
+            msgError = Messages.START_TURN;
             alt = "Next player turn";
         } else if (lastAction == 2) {//build again
-            msgError = Messages.buildAgain;
+            msgError = Messages.BUILD_AGAIN;
             buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
             alt = PrintPossibilities(buildPossibilities);
         }
@@ -651,7 +651,7 @@ public class Match extends Observable {
         GameSaver.deleteGameData();
         System.out.println("Player " + getPlayerTurn().getNickname() + " won!!!");
         System.out.println("Shutdown server");
-        SendPacket(player, Messages.End, player + " Won", null);
+        SendPacket(player, Messages.END, player + " Won", null);
     }
 
     /**
@@ -668,7 +668,7 @@ public class Match extends Observable {
             nPlayer--;
         NextPlayer();
         lastAction = -10;
-        CreateMsgPacket(Messages.startTurn, alt);
+        CreateMsgPacket(Messages.START_TURN, alt);
     }
 
     /**

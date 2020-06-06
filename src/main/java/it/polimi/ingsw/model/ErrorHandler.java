@@ -1,15 +1,15 @@
 package it.polimi.ingsw.model;
 
 public class ErrorHandler {
-    private final String prefix = Messages.error + " ";
+    private final String prefix = Messages.ERROR + " ";
 
     public String GetErrorSetup(int value) {
         return switch (value) {
             case -1 -> "You Lost";
             case 1 -> "You Won!!";
             case 0 -> "";
-            case -7 -> Messages.error + " No space to move the worker";
-            default -> Messages.error + " generic";
+            case -7 -> Messages.ERROR + " No space to move the worker";
+            default -> Messages.ERROR + " generic";
         };
     }
 
@@ -25,7 +25,7 @@ public class ErrorHandler {
             case 1 -> "\n";
             case 2 -> "Again";
             case 0 -> "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
-            default -> Messages.error + " Generic";
+            default -> Messages.ERROR + " Generic";
         };
     }
 
@@ -44,7 +44,7 @@ public class ErrorHandler {
             case 1 -> "\n";
             case 2 -> "Again";
             case 0 -> "why are you here??!!! this is supposed to be an unreachable case!!! someone will be beat for this";
-            default -> Messages.error + " generic";
+            default -> Messages.ERROR + " generic";
         };
     }
 }
