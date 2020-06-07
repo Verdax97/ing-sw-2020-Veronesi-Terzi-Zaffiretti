@@ -325,6 +325,6 @@ public class ClientInputCLI extends ClientInput {
         System.out.println("Game is ended.\nPress enter to end the program");
         scanner = new Scanner(System.in);
         scanner.nextLine();
-        scanner.close();
+        System.exit(1);
     }
 }

@@ -172,7 +172,8 @@ public class ClientMain implements Runnable {
     /**
      * Method EndAll close all thread
      */
-    public void EndAll() {
+    public synchronized void EndAll() {
+        end = true;
         clientInput.closeGame();
         try {
             threadInput.interrupt();
@@ -181,8 +182,6 @@ public class ClientMain implements Runnable {
             System.out.println(threadInput.getName());
         }
         //close all
-        System.exit(1);
-        end = true;
     }
 
 }
