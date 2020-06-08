@@ -288,10 +288,29 @@ public class ControllerGUI {
      * @param header  the header
      * @param content the content
      */
-    public void error(String header, String content){
+    public void error(String header, String content) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setHeaderText(header);
         errorAlert.setContentText(content);
         errorAlert.showAndWait();
+    }
+
+    public void endGame(String message, boolean won) {
+        System.out.println("We are in the endgame!");
+        FXMLLoader loaderEndgame = new FXMLLoader(getClass().getClassLoader().getResource("FXML/GameClosing.fxml"));
+        Parent rootEndGame = null;
+        Stage secondStage = new Stage();
+        try {
+            rootEndGame = (Parent) loaderEndgame.load();
+            ((GameCloserWindow) loaderEndgame.getController()).setWinner(won);
+            ((GameCloserWindow) loaderEndgame.getController()).setMessage(message, won);
+            Scene secondScene = new Scene(rootEndGame);
+            secondStage.setTitle("Game Ending");
+            secondStage.setScene(secondScene);
+            secondStage.show();
+            ((GameCloserWindow) loaderEndgame.getController()).showVideo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

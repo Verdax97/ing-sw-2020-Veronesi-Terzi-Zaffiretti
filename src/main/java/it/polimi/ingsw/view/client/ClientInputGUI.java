@@ -260,18 +260,17 @@ public class ClientInputGUI extends ClientInput {
         Reply(-5, -5, -5, -5);
     }
 
+    /**
+     * @see ClientInput#printBoard(SimpleBoard)
+     */
     @Override
     public void printBoard(SimpleBoard board) {
         controllerGui.receiveUpdate(board);
     }
 
+    /** @see ClientInput#updateEndGame() */
     @Override
     public void updateEndGame() {
-        Platform.runLater(() -> controllerGui.error("EndGame", clientMain.getReceivedMsg().altMsg));
-    }
-
-    @Override
-    public void closeGame() {
-        Platform.runLater(() -> controllerGui.error("Closing", "The app is closing"));
+        Platform.runLater(() -> controllerGui.endGame(clientMain.getReceivedMsg().altMsg, clientMain.getNick().equals(clientMain.getReceivedMsg().nickname)));
     }
 }
