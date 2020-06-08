@@ -2,7 +2,9 @@ package it.polimi.ingsw.view.GUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.web.WebEngine;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.web.WebView;
 
 public class GameCloserWindow {
@@ -10,15 +12,16 @@ public class GameCloserWindow {
     private Label message;
     @FXML
     private WebView video;
+    @FXML
+    private MediaView videoPlayer;
 
     String winningMessage = "Winner winner chicken dinner!!!!";
     String losingMessage = "You get nothing! You lose! Good day Sir!";
-    String winnerVideo = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-    String loserVideo = "https://www.youtube.com/watch?v=ymPpIzaanhY";
-    String s;
+    Media winnerVideo = new Media(getClass().getClassLoader().getResource("videos/win.mp4").toExternalForm());
+    Media loserVideo = new Media(getClass().getClassLoader().getResource("videos/lose.mp4").toExternalForm());
+    Media s;
 
     public void setWinner(boolean won) {
-        s = "";
         if (won)
             s = winnerVideo;
         else
@@ -34,8 +37,10 @@ public class GameCloserWindow {
     }
 
     public void showVideo() {
-        WebEngine webEngine = video.getEngine();
-        webEngine.load(s);
+        MediaPlayer mediaPlayer = new MediaPlayer(s);
+        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setVolume(.15);
+        videoPlayer.setMediaPlayer(mediaPlayer);
     }
 
     public void closeAll() {

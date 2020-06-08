@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.web.WebView?>
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.view.GUI.GameCloserWindow">
@@ -14,8 +15,10 @@
       <Button layoutX="274.0" layoutY="250.0" mnemonicParsing="false" onAction="#closeAll" prefHeight="34.0"
               prefWidth="100.0" text="Close Game" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="250.0"
               AnchorPane.rightAnchor="250.0"/>
-      <WebView fx:id="video" layoutX="200.0" layoutY="100.0" prefHeight="540.0" prefWidth="960.0"
+      <WebView fx:id="video" layoutX="200.0" layoutY="100.0" prefHeight="540.0" prefWidth="960.0" visible="false"
                AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0"
                AnchorPane.topAnchor="100.0"/>
+      <MediaView fx:id="videoPlayer" fitHeight="540.0" fitWidth="960.0" AnchorPane.bottomAnchor="100.0"
+                 AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0"/>
    </children>
 </AnchorPane>
