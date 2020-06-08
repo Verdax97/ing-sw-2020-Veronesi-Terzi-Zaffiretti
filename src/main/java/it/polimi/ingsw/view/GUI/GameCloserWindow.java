@@ -5,18 +5,15 @@ import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.web.WebView;
 
 public class GameCloserWindow {
     @FXML
     private Label message;
     @FXML
-    private WebView video;
-    @FXML
     private MediaView videoPlayer;
 
     String winningMessage = "Winner winner chicken dinner!!!!";
-    String losingMessage = "You get nothing! You lose! Good day Sir!";
+    //String losingMessage = "You get nothing! You lose! Good day Sir!";
     Media winnerVideo = new Media(getClass().getClassLoader().getResource("videos/win.mp4").toExternalForm());
     Media loserVideo = new Media(getClass().getClassLoader().getResource("videos/lose.mp4").toExternalForm());
     Media s;
