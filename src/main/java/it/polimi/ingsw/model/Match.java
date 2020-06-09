@@ -359,7 +359,6 @@ public class Match extends Observable {
             return;
         }
 
-
         alt = "there was a 0 return value in move... why??!!!";
 
         if (lastAction == 1) {
@@ -370,6 +369,11 @@ public class Match extends Observable {
             movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
             alt = PrintPossibilities(movePossibilities);
             msgError = Messages.MOVE_AGAIN;
+            if (movePossibilities.size() == 0) {
+                msgError = Messages.BUILD;
+                ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
+                alt = PrintPossibilities(buildPossibilities);
+            }
         }
         //notify view
         CreateMsgPacket(msgError, alt);
@@ -458,7 +462,13 @@ public class Match extends Observable {
         } else if (lastAction == 2) {//build again
             msgError = Messages.BUILD_AGAIN;
             buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
-            alt = PrintPossibilities(buildPossibilities);
+            if (buildPossibilities.size() == 0) {
+                NextPlayer();
+                msgError = Messages.START_TURN;
+                alt = "Next player turn";
+                lastAction = 1;
+            } else
+                alt = PrintPossibilities(buildPossibilities);
         }
         //notify view
         CreateMsgPacket(msgError, alt);
