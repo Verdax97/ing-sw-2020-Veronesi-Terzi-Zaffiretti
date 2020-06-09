@@ -39,7 +39,7 @@ public class GameSaver {
         saveFile = new File("savedGames/" + fileName.toString());
         if (!saveFile.exists()) {
             //saveFile.createNewFile();
-            System.out.println("File created: " + saveFile.getName());
+            System.out.println("File does not exists.");
             return false;
         } else {
             System.out.println("File already exists.");
