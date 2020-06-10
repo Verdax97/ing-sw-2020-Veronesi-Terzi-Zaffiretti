@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -203,9 +204,10 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void selectWorker(String msg) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             messageBox.setText("Select worker you want to perform your turn");
         });
+        godMessageBox.setText("");
         powerGodUse.setVisible(false);
         lightUpBoard(msg);
     }
@@ -258,6 +260,8 @@ public class SantoriniMatchController {
         Platform.runLater(() -> {
             messageBox.setText("Select cell you want to move to");
         });
+
+        godMessageBox.setText("");
         powerGodUse.setVisible(false);
         lightUpBoard(msg);
     }
@@ -275,7 +279,7 @@ public class SantoriniMatchController {
             powerGodUse.setVisible(true);
             godMessageBox.setText("Do you want to build a dome?");
         } else
-            powerGodUse.setVisible(false);
+            godMessageBox.setText("");
         Platform.runLater(()-> {
             messageBox.setText("Select cell you want to build on");
         });
@@ -492,9 +496,10 @@ public class SantoriniMatchController {
      * @param yourTurn the your turn
      */
     public void resume(boolean yourTurn) {
-        //todo
         waitWorker = 0;
         turn = yourTurn;
+        if (!turn)
+            hideConfirmButton();
     }
 }
 
