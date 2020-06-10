@@ -7,9 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * The type Controller gui.
@@ -311,6 +313,21 @@ public class ControllerGUI {
             ((GameCloserWindow) loaderEndgame.getController()).showVideo();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void infoPopUp(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.setContentText("Confirm to close the game.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            // ... user chose OK
+            System.exit(0);
+        } else {
+            // ... user chose CANCEL or closed the dialog
+            infoPopUp("You will never get rid of me this way", "Bold of you to assume that i can so easily be bested!");
         }
     }
 }

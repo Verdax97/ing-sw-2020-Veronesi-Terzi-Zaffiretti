@@ -285,6 +285,7 @@ public class ClientInputGUI extends ClientInput {
         if (clientMain.getReceivedMsg().msg.equals(Messages.END))
             return;
         System.out.println("Closing the game.");
-        System.exit(1);
+        Platform.runLater(() -> controllerGui.infoPopUp("Game is closing", "Some player has disconnected, closing the game"));
+        //System.exit(1);
     }
 }

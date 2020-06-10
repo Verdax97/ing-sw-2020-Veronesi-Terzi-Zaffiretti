@@ -10,6 +10,9 @@ import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class LineClient manages the socket connection with the server.
+ */
 public class LineClient extends Thread implements Observer {
     private final ClientMain clientMain;
     private final String ip;
@@ -18,14 +21,24 @@ public class LineClient extends Thread implements Observer {
     private ObjectInputStream socketIn;
     private ObjectOutputStream socketOut;
 
+    /**
+     * Constructor LineClient creates a new LineClient instance.
+     *
+     * @param ip of type String
+     * @param port of type int
+     * @param clientMain of type ClientMain
+     */
     public LineClient(String ip, int port, ClientMain clientMain) {
         this.ip = ip;
         this.port = port;
         this.clientMain = clientMain;
     }
 
-    public void startClient() throws IOException
-    {
+    /**
+     * Method startClient setup the connection to the server
+     * @throws IOException when
+     */
+    public void startClient() throws IOException {
         //setup socket
         socket = new Socket(ip, port);
         //setup in/out socket
@@ -33,8 +46,10 @@ public class LineClient extends Thread implements Observer {
         socketOut = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    public void run()
-    {
+    /**
+     * Method run is the main class of the thread
+     */
+    public void run() {
         while (true) {
             MsgPacket msg = ReceiveMsg();
 
@@ -48,12 +63,17 @@ public class LineClient extends Thread implements Observer {
                     break;
             } else {
                 System.out.println("the game is ended");
-                clientMain.EndAll();
+                closeSocket();
                 break;
             }
         }
     }
 
+    /**
+     * Method SendMsg sends message to the server
+     *
+     * @param msg of type MsgToServer
+     */
     private void SendMsg(MsgToServer msg) {
         try {
             //socketOut.reset();
@@ -61,10 +81,15 @@ public class LineClient extends Thread implements Observer {
             socketOut.flush();
         } catch (IOException e) {
             System.out.println("no more connection");
-            clientMain.EndAll();
+            closeSocket();
         }
     }
 
+    /**
+     * Method ReceiveMsg try to receive message from the server.
+     *
+     * @return MsgPacket
+     */
     private MsgPacket ReceiveMsg() {
         try {
             return (MsgPacket) socketIn.readObject();
@@ -72,11 +97,31 @@ public class LineClient extends Thread implements Observer {
             if (!(e instanceof IOException))
                 System.out.println("The format of the message to receive is incorrect");
             else
-                clientMain.EndAll();
+                closeSocket();
         }
         return null;
     }
 
+    /**
+     * Method closeSocket close the socket
+     */
+    void closeSocket() {
+        try {
+            socketIn.close();
+            socketOut.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientMain.EndAll();
+    }
+
+    /**
+     * Method update is called when the client sends a message to the server
+     *
+     * @param o   of type Observable
+     * @param arg of type Object
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (!(o instanceof ClientInput) || !(arg instanceof MsgToServer)) {
