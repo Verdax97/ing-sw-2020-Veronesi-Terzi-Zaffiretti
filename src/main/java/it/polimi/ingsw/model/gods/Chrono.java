@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
-import javafx.scene.image.Image;
 
 public class Chrono extends God{
 
@@ -17,7 +16,7 @@ public class Chrono extends God{
         int fullTowers = 0;
         for (int i=0; i<5; i++){
             for (int j=0; j<5; j++){
-                if (board.getCell(i, j).getBuilding()==3 && board.getCell(i, j).getDome()==true){
+                if (board.getCell(i, j).getBuilding() == 3 && board.getCell(i, j).getDome()) {
                     fullTowers++;
                 }
             }
