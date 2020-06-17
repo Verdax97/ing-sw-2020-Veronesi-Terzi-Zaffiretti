@@ -398,10 +398,13 @@ public class SantoriniMatchController {
     public void refreshPlayers(SimpleBoard simpleBoard){
         for (int i = 0; i < simpleBoard.players.size(); i++) {
             for (int j = 0; j < simpleBoard.players.size(); j++) {
-                AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(i);
-                ((ImageView) temp.getChildren().get(1)).setImage(new Image("Images/godCards/" + simpleBoard.gods.get(i).getName() + ".png"));
-                ((Label) temp.getChildren().get(2)).setText(simpleBoard.players.get(i));
-                ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(i).getDescription());
+                int finalI = i;
+                Platform.runLater(() -> {
+                    AnchorPane temp = (AnchorPane) playersInfo.getChildren().get(finalI);
+                    ((ImageView) temp.getChildren().get(1)).setImage(new Image("Images/godCards/" + simpleBoard.gods.get(finalI).getName() + ".png"));
+                    ((Label) temp.getChildren().get(2)).setText(simpleBoard.players.get(finalI));
+                    ((Label) temp.getChildren().get(3)).setText(simpleBoard.gods.get(finalI).getDescription());
+                });
             }
         }
         if (simpleBoard.players.size() == 2) {
