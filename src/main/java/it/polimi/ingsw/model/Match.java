@@ -218,8 +218,7 @@ public class Match extends Observable {
             return;
         } else if (lastAction == -1)//you lose
         {
-            PlayerLost("Error You Lost (can't move worker)", playerTurn.getNickname() + "" +
-                    " lost because he can't move his workers");
+            PlayerLost("Error " + playerTurn.getNickname() + " lost because he can't move his workers", playerTurn.getNickname() + " lost because he can't move his workers");
             return;
         } else
             msgError = errorHandler.GetErrorSetup(lastAction) + "\n" + Messages.START_TURN;
@@ -413,7 +412,7 @@ public class Match extends Observable {
         if (turn.CheckLostBuild(board)) {
             lastAction = -10;
             msgError = errorHandler.GetErrorBuild(lastAction);
-            PlayerLost("Error You Lost (can't build)", playerTurn.getNickname() + "" +
+            PlayerLost("Error " + playerTurn.getNickname() + " lost because he can't build with his worker", playerTurn.getNickname() + "" +
                     " lost because he can't build with his worker");
             return;
         }
@@ -672,6 +671,7 @@ public class Match extends Observable {
      */
     public void PlayerLost(String msg, String alt) {
         Player loser = playerTurn;
+        msg += "\n";
         CreateMsgPacket(msg, alt);//send packet to the player
         killPlayer(loser);
         if (nPlayer > 0)

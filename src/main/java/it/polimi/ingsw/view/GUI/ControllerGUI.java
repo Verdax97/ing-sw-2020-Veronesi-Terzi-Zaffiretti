@@ -278,8 +278,13 @@ public class ControllerGUI {
         for (int val = 0; val < simpleBoard.players.size(); val++)
             if (simpleBoard.players.get(val).equals(name)) {
                 int finalVal = val;
-                Platform.runLater(() -> santoriniMatchController.enlightenPlayer(finalVal));
-                break;
+                Platform.runLater(() -> {
+                    try {
+                        santoriniMatchController.enlightenPlayer(finalVal);
+                    } catch (NullPointerException e) {
+                        System.out.println("ok");
+                    }
+                });
             }
     }
 
