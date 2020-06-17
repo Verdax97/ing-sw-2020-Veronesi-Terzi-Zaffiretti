@@ -95,7 +95,6 @@ public class ClientInputGUI extends ClientInput {
     public void ParseMsg(MsgPacket msgPacket) {
 
         String msg = msgPacket.msg;
-
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             String errorMsg = msg.split("\n", 2)[0];
             msg = msg.split("\n", 2)[1];
@@ -205,13 +204,15 @@ public class ClientInputGUI extends ClientInput {
             }
             controllerGui.build(msgPacket.altMsg, atlas);
         }
+
+        controllerGui.activePlayer(msgPacket.board, msgPacket.nickname);
     }
 
     /** @see ClientInput#updateNotYourTurn(MsgPacket) */
     @Override
     public void updateNotYourTurn(MsgPacket msgPacket) {
         String msg = msgPacket.msg;
-
+        controllerGui.activePlayer(msgPacket.board, msgPacket.nickname);
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             msg = msg.split("\n", 2)[1];
         }
@@ -258,6 +259,8 @@ public class ClientInputGUI extends ClientInput {
         }
 
         Reply(-5, -5, -5, -5);
+
+        controllerGui.activePlayer(msgPacket.board, msgPacket.nickname);
     }
 
     /**

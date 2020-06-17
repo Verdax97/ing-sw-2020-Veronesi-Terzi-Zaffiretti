@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.GUI;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -269,9 +270,18 @@ public class ControllerGUI {
     /**
      * Active player.
      *
-     * @param val the val
+     * @param simpleBoard the board with all information
      */
-    public void activePlayer(int val){ santoriniMatchController.enlightenPlayer(val);}
+    public void activePlayer(SimpleBoard simpleBoard, String name) {
+        if (simpleBoard == null)
+            return;
+        for (int val = 0; val < simpleBoard.players.size(); val++)
+            if (simpleBoard.players.get(val).equals(name)) {
+                int finalVal = val;
+                Platform.runLater(() -> santoriniMatchController.enlightenPlayer(finalVal));
+                break;
+            }
+    }
 
     /**
      * Receive update.

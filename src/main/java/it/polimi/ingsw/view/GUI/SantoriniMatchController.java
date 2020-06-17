@@ -314,6 +314,7 @@ public class SantoriniMatchController {
             }
             sendReply();
             resetLighten();
+            powerGodUse.setVisible(false);
         }
     }
 
@@ -376,11 +377,15 @@ public class SantoriniMatchController {
      * @param val the val
      */
 //check usage
-    public void enlightenPlayer(int val){
-        for (int i= 0; i<nPlayers; i++){
-            if (i == val){
-                playersInfo.getChildren().get(i).setStyle("-fx-background-color: #6495ed");
-            } else playersInfo.getChildren().get(i).setStyle("-fx-background-color: Black");
+    public void enlightenPlayer(int val) {
+        try {
+            for (int i = 0; i < nPlayers; i++) {
+                if (i == val) {
+                    playersInfo.getChildren().get(i).setStyle("-fx-background-color: #6495ed");
+                } else playersInfo.getChildren().get(i).setStyle("-fx-background-color: Black");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("ok");
         }
     }
 
