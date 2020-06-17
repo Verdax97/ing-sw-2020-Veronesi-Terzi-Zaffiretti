@@ -31,4 +31,7 @@ public class MoveEnemyGods extends God {
         } else return -5;//no space to move enemy worker
         return 1;
     }
+
+    public void computeTargetPos(Cell selectedCell, int x, int y) {
+    }
 }

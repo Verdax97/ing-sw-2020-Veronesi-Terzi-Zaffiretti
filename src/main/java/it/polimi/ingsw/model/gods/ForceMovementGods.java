@@ -48,6 +48,7 @@ public class ForceMovementGods extends MoveEnemyGods {
      */
     @Override
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
+        computeTargetPos(selectedCell, x, y);
         int moved = super.CheckMove(board, selectedCell, x, y);
         if (moved > 0 || (moved == -4 && !board.getCell(x, y).getDome())) {
             Worker worker = board.getCell(x, y).getWorker();
@@ -57,7 +58,7 @@ public class ForceMovementGods extends MoveEnemyGods {
                     return moved;//should return -4
                 } else if (targetPosX < 0 || targetPosX > 4 || targetPosY < 0 || targetPosY > 4) {
                     return -7;//target space is out of board
-                } else if ((board.getCell(targetPosX, targetPosY).getWorker() != null || board.getCell(targetPosX, targetPosY).getDome()) && targetPosX != selectedCell.getPos()[0] && targetPosY != selectedCell.getPos()[1]) {
+                } else if ((board.getCell(targetPosX, targetPosY).getWorker() != null || board.getCell(targetPosX, targetPosY).getDome()) && (targetPosX != selectedCell.getPos()[0] || targetPosY != selectedCell.getPos()[1])) {
                     return -5;
                 }
             }

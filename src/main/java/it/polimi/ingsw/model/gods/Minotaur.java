@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
-import javafx.scene.image.Image;
 
 public class Minotaur extends ForceMovementGods
 {
@@ -13,12 +12,16 @@ public class Minotaur extends ForceMovementGods
     }
 
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y)
-    {
+    public int Move(Board board, Cell selectedCell, int x, int y) {
+        computeTargetPos(selectedCell, x, y);
+        return ForceMove(board, selectedCell, x, y);
+    }
+
+    @Override
+    public void computeTargetPos(Cell selectedCell, int x, int y) {
         int dx = x - selectedCell.getPos()[0];
         int dy = y - selectedCell.getPos()[1];
         targetPosX = x + dx;
         targetPosY = y + dy;
-        return ForceMove(board, selectedCell, x, y);
     }
 }

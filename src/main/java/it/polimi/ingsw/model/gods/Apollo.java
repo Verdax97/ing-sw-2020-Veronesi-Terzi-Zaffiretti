@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
-import javafx.scene.image.Image;
 
 /**
  * Class Apollo implements Apollo functionalities
@@ -21,8 +20,13 @@ public class Apollo extends ForceMovementGods {
      */
     @Override
     public int Move(Board board, Cell selectedCell, int x, int y) {
+        computeTargetPos(selectedCell, x, y);
+        return ForceMove(board, selectedCell, x, y);
+    }
+
+    @Override
+    public void computeTargetPos(Cell selectedCell, int x, int y) {
         targetPosX = selectedCell.getPos()[0];
         targetPosY = selectedCell.getPos()[1];
-        return ForceMove(board, selectedCell, x, y);
     }
 }
