@@ -5,12 +5,11 @@ import it.polimi.ingsw.model.gods.Hephaestus;
 import it.polimi.ingsw.model.gods.Hestia;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.model.gods.Triton;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class MatchTest {
 
@@ -56,19 +55,21 @@ public class MatchTest {
     }
 
     @Test
-    public void pickGodTest(){
+    public void pickGodTest() {
         ArrayList<String> players = new ArrayList<>();
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
         match.StartGame();
-        MsgToServer msg50 = new MsgToServer("Pino", 50, 0, 0, 0 );
+        MsgToServer msg50 = new MsgToServer("Pino", 50, 0, 0, 0);
         match.PickGod(msg50);
         Assertions.assertEquals(-1, match.getLastAction());
-        MsgToServer msg1 = new MsgToServer("Pino", 1, 0, 0, 0 );
+        match.PickGod(msg50);
+        Assertions.assertEquals(-1, match.getLastAction());
+        MsgToServer msg1 = new MsgToServer("Pino", 1, 0, 0, 0);
         match.PickGod(msg1);
         Assertions.assertEquals(1, match.getLastAction());
-        MsgToServer msg2 = new MsgToServer("Pino", 2, 0, 0, 0 );
+        MsgToServer msg2 = new MsgToServer("Pino", 2, 0, 0, 0);
         match.PickGod(msg2);
         Assertions.assertEquals(1, match.getLastAction());
     }

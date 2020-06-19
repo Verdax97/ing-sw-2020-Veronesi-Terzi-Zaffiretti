@@ -50,6 +50,11 @@ public class CharonTest{
         Assertions.assertEquals(1, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
         serverView.printBoard(board, match);
         Assertions.assertEquals(-2, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
+        board.getCell(2, 1).setWorker(board.getCell(1, 1).getWorker());
+        board.getCell(1, 1).setWorker(null);
+        serverView.printBoard(board, match);
+        turn.setSelectedCell(board.getCell(3, 1));
+        Assertions.assertEquals(-5, charon.PlayerTurn(board, turn.getSelectedCell(), 2, 1));
         serverView.printBoard(board, match);
     }
 }

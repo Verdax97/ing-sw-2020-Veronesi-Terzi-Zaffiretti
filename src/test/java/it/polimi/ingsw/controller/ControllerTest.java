@@ -72,18 +72,38 @@ public class ControllerTest {
         controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
         msg = new MsgToServer("PinoTest", 3, 3, 2, 2);
         controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+        for (int i = 0; i < 8; i++) {
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
+        }
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
-        msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
-        controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
-        msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
-        controller.update(new ServerMultiplexer(new Controller(), new Integer(4567)), msg);
-
-
     }
 
 }
