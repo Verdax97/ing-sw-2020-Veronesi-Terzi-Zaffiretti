@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,7 +37,7 @@ public class SantoriniMatchController {
     @FXML
     private Text godMessageBox;
     @FXML
-    private CheckBox powerGodUse;
+    private Button otherActionButton;
     @FXML
     private Label messageBox;
 
@@ -142,7 +141,7 @@ public class SantoriniMatchController {
             messageBox.setText("");
         });
         godMessageBox.setText("");
-        powerGodUse.setVisible(false);
+        otherActionButton.setVisible(false);
         confirmButton.setVisible(false);
         turn = false;
     }
@@ -208,7 +207,7 @@ public class SantoriniMatchController {
             messageBox.setText("Select worker you want to perform your turn");
         });
         godMessageBox.setText("");
-        powerGodUse.setVisible(false);
+        otherActionButton.setVisible(false);
         lightUpBoard(msg);
     }
 
@@ -219,7 +218,7 @@ public class SantoriniMatchController {
      */
     public void beforeMovePower(String msg) {
         godMessageBox.setText("You can perform an action before your move");
-        powerGodUse.setVisible(true);
+        otherActionButton.setVisible(true);
         godMessageBox.setText("Do you want to make an action before the move?");
         powerGodAnswer = true;
         lightUpBoard(msg);
@@ -232,7 +231,7 @@ public class SantoriniMatchController {
      */
     public void moveAgain(String msg) {
         godMessageBox.setText("You can move again");
-        powerGodUse.setVisible(true);
+        otherActionButton.setVisible(true);
         godMessageBox.setText("Do you want to move again?");
         powerGodAnswer = true;
         lightUpBoard(msg);
@@ -245,7 +244,7 @@ public class SantoriniMatchController {
      */
     public void buildAgain(String msg) {
         godMessageBox.setText("You could build again");
-        powerGodUse.setVisible(true);
+        otherActionButton.setVisible(true);
         godMessageBox.setText("Do you want to build again?");
         powerGodAnswer = true;
         lightUpBoard(msg);
@@ -262,7 +261,7 @@ public class SantoriniMatchController {
         });
 
         godMessageBox.setText("");
-        powerGodUse.setVisible(false);
+        otherActionButton.setVisible(false);
         lightUpBoard(msg);
     }
 
@@ -276,7 +275,7 @@ public class SantoriniMatchController {
         if (atlas) {
             this.atlas = true;
             powerGodAnswer = true;
-            powerGodUse.setVisible(true);
+            otherActionButton.setVisible(true);
             godMessageBox.setText("Do you want to build a dome?");
         } else
             godMessageBox.setText("");
@@ -308,19 +307,19 @@ public class SantoriniMatchController {
                 startWorkerPos.clear();
                 placeWorkersPhase = false;
             } else if (powerGodAnswer) {
-                isThisAtlasBuilding();
+                isThisAtlasBuilding(true);
             } else {
                 reply[1] = -5;
             }
             sendReply();
             resetLighten();
-            powerGodUse.setVisible(false);
+            otherActionButton.setVisible(false);
         }
     }
 
-    private void isThisAtlasBuilding() {
+    private void isThisAtlasBuilding(boolean cond) {
         powerGodAnswer = false;
-        if (powerGodUse.isSelected()) {
+        if (cond) {
             if (atlas) {
                 reply[2] = 1;
                 this.atlas = false;
@@ -336,6 +335,19 @@ public class SantoriniMatchController {
             return;
         }
         reply[1] = 0;
+    }
+
+    public void otherAction() {
+        if (turn) {
+            if (powerGodAnswer) {
+                isThisAtlasBuilding(false);
+            } else {
+                reply[1] = -5;
+            }
+            sendReply();
+            resetLighten();
+            otherActionButton.setVisible(false);
+        }
     }
 
     private void selectedCell(CellButton cellButton) {
@@ -441,7 +453,7 @@ public class SantoriniMatchController {
         //check if someone has lost
         if (activePlayers != nPlayers) {
             if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
-                winner();
+                //winner();
             } else refreshPlayers(simpleBoard);
             nPlayers = activePlayers;
         }
@@ -451,8 +463,8 @@ public class SantoriniMatchController {
         //updates the board itself
         for (int j = 4; j >= 0; j--) {
             for (int i = 0; i < 5; i++) {
+                cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j]);
                 if (simpleBoard.board[i][j] == 4) {
-                    cellButtonBoard.get(cell).setDome();
                     cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(5) + "; -fx-stroke: transparent");
                 } else //search for worker on that cell
                 {
@@ -465,14 +477,12 @@ public class SantoriniMatchController {
                                 val = 1;
                             else if (index >= 4 && index < 6)
                                 val = 2;
-                            cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j]);
                             cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(val) + "; -fx-stroke: black");
                             found = true;
                             break;
                         }
                     }
                     if (!found) {
-                        cellButtonBoard.get(cell).refresh(simpleBoard.board[i][j]); //no worker and no dome
                         cellWorker.get(cell).setStyle("-fx-fill: " + pickColor(5) + "; -fx-stroke: transparent");
                     }
                 }

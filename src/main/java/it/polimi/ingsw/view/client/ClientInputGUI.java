@@ -157,7 +157,8 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.itIsYourTurn();
-            Reply(-5, -5, -5, -5);
+            if (msgPacket.board.players.size() > 1)
+                Reply(-5, -5, -5, -5);
             return;
         }
 
@@ -257,7 +258,7 @@ public class ClientInputGUI extends ClientInput {
         controllerGui.waitYourTurn();
 
 
-        Reply(-5, -5, -5, -5);
+        //Reply(-5, -5, -5, -5);
 
         controllerGui.activePlayer(msgPacket.board, msgPacket.nickname);
     }
@@ -267,7 +268,7 @@ public class ClientInputGUI extends ClientInput {
      */
     @Override
     public void printBoard(SimpleBoard board) {
-        controllerGui.receiveUpdate(board);
+        Platform.runLater(() -> controllerGui.receiveUpdate(board));
     }
 
     /**

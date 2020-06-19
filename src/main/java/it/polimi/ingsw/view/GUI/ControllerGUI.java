@@ -188,6 +188,7 @@ public class ControllerGUI {
             santoriniMatchScene = new Scene(rootSantoriniMatch);
             primaryStage.setScene(santoriniMatchScene);
             primaryStage.setTitle("Santorini Board Game");
+            primaryStage.setResizable(false);
             santoriniMatchController.setMyName(clientInputGUI.getMyName());
             santoriniMatchController.initializeAll(simpleBoard);
         }

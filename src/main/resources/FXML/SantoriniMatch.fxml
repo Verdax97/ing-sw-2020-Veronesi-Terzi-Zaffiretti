@@ -20,7 +20,10 @@
                               <Image url="@../Images/godCards/Zeus.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0"
+                               prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE"
+                               wrapText="true" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="5.0"
+                               AnchorPane.topAnchor="15.0"/>
                         <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
                         <Circle fill="RED" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
                      </children>
@@ -33,7 +36,10 @@
                               <Image url="@../Images/godCards/Zeus.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0"
+                               prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE"
+                               wrapText="true" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="5.0"
+                               AnchorPane.topAnchor="15.0"/>
                         <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
                         <Circle fill="LIME" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
                      </children>
@@ -46,7 +52,10 @@
                               <Image url="@../Images/godCards/Zeus.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0" prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="111.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="5.0"
+                               prefHeight="47.0" prefWidth="169.0" text="Player" textAlignment="CENTER" textFill="WHITE"
+                               wrapText="true" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="5.0"
+                               AnchorPane.topAnchor="15.0"/>
                         <Label alignment="TOP_CENTER" layoutX="128.0" layoutY="51.0" prefHeight="120.0" prefWidth="179.0" text="Your Move: Your Worker maymove into an opponent Worker’sspace, if their Worker can beforced one space straight backwards to anunoccupied space at any level." textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="116.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="51.0" />
                         <Circle fill="BLUE" layoutX="122.0" layoutY="20.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="113.0" AnchorPane.topAnchor="11.0" />
                      </children>
@@ -65,7 +74,7 @@
                   </ImageView>
                   <Text fx:id="whosTurn" layoutX="196.0" layoutY="41.423828125" text="Your Turn" textAlignment="CENTER" wrappingWidth="480.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="30.0"/>
                      </font>
                   </Text>
                   <VBox layoutY="73.0" prefHeight="400.0" prefWidth="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="73.0">
@@ -144,95 +153,119 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="240.0" style="-fx-background-color: black;" HBox.hgrow="ALWAYS">
+            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane prefHeight="103.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                  <AnchorPane VBox.vgrow="ALWAYS">
                      <children>
-                        <CheckBox fx:id="powerGodUse" alignment="CENTER" layoutX="81.0" layoutY="51.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="101.0" textFill="WHITE" visible="false" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <Label fx:id="messageBox" alignment="CENTER" prefHeight="43.0" prefWidth="240.0" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                        <Text fx:id="godMessageBox" fill="WHITE" layoutX="79.0" layoutY="58.0" text="info god box" textAlignment="CENTER" wrappingWidth="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <AnchorPane opacity="0.5" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="5.0"
+                                    AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                    AnchorPane.topAnchor="5.0"/>
+                        <Label fx:id="messageBox" alignment="CENTER" prefHeight="120.0" prefWidth="230.0"
+                               text="se provo a scrivere che cosa si riesce a capire?" textAlignment="CENTER"
+                               wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                               AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font size="20.0"/>
+                           </font>
+                        </Label>
+                        <Text fx:id="godMessageBox" layoutY="130.0" text="info god box" textAlignment="CENTER"
+                              wrappingWidth="240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0"/>
                      </children>
                   </AnchorPane>
                   <AnchorPane VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.62"
-                                    style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="10.0"
-                                    AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                    AnchorPane.topAnchor="10.0">
+                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.5" style="-fx-background-color: lightblue;"
+                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0"/>
+                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0"
+                              AnchorPane.rightAnchor="20.0">
                            <children>
-                              <Label alignment="CENTER" layoutX="63.0" layoutY="14.0" text="Legenda: "
-                                     textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0"
-                                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0">
-                                 <font>
-                                    <Font size="19.0"/>
-                                 </font>
-                              </Label>
-                              <VBox alignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-                                    AnchorPane.rightAnchor="5.0">
+                              <HBox>
                                  <children>
-                                    <HBox>
-                                       <children>
-                                          <Label prefHeight="21.0" text="Dome                     ">
-                                             <font>
-                                                <Font size="15.0"/>
-                                             </font>
-                                          </Label>
-                                          <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                      style="-fx-background-color: dodgerblue;" HBox.hgrow="ALWAYS"/>
-                                       </children>
-                                    </HBox>
-                                    <HBox layoutX="10.0" layoutY="10.0">
-                                       <children>
-                                          <Label prefHeight="21.0" text="Level3                ">
-                                             <font>
-                                                <Font size="15.0"/>
-                                             </font>
-                                          </Label>
-                                          <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                      style="-fx-background-color: darkslategray;" HBox.hgrow="ALWAYS"/>
-                                       </children>
-                                    </HBox>
-                                    <HBox layoutX="10.0" layoutY="31.0">
-                                       <children>
-                                          <Label prefHeight="21.0" text="Level2            ">
-                                             <font>
-                                                <Font size="15.0"/>
-                                             </font>
-                                          </Label>
-                                          <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                      style="-fx-background-color: firebrick;" HBox.hgrow="ALWAYS"/>
-                                       </children>
-                                    </HBox>
-                                    <HBox layoutX="10.0" layoutY="52.0">
-                                       <children>
-                                          <Label prefHeight="21.0" text="Level1        ">
-                                             <font>
-                                                <Font size="15.0"/>
-                                             </font>
-                                          </Label>
-                                          <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                      style="-fx-background-color: coral;" HBox.hgrow="ALWAYS"/>
-                                       </children>
-                                    </HBox>
-                                    <HBox layoutX="10.0" layoutY="73.0">
-                                       <children>
-                                          <Label prefHeight="21.0" text="Ground  ">
-                                             <font>
-                                                <Font size="15.0"/>
-                                             </font>
-                                          </Label>
-                                          <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                      style="-fx-background-color: navajowhite;" HBox.hgrow="ALWAYS"/>
-                                       </children>
-                                    </HBox>
+                                    <Label prefHeight="21.0" text="Dome                     ">
+                                       <font>
+                                          <Font size="15.0"/>
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
+                                                style="-fx-background-color: dodgerblue;" HBox.hgrow="ALWAYS"/>
                                  </children>
-                              </VBox>
-                           </children></AnchorPane>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Label prefHeight="21.0" text="Level3                ">
+                                       <font>
+                                          <Font size="15.0"/>
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
+                                                style="-fx-background-color: darkslategray;" HBox.hgrow="ALWAYS"/>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="31.0">
+                                 <children>
+                                    <Label prefHeight="21.0" text="Level2            ">
+                                       <font>
+                                          <Font size="15.0"/>
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
+                                                style="-fx-background-color: firebrick;" HBox.hgrow="ALWAYS"/>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="52.0">
+                                 <children>
+                                    <Label prefHeight="21.0" text="Level1        ">
+                                       <font>
+                                          <Font size="15.0"/>
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="14.0" prefWidth="14.0" style="-fx-background-color: coral;"
+                                                HBox.hgrow="ALWAYS"/>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="73.0">
+                                 <children>
+                                    <Label prefHeight="21.0" text="Ground  ">
+                                       <font>
+                                          <Font size="15.0"/>
+                                       </font>
+                                    </Label>
+                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
+                                                style="-fx-background-color: navajowhite;" HBox.hgrow="ALWAYS"/>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="210.0" text="Legenda: "
+                               textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0"
+                               AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                           <font>
+                              <Font size="19.0"/>
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="124.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                  <AnchorPane VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="confirmButton" layoutX="56.0" layoutY="36.0" mnemonicParsing="false" onAction="#confirmAction" prefHeight="56.0" prefWidth="131.0" text="Confirm" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="53.0" />
+                        <AnchorPane layoutX="5.0" layoutY="5.0" opacity="0.5" style="-fx-background-color: lightblue;"
+                                    AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+                        <Button fx:id="otherActionButton" mnemonicParsing="false" onAction="#otherAction" text="Cancel"
+                                visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font size="25.0"/>
+                           </font>
+                        </Button>
+                        <Button fx:id="confirmButton" layoutY="39.0" mnemonicParsing="false" onAction="#confirmAction"
+                                text="Confirm" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0"
+                                AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font size="25.0"/>
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                </children>

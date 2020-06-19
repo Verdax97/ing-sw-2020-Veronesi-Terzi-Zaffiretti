@@ -150,6 +150,7 @@ public class ClientMain implements Runnable {
 
         board = receivedMsg.board;
         clientInput.printBoard(board);
+        //clientInput.printBoard(board);
 
         //exit if the game ends
         if (getReceivedMsg().msg.equalsIgnoreCase(Messages.END)) {
@@ -174,6 +175,9 @@ public class ClientMain implements Runnable {
      */
     public synchronized void EndAll() {
         end = true;
+        if (isEnding)
+            return;
+        isEnding = true;
         clientInput.closeGame();
         try {
             threadInput.interrupt();
@@ -184,4 +188,5 @@ public class ClientMain implements Runnable {
         //close all
     }
 
+    public boolean isEnding = false;
 }

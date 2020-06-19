@@ -112,6 +112,7 @@ public class LineClient extends Thread implements Observer {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Socket already closed");
         }
         clientMain.EndAll();
     }
