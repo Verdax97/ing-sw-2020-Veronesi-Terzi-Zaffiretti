@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgPacket;
 import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.view.Colors;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,6 +23,8 @@ public class ServerThread extends Thread implements Observer {
     protected Socket socket;
     private ObjectInputStream socketIn;
     private ObjectOutputStream socketOut;
+
+    private boolean isEnding = false;
 
     private final int pos;
     private volatile boolean going = true;
@@ -62,7 +65,7 @@ public class ServerThread extends Thread implements Observer {
                 server.receiveMsg(msgToServer);
             }
         } catch (IOException e) {
-            System.out.println("Connection ended with " + this.nick);
+            System.out.println("Connection ended with " + Colors.ANSI_YELLOW + nick + Colors.ANSI_RESET);
         }
         closeConnection();
     }
@@ -75,15 +78,11 @@ public class ServerThread extends Thread implements Observer {
 
         setupNickname();
 
-        //
+        //send confirm message to the player
         sendMsg(new MsgPacket(nick, Messages.WAIT_TURN, "Waiting for players", null));
-        /*
-        MsgToServer msgToServer = receiveMsg();
-        if (msgToServer == null)
-            throw new IOException("Received message was null");*/
 
         //add user to the number successfully connected
-        System.out.println("Player " + nick + " has joined the game");
+        System.out.println("Player " + Colors.ANSI_YELLOW + nick + Colors.ANSI_RESET + " has joined the game");
         server.addConnected();
     }
 
@@ -154,8 +153,6 @@ public class ServerThread extends Thread implements Observer {
      */
     private void sendMsg(MsgPacket msg) throws IOException {
         try {
-            //System.out.println(nick + " receiving message directed to " + msg.nickname + " msg= " + msg.msg);
-            //socketOut.reset();
             socketOut.writeObject(msg);
             socketOut.flush();
         } catch (IOException e) {
@@ -188,15 +185,22 @@ public class ServerThread extends Thread implements Observer {
      * Method CloseConnection close the connection to the client
      */
     public void closeConnection() {
+        if (isEnding)
+            return;
+        isEnding = true;
         going = false;
         try {
             socketIn.close();
             socketOut.close();
             socket.close();
         } catch (IOException e) {
-            System.out.println(e.toString() + " error in closing the connection with " + nick);
+            System.out.println(e.toString() + " error in closing the connection with " + Colors.ANSI_YELLOW + nick + Colors.ANSI_RESET);
         }
+        server.removeConnected();
         server.closeConnections();
+        synchronized (server) {
+            server.notifyAll();
+        }
     }
 
 

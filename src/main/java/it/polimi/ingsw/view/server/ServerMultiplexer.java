@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Observable;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Class ServerMultiplexer creates the socket and performs the connection to the players
@@ -42,12 +39,11 @@ public class ServerMultiplexer extends Observable implements Runnable {
     private volatile boolean resumeGame = false;
     private volatile boolean ending = false;
     private volatile boolean started = false;
-    Integer port = null;
+    private final Integer port;
+    private volatile boolean ended = false;
 
     /**
      * Method isEnding returns the ending of this ServerMultiplexer object.
-     *
-     *
      *
      * @return the ending (type boolean) of this ServerMultiplexer object.
      */
@@ -72,8 +68,9 @@ public class ServerMultiplexer extends Observable implements Runnable {
      *
      * @param controller of type Controller
      */
-    public ServerMultiplexer(Controller controller) {
+    public ServerMultiplexer(Controller controller, Integer port) {
         this.controller = controller;
+        this.port = port;
     }
 
     /**
@@ -87,20 +84,6 @@ public class ServerMultiplexer extends Observable implements Runnable {
         nConnectionPlayer = 0;
         setEnding(false);
         started = false;
-
-        AtomicReference<Scanner> scanner = new AtomicReference<>(new Scanner(System.in));
-        if (port == null) {
-            System.out.println("Insert server port:");
-            while (true) {
-                try {
-                    port = scanner.get().nextInt();
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println("Insert a valid port");
-                    scanner.set(new Scanner(System.in));
-                }
-            }
-        }
 
         while (true) {
             try {
@@ -140,15 +123,10 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 } else Thread.yield();
             } catch (IOException e) {
                 System.out.println("Closing connection before connecting to all players");
-                //System.out.println(e.toString());
-                ending = true;
-                break;
+                closeConnections();
+                return;
                 //break; //In case the serverSocket gets closed
             }
-        }
-        if (ending) {
-            closeConnections();
-            return;
         }
 
         //check if there are other games with same players
@@ -163,7 +141,6 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 }
         } catch (IOException | InterruptedException e) {
             System.out.println("Cannot communicate if the player wants to resume");
-            //System.out.println(e.toString());
             closeConnections();
             return;
         }
@@ -193,23 +170,27 @@ public class ServerMultiplexer extends Observable implements Runnable {
         if (isEnding())
             return;
         setEnding(true);
+        for (ServerThread thread : playersThread) {
+            thread.closeConnection();
+            thread.interrupt();
+        }
+        try {
+            while (nConnectionPlayer > 1) {
+                synchronized (this) {
+                    wait();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         try {
             serverSocket.close();
         } catch (IOException | NullPointerException e) {
             System.out.println("cannot close server");
         }
-        for (ServerThread thread : playersThread) {
-            thread.closeConnection();
-            thread.interrupt();
-        }
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println("Server can't sleep :(");
-            //e.printStackTrace();
-        }
-        startServer();
+        //startServer();
+        ended = true;
     }
 
     /**
@@ -236,6 +217,13 @@ public class ServerMultiplexer extends Observable implements Runnable {
     }
 
     /**
+     * Method removeConnected decrement nConnectionPlayer
+     */
+    public synchronized void removeConnected() {
+        nConnectionPlayer--;
+    }
+
+    /**
      * Method getNConnectionPlayer returns the nConnectionPlayer of this ServerMultiplexer object.
      *
      * @return the nConnectionPlayer (type int) of this ServerMultiplexer object.
@@ -250,6 +238,15 @@ public class ServerMultiplexer extends Observable implements Runnable {
     @Override
     public void run() {
         startServer();
+        while (!ended) {
+            try {
+                synchronized (this) {
+                    wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
