@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.GameSaver;
 import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.view.ServerView;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,18 +74,38 @@ public class ControllerTest {
         controller.update(new ServerMultiplexer(new Controller()), msg);
         msg = new MsgToServer("PinoTest", 3, 3, 2, 2);
         controller.update(new ServerMultiplexer(new Controller()), msg);
+        for (int i = 0; i < 8; i++) {
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+            msg = new MsgToServer("PinoTest", 0, -5, -5, -5);
+            controller.update(new ServerMultiplexer(new Controller()), msg);
+        }
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller()), msg);
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller()), msg);
         msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
         controller.update(new ServerMultiplexer(new Controller()), msg);
-        msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
-        controller.update(new ServerMultiplexer(new Controller()), msg);
-        msg = new MsgToServer("GinoTest1", 0, -5, -5, -5);
-        controller.update(new ServerMultiplexer(new Controller()), msg);
-
-
     }
 
 }

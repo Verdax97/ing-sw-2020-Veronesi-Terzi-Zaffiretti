@@ -11,6 +11,7 @@ public class ErrorHandlerTest {
         Assertions.assertEquals("You Lost", errorHandler.GetErrorSetup(-1));
         Assertions.assertEquals("You Won!!", errorHandler.GetErrorSetup(1));
         Assertions.assertEquals("", errorHandler.GetErrorSetup(0));
+        Assertions.assertEquals("Error No space to move the worker", errorHandler.GetErrorSetup(-7));
         int n = 15;
         Assertions.assertEquals("Error generic", errorHandler.GetErrorSetup(n));
 

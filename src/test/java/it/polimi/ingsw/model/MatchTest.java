@@ -65,6 +65,8 @@ public class MatchTest {
         MsgToServer msg50 = new MsgToServer("Pino", 50, 0, 0, 0 );
         match.PickGod(msg50);
         Assertions.assertEquals(-1, match.getLastAction());
+        match.PickGod(msg50);
+        Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg1 = new MsgToServer("Pino", 1, 0, 0, 0 );
         match.PickGod(msg1);
         Assertions.assertEquals(1, match.getLastAction());
