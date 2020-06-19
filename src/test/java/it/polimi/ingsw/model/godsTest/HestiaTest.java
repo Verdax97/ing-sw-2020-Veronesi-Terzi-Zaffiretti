@@ -3,11 +3,10 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Hestia;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class HestiaTest
 {
@@ -34,15 +33,15 @@ public class HestiaTest
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(0, 0).setWorker(testWorker3);
         Hestia hestia = new Hestia();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
         Assertions.assertEquals(2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(1, hestia.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(2, hestia.Building(board, selectedCell, 1, 1, 0, 0));
         Assertions.assertEquals(-9, hestia.Building(board, selectedCell, 0, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         hestia.ResetGod();
         Assertions.assertEquals(-1, hestia.Building(board, selectedCell, 5, 5, 0, 0));
         Assertions.assertEquals(-2, hestia.Building(board, selectedCell, 4, 4, 0, 0));

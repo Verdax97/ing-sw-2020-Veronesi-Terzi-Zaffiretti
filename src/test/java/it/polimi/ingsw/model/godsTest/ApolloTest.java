@@ -3,11 +3,10 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Apollo;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class ApolloTest
 {
@@ -40,9 +39,9 @@ public class ApolloTest
         board.getCell(4, 0).setWorker(testWorker01);
         board.getCell(0, 0).setWorker(testWorker21);
         Apollo apollo = new Apollo();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 4);
         Assertions.assertEquals(1, apollo.Move(board, selectedCell, 1, 3));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
     }
 }

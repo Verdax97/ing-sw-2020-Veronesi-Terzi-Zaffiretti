@@ -3,11 +3,10 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Prometheus;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class PrometheusTest {
     @Test
@@ -42,13 +41,13 @@ public class PrometheusTest {
         board.getCell(1, 4).setBuilding(1);
         board.getCell(3, 0).setBuilding(1);
         board.getCell(4, 1).setBuilding(1);
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 4));
         Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertTrue(testWorker00.isDebuff());
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         turn.setSelectedCell(board.getCell(1, 3));
         Assertions.assertFalse(testWorker10.isDebuff());
         prometheus.PlayerTurn(board, turn.getSelectedCell(), 1, 2);
@@ -59,7 +58,7 @@ public class PrometheusTest {
         board.getCell(0, 3).setBuilding(1);
         Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
         Assertions.assertEquals(-4, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
 
     }
 }

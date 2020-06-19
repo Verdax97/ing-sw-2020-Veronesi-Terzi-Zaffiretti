@@ -1,14 +1,12 @@
 package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.gods.Artemis;
 import it.polimi.ingsw.model.gods.Demeter;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class DemeterTest{
 
@@ -34,14 +32,14 @@ public class DemeterTest{
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(0, 0).setWorker(testWorker3);
         Demeter demeter = new Demeter();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
         Assertions.assertEquals(2, demeter.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(-8, demeter.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(1, demeter.Building(board, selectedCell, 0, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         demeter.ResetGod();
         Assertions.assertEquals(-1, demeter.Building(board, selectedCell, 5, 5, 0, 0));
         Assertions.assertEquals(-2, demeter.Building(board, selectedCell, 4, 4, 0, 0));

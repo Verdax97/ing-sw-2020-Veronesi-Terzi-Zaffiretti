@@ -1,14 +1,12 @@
 package it.polimi.ingsw.model.godsTest;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.gods.Demeter;
 import it.polimi.ingsw.model.gods.Hephaestus;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class HephaestusTest {
 
@@ -34,22 +32,22 @@ public class HephaestusTest {
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(0, 0).setWorker(testWorker3);
         Hephaestus hephaestus = new Hephaestus();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
         Assertions.assertEquals(2, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 1, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         board.getCell(0, 1).setBuilding(2);
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         hephaestus.ResetGod();
         Assertions.assertEquals(2, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         hephaestus.ResetGod();
         Assertions.assertEquals(1, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         hephaestus.ResetGod();
         Assertions.assertEquals(-1, hephaestus.Building(board, selectedCell, 5, 5, 0, 0));
         Assertions.assertEquals(-2, hephaestus.Building(board, selectedCell, 4, 4, 0, 0));
@@ -58,7 +56,7 @@ public class HephaestusTest {
         Assertions.assertEquals(-3, hephaestus.Building(board, selectedCell, 1, 0, 0, 0));
         hephaestus.ResetGod();
         Assertions.assertEquals(-4, hephaestus.Building(board, selectedCell, 0, 1, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         // For coverage only (not reacheable)
         selectedCell = board.getCell(1, 3);
         hephaestus.ResetGod();

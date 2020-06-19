@@ -154,7 +154,7 @@ public class Controller implements Observer {
                 match.CreateMsgPacket(match.getMsgError(), "Wait");
                 break;
         }
-        new ServerView().PrintBoard(match.getBoard(), match);
+        new ServerView().printBoard(match.getBoard(), match);
     }
 
     /**

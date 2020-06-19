@@ -3,11 +3,10 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Minotaur;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class MinotaurTest {
     @Test
@@ -38,19 +37,19 @@ public class MinotaurTest {
         board.getCell(0, 0).setWorker(testWorker11);
         board.getCell(0, 1).setWorker(testWorker10);
         Minotaur minotaur = new Minotaur();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(1, 3);
         Assertions.assertEquals(-7, minotaur.Move(board, selectedCell, 0, 4));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         selectedCell = board.getCell(0, 4);
         Assertions.assertEquals(1, minotaur.Move(board, selectedCell, 1, 3));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         selectedCell = board.getCell(1, 3);
         Assertions.assertEquals(-5, minotaur.Move(board, selectedCell, 2, 2));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         board.getCell(0, 4).setDome(true);
         selectedCell = board.getCell(2, 2);
         Assertions.assertEquals(-5, minotaur.Move(board, selectedCell, 1, 3));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
     }
 }

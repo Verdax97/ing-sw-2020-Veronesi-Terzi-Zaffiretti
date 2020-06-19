@@ -1,11 +1,12 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Board;
+import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class ServerViewTest
 {
@@ -36,6 +37,6 @@ public class ServerViewTest
         board.getCell(4, 0).setWorker(testWorker);
         board.getCell(4, 4).setWorker(testWorker3);
         board.getCell(0, 0).setWorker(testWorker3);
-        serverView.PrintBoard(match.getBoard(), match);
+        serverView.printBoard(match.getBoard(), match);
     }
 }

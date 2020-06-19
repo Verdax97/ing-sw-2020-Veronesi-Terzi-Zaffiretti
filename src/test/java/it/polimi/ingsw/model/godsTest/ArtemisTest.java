@@ -3,11 +3,10 @@ package it.polimi.ingsw.model.godsTest;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.gods.Artemis;
 import it.polimi.ingsw.view.ServerView;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-
-import org.junit.jupiter.api.Assertions;
 
 public class ArtemisTest
 {
@@ -34,13 +33,13 @@ public class ArtemisTest
         board.getCell(4, 0).setWorker(testWorker00);
         board.getCell(0, 0).setWorker(testWorker22);
         Artemis artemis = new Artemis();
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
         Assertions.assertEquals(2, artemis.Move(board, selectedCell, 1, 1));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         selectedCell = board.getCell(1, 1);
         Assertions.assertEquals(-6, artemis.Move(board, selectedCell, 0, 0));
-        serverView.PrintBoard(board, match);
+        serverView.printBoard(board, match);
         artemis.ResetGod();
         artemis.Move(board, selectedCell, 0, 0);
         artemis.ResetGod();
@@ -56,8 +55,8 @@ public class ArtemisTest
         board.getCell(1, 1).setWorker(testWorker00);
         Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
         Assertions.assertEquals(2, artemis.Move(board, selectedCell, 0, 1));
-        serverView.PrintBoard(board, match);
-        selectedCell = board.getCell(0,1);
+        serverView.printBoard(board, match);
+        selectedCell = board.getCell(0, 1);
         Assertions.assertEquals(1, artemis.Move(board, selectedCell, 0,2));
 
     }
