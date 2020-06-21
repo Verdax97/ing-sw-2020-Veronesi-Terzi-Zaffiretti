@@ -5,7 +5,6 @@ import it.polimi.ingsw.view.client.ClientInput;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -27,8 +26,6 @@ public class SantoriniMatchController {
 
     @FXML private VBox playersInfo;
     @FXML private GridPane board;
-    @FXML private AnchorPane firstPlayerPane;
-    @FXML private AnchorPane secondPlayerPane;
     @FXML private AnchorPane thirdPlayerPane;
     @FXML
     private Button confirmButton;
@@ -48,7 +45,6 @@ public class SantoriniMatchController {
     private final ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private final ArrayList<Circle> cellWorker = new ArrayList<>();
     private int nPlayers;
-    private String myName;
     private final ArrayList<String> players = new ArrayList<>();
 
     private boolean turn = false;
@@ -57,6 +53,8 @@ public class SantoriniMatchController {
     private final ArrayList<Integer> startWorkerPos = new ArrayList<>();
     private boolean powerGodAnswer = false;
     private boolean atlas = false;
+
+    private CellButton lastCell;
 
     /**
      * Gets client main.
@@ -83,15 +81,6 @@ public class SantoriniMatchController {
      */
     public void setClientInputGUI(ClientInput clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
-    }
-
-    /**
-     * Sets my name.
-     *
-     * @param myName the my name
-     */
-    public void setMyName(String myName) {
-        this.myName = myName;
     }
 
     /**
@@ -137,11 +126,11 @@ public class SantoriniMatchController {
      */
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
-        Platform.runLater(()-> {
-            messageBox.setText("");
-        });
-        godMessageBox.setText("");
         otherActionButton.setVisible(false);
+        Platform.runLater(() -> {
+            messageBox.setText("");
+            otherActionButton.setText("Cancel");
+        });
         confirmButton.setVisible(false);
         turn = false;
     }
@@ -151,7 +140,6 @@ public class SantoriniMatchController {
      */
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
-        godMessageBox.setText("");
         confirmButton.setVisible(true);
         turn = true;
     }
@@ -168,9 +156,9 @@ public class SantoriniMatchController {
         }
         //should parse message of possibilities
         ArrayList<String> temp = new ArrayList<>(Arrays.asList(msg.split("\n")));
-        for (int p = 0; p < temp.size(); p++){
+        for (String value : temp) {
             //still parsing that message
-            ArrayList<String> s = new ArrayList<>(Arrays.asList(temp.get(p).split(" ")));
+            ArrayList<String> s = new ArrayList<>(Arrays.asList(value.split(" ")));
             String index = s.get(0).split(Pattern.quote(")"))[0];
             String almostX = s.get(1).split(Pattern.quote(","))[0];
             String x = almostX.replaceAll(Pattern.quote("("), "");
@@ -190,9 +178,7 @@ public class SantoriniMatchController {
      * Place workers.
      */
     public void placeWorkers(){
-        Platform.runLater(()-> {
-            messageBox.setText("Select two different cell\nwhere you want to put your workers");
-        });
+        Platform.runLater(() -> messageBox.setText("Select two different cells\nwhere you want to put your workers"));
         waitWorker = 2;
         placeWorkersPhase = true;
     }
@@ -203,10 +189,8 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void selectWorker(String msg) {
-        Platform.runLater(() -> {
-            messageBox.setText("Select worker you want to perform your turn");
-        });
-        godMessageBox.setText("");
+        Platform.runLater(() -> messageBox.setText("Select worker you want to perform your turn"));
+        Platform.runLater(() -> otherActionButton.setText("Cancel"));
         otherActionButton.setVisible(false);
         lightUpBoard(msg);
     }
@@ -219,7 +203,7 @@ public class SantoriniMatchController {
     public void beforeMovePower(String msg) {
         godMessageBox.setText("You can perform an action before your move");
         otherActionButton.setVisible(true);
-        godMessageBox.setText("Do you want to make an action before the move?");
+        Platform.runLater(() -> otherActionButton.setText("Cancel"));
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -232,7 +216,7 @@ public class SantoriniMatchController {
     public void moveAgain(String msg) {
         godMessageBox.setText("You can move again");
         otherActionButton.setVisible(true);
-        godMessageBox.setText("Do you want to move again?");
+        Platform.runLater(() -> otherActionButton.setText("Cancel"));
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -245,7 +229,7 @@ public class SantoriniMatchController {
     public void buildAgain(String msg) {
         godMessageBox.setText("You could build again");
         otherActionButton.setVisible(true);
-        godMessageBox.setText("Do you want to build again?");
+        Platform.runLater(() -> otherActionButton.setText("Cancel"));
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -256,11 +240,8 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void move(String msg) {
-        Platform.runLater(() -> {
-            messageBox.setText("Select cell you want to move to");
-        });
-
-        godMessageBox.setText("");
+        Platform.runLater(() -> messageBox.setText("Select the cell you want to move to"));
+        Platform.runLater(() -> otherActionButton.setText("Cancel"));
         otherActionButton.setVisible(false);
         lightUpBoard(msg);
     }
@@ -276,12 +257,12 @@ public class SantoriniMatchController {
             this.atlas = true;
             powerGodAnswer = true;
             otherActionButton.setVisible(true);
-            godMessageBox.setText("Do you want to build a dome?");
-        } else
-            godMessageBox.setText("");
-        Platform.runLater(()-> {
-            messageBox.setText("Select cell you want to build on");
-        });
+            Platform.runLater(() -> {
+                otherActionButton.setText("Build normally");
+                confirmButton.setText("Build dome");
+            });
+        }
+        Platform.runLater(() -> messageBox.setText("Select the cell you want to build on"));
         lightUpBoard(msg);
     }
 
@@ -314,6 +295,10 @@ public class SantoriniMatchController {
             sendReply();
             resetLighten();
             otherActionButton.setVisible(false);
+            Platform.runLater(() -> {
+                otherActionButton.setText("Cancel");
+                confirmButton.setText("Confirm");
+            });
         }
     }
 
@@ -347,6 +332,10 @@ public class SantoriniMatchController {
             sendReply();
             resetLighten();
             otherActionButton.setVisible(false);
+            Platform.runLater(() -> {
+                otherActionButton.setText("Cancel");
+                confirmButton.setText("Confirm");
+            });
         }
     }
 
@@ -366,7 +355,10 @@ public class SantoriniMatchController {
                 waitWorker--;
             }
         } else {
+            if (lastCell != null)
+                lastCell.lighten(true);
             cellButton.lighten(false);
+            lastCell = cellButton;
             reply[0] = cellButton.getIdFromList();
         }
         cellButton.getStyleClass().clear();
@@ -424,16 +416,6 @@ public class SantoriniMatchController {
         }
     }
 
-    private void winner() {
-        //throws winner windows
-        //if button is pressed program exit
-        //debug message
-        Alert winAlert = new Alert(Alert.AlertType.INFORMATION);
-        winAlert.setHeaderText("You Win");
-        winAlert.setContentText("Really Really Congrats");
-        winAlert.setTitle("Winner winner");
-    }
-
     /**
      * Update board.
      *
@@ -447,14 +429,12 @@ public class SantoriniMatchController {
         if (simpleBoard.players.size() == 0){
             return;
         }
+        lastCell = null;
         int cell = 0;
         int activePlayers = simpleBoard.players.size();
-        ArrayList<String> temp = (ArrayList<String>) players.clone();
         //check if someone has lost
         if (activePlayers != nPlayers) {
-            if (myName.equals(simpleBoard.players.get(0)) && simpleBoard.players.size() == 1) {
-                //winner();
-            } else refreshPlayers(simpleBoard);
+            refreshPlayers(simpleBoard);
             nPlayers = activePlayers;
         }
         if (simpleBoard.board == null){
