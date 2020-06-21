@@ -39,7 +39,8 @@ public class ClientInput extends Observable {
      * @param targetY of type int
      */
     public void Reply(int x, int y, int targetX, int targetY) {
-        //clientMain.setReplyMsg(new MsgToServer(clientMain.getNick(), x,y,targetX, targetY));
+        if (clientMain.isEnding)
+            return;
         setChanged();
         notifyObservers(new MsgToServer(clientMain.getNick(), x, y, targetX, targetY));
     }

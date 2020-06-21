@@ -157,7 +157,7 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.itIsYourTurn();
-            if (msgPacket.board.players.size() > 1)
+            //if (msgPacket.board.players.size() > 1)
                 Reply(-5, -5, -5, -5);
             return;
         }
