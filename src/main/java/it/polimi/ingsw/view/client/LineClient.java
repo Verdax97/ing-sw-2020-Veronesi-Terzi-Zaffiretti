@@ -106,13 +106,15 @@ public class LineClient extends Thread implements Observer {
      * Method closeSocket close the socket
      */
     void closeSocket() {
-        try {
-            socketIn.close();
-            socketOut.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Socket already closed");
+        if (!socket.isClosed()) {
+            try {
+                socketIn.close();
+                socketOut.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Socket already closed");
+            }
         }
         clientMain.EndAll();
     }

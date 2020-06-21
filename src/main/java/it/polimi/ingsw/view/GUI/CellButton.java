@@ -1,12 +1,17 @@
 package it.polimi.ingsw.view.GUI;
 
-import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * The type Cell button.
+ *
  * @author Stefano
- * */
-public class CellButton extends Button{
+ */
+public class CellButton extends AnchorPane {
+
+    private final AnchorPane anchorPane;
 
     /**
      * Gets id from list.
@@ -26,7 +31,6 @@ public class CellButton extends Button{
         this.idFromList = idFromList;
     }
 
-    //TODO CREATE IMAGES FOR GUI
     private int idFromList;
     /**
      * The X.
@@ -36,7 +40,6 @@ public class CellButton extends Button{
      * The Y.
      */
     public int y;
-    private boolean ground;
 
     /**
      * Instantiates a new Cell button.
@@ -44,44 +47,74 @@ public class CellButton extends Button{
      * @param x the x
      * @param y the y
      */
-    CellButton(int x, int y){
+    CellButton(int x, int y) {
         this.idFromList = -5;
         this.x = x;
         this.y = y;
-        this.ground = true;
-        /*
-        this.setStyle("-fx-background-color: transparent; -fx-background-size: 100% 100%; -fx-background-repeat: no-repeat;");
-        this.setAlignment(Pos.CENTER);
-         */
-        this.getStylesheets().add("CSS/Ground.css");
-        this.getStyleClass().clear();
-        this.getStyleClass().add("normal");
-        this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        Rectangle r = new Rectangle();
+        r.setX(7.5);
+        r.setY(7.5);
+        r.setWidth(65);
+        r.setHeight(65);
+        r.setStyle("-fx-fill: white; -fx-stroke: black");
+        r.setVisible(false);
+        r.setMouseTransparent(true);
+        getChildren().add(r);
+        Rectangle r1 = new Rectangle();
+        r1.setX(12.5);
+        r1.setY(12.5);
+        r1.setWidth(55);
+        r1.setHeight(55);
+        r1.setStyle("-fx-fill: white; -fx-stroke: black");
+        r1.setVisible(false);
+        r1.setMouseTransparent(true);
+        getChildren().add(r1);
+        Circle r2 = new Circle();
+        r2.setCenterX(40);
+        r2.setCenterY(40);
+        r2.setRadius(27.5);
+        r2.setStyle("-fx-fill: white; -fx-stroke: black");
+        r2.setVisible(false);
+        r2.setMouseTransparent(true);
+        getChildren().add(r2);
+        Circle r3 = new Circle();
+        r3.setCenterX(40);
+        r3.setCenterY(40);
+        r3.setRadius(21);
+        r3.setStyle("-fx-fill: blue; -fx-stroke: black");
+        r3.setVisible(false);
+        r3.setMouseTransparent(true);
+        getChildren().add(r3);
+        anchorPane = new AnchorPane();
+        anchorPane.setPrefSize(80, 80);
+        anchorPane.setMouseTransparent(true);
+        getChildren().add(anchorPane);
+        anchorPane.getStylesheets().add("CSS/Ground.css");
+        anchorPane.getStyleClass().add("normal");
     }
 
 
     /**
-     * Refresh.
+     * Refresh the cell
      *
      * @param value the value
      */
     public void refresh(int value) {
-        synchronized (getStylesheets()) {
-            getStylesheets().clear();
+        synchronized (anchorPane) {
             if (value == 0) {
-                getStylesheets().add("CSS/Ground.css");
-            }
-            if (value == 1) {
-                this.ground = false;
-                getStylesheets().add("CSS/Level1.css");
-            }
-            if (value == 2) {
-                this.ground = false;
-                getStylesheets().add("CSS/Level2.css");
-            }
-            if (value == 3) {
-                this.ground = false;
-                getStylesheets().add("CSS/Level3.css");
+                getChildren().get(0).setVisible(false);
+                getChildren().get(1).setVisible(false);
+                getChildren().get(2).setVisible(false);
+            } else if (value == 1) {
+                getChildren().get(0).setVisible(true);
+            } else if (value == 2) {
+                getChildren().get(0).setVisible(true);
+                getChildren().get(1).setVisible(true);
+            } else if (value == 3) {
+                getChildren().get(0).setVisible(true);
+                getChildren().get(1).setVisible(true);
+                getChildren().get(2).setVisible(true);
             }
             if (value == 4) {
                 setDome();
@@ -92,29 +125,30 @@ public class CellButton extends Button{
     /**
      * Sets dome.
      */
-    public void setDome() { this.setStyle("-fx-background-color: dodgerblue"); }
+    public void setDome() {
+        getChildren().get(3).setVisible(true);
+    }
 
     /**
-     * Lighten.
+     * Lighten apply a border on the button giving back a feedback about being pressed
      *
      * @param selectable the selectable
      */
     public void lighten(boolean selectable) {
-        getStyleClass().clear();
+        anchorPane.getStyleClass().clear();
         //apply a border on the button giving back a feedback about being pressed
         if (selectable){
-            getStyleClass().add("selectable");
+            anchorPane.getStyleClass().add("selectable");
         } else{
-            getStyleClass().add("normal");
+            anchorPane.getStyleClass().add("selected");
         }
     }
 
     /**
-     * Turn off.
+     * Turn off resetS aspect of board to default
      */
     public void turnOff() {
-        //reset aspect of board to default
-        getStyleClass().clear();
-        getStyleClass().add("normal");
+        anchorPane.getStyleClass().clear();
+        anchorPane.getStyleClass().add("normal");
     }
 }

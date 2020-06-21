@@ -101,7 +101,7 @@ public class SantoriniMatchController {
             for (int i = 0; i < 5; i++) {
                 //create and set the custom button
                 CellButton cellButton = new CellButton(i, j);
-                cellButton.setOnAction(e -> selectedCell(cellButton));
+                cellButton.setOnMouseClicked(e -> selectedCell(cellButton));
                 board.add(cellButton, k, z);
                 //create the "worker" placeholder
                 Circle worker = new Circle();
