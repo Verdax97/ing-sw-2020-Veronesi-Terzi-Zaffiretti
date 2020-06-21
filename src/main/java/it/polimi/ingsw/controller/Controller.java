@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.GameSaver;
 import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgToServer;
-import it.polimi.ingsw.view.ServerView;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 
 import java.io.FileNotFoundException;
@@ -154,7 +153,6 @@ public class Controller implements Observer {
                 match.CreateMsgPacket(match.getMsgError(), "Wait");
                 break;
         }
-        new ServerView().printBoard(match.getBoard(), match);
     }
 
     /**
