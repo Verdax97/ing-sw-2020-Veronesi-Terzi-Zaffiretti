@@ -15,10 +15,11 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select an option:\n0)Server\n1)Client");
         System.out.print(">");
-        int let = scanner.nextInt();
-        if (let == 0)
+        String let = scanner.nextLine();
+
+        if (let.equals("0"))
             new ServerMain().run();
-        else if (let == 1)
+        else if (let.equals("1"))
             new ClientStarter().run();
         else
             System.out.println("Not a valid input");
