@@ -108,7 +108,6 @@ public class ControllerGUI {
         Parent rootLauncher = (Parent) loaderLauncher.load();
         LauncherController launcherController = loaderLauncher.getController();
         launcherController.setClientMain(clientMain);
-        //((ClientInputGUI) clientMain.getClientInput()).setLauncherController(launcherController);
         connectionScene = new Scene(rootLauncher);
         LauncherApp.primaryStage.setScene(connectionScene);
     }
@@ -156,6 +155,7 @@ public class ControllerGUI {
         ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
         pickGodScene = new Scene(rootMatch);
         primaryStage.setScene(pickGodScene);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Pick God Cards");
     }
 
@@ -189,7 +189,6 @@ public class ControllerGUI {
             primaryStage.setScene(santoriniMatchScene);
             primaryStage.setTitle("Santorini Board Game");
             primaryStage.setResizable(false);
-            santoriniMatchController.setMyName(clientInputGUI.getMyName());
             santoriniMatchController.initializeAll(simpleBoard);
         }
         if (resume)
