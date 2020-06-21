@@ -4,7 +4,9 @@ import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.GameSaver;
 import it.polimi.ingsw.model.Lobby;
+import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.view.Colors;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,11 +22,19 @@ public class ServerMultiplexer extends Observable implements Runnable {
     private ServerSocket serverSocket;
     public ArrayList<ServerThread> playersThread;
     public ServerMain serverMain;
+    private ServerAuxiliaryThread serverAuxiliaryThread = null;
+
+    /**
+     * Method setServerAuxiliaryThread sets the serverAuxiliaryThread of this ServerMultiplexer object.
+     *
+     * @param serverAuxiliaryThread the serverAuxiliaryThread of this ServerMultiplexer object.
+     */
+    public void setServerAuxiliaryThread(ServerAuxiliaryThread serverAuxiliaryThread) {
+        this.serverAuxiliaryThread = serverAuxiliaryThread;
+    }
 
     /**
      * Method getLobby returns the lobby of this ServerMultiplexer object.
-     *
-     *
      *
      * @return the lobby (type Lobby) of this ServerMultiplexer object.
      */
@@ -90,7 +100,6 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 serverSocket = new ServerSocket(port);
                 break;
             } catch (IOException e) {
-                //System.err.println(e.getMessage()); //port not available
                 System.out.println("port not available");
                 try {
                     serverSocket.close();
@@ -100,8 +109,9 @@ public class ServerMultiplexer extends Observable implements Runnable {
             }
         }
 
-        System.out.println("Server ready on port " + port);
+        System.out.println(Colors.ANSI_YELLOW + "Server ready on port " + Colors.ANSI_GREEN + port + Colors.ANSI_RESET);
         started = false;
+        //serverAuxiliaryThread.printInfo();
         waitForPlayers();
     }
 
@@ -156,7 +166,8 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * @throws IOException when
      */
     private void connectNewPlayer() throws IOException {
-        System.out.println("Wait for player " + playersThread.size());
+        int val = playersThread.size() + 1;
+        System.out.println("Waiting for player " + val);
         Socket socket = serverSocket.accept();
         playersThread.add(new ServerThread(socket, "temp", this, playersThread.size()));
         //Run Thread
@@ -170,6 +181,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
         if (isEnding())
             return;
         setEnding(true);
+        serverAuxiliaryThread.setMatch(null);
         for (ServerThread thread : playersThread) {
             thread.closeConnection();
             thread.interrupt();
@@ -189,7 +201,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
         } catch (IOException | NullPointerException e) {
             System.out.println("cannot close server");
         }
-        //startServer();
+
         ended = true;
     }
 
@@ -274,6 +286,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * @param observable of type Match
      */
     public void connectObservers(Observable observable) {
+        serverAuxiliaryThread.setMatch((Match) observable);
         for (ServerThread observer : playersThread) {
             observable.addObserver(observer);
         }

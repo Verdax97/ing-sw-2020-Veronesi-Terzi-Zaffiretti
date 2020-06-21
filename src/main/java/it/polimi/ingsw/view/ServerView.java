@@ -30,6 +30,8 @@ public class ServerView {
      * @param match of type Match
      */
     public void printBoard(Board board, Match match) {
+        if (match.getPlayers().size() == 0)
+            return;
         outputStream.print(ANSI_RED + match.getPlayers().get(0).getNickname() + " ");
         if (match.getPlayers().size() == 2)
             outputStream.print(ANSI_GREEN + match.getPlayers().get(1).getNickname() + " ");
@@ -47,9 +49,9 @@ public class ServerView {
                     if (match.getPlayers().get(0).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
                         System.out.print(ANSI_RED + board.getCell(i, j).getBuilding()+ANSI_RESET + " ");
                     } else if (match.getPlayers().get(1).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
-                        System.out.print(ANSI_BLUE + board.getCell(i, j).getBuilding() + ANSI_RESET + " ");
-                    } else if (match.getPlayers().get(2).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
                         System.out.print(ANSI_GREEN + board.getCell(i, j).getBuilding() + ANSI_RESET + " ");
+                    } else if (match.getPlayers().get(2).getNickname().equals(board.getCell(i, j).getWorker().getPlayer().getNickname())) {
+                        System.out.print(ANSI_BLUE + board.getCell(i, j).getBuilding() + ANSI_RESET + " ");
                     }
                 } else {
                     System.out.print(board.getCell(i, j).getBuilding() + " ");

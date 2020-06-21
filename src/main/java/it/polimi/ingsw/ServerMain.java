@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.view.server.ServerAuxiliaryThread;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 
 import java.util.InputMismatchException;
@@ -10,8 +11,6 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Class ServerMain starts the server
  *
- * @author Davide
- * Created on 21/05/2020
  */
 public class ServerMain implements Runnable {
     /**
@@ -19,7 +18,7 @@ public class ServerMain implements Runnable {
      */
     @Override
     public void run() {
-        Integer port = null;
+        int port;
         AtomicReference<Scanner> scanner = new AtomicReference<>(new Scanner(System.in));
 
         System.out.println("Insert server port:");
@@ -32,25 +31,23 @@ public class ServerMain implements Runnable {
                 scanner.set(new Scanner(System.in));
             }
         }
-        System.out.println("Type quit to close the server");
-        Thread thread = new Thread(() ->
-        {
-            Scanner scanner1 = new Scanner(System.in);
-            while (!scanner1.nextLine().equalsIgnoreCase("quit")) {
-
-            }
-            System.exit(0);
-        }
-        );
-
+        ServerAuxiliaryThread serverAuxiliaryThread = new ServerAuxiliaryThread();
+        serverAuxiliaryThread.start();
         while (true)
-            newGame(port);
+            newGame(port, serverAuxiliaryThread);
     }
 
-    public void newGame(Integer port) {
+    /**
+     * Method newGame starts a new game on the server
+     *
+     * @param port                  of type Integer
+     * @param serverAuxiliaryThread of type ServerAuxiliaryThread
+     */
+    public void newGame(Integer port, ServerAuxiliaryThread serverAuxiliaryThread) {
         System.out.println("Starting new game.");
         Controller controller = new Controller();
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, port);
+        serverMultiplexer.setServerAuxiliaryThread(serverAuxiliaryThread);
         controller.setServerMultiplexer(serverMultiplexer);
         serverMultiplexer.addObserver(controller);
         serverMultiplexer.serverMain = this;
