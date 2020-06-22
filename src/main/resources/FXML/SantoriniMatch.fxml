@@ -117,9 +117,9 @@
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
                      </rowConstraints>
                   </GridPane>
                   <HBox layoutX="39.0" layoutY="473.0" prefHeight="40.0" prefWidth="400.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="473.0">
@@ -153,123 +153,51 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
+            <AnchorPane prefHeight="442.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane VBox.vgrow="ALWAYS">
+                  <VBox layoutY="205.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="240.0">
                      <children>
-                        <AnchorPane opacity="0.5" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="5.0"
-                                    AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                                    AnchorPane.topAnchor="5.0"/>
-                        <Label fx:id="messageBox" alignment="CENTER" prefHeight="120.0" prefWidth="230.0"
-                               text="se provo a scrivere che cosa si riesce a capire?" textAlignment="CENTER"
-                               wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                               AnchorPane.topAnchor="10.0">
-                           <font>
-                              <Font size="20.0"/>
-                           </font>
-                        </Label>
-                        <Text fx:id="godMessageBox" layoutY="130.0" text="info god box" textAlignment="CENTER"
-                              wrappingWidth="240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0"
-                              AnchorPane.rightAnchor="0.0"/>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane VBox.vgrow="ALWAYS">
-                     <children>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" opacity="0.5" style="-fx-background-color: lightblue;"
-                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0"
-                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0"/>
-                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="20.0"
-                              AnchorPane.rightAnchor="20.0">
+                        <AnchorPane>
                            <children>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="21.0" text="Dome                     ">
-                                       <font>
-                                          <Font size="15.0"/>
-                                       </font>
-                                    </Label>
-                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                style="-fx-background-color: dodgerblue;" HBox.hgrow="ALWAYS"/>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="10.0">
-                                 <children>
-                                    <Label prefHeight="21.0" text="Level3                ">
-                                       <font>
-                                          <Font size="15.0"/>
-                                       </font>
-                                    </Label>
-                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                style="-fx-background-color: darkslategray;" HBox.hgrow="ALWAYS"/>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="31.0">
-                                 <children>
-                                    <Label prefHeight="21.0" text="Level2            ">
-                                       <font>
-                                          <Font size="15.0"/>
-                                       </font>
-                                    </Label>
-                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                style="-fx-background-color: firebrick;" HBox.hgrow="ALWAYS"/>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="52.0">
-                                 <children>
-                                    <Label prefHeight="21.0" text="Level1        ">
-                                       <font>
-                                          <Font size="15.0"/>
-                                       </font>
-                                    </Label>
-                                    <AnchorPane prefHeight="14.0" prefWidth="14.0" style="-fx-background-color: coral;"
-                                                HBox.hgrow="ALWAYS"/>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="73.0">
-                                 <children>
-                                    <Label prefHeight="21.0" text="Ground  ">
-                                       <font>
-                                          <Font size="15.0"/>
-                                       </font>
-                                    </Label>
-                                    <AnchorPane prefHeight="14.0" prefWidth="14.0"
-                                                style="-fx-background-color: navajowhite;" HBox.hgrow="ALWAYS"/>
-                                 </children>
-                              </HBox>
+                              <AnchorPane opacity="0.5" style="-fx-background-color: lightblue;"
+                                          AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                          AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+                              <Label fx:id="messageBox" alignment="CENTER" prefHeight="180.0" prefWidth="220.0"
+                                     text="se provo a scrivere che cosa si riesce a capire?" textAlignment="CENTER"
+                                     wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                     AnchorPane.topAnchor="10.0">
+                                 <font>
+                                    <Font size="20.0"/>
+                                 </font>
+                              </Label>
                            </children>
-                        </VBox>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="210.0" text="Legenda: "
-                               textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0"
-                               AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-                           <font>
-                              <Font size="19.0"/>
-                           </font>
-                        </Label>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="0.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <AnchorPane layoutX="5.0" layoutY="5.0" opacity="0.5"
+                                          style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="5.0"
+                                          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                          AnchorPane.topAnchor="5.0"/>
+                              <Button fx:id="otherActionButton" mnemonicParsing="false" onAction="#otherAction"
+                                      text="Cancel" visible="false" AnchorPane.leftAnchor="10.0"
+                                      AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <font>
+                                    <Font size="25.0"/>
+                                 </font>
+                              </Button>
+                              <Button fx:id="confirmButton" layoutY="39.0" mnemonicParsing="false"
+                                      onAction="#confirmAction" text="Confirm" AnchorPane.bottomAnchor="15.0"
+                                      AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                 <font>
+                                    <Font size="25.0"/>
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane VBox.vgrow="ALWAYS">
-                     <children>
-                        <AnchorPane layoutX="5.0" layoutY="5.0" opacity="0.5" style="-fx-background-color: lightblue;"
-                                    AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-                        <Button fx:id="otherActionButton" mnemonicParsing="false" onAction="#otherAction" text="Cancel"
-                                visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                AnchorPane.topAnchor="10.0">
-                           <font>
-                              <Font size="25.0"/>
-                           </font>
-                        </Button>
-                        <Button fx:id="confirmButton" layoutY="39.0" mnemonicParsing="false" onAction="#confirmAction"
-                                text="Confirm" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0"
-                                AnchorPane.rightAnchor="10.0">
-                           <font>
-                              <Font size="25.0"/>
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
          </children>
       </HBox>
    </children>

@@ -32,8 +32,6 @@ public class SantoriniMatchController {
     @FXML
     private Text whosTurn;
     @FXML
-    private Text godMessageBox;
-    @FXML
     private Button otherActionButton;
     @FXML
     private Label messageBox;
@@ -45,7 +43,6 @@ public class SantoriniMatchController {
     private final ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
     private final ArrayList<Circle> cellWorker = new ArrayList<>();
     private int nPlayers;
-    private final ArrayList<String> players = new ArrayList<>();
 
     private boolean turn = false;
     private int waitWorker = 0;
@@ -160,15 +157,17 @@ public class SantoriniMatchController {
             //still parsing that message
             ArrayList<String> s = new ArrayList<>(Arrays.asList(value.split(" ")));
             String index = s.get(0).split(Pattern.quote(")"))[0];
-            String almostX = s.get(1).split(Pattern.quote(","))[0];
-            String x = almostX.replaceAll(Pattern.quote("("), "");
-            String y = s.get(2).split(Pattern.quote(")"))[0];
-            //should scroll array of buttons, if value corresponds, the button should light up
-            for (CellButton cellButton : cellButtonBoard) {
-                if (cellButton.x == Integer.parseInt(x) && cellButton.y == Integer.parseInt(y)) {
-                    cellButton.setIdFromList(Integer.parseInt(index));
-                    cellButton.lighten(true);
-                    break;
+            if (s.size() > 1) {
+                String almostX = s.get(1).split(Pattern.quote(","))[0];
+                String x = almostX.replaceAll(Pattern.quote("("), "");
+                String y = s.get(2).split(Pattern.quote(")"))[0];
+                //should scroll array of buttons, if value corresponds, the button should light up
+                for (CellButton cellButton : cellButtonBoard) {
+                    if (cellButton.x == Integer.parseInt(x) && cellButton.y == Integer.parseInt(y)) {
+                        cellButton.setIdFromList(Integer.parseInt(index));
+                        cellButton.lighten(true);
+                        break;
+                    }
                 }
             }
         }
@@ -201,9 +200,11 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void beforeMovePower(String msg) {
-        godMessageBox.setText("You can perform an action before your move");
         otherActionButton.setVisible(true);
-        Platform.runLater(() -> otherActionButton.setText("Cancel"));
+        Platform.runLater(() -> {
+            otherActionButton.setText("Cancel");
+            messageBox.setText("You can perform an action before your move");
+        });
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -214,9 +215,11 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void moveAgain(String msg) {
-        godMessageBox.setText("You can move again");
         otherActionButton.setVisible(true);
-        Platform.runLater(() -> otherActionButton.setText("Cancel"));
+        Platform.runLater(() -> {
+            otherActionButton.setText("Cancel");
+            messageBox.setText("You can move again");
+        });
         powerGodAnswer = true;
         lightUpBoard(msg);
     }
@@ -227,9 +230,11 @@ public class SantoriniMatchController {
      * @param msg the msg
      */
     public void buildAgain(String msg) {
-        godMessageBox.setText("You could build again");
         otherActionButton.setVisible(true);
-        Platform.runLater(() -> otherActionButton.setText("Cancel"));
+        Platform.runLater(() -> {
+            otherActionButton.setText("Cancel");
+            messageBox.setText("You can build again");
+        });
         powerGodAnswer = true;
         lightUpBoard(msg);
     }

@@ -286,7 +286,8 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * @param observable of type Match
      */
     public void connectObservers(Observable observable) {
-        serverAuxiliaryThread.setMatch((Match) observable);
+        if (serverAuxiliaryThread != null)
+            serverAuxiliaryThread.setMatch((Match) observable);
         for (ServerThread observer : playersThread) {
             observable.addObserver(observer);
         }
