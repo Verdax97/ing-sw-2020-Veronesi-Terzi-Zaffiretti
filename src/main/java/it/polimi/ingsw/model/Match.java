@@ -372,6 +372,7 @@ public class Match extends Observable {
                 msgError = Messages.BUILD;
                 ArrayList<int[]> buildPossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 2);
                 alt = PrintPossibilities(buildPossibilities);
+                lastAction = 1;
             }
         }
         //notify view
