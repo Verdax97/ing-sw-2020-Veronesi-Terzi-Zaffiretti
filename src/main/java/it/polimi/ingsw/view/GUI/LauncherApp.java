@@ -40,11 +40,6 @@ public class LauncherApp extends Application{
         stage.show();
     }
 
-    @Override
-    public void stop(){
-        System.exit(0);
-    }
-
     /**
      * The entry point of application.
      *

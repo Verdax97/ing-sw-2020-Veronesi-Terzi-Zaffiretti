@@ -78,15 +78,6 @@ public class ControllerGUI {
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
     /**
-     * Gets primary stage.
-     *
-     * @return the primary stage
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    /**
      * Sets primary stage.
      *
      * @param primaryStage the primary stage
