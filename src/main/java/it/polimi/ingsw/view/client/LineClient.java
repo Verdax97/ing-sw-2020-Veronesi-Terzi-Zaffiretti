@@ -24,8 +24,8 @@ public class LineClient extends Thread implements Observer {
     /**
      * Constructor LineClient creates a new LineClient instance.
      *
-     * @param ip of type String
-     * @param port of type int
+     * @param ip         of type String
+     * @param port       of type int
      * @param clientMain of type ClientMain
      */
     public LineClient(String ip, int port, ClientMain clientMain) {
@@ -36,6 +36,7 @@ public class LineClient extends Thread implements Observer {
 
     /**
      * Method startClient setup the connection to the server
+     *
      * @throws IOException when
      */
     public void startClient() throws IOException {

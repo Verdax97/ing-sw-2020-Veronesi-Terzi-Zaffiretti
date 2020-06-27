@@ -15,9 +15,17 @@ import java.util.Scanner;
  */
 public class ClientInputCLI extends ClientInput {
 
+    /**
+     * The Scanner.
+     */
     protected Scanner scanner = new Scanner(System.in);
 
-    /** @see ClientInput#ClientInput(ClientMain) */
+    /**
+     * Instantiates a new Client input cli.
+     *
+     * @param clientMain the client main
+     * @see ClientInput#ClientInput(ClientMain) ClientInput#ClientInput(ClientMain)
+     */
     public ClientInputCLI(ClientMain clientMain) {
         super(clientMain);
     }
@@ -165,7 +173,7 @@ public class ClientInputCLI extends ClientInput {
     /**
      * Method ReadStringInput read the next string inserted
      *
-     * @return String
+     * @return String string
      */
     public String ReadStringInput() {
         scanner = new Scanner(System.in);
@@ -176,7 +184,7 @@ public class ClientInputCLI extends ClientInput {
     /**
      * Method ReadIntInput read the next int inserted
      *
-     * @return int
+     * @return int int
      */
     public int ReadIntInput() {
         int a;

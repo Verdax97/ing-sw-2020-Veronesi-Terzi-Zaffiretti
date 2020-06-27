@@ -13,17 +13,32 @@ import java.util.Scanner;
  * Class ClientMain manage all the client logic
  */
 public class ClientMain implements Runnable {
+    /**
+     * The Stdin.
+     */
     Scanner stdin = new Scanner(System.in);
 
     private MsgPacket receivedMsg;
     private ClientInput clientInput;
+    /**
+     * The Colors.
+     */
     public final ArrayList<String> colors = new ArrayList<>();
 
+    /**
+     * The Cli.
+     */
     public boolean CLI = false;
+    /**
+     * The Board.
+     */
     public SimpleBoard board;
 
     private String nick = "temp";
 
+    /**
+     * The Thread input.
+     */
     Thread threadInput;
 
     private boolean end = false;
@@ -116,7 +131,7 @@ public class ClientMain implements Runnable {
      *
      * @param IP   of type String
      * @param port of type int
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean InitializeClient(String IP, int port) {
         LineClient client = new LineClient(IP, port, this);
@@ -188,5 +203,8 @@ public class ClientMain implements Runnable {
         //close all
     }
 
+    /**
+     * The Is ending.
+     */
     public boolean isEnding = false;
 }

@@ -7,6 +7,9 @@ import javafx.application.Application;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The type Client starter.
+ */
 public class ClientStarter implements Runnable {
 
     @Override

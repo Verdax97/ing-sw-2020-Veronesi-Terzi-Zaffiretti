@@ -20,10 +20,20 @@ public class ClientInputGUI extends ClientInput {
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
+    /**
+     * Gets my name.
+     *
+     * @return the my name
+     */
     public String getMyName() {
         return myName;
     }
 
+    /**
+     * Sets my name.
+     *
+     * @param myName the my name
+     */
     public void setMyName(String myName) {
         this.myName = myName;
     }
@@ -34,10 +44,7 @@ public class ClientInputGUI extends ClientInput {
     /**
      * Method setSantoriniMatchController sets the santoriniMatchController of this ClientInputGUI object.
      *
-     *
-     *
      * @param santoriniMatchController the santoriniMatchController of this ClientInputGUI object.
-     *
      */
     public void setSantoriniMatchController(SantoriniMatchController santoriniMatchController) {
         this.santoriniMatchController = santoriniMatchController;
@@ -48,10 +55,7 @@ public class ClientInputGUI extends ClientInput {
     /**
      * Method setControllerGui sets the controllerGui of this ClientInputGUI object.
      *
-     *
-     *
      * @param controllerGui the controllerGui of this ClientInputGUI object.
-     *
      */
     public void setControllerGui(ControllerGUI controllerGui) {
         this.controllerGui = controllerGui;
@@ -60,10 +64,7 @@ public class ClientInputGUI extends ClientInput {
     /**
      * Method setLobbyController sets the lobbyController of this ClientInputGUI object.
      *
-     *
-     *
      * @param lobbyController the lobbyController of this ClientInputGUI object.
-     *
      */
     public void setLobbyController(LobbyController lobbyController) {
         this.lobbyController = lobbyController;
@@ -72,10 +73,7 @@ public class ClientInputGUI extends ClientInput {
     /**
      * Method setPickGodsController sets the pickGodsController of this ClientInputGUI object.
      *
-     *
-     *
      * @param pickGodsController the pickGodsController of this ClientInputGUI object.
-     *
      */
     public void setPickGodsController(PickGodsController pickGodsController) {
         this.pickGodsController = pickGodsController;

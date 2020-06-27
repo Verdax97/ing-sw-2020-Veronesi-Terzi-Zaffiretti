@@ -1,8 +1,17 @@
 package it.polimi.ingsw.model;
 
+/**
+ * The type Error handler.
+ */
 public class ErrorHandler {
     private final String prefix = Messages.ERROR + " ";
 
+    /**
+     * Get error setup string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public String GetErrorSetup(int value) {
         return switch (value) {
             case -1 -> "You Lost";
@@ -13,6 +22,12 @@ public class ErrorHandler {
         };
     }
 
+    /**
+     * Get error move string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public String GetErrorMove(int value) {
         return switch (value) {
             case -1 -> prefix + "Target cell out of board";
@@ -29,6 +44,12 @@ public class ErrorHandler {
         };
     }
 
+    /**
+     * Get error build string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public String GetErrorBuild(int value) {
         return switch (value) {
             case -1 -> prefix + "Target cell out of board";

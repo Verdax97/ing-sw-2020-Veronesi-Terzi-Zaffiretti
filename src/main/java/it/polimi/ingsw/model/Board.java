@@ -2,21 +2,44 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
+/**
+ * The type Board.
+ */
 public class Board implements Serializable {
     private Cell[][] board = new Cell[5][5];
 
+    /**
+     * Get board cell [ ] [ ].
+     *
+     * @return the cell [ ] [ ]
+     */
     public Cell[][] getBoard() {
         return board;
     }
 
+    /**
+     * Sets board.
+     *
+     * @param board the board
+     */
     public void setBoard(Cell[][] board) {
         this.board = board;
     }
 
+    /**
+     * Gets cell.
+     *
+     * @param x the x
+     * @param y the y
+     * @return the cell
+     */
     public Cell getCell(int x, int y) {
         return board[x][y];
     }
 
+    /**
+     * Instantiates a new Board.
+     */
     public Board()
     {
         for (int x = 0; x < 5; x++)
@@ -28,6 +51,11 @@ public class Board implements Serializable {
         }
     }
 
+    /**
+     * Copy values in new board board.
+     *
+     * @return the board
+     */
     public final Board CopyValuesInNewBoard() {
         final Board result = new Board();
         for (int i = 0; i < 5; i++) {
@@ -36,6 +64,11 @@ public class Board implements Serializable {
         return result;
     }
 
+    /**
+     * Copy values in new simple board int [ ] [ ].
+     *
+     * @return the int [ ] [ ]
+     */
     public int[][] CopyValuesInNewSimpleBoard() {
         int[][] result = new int[5][5];
         for (int i = 0; i < 5; i++) {

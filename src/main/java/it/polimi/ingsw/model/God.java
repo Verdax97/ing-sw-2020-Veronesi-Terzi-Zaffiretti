@@ -7,11 +7,11 @@ public class God extends SimpleGod {
     /**
      * Method PlayerTurn to do at the beginning of the turn when is called BeforeMove in Match
      *
-     * @param board of type Board
+     * @param board        of type Board
      * @param selectedCell of type Cell
-     * @param x of type int
-     * @param y of type int
-     * @return int
+     * @param x            of type int
+     * @param y            of type int
+     * @return int int
      */
     public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
         return 1;
@@ -20,11 +20,11 @@ public class God extends SimpleGod {
     /**
      * Method CheckPlayerTurn check if is possible to do PlayerTurn()
      *
-     * @param board of type Board
+     * @param board        of type Board
      * @param selectedCell of type Cell
-     * @param x of type int
-     * @param y of type int
-     * @return int
+     * @param x            of type int
+     * @param y            of type int
+     * @return int int
      */
     public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y) {
         return 0;
@@ -37,7 +37,7 @@ public class God extends SimpleGod {
      * @param selectedCell of type Cell
      * @param x            of type int
      * @param y            of type int
-     * @return int
+     * @return int int
      */
     public int Move(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);
@@ -58,7 +58,7 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @param typeBuild    of type int
      * @param turnNumber   of type int
-     * @return int
+     * @return int int
      */
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
         int built = CheckBuild(board, selectedCell, x, y);
@@ -80,7 +80,7 @@ public class God extends SimpleGod {
      * @param board      of type Board
      * @param turnPlayer of type Player
      * @param player     of type Player
-     * @return int
+     * @return int int
      */
     public int EnemyTurn(Board board, Player turnPlayer, Player player) {
         return 0;
@@ -92,7 +92,7 @@ public class God extends SimpleGod {
      *
      * @param board  of type Board
      * @param player of type Player
-     * @return Player
+     * @return Player player
      */
     public Player WinCondition(Board board, Player player) {
         return null;
@@ -112,7 +112,7 @@ public class God extends SimpleGod {
      * @param selectedCell of type Cell
      * @param x            of type int
      * @param y            of type int
-     * @return int
+     * @return int int
      */
     public int CheckMove(Board board, Cell selectedCell, int x, int y) {
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
@@ -134,7 +134,7 @@ public class God extends SimpleGod {
      * @param selectedCell of type Cell
      * @param x            of type int
      * @param y            of type int
-     * @return int
+     * @return int int
      */
     public int CheckBuild(Board board, Cell selectedCell, int x, int y) {
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
