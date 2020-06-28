@@ -32,6 +32,13 @@ public class MoveEnemyGods extends God {
         return 1;
     }
 
+    /**
+     * Method computeTargetPos compute the targetX and targetY
+     *
+     * @param selectedCell of type Cell
+     * @param x            of type int
+     * @param y            of type int
+     */
     public void computeTargetPos(Cell selectedCell, int x, int y) {
     }
 }

@@ -24,6 +24,9 @@ public class Apollo extends ForceMovementGods {
         return ForceMove(board, selectedCell, x, y);
     }
 
+    /**
+     * @see MoveEnemyGods#computeTargetPos(Cell, int, int)
+     */
     @Override
     public void computeTargetPos(Cell selectedCell, int x, int y) {
         targetPosX = selectedCell.getPos()[0];
