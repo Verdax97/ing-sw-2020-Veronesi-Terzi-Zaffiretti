@@ -75,30 +75,33 @@ public class Controller implements Observer {
         }
         int ret;
         switch (state) {
-            case LOBBY://
+//
+            case LOBBY -> {
                 lobby = serverMultiplexer.getLobby();
                 createMatch(false);
-                break;
-            case START:
+            }
+            case START -> {
                 match.PickGod(msgPacket);
                 setState(State.SETUP);
-                break;
-            case SETUP:
+            }
+            case SETUP -> {
                 match.PickGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
                     setState(State.SELECT);
-                break;
-            case SELECT://select player god
+            }
+            case SELECT -> {
+                //select player god
                 match.SelectPlayerGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == 0)
                     setState(State.PLACEWORKERS);
-                break;
-            case PLACEWORKERS:
+            }
+            case PLACEWORKERS -> {
                 match.PlaceWorker(msgPacket);
                 if (match.getLastAction() == 2)
                     setState(State.STARTTURN);
-                break;
-            case STARTTURN://check startTurn options
+            }
+            case STARTTURN -> {
+                //check startTurn options
                 match.StartTurn();
                 ret = match.getLastAction();
                 if (ret == 0)
@@ -107,22 +110,22 @@ public class Controller implements Observer {
                     setState(State.ENDMATCH);
                 else if (ret == -1)
                     setState(State.STARTTURN);
-                break;
-            case SELECTWORKER:
+            }
+            case SELECTWORKER -> {
                 match.SelectWorker(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.BEFOREMOVE);
                 else if (ret == 2)
                     setState(State.MOVE);
-                break;
-            case BEFOREMOVE:
+            }
+            case BEFOREMOVE -> {
                 match.BeforeMove(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.MOVE);
-                break;
-            case MOVE:
+            }
+            case MOVE -> {
                 match.Move(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
@@ -131,27 +134,27 @@ public class Controller implements Observer {
                     setState(State.ENDMATCH);
                 else if (ret == -10)
                     setState(State.STARTTURN);
-                break;
-            case BUILD:
+            }
+            case BUILD -> {
                 match.Build(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1 || ret == -10)
                     setState(State.STARTTURN);
                 if (ret == 10)
                     setState(State.ENDMATCH);
-                break;
-            case ENDMATCH://we have a winner winner chicken dinner
-                //save record data....maybe
+            }
+            case ENDMATCH -> {
+                //we have a winner winner chicken dinner
                 //delete game data
                 GameSaver.deleteGameData();
                 System.out.println("Player " + match.getPlayerTurn().getNickname() + " won!!!");
                 System.out.println("Shutdown server");
                 serverMultiplexer.closeConnections();
-                return;
-            default:
+            }
+            default -> {
                 System.out.println("Error of received message");
                 match.CreateMsgPacket(match.getMsgError(), "Wait");
-                break;
+            }
         }
     }
 
