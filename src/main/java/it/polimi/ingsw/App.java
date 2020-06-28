@@ -1,7 +1,5 @@
 package it.polimi.ingsw;
 
-import java.util.Scanner;
-
 /**
  * Class App the starting class
  */
@@ -12,16 +10,16 @@ public class App {
      * @param args of type String[]
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select an option:\n0)Server\n1)Client");
-        System.out.print(">");
-        String let = scanner.nextLine();
-
-        if (let.equals("0"))
-            new ServerMain().run();
-        else if (let.equals("1"))
-            new ClientStarter().run();
-        else
+        if (args.length == 0)
+            new ClientStarter().startClient(true);
+        else if (args.length == 1) {
+            if (args[0].equals("-server"))
+                new ServerMain().run();
+            else if (args[0].equals("-cli"))
+                new ClientStarter().startClient(false);
+            else
+                System.out.println("Not a valid input");
+        } else
             System.out.println("Not a valid input");
     }
 }
