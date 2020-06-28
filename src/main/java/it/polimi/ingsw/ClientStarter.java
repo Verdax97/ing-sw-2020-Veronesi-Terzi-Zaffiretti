@@ -10,15 +10,16 @@ import java.util.Scanner;
 /**
  * The type Client starter.
  */
-public class ClientStarter implements Runnable {
+public class ClientStarter {
 
-    @Override
-    public void run() {
+    /**
+     * Method startClient start the gui or the cli client
+     *
+     * @param gui of type boolean
+     */
+    public void startClient(boolean gui) {
         ClientMain clientMain = new ClientMain();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Do you want to use GUI? (y/n)");
-        System.out.print(">");
-        if (scanner.nextLine().equalsIgnoreCase("y"))
+        if (gui)
             Application.launch(LauncherApp.class);
         else {
             String IP;
@@ -27,7 +28,7 @@ public class ClientStarter implements Runnable {
                 clientMain.CLI = true;
                 System.out.println("Insert Server IP");
                 System.out.print(">");
-                scanner = new Scanner(System.in);
+                Scanner scanner = new Scanner(System.in);
                 IP = scanner.nextLine();
                 System.out.println("Insert Server port");
                 System.out.print(">");
@@ -43,10 +44,5 @@ public class ClientStarter implements Runnable {
             } while (!clientMain.InitializeClient(IP, port));
             clientMain.run();
         }
-        /*
-        //at the end of the program
-        System.out.println("Press enter to end the program");
-        scanner.nextLine();
-        System.out.println("Program ended");*/
     }
 }
