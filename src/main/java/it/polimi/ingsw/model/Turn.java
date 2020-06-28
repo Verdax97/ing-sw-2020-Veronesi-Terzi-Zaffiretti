@@ -3,6 +3,9 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Turn.
+ */
 public class Turn {
     private int turnNumber;
     private ArrayList<Worker> workers;
@@ -81,6 +84,14 @@ public class Turn {
         this.selectedCell = selectedCell;
     }
 
+    /**
+     * Check lost move boolean.
+     *
+     * @param player  the player
+     * @param board   the board
+     * @param workers the workers
+     * @return the boolean
+     */
     public boolean CheckLostMove(Player player, Board board, ArrayList<int[]> workers) {
         boolean flag = false;
         for (int[] coords : workers) {
@@ -97,11 +108,26 @@ public class Turn {
         return flag;
     }
 
+    /**
+     * Check lost build boolean.
+     *
+     * @param board the board
+     * @return the boolean
+     */
     public boolean CheckLostBuild(Board board) {
         ArrayList<int[]> buildPossibilities = CheckAround(board, getSelectedCell().getPos()[0], getSelectedCell().getPos()[1], selectedCell.getWorker().getPlayer().getGodPower(), 2);
         return buildPossibilities.size() <= 0;
     }
 
+    /**
+     * Start turn int.
+     *
+     * @param ActivePlayers the active players
+     * @param player        the player
+     * @param board         the board
+     * @param workers       the workers
+     * @return the int
+     */
     public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, ArrayList<int[]> workers)
     /*
     -1 Player lost
@@ -123,7 +149,15 @@ public class Turn {
         return 0;
     }
 
-    /*
+    /**
+     * Before move int.
+     *
+     * @param board the board
+     * @param x     the x
+     * @param y     the y
+     * @return the int
+     */
+/*
     1 all good needed for check cause 0 means useless
 
     */
@@ -133,7 +167,15 @@ public class Turn {
         return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell, x, y);
     }
 
-    /*
+    /**
+     * Move int.
+     *
+     * @param board the board
+     * @param x     the x
+     * @param y     the y
+     * @return the int
+     */
+/*
     -1 Target cell out of board
     -2 Target cell is too far
     -3 Cell is too high
@@ -148,7 +190,16 @@ public class Turn {
         return moved;
     }
 
-    /*
+    /**
+     * Build int.
+     *
+     * @param board     the board
+     * @param x         the x
+     * @param y         the y
+     * @param typeBuild the type build
+     * @return the int
+     */
+/*
     -5 (Hephaestus) Not same as last built cell
     -6 (Hephaestus) Building is > 2
     -7 (Zeus) third level build forbidden
@@ -160,6 +211,14 @@ public class Turn {
 
     }
 
+    /**
+     * Check win condition player.
+     *
+     * @param board   the board
+     * @param player  the player
+     * @param workers the workers
+     * @return the player
+     */
     public Player CheckWinCondition(Board board, Player player, ArrayList<int[]> workers) {
         for (int[] coords : workers) {
             int i = coords[0];
@@ -170,6 +229,16 @@ public class Turn {
         return player.getGodPower().WinCondition(board, player);
     }
 
+    /**
+     * Check around array list.
+     *
+     * @param board the board
+     * @param tempx the tempx
+     * @param tempy the tempy
+     * @param god   the god
+     * @param phase the phase
+     * @return the array list
+     */
     public ArrayList<int[]> CheckAround(Board board, int tempx, int tempy, God god, int phase) {
         ArrayList<int[]> arr = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
@@ -187,6 +256,18 @@ public class Turn {
         return arr;
     }
 
+    /**
+     * Check phase int.
+     *
+     * @param board the board
+     * @param tempx the tempx
+     * @param tempy the tempy
+     * @param god   the god
+     * @param x     the x
+     * @param y     the y
+     * @param phase the phase
+     * @return the int
+     */
     public int CheckPhase(Board board, int tempx, int tempy, God god, int x, int y, int phase) {
         int ret = -1;
         if (phase == 0)//beforeMove

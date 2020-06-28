@@ -27,14 +27,10 @@ public class SantoriniMatchController {
     @FXML private VBox playersInfo;
     @FXML private GridPane board;
     @FXML private AnchorPane thirdPlayerPane;
-    @FXML
-    private Button confirmButton;
-    @FXML
-    private Text whosTurn;
-    @FXML
-    private Button otherActionButton;
-    @FXML
-    private Label messageBox;
+    @FXML private Button confirmButton;
+    @FXML private Text whosTurn;
+    @FXML private Button otherActionButton;
+    @FXML private Label messageBox;
 
     private ClientMain clientMain;
     private ClientInput clientInputGUI;

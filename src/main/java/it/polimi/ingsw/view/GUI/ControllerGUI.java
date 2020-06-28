@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * The type Controller gui.
+ * @author Stefano
  */
 public class ControllerGUI {
 
@@ -34,7 +35,6 @@ public class ControllerGUI {
     santoriniMatchScene;
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
-    //public LauncherController launcherController = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
 
