@@ -1,12 +1,11 @@
 package it.polimi.ingsw.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * The type Msg packet.
  */
-public class MsgPacket implements Serializable {
+public class MsgToClient implements Serializable {
     private static final long serialVersionUID = 1234L;
     /**
      * The Nickname.
@@ -33,7 +32,7 @@ public class MsgPacket implements Serializable {
      * @param altMsg the alt msg
      * @param board  the board
      */
-    public MsgPacket(String nick, String msg, String altMsg, SimpleBoard board) {
+    public MsgToClient(String nick, String msg, String altMsg, SimpleBoard board) {
         this.nickname = nick;
         this.altMsg = altMsg;
         this.msg = msg;

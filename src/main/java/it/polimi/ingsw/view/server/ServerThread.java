@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Messages;
-import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.view.Colors;
 
@@ -79,7 +79,7 @@ public class ServerThread extends Thread implements Observer {
         setupNickname();
 
         //send confirm message to the player
-        sendMsg(new MsgPacket(nick, Messages.WAIT_TURN, "Waiting for players", null));
+        sendMsg(new MsgToClient(nick, Messages.WAIT_TURN, "Waiting for players", null));
 
         //add user to the number successfully connected
         System.out.println("Player " + Colors.ANSI_YELLOW + nick + Colors.ANSI_RESET + " has joined the game");
@@ -95,7 +95,7 @@ public class ServerThread extends Thread implements Observer {
             String err = "";
             while (true) {
                 //insert player number
-                sendMsg(new MsgPacket(nick, err + mess, "", null));
+                sendMsg(new MsgToClient(nick, err + mess, "", null));
 
                 //read response
                 MsgToServer msgToServer = receiveMsg();
@@ -121,7 +121,7 @@ public class ServerThread extends Thread implements Observer {
         String err = "";
         while (true) {
             //insert player nickname
-            sendMsg(new MsgPacket(nick, err + mess, "", null));
+            sendMsg(new MsgToClient(nick, err + mess, "", null));
             //read response
             MsgToServer msgToServer = receiveMsg();
             if (msgToServer == null)
@@ -143,7 +143,7 @@ public class ServerThread extends Thread implements Observer {
         String mess = Messages.RESUME;
         String err = "";
         //send msg asking for resume
-        sendMsg(new MsgPacket(nick, err + mess, "", null));
+        sendMsg(new MsgToClient(nick, err + mess, "", null));
     }
 
     /**
@@ -151,7 +151,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @param msg of type MsgPacket
      */
-    private void sendMsg(MsgPacket msg) throws IOException {
+    private void sendMsg(MsgToClient msg) throws IOException {
         try {
             socketOut.writeObject(msg);
             socketOut.flush();
@@ -212,17 +212,17 @@ public class ServerThread extends Thread implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        if (!(o instanceof Match) || !(arg instanceof MsgPacket)) {
+        if (!(o instanceof Match) || !(arg instanceof MsgToClient)) {
             throw new IllegalArgumentException();
         }
 
         //send the msg packet
-        if (((MsgPacket) arg).msg.equalsIgnoreCase("end"))
+        if (((MsgToClient) arg).msg.equalsIgnoreCase("end"))
             going = false;
 
         //send the message
         try {
-            sendMsg((MsgPacket) arg);
+            sendMsg((MsgToClient) arg);
         } catch (IOException e) {
             going = false;
         }

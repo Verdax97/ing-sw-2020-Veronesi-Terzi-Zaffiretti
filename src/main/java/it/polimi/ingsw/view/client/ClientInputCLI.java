@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
-import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.model.SimpleGod;
 import it.polimi.ingsw.view.Colors;
@@ -30,10 +30,12 @@ public class ClientInputCLI extends ClientInput {
         super(clientMain);
     }
 
-    /** @see ClientInput#ParseMsg(MsgPacket) */
+    /**
+     * @see ClientInput#ParseMsg(MsgToClient)
+     */
     @Override
-    public void ParseMsg(MsgPacket msgPacket) {
-        String msg = msgPacket.msg;
+    public void ParseMsg(MsgToClient msgToClient) {
+        String msg = msgToClient.msg;
         int[] arr = {-5, -5, -5, -5};
         scanner = new Scanner(System.in);
         //wait for input only in particular cases
@@ -66,14 +68,14 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.CHOSE_GODS)) {
             System.out.println("Chose gods for all players by inserting corresponding value (one at the time)");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             arr[0] = ReadIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose gods for all players by inserting corresponding value (one at the time)");
         }
 
         if (msg.equalsIgnoreCase(Messages.CHOSE_YOUR_GOD)) {
             System.out.println("Chose your god by inserting corresponding value");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             arr[0] = ReadIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose your god by inserting corresponding value");
         }
@@ -101,13 +103,13 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.SELECT_WORKER)) {
             System.out.println("Select your worker by inserting corresponding value");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             arr[0] = ReadIntInput();
         }
 
         if (msg.equalsIgnoreCase(Messages.BEFORE_MOVE)) {
             System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             if (Confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
                 System.out.println("Insert value");
@@ -129,7 +131,7 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.MOVE)) {
             System.out.println("You must move.\nAll the possible moves your worker can do");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             arr[0] = ReadIntInput();
         }
 
@@ -145,15 +147,15 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.BUILD)) {
             System.out.println("You must build.\nAll the possible build your worker can do");
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             arr[0] = ReadIntInput();
 
             int i;
-            for (i = 0; i < msgPacket.board.players.size(); i++) {
-                if (clientMain.getNick().equals(msgPacket.board.players.get(i)))
+            for (i = 0; i < msgToClient.board.players.size(); i++) {
+                if (clientMain.getNick().equals(msgToClient.board.players.get(i)))
                     break;
             }
-            if (msgPacket.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
+            if (msgToClient.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
                 System.out.println("You have the power to build a dome here");
                 if (Confirm("Do you want to do it? (y/n)")) {
                     arr[2] = 1;
@@ -162,7 +164,7 @@ public class ClientInputCLI extends ClientInput {
         }
 
         if (msg.equalsIgnoreCase(Messages.WAIT_TURN)) {
-            System.out.println(msgPacket.altMsg);
+            System.out.println(msgToClient.altMsg);
             return;
         }
 
@@ -309,10 +311,10 @@ public class ClientInputCLI extends ClientInput {
 
 
     /**
-     * @see ClientInput#updateNotYourTurn(MsgPacket)
+     * @see ClientInput#updateNotYourTurn(MsgToClient)
      */
     @Override
-    public void updateNotYourTurn(MsgPacket msgPacket) {
+    public void updateNotYourTurn(MsgToClient msgToClient) {
         System.out.println(Colors.ANSI_YELLOW + clientMain.getReceivedMsg().nickname + "'s turn, wait" + Colors.ANSI_RESET);
         System.out.println(clientMain.getReceivedMsg().altMsg);
     }

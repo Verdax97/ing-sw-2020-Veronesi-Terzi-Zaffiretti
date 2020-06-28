@@ -618,7 +618,7 @@ public class Match extends Observable {
         }
         SimpleBoard simpleBoard = new SimpleBoard(board, gods, players, workers);
         setChanged();
-        notifyObservers(new MsgPacket(nickname, msg, alt, simpleBoard));
+        notifyObservers(new MsgToClient(nickname, msg, alt, simpleBoard));
     }
 
     /**

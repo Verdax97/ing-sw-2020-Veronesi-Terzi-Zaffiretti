@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.MsgToServer;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class LineClient extends Thread implements Observer {
      */
     public void run() {
         while (true) {
-            MsgPacket msg = ReceiveMsg();
+            MsgToClient msg = ReceiveMsg();
 
             //pass the message to the main client
             if (msg != null) {
@@ -91,9 +91,9 @@ public class LineClient extends Thread implements Observer {
      *
      * @return MsgPacket
      */
-    private MsgPacket ReceiveMsg() {
+    private MsgToClient ReceiveMsg() {
         try {
-            return (MsgPacket) socketIn.readObject();
+            return (MsgToClient) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
             if (!(e instanceof IOException))
                 System.out.println("The format of the message to receive is incorrect");

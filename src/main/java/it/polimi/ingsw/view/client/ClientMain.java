@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
-import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.Colors;
 
@@ -18,7 +18,7 @@ public class ClientMain implements Runnable {
      */
     Scanner stdin = new Scanner(System.in);
 
-    private MsgPacket receivedMsg;
+    private MsgToClient receivedMsg;
     private ClientInput clientInput;
     /**
      * The Colors.
@@ -48,7 +48,7 @@ public class ClientMain implements Runnable {
      *
      * @return the receivedMsg (type MsgPacket) of this ClientMain object.
      */
-    public synchronized MsgPacket getReceivedMsg() {
+    public synchronized MsgToClient getReceivedMsg() {
         return receivedMsg;
     }
 
@@ -57,7 +57,7 @@ public class ClientMain implements Runnable {
      *
      * @param receivedMsg the receivedMsg of this ClientMain object.
      */
-    public synchronized void setReceivedMsg(MsgPacket receivedMsg) {
+    public synchronized void setReceivedMsg(MsgToClient receivedMsg) {
         this.receivedMsg = receivedMsg;
     }
 

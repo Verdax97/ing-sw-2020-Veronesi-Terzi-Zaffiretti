@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view.client;
 
-import it.polimi.ingsw.model.MsgPacket;
+import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.model.SimpleBoard;
 
@@ -25,9 +25,9 @@ public class ClientInput extends Observable {
     /**
      * Method ParseMsg parse the incoming message and call the appropriated function
      *
-     * @param msgPacket of type MsgPacket
+     * @param msgToClient of type MsgPacket
      */
-    public void ParseMsg(MsgPacket msgPacket) {
+    public void ParseMsg(MsgToClient msgToClient) {
     }
 
     /**
@@ -56,7 +56,7 @@ public class ClientInput extends Observable {
     /**
      * Method updateNotYourTurn show that is not your turn
      */
-    public void updateNotYourTurn(MsgPacket msgPacket) {
+    public void updateNotYourTurn(MsgToClient msgToClient) {
 
     }
 
