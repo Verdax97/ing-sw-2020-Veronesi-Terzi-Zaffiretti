@@ -31,13 +31,7 @@ public class Demeter extends MultipleActionGod {
         }
         int built = CheckBuild(board, selectedCell, x, y);
         if (built > 0) {
-            int building = board.getCell(x, y).getBuilding();
-            if (building < 3)
-                board.getCell(x, y).setBuilding(1);
-            else if (building == 3)
-                board.getCell(x, y).setDome(true);
-            board.getCell(x, y).setBuiltBy(selectedCell.getWorker().getPlayer());
-            board.getCell(x, y).setBuiltTurn(turnNumber);
+            super.Building(board, selectedCell, x, y, typeBuild, turnNumber);
             use++;
             return CheckUse();
         }
