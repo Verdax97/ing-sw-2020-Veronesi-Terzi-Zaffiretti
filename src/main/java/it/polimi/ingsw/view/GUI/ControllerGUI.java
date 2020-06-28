@@ -16,7 +16,6 @@ import java.util.Optional;
 
 /**
  * The type Controller gui.
- * @author Stefano
  */
 public class ControllerGUI {
 
@@ -49,8 +48,6 @@ public class ControllerGUI {
     }
 
     private SantoriniMatchController santoriniMatchController = null;
-
-    private int firstTime = 0;
 
     /**
      * Gets client main.
@@ -96,7 +93,7 @@ public class ControllerGUI {
      */
     public void getFirstWindow() throws IOException {
         FXMLLoader loaderLauncher = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
-        Parent rootLauncher = (Parent) loaderLauncher.load();
+        Parent rootLauncher = loaderLauncher.load();
         LauncherController launcherController = loaderLauncher.getController();
         launcherController.setClientMain(clientMain);
         connectionScene = new Scene(rootLauncher);
@@ -112,7 +109,7 @@ public class ControllerGUI {
     public void changeToLobby(boolean master) throws IOException {
         if (lobbyController == null){
             FXMLLoader loaderLobby = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Lobby.fxml"));
-            Parent rootLobby = (Parent) loaderLobby.load();
+            Parent rootLobby = loaderLobby.load();
             lobbyController = loaderLobby.getController();
             lobbyController.setClientMain(clientMain);
             lobbyController.setClientInputGUI(clientInputGUI);
@@ -139,7 +136,7 @@ public class ControllerGUI {
      */
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
-        Parent rootMatch = (Parent) loaderPickGod.load();
+        Parent rootMatch = loaderPickGod.load();
         pickGodsController = loaderPickGod.getController();
         pickGodsController.setClientMain(clientMain);
         pickGodsController.setClientInputGUI(clientInputGUI);
@@ -171,7 +168,7 @@ public class ControllerGUI {
     public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn, boolean resume) throws IOException {
         if (santoriniMatchController == null) {
             FXMLLoader loaderSantoriniMatch = new FXMLLoader(getClass().getClassLoader().getResource("FXML/SantoriniMatch.fxml"));
-            Parent rootSantoriniMatch = (Parent) loaderSantoriniMatch.load();
+            Parent rootSantoriniMatch = loaderSantoriniMatch.load();
             santoriniMatchController = loaderSantoriniMatch.getController();
             santoriniMatchController.setClientMain(clientMain);
             santoriniMatchController.setClientInputGUI(clientInputGUI);
@@ -291,7 +288,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Error.
+     * Method error popup an error window
      *
      * @param header  the header
      * @param content the content
@@ -303,13 +300,19 @@ public class ControllerGUI {
         errorAlert.showAndWait();
     }
 
+    /**
+     * Method endGame change to the endgame scene
+     *
+     * @param message of type String
+     * @param won     of type boolean
+     */
     public void endGame(String message, boolean won) {
         System.out.println("We are in the endgame!");
         FXMLLoader loaderEndgame = new FXMLLoader(getClass().getClassLoader().getResource("FXML/GameClosing.fxml"));
-        Parent rootEndGame = null;
+        Parent rootEndGame;
         Stage secondStage = new Stage();
         try {
-            rootEndGame = (Parent) loaderEndgame.load();
+            rootEndGame = loaderEndgame.load();
             ((GameCloserWindow) loaderEndgame.getController()).setWinner(won);
             ((GameCloserWindow) loaderEndgame.getController()).setMessage(message, won);
             Scene secondScene = new Scene(rootEndGame);
@@ -322,6 +325,12 @@ public class ControllerGUI {
         }
     }
 
+    /**
+     * Method infoPopUp popup an info window
+     *
+     * @param title   of type String
+     * @param message of type String
+     */
     public void infoPopUp(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
