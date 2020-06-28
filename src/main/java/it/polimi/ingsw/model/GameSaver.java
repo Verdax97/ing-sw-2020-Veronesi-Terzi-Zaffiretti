@@ -16,11 +16,13 @@ import java.util.Scanner;
 public class GameSaver {
     private static File saveFile;
     private static StringBuilder fileName;
+
     /**
      * Method checkForGames true if there is another game with the same players
      *
      * @param lobby of type Lobby
-     * @return boolean
+     * @return boolean boolean
+     * @throws IOException the io exception
      */
     public static boolean checkForGames(Lobby lobby) throws IOException {
         ArrayList<String> players = new ArrayList<>(lobby.getPlayers());
@@ -92,7 +94,7 @@ public class GameSaver {
     /**
      * Method loadGame loads the old game
      *
-     * @return Match
+     * @return Match match
      * @throws FileNotFoundException when
      */
     public static Match loadGame() throws FileNotFoundException {

@@ -327,6 +327,9 @@ public class SantoriniMatchController {
         reply[1] = 0;
     }
 
+    /**
+     * Other action.
+     */
     public void otherAction() {
         if (turn) {
             if (powerGodAnswer) {
