@@ -174,8 +174,9 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <ScrollPane layoutY="41.0" prefHeight="148.0" prefWidth="220.0" AnchorPane.leftAnchor="5.0"
-                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="41.0">
+                        <ScrollPane fx:id="chatPane" layoutY="41.0" prefHeight="148.0" prefWidth="220.0"
+                                    AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                    AnchorPane.topAnchor="41.0">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0">
                                  <children>
@@ -196,9 +197,10 @@
                                     <Font size="18.0"/>
                                  </font>
                               </TextField>
-                              <Button layoutX="171.0" layoutY="8.0" mnemonicParsing="false" onAction="#sendChatMessage"
-                                      prefHeight="39.0" prefWidth="52.0" text="Send" AnchorPane.bottomAnchor="0.0"
-                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Button fx:id="chatButton" layoutX="171.0" layoutY="8.0" mnemonicParsing="false"
+                                      onAction="#sendChatMessage" prefHeight="39.0" prefWidth="52.0" text="Send"
+                                      AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                      AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="14.0"/>
                                  </font>

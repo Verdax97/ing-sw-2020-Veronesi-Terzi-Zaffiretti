@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,6 +44,10 @@ public class SantoriniMatchController {
     private VBox chatVBox;
     @FXML
     private TextField chatInput;
+    @FXML
+    private ScrollPane chatPane;
+    @FXML
+    private Button chatButton;
 
 
     private ClientMain clientMain;
@@ -99,15 +104,21 @@ public class SantoriniMatchController {
         refreshPlayers(simpleBoard);
         //setup all the board
         initializeBoard(simpleBoard);
+        chatButton.setDefaultButton(true);
     }
 
+    /**
+     * Method initializeBoard initialize the board with players and building (if the game is resuming)
+     *
+     * @param simpleBoard of type SimpleBoard
+     */
     private void initializeBoard(SimpleBoard simpleBoard) {
         int k = 0, z = 0;
         for (int j = 4; j >= 0; j--) {
             for (int i = 0; i < 5; i++) {
                 //create and set the custom button
                 CellButton cellButton = new CellButton(i, j);
-                cellButton.setOnMouseClicked(e -> selectedCell(cellButton));
+                cellButton.setOnMouseClicked(e -> selectCell(cellButton));
                 board.add(cellButton, k, z);
                 //create the "worker" placeholder
                 Circle worker = new Circle();
@@ -316,6 +327,11 @@ public class SantoriniMatchController {
         }
     }
 
+    /**
+     * Method isThisAtlasBuilding check if the buttons text need to be changed
+     *
+     * @param cond of type boolean
+     */
     private void isThisAtlasBuilding(boolean cond) {
         powerGodAnswer = false;
         if (cond) {
@@ -356,7 +372,12 @@ public class SantoriniMatchController {
         }
     }
 
-    private void selectedCell(CellButton cellButton) {
+    /**
+     * Method selectCell is used to select the cell values
+     *
+     * @param cellButton of type CellButton
+     */
+    private void selectCell(CellButton cellButton) {
         if (cellButton.getIdFromList() == -5 && !placeWorkersPhase) {
             return;
         }
@@ -488,6 +509,12 @@ public class SantoriniMatchController {
         }
     }
 
+    /**
+     * Method pickColor used for displaying the correct workers color
+     *
+     * @param val of type int
+     * @return String
+     */
     private String pickColor(int val) {
         switch (val) {
             case 0 -> {
@@ -517,17 +544,27 @@ public class SantoriniMatchController {
             hideConfirmButton();
     }
 
+    /**
+     * Method sendChatMessage send the message to the server if it is not empty
+     */
     public void sendChatMessage() {
         if (chatInput.getText().length() > 0) {
             clientInputGUI.sendChatMsg(chatInput.getText());
-            //chatVBox.getChildren().add(new Label(clientMain.getNick()+":"+chatInput.getText()));
             chatInput.setText("");
         }
     }
 
+    /**
+     * Method receiveChatMessage receives a chat message from the server and update the chat panel
+     *
+     * @param msg of type String
+     */
     public void receiveChatMessage(String msg) {
         String finalMsg = msg.split(":", 2)[1];
-        Platform.runLater(() -> chatVBox.getChildren().add(new Label(finalMsg)));
+        Platform.runLater(() -> {
+            chatVBox.getChildren().add(new Label(finalMsg));
+            chatPane.setVvalue(1);
+        });
     }
 }
 

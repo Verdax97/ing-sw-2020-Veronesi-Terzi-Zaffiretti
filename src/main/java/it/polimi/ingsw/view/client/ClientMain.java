@@ -142,12 +142,14 @@ public class ClientMain implements Runnable {
         try {
             client.startClient();
         } catch (IOException e) {
-            System.err.println("Server not reachable"); //server not available
+            if (CLI)
+                System.err.println("Server not reachable"); //server not available
             stdin = new Scanner(System.in);
             return false;
         }
         //connection established message
-        System.out.println("Connection established");
+        if (CLI)
+            System.out.println("Connection established");
 
         //create
         client.start();
@@ -197,7 +199,8 @@ public class ClientMain implements Runnable {
             threadInput.interrupt();
             threadInput.join(300);
         } catch (InterruptedException e) {
-            System.out.println(threadInput.getName());
+            if (CLI)
+                System.out.println(threadInput.getName());
         }
         //close all
     }

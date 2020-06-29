@@ -126,7 +126,8 @@ public class ServerThread extends Thread implements Observer {
      * Method SetupNickname check if the nickname is available on the server
      */
     private void setupNickname() throws IOException {
-        System.out.println("Waiting for player " + pos + " nickname");
+        int v = pos + 1;
+        System.out.println("Waiting for player " + v + " nickname");
         String mess = Messages.INSERT_NICKNAME;
         String err = "";
         while (true) {
