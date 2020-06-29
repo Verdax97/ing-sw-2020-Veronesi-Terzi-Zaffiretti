@@ -212,6 +212,8 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * @return boolean
      */
     public synchronized boolean setNicknameInLobby(String name) {
+        if (name.split(":")[0].equalsIgnoreCase("Chat"))
+            return false;
         for (String s : lobby.getPlayers()) {
             if (name.equalsIgnoreCase(s)) {
                 System.out.println(name + "-" + s);
