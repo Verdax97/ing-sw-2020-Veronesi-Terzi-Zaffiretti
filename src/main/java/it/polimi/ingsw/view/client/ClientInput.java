@@ -38,7 +38,7 @@ public class ClientInput extends Observable {
      * @param targetX of type int
      * @param targetY of type int
      */
-    public void Reply(int x, int y, int targetX, int targetY) {
+    public void reply(int x, int y, int targetX, int targetY) {
         if (clientMain.isEnding)
             return;
         setChanged();

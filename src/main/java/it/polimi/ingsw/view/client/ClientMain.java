@@ -165,7 +165,6 @@ public class ClientMain implements Runnable {
 
         board = receivedMsg.board;
         clientInput.printBoard(board);
-        //clientInput.printBoard(board);
 
         //exit if the game ends
         if (getReceivedMsg().msg.equalsIgnoreCase(Messages.END)) {

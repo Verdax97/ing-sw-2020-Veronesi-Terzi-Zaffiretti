@@ -31,7 +31,7 @@ public class PickGodsController {
      */
     int[] reply = new int[] {-5, -5, -5, -5};
 
-    private ArrayList<GodCard> pickableGod = new ArrayList<>();
+    private final ArrayList<GodCard> pickableGod = new ArrayList<>();
 
     @FXML
     private ChoiceBox listOfGod;
@@ -105,7 +105,7 @@ public class PickGodsController {
      * Send reply.
      */
     public void sendReply () {
-        clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
+        clientInputGUI.reply(reply[0], reply[1], reply[2], reply[3]);
         godEffect.setText("Select a god");
         godImage.setImage(null);
         reply = new int[]{-5, -5, -5, -5};
@@ -125,6 +125,12 @@ public class PickGodsController {
         reply[0] = Integer.parseInt(godCard.id);
     }
 
+    /**
+     * Method getGodCard get the card from the possibilities
+     *
+     * @param name of type String
+     * @return GodCard
+     */
     private GodCard getGodCard(String name) {
         for (GodCard card : pickableGod) {
             if (card.name.equals(name))

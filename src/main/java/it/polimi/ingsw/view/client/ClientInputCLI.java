@@ -168,7 +168,7 @@ public class ClientInputCLI extends ClientInput {
             return;
         }
 
-        Reply(arr[0], arr[1], arr[2], arr[3]);
+        reply(arr[0], arr[1], arr[2], arr[3]);
     }
 
 

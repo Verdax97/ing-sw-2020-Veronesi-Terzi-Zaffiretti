@@ -81,13 +81,13 @@ public class LobbyController{
         String number = numberPlayer.getValue().toString();
         if (number.equalsIgnoreCase("2 Players")) {
             val = 2;
-            clientInputGUI.Reply(val, -5, -5, -5);
+            clientInputGUI.reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
         }
         else if (number.equalsIgnoreCase("3 Players")) {
             val = 3;
-            clientInputGUI.Reply(val, -5, -5, -5);
+            clientInputGUI.reply(val, -5, -5, -5);
             numberPlayer.setVisible(false);
             confirm.setVisible(false);
         }
@@ -104,8 +104,7 @@ public class LobbyController{
     public boolean lobby() {
         if (nickname != null) {
             clientMain.setNick(nickname.getText());
-            clientInputGUI.Reply(-5,-5, -5, -5);
-            clientInputGUI.setMyName(nickname.getText());
+            clientInputGUI.reply(-5, -5, -5, -5);
             return true;
         }
         else {
@@ -129,7 +128,7 @@ public class LobbyController{
      */
     @FXML
     public void resume(){
-        clientInputGUI.Reply(1, -5, -5, -5);
+        clientInputGUI.reply(1, -5, -5, -5);
         yes.setVisible(false);
         no.setVisible(false);
     }
@@ -139,7 +138,7 @@ public class LobbyController{
      */
     @FXML
     public void dontResume(){
-        clientInputGUI.Reply(0, -5, -5, -5);
+        clientInputGUI.reply(0, -5, -5, -5);
         yes.setVisible(false);
         no.setVisible(false);
     }
