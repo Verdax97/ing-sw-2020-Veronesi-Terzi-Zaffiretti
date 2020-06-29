@@ -44,6 +44,9 @@ public class ClientInputCLI extends ClientInput {
             System.out.println(Colors.ANSI_RED + msg.split("\n", 2)[0] + Colors.ANSI_RESET);
             msg = msg.split("\n", 2)[1];
         }
+        if (msg.split(":", 2)[0].equals("Chat")) {
+            return;
+        }
 
         if (msg.equalsIgnoreCase(Messages.LOBBY)) {
             System.out.println("Select number of players (2/3)");
@@ -315,6 +318,10 @@ public class ClientInputCLI extends ClientInput {
      */
     @Override
     public void updateNotYourTurn(MsgToClient msgToClient) {
+        String msg = msgToClient.msg;
+        if (msg.split(":", 2)[0].equals("Chat")) {
+            return;
+        }
         System.out.println(Colors.ANSI_YELLOW + clientMain.getReceivedMsg().nickname + "'s turn, wait" + Colors.ANSI_RESET);
         System.out.println(clientMain.getReceivedMsg().altMsg);
     }
