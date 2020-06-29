@@ -2,10 +2,7 @@ package it.polimi.ingsw.view.server;
 
 import it.polimi.ingsw.ServerMain;
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.GameSaver;
-import it.polimi.ingsw.model.Lobby;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Colors;
 
 import java.io.IOException;
@@ -154,7 +151,10 @@ public class ServerMultiplexer extends Observable implements Runnable {
             closeConnections();
             return;
         }
-
+        if (lobby.getPlayers().size() != lobby.getnPlayer() || lobby.getPlayers().size() < 2) {
+            closeConnections();
+            return;
+        }
         controller.setLobby(lobby);
         controller.createMatch(resumeGame);
         started = true;
@@ -276,6 +276,16 @@ public class ServerMultiplexer extends Observable implements Runnable {
         }
         if (!started)
             return;
+        if (msg.nickname.split(":")[0].equalsIgnoreCase("Chat")) {
+            String chatMsg = msg.nickname.split("\n", 2)[0];
+            for (ServerThread thread : playersThread) {
+                try {
+                    thread.sendMsg(new MsgToClient(thread.getNick(), chatMsg, chatMsg, null));
+                } catch (IOException e) {
+                    System.out.println("cannot send ");
+                }
+            }
+        }
         setChanged();
         notifyObservers(msg);
     }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.client;
 
 import it.polimi.ingsw.model.Messages;
 import it.polimi.ingsw.model.MsgToClient;
+import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.GUI.ControllerGUI;
 import it.polimi.ingsw.view.GUI.LobbyController;
@@ -19,26 +20,6 @@ public class ClientInputGUI extends ClientInput {
     private ControllerGUI controllerGui = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
-
-    /**
-     * Gets my name.
-     *
-     * @return the my name
-     */
-    public String getMyName() {
-        return myName;
-    }
-
-    /**
-     * Sets my name.
-     *
-     * @param myName the my name
-     */
-    public void setMyName(String myName) {
-        this.myName = myName;
-    }
-
-    private String myName;
 
 
     /**
@@ -100,6 +81,10 @@ public class ClientInputGUI extends ClientInput {
             msg = msg.split("\n", 2)[1];
             Platform.runLater(() -> controllerGui.error("Error", errorMsg));
         }
+        if (msg.split(":", 2)[0].equals("Chat")) {
+            receiveChatMsg(msg);
+            return;
+        }
 
         if (msg.equalsIgnoreCase(Messages.LOBBY)) {
             Platform.runLater(() -> {
@@ -125,7 +110,7 @@ public class ClientInputGUI extends ClientInput {
             Platform.runLater(() -> {
                 try {
                     controllerGui.changeToPickGods();
-                    Reply(-5, -5, -5, -5);
+                    reply(-5, -5, -5, -5);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -158,7 +143,7 @@ public class ClientInputGUI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.itIsYourTurn();
             //if (msgPacket.board.players.size() > 1)
-                Reply(-5, -5, -5, -5);
+            reply(-5, -5, -5, -5);
             return;
         }
 
@@ -215,6 +200,10 @@ public class ClientInputGUI extends ClientInput {
     @Override
     public void updateNotYourTurn(MsgToClient msgToClient) {
         String msg = msgToClient.msg;
+        if (msg.split(":", 2)[0].equals("Chat")) {
+            receiveChatMsg(msg);
+            return;
+        }
         controllerGui.activePlayer(msgToClient.board, msgToClient.nickname);
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {
             msg = msg.split("\n", 2)[1];
@@ -257,10 +246,8 @@ public class ClientInputGUI extends ClientInput {
             }
         }
 
+
         controllerGui.waitYourTurn();
-
-
-        //Reply(-5, -5, -5, -5);
 
         controllerGui.activePlayer(msgToClient.board, msgToClient.nickname);
     }
@@ -291,5 +278,16 @@ public class ClientInputGUI extends ClientInput {
             return;
         System.out.println("Closing the game.");
         Platform.runLater(() -> controllerGui.infoPopUp("Game is closing", "Some player has disconnected, closing the game"));
+    }
+
+    public void sendChatMsg(String msg) {
+        if (clientMain.isEnding)
+            return;
+        setChanged();
+        notifyObservers(new MsgToServer("Chat:" + clientMain.getNick() + ":" + msg, -5, -5, -5, -5));
+    }
+
+    public void receiveChatMsg(String msg) {
+        controllerGui.receiveChatMessage(msg);
     }
 }

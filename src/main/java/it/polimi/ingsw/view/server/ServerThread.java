@@ -47,6 +47,16 @@ public class ServerThread extends Thread implements Observer {
 
 
     /**
+     * Method getNick returns the nick of this ServerThread object.
+     *
+     * @return the nick (type String) of this ServerThread object.
+     */
+    public String getNick() {
+        return nick;
+    }
+
+
+    /**
      * Method run for invoking thread
      */
     public void run() {
@@ -151,7 +161,7 @@ public class ServerThread extends Thread implements Observer {
      *
      * @param msg of type MsgPacket
      */
-    private void sendMsg(MsgToClient msg) throws IOException {
+    public void sendMsg(MsgToClient msg) throws IOException {
         try {
             socketOut.writeObject(msg);
             socketOut.flush();

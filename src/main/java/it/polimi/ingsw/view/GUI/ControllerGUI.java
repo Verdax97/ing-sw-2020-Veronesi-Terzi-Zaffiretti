@@ -345,4 +345,9 @@ public class ControllerGUI {
             infoPopUp("You will never get rid of me this way", "Bold of you to assume that i can so easily be bested!");
         }
     }
+
+    public void receiveChatMessage(String msg) {
+        if (santoriniMatchController != null)
+            santoriniMatchController.receiveChatMessage(msg);
+    }
 }

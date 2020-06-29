@@ -1,12 +1,13 @@
 package it.polimi.ingsw.view.GUI;
 
 import it.polimi.ingsw.model.SimpleBoard;
-import it.polimi.ingsw.view.client.ClientInput;
+import it.polimi.ingsw.view.client.ClientInputGUI;
 import it.polimi.ingsw.view.client.ClientMain;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,16 +25,28 @@ import java.util.regex.Pattern;
  */
 public class SantoriniMatchController {
 
-    @FXML private VBox playersInfo;
-    @FXML private GridPane board;
-    @FXML private AnchorPane thirdPlayerPane;
-    @FXML private Button confirmButton;
-    @FXML private Text whosTurn;
-    @FXML private Button otherActionButton;
-    @FXML private Label messageBox;
+    @FXML
+    private VBox playersInfo;
+    @FXML
+    private GridPane board;
+    @FXML
+    private AnchorPane thirdPlayerPane;
+    @FXML
+    private Button confirmButton;
+    @FXML
+    private Text whosTurn;
+    @FXML
+    private Button otherActionButton;
+    @FXML
+    private Label messageBox;
+    @FXML
+    private VBox chatVBox;
+    @FXML
+    private TextField chatInput;
+
 
     private ClientMain clientMain;
-    private ClientInput clientInputGUI;
+    private ClientInputGUI clientInputGUI;
     private int[] reply = {-5, -5, -5, -5};
 
     private final ArrayList<CellButton> cellButtonBoard = new ArrayList<>();
@@ -72,7 +85,7 @@ public class SantoriniMatchController {
      *
      * @param clientInputGUI the client input gui
      */
-    public void setClientInputGUI(ClientInput clientInputGUI) {
+    public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
 
@@ -271,7 +284,7 @@ public class SantoriniMatchController {
      * Send reply.
      */
     public void sendReply() {
-        clientInputGUI.Reply(reply[0], reply[1], reply[2], reply[3]);
+        clientInputGUI.reply(reply[0], reply[1], reply[2], reply[3]);
         reply = new int[]{-5, -5, -5, -5};
     }
 
@@ -502,6 +515,19 @@ public class SantoriniMatchController {
         turn = yourTurn;
         if (!turn)
             hideConfirmButton();
+    }
+
+    public void sendChatMessage() {
+        if (chatInput.getText().length() > 0) {
+            clientInputGUI.sendChatMsg(chatInput.getText());
+            //chatVBox.getChildren().add(new Label(clientMain.getNick()+":"+chatInput.getText()));
+            chatInput.setText("");
+        }
+    }
+
+    public void receiveChatMessage(String msg) {
+        String finalMsg = msg.split(":", 2)[1];
+        Platform.runLater(() -> chatVBox.getChildren().add(new Label(finalMsg)));
     }
 }
 

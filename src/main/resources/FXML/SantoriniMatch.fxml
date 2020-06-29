@@ -155,47 +155,95 @@
             </AnchorPane>
             <AnchorPane prefHeight="442.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox layoutY="205.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="240.0">
+                  <AnchorPane layoutX="5.0" layoutY="24.0" prefHeight="234.0" prefWidth="230.0"
+                              AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0">
                      <children>
-                        <AnchorPane>
+                        <AnchorPane layoutY="30.0" opacity="0.6" prefHeight="209.0" prefWidth="230.0"
+                                    style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.topAnchor="0.0"/>
+                        <AnchorPane prefHeight="24.0" prefWidth="220.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <children>
-                              <AnchorPane opacity="0.5" style="-fx-background-color: lightblue;"
-                                          AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-                                          AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
-                              <Label fx:id="messageBox" alignment="CENTER" prefHeight="180.0" prefWidth="220.0"
-                                     text="se provo a scrivere che cosa si riesce a capire?" textAlignment="CENTER"
-                                     wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                     AnchorPane.topAnchor="10.0">
+                              <Label alignment="CENTER" text="Chat" AnchorPane.bottomAnchor="0.0"
+                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                     AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font size="20.0"/>
+                                    <Font size="24.0"/>
                                  </font>
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="0.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                        <ScrollPane layoutY="41.0" prefHeight="148.0" prefWidth="220.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="41.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <VBox fx:id="chatVBox" alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                          AnchorPane.topAnchor="0.0"/>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <AnchorPane prefWidth="230.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0">
                            <children>
-                              <AnchorPane layoutX="5.0" layoutY="5.0" opacity="0.5"
-                                          style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="5.0"
-                                          AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                                          AnchorPane.topAnchor="5.0"/>
-                              <Button fx:id="otherActionButton" mnemonicParsing="false" onAction="#otherAction"
-                                      text="Cancel" visible="false" AnchorPane.leftAnchor="10.0"
-                                      AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <TextField fx:id="chatInput" prefHeight="39.0" prefWidth="168.0"
+                                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                         AnchorPane.rightAnchor="52.0">
                                  <font>
-                                    <Font size="25.0"/>
+                                    <Font size="18.0"/>
                                  </font>
-                              </Button>
-                              <Button fx:id="confirmButton" layoutY="39.0" mnemonicParsing="false"
-                                      onAction="#confirmAction" text="Confirm" AnchorPane.bottomAnchor="15.0"
-                                      AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                              </TextField>
+                              <Button layoutX="171.0" layoutY="8.0" mnemonicParsing="false" onAction="#sendChatMessage"
+                                      prefHeight="39.0" prefWidth="52.0" text="Send" AnchorPane.bottomAnchor="0.0"
+                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font size="25.0"/>
+                                    <Font size="14.0"/>
                                  </font>
                               </Button>
                            </children>
                         </AnchorPane>
                      </children>
-                  </VBox>
+                  </AnchorPane>
+                  <AnchorPane layoutY="265.0" prefHeight="130.0" prefWidth="240.0">
+                     <children>
+                        <AnchorPane opacity="0.5" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="5.0"
+                                    AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
+                                    AnchorPane.topAnchor="5.0"/>
+                        <Label fx:id="messageBox" alignment="CENTER" layoutY="17.0" prefHeight="120.0"
+                               text="se provo a scrivere che cosa si riesce a capire?" textAlignment="CENTER"
+                               wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                               AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="18.0"/>
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutY="395.0" prefHeight="140.0" prefWidth="230.0" AnchorPane.bottomAnchor="5.0"
+                              AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                     <children>
+                        <AnchorPane layoutX="5.0" layoutY="5.0" opacity="0.5" style="-fx-background-color: lightblue;"
+                                    AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+                                    AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+                        <Button fx:id="otherActionButton" mnemonicParsing="false" onAction="#otherAction" text="Cancel"
+                                visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                AnchorPane.topAnchor="10.0">
+                           <font>
+                              <Font size="25.0"/>
+                           </font>
+                        </Button>
+                        <Button fx:id="confirmButton" layoutY="39.0" mnemonicParsing="false" onAction="#confirmAction"
+                                text="Confirm" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                AnchorPane.rightAnchor="10.0">
+                           <font>
+                              <Font size="25.0"/>
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
