@@ -4,13 +4,20 @@ import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
 
+/**
+ * Class Chrono implements Chrono functionalities
+ */
 public class Chrono extends God{
 
+    /**
+     * Constructor Chrono creates a new Chrono instance.
+     */
     public Chrono(){
         this.name = "Chrono";
         this.description = "Win Condition: you also win where there are al least five Complete Towers on the board";
     }
 
+    /** @see it.polimi.ingsw.model.God#WinCondition(Board, Player) */
     @Override
     public Player WinCondition(Board board, Player player){
         int fullTowers = 0;

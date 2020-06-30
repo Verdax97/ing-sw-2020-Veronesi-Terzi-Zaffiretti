@@ -4,24 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * The type Simple board.
+ * Class SimpleBoard
  */
 public class SimpleBoard implements Serializable {
-    /**
-     * The Board.
-     */
+
     public final int[][] board;
-    /**
-     * The Gods.
-     */
     public final ArrayList<SimpleGod> gods;
-    /**
-     * The Players.
-     */
     public final ArrayList<String> players;
-    /**
-     * The Workers.
-     */
     public final ArrayList<int[]> workers;
 
     /**

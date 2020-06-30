@@ -6,8 +6,6 @@ import it.polimi.ingsw.model.MultipleActionGod;
 
 /**
  * Class Hephaestus implements Hephaestus functionalities
- *
- * @author Davide
  * Created on 22/05/2020
  */
 public class Hephaestus extends MultipleActionGod {

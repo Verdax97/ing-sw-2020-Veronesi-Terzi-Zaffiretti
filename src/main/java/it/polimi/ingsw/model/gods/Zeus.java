@@ -5,13 +5,20 @@ import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.God;
 import javafx.scene.image.Image;
 
+/**
+ * Class Zeus implements Zeus functionalities
+ */
 public class Zeus extends God {
 
+    /**
+     * Constructor Zeus creates a new Zeus instance.
+     */
     public Zeus() {
         this.name = "Zeus";
         this.description = "Your Build: your worker may build under itself in its current space, forcing it up one level. You do not win by forcing yourself up to the third level";
     }
 
+    /** @see it.polimi.ingsw.model.God#Building(Board, Cell, int, int, int, int)  */
     @Override
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber){
         int built = CheckBuild(board, selectedCell, x, y);
@@ -29,6 +36,7 @@ public class Zeus extends God {
         return built;
     }
 
+    /** @see it.polimi.ingsw.model.God#CheckBuild(Board, Cell, int, int)  */
     @Override
     public int CheckBuild(Board board, Cell selectedCell, int x, int y) {
 

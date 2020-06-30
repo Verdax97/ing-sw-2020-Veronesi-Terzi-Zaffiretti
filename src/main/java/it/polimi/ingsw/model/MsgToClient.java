@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * The type Msg packet.
+ * Class MsgToClient
  */
 public class MsgToClient implements Serializable {
+
     private static final long serialVersionUID = 1234L;
     /**
      * The Nickname.

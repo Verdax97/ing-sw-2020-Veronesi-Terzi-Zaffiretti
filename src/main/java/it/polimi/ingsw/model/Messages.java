@@ -2,9 +2,6 @@ package it.polimi.ingsw.model;
 
 /**
  * Class Messages all possible messages that the server sends to the client
- *
- * @author Davide
- * Created on 22/05/2020
  */
 public class Messages {
     public static final String LOBBY = "Lobby";

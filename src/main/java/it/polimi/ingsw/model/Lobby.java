@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Lobby.
+ * Class Lobby
  */
 public class Lobby
 {

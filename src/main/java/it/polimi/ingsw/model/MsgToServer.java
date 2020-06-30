@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * The type Msg to server.
+ * Class MsgToServer.
  */
 public class MsgToServer implements Serializable {
     /**

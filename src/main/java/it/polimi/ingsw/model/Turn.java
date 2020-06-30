@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Turn.
+ * Class Turn
  */
 public class Turn {
     private int turnNumber;
