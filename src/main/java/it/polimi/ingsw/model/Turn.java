@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class Turn
+ * Class Turn contains info about current game turn
  */
 public class Turn {
+
     private int turnNumber;
     private ArrayList<Worker> workers;
     private int validMoves;

@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class Cell
+ * Class Cell contains information about a single element of the game board
  */
 public class Cell implements Serializable {
     private Worker worker;
@@ -15,7 +15,7 @@ public class Cell implements Serializable {
     private int builtTurn;
 
     /**
-     * Instantiates a new Cell.
+     * Constructor Cell creates a new Cell instance.
      *
      * @param x the x
      * @param y the y
@@ -32,9 +32,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Gets worker.
+     * Method getWorker return the worker of this Cell object.
      *
-     * @return the worker
+     * @return worker of type Worker
      */
     public Worker getWorker()
     {
@@ -42,9 +42,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets worker.
+     * Method setWorker sets the worker of this Cell object.
      *
-     * @param worker the worker
+     * @param worker of type Worker
      */
     public void setWorker(Worker worker)
     {
@@ -52,9 +52,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Gets building.
+     * Method getBuilding returns the building of this Cell object.
      *
-     * @return the building
+     * @return building of type int
      */
     public int getBuilding()
     {
@@ -62,9 +62,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets building.
+     * Method setBuilding sets the building of this Cell object.
      *
-     * @param diff the diff
+     * @param diff of type int
      */
     public void setBuilding(int diff)
     {
@@ -72,9 +72,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Gets dome.
+     * Method getDome returns the dome of this Cell object.
      *
-     * @return the dome
+     * @return dome of type boolean
      */
     public boolean getDome()
     {
@@ -82,9 +82,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets dome.
+     * Method setDome sets the dome of this Cell object.
      *
-     * @param dome the dome
+     * @param dome of type boolean
      */
     public void setDome(boolean dome)
     {
@@ -92,9 +92,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Get pos int [ ].
+     * Method getPos returns the array arr which contains the coordX, coordY of this Cell object.
      *
-     * @return the int [ ]
+     * @return arr of type int[]
      */
     public int [] getPos()
     {
@@ -103,10 +103,10 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets pos.
+     * Method setPos sets the position of this Cell object.
      *
-     * @param x the x
-     * @param y the y
+     * @param x of type int
+     * @param y of type int
      */
     public void setPos(int x, int y)
     {
@@ -115,11 +115,11 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Is adjacent boolean.
+     * Method isAdjacent checks if another cell is adjacent of this Cell object.
      *
-     * @param x the x
-     * @param y the y
-     * @return the boolean
+     * @param x of type int
+     * @param y of type int
+     * @return boolean value
      */
     public boolean isAdjacent(int x, int y)
     {
@@ -135,9 +135,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Gets built turn.
+     * Method getBuiltTurn return the builtTurn of this Cell object.
      *
-     * @return the built turn
+     * @return builtTurn of type int
      */
     public int getBuiltTurn()
     {
@@ -145,9 +145,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets built turn.
+     * Method setBuiltTurn sets the builtTurn of this Cell object.
      *
-     * @param turn the turn
+     * @param turn of type int
      */
     public void setBuiltTurn(int turn)
     {
@@ -155,9 +155,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Gets built by.
+     * Method getBuiltBy returns the builtBy of this Cell object.
      *
-     * @return the built by
+     * @return builtby of type Player
      */
     public Player getBuiltBy()
     {
@@ -165,9 +165,9 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Sets built by.
+     * Method setBuiltBy sets the builtBy of this Cell object.
      *
-     * @param builder the builder
+     * @param builder of type Player
      */
     public void setBuiltBy(Player builder)
     {
@@ -175,12 +175,12 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Is not high boolean.
+     * Method isNotHigh checks if this Cell object is high.
      *
-     * @param board the board
-     * @param x     the x
-     * @param y     the y
-     * @return the boolean
+     * @param board of type Board
+     * @param x     of type int
+     * @param y     of type int
+     * @return boolean value
      */
     public boolean IsNotHigh(Board board, int x, int y)
     {
@@ -188,12 +188,12 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Is free dome boolean.
+     * Method isFreeDome checks if this Cell object has a dome.
      *
      * @param board the board
      * @param x     the x
      * @param y     the y
-     * @return the boolean
+     * @return boolean value
      */
     public boolean IsFreeDome(Board board, int x, int y)
     {
@@ -201,12 +201,12 @@ public class Cell implements Serializable {
     }
 
     /**
-     * Is free worker boolean.
+     * Method isFreeWorker checks if this Cell object has a worker.
      *
-     * @param board the board
-     * @param x     the x
-     * @param y     the y
-     * @return the boolean
+     * @param board of type Board
+     * @param x     of type int
+     * @param y     of type int
+     * @return boolean value
      */
     public boolean IsFreeWorker(Board board, int x, int y)
     {

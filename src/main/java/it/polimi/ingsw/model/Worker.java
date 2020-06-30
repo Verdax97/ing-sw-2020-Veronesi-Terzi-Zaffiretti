@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class Worker
+ * Class Worker contains information about a specific worker
  */
 public class Worker implements Serializable {
 
@@ -12,18 +12,18 @@ public class Worker implements Serializable {
     private boolean debuff = false;
 
     /**
-     * Sets player.
+     * Method setPlayer sets the player of this Workers object.
      *
-     * @param player the player
+     * @param player of type Player
      */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
     /**
-     * Gets player.
+     * Method getPlayer returns the player of this Worker object.
      *
-     * @return the player
+     * @return player of type Player
      */
     public Player getPlayer()
     {
@@ -31,21 +31,21 @@ public class Worker implements Serializable {
     }
 
     /**
-     * Gets last movement.
+     * Method getLastMovement returns the lastMovement of this Worker object.
      *
-     * @return the last movement
+     * @return lastMovement of type int
      */
     public int getLastMovement() { return lastMovement; }
 
     /**
-     * Sets last movement.
+     * Method setLastMovement sets the lastMovement of this Worker object.
      *
-     * @param lastMovement the last movement
+     * @param lastMovement of type int
      */
     public void setLastMovement(int lastMovement) { this.lastMovement = lastMovement; }
 
     /**
-     * Is debuff boolean.
+     * Method isDebuff returns the debuff of this Worker object.
      *
      * @return the boolean
      */
@@ -54,7 +54,7 @@ public class Worker implements Serializable {
     }
 
     /**
-     * Sets debuff.
+     * Method setDebuff sets the debuff of this Worker object.
      *
      * @param debuff the debuff
      */

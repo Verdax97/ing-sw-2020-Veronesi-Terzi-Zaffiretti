@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class Player
+ * Class Player contains all the info about the player
  */
 public class Player implements Serializable {
 
@@ -12,9 +12,9 @@ public class Player implements Serializable {
     private boolean Active;
 
     /**
-     * Instantiates a new Player.
+     * Constructor Board creates a new Board instance.
      *
-     * @param nick the nick
+     * @param nick of type String
      */
     public Player(String nick) {
         this.nickname = nick;
@@ -22,44 +22,44 @@ public class Player implements Serializable {
     }
 
     /**
-     * Gets god power.
+     * Method getGodPower return the godPower of this Player object.
      *
-     * @return the god power
+     * @return godPower of type God
      */
     public God getGodPower() { return godPower; }
 
     /**
-     * Sets god power.
+     * Method setGodPower sets the godPower of this Player object.
      *
-     * @param godPower the god power
+     * @param godPower of type God
      */
     public void setGodPower(God godPower) { this.godPower = godPower; }
 
     /**
-     * Gets nickname.
+     * Method getNickname returns the nickname of this Player object.
      *
-     * @return the nickname
+     * @return nickname of type String
      */
     public String getNickname() { return nickname; }
 
     /**
-     * Sets nickname.
+     * Method setNickname sets the nickname of this Player object.
      *
-     * @param nickname the nickname
+     * @param nickname of type String
      */
     public void setNickname(String nickname) { this.nickname = nickname; }
 
     /**
-     * Gets active.
+     * Method getActive returns the Active of this Player object.
      *
-     * @return the active
+     * @return Active of type boolean
      */
     public boolean getActive() { return Active; }
 
     /**
-     * Sets active.
+     * Method setActive sets the Active of this Player object.
      *
-     * @param active the active
+     * @param active of type boolean
      */
     public void setActive(boolean active) { Active = active; }
 }

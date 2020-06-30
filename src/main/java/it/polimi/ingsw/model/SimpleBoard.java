@@ -14,7 +14,7 @@ public class SimpleBoard implements Serializable {
     public final ArrayList<int[]> workers;
 
     /**
-     * Instantiates a new Simple board.
+     * Constructor SimpleBoard creates a new SimpleBoard instance.
      *
      * @param board   the board
      * @param gods    the gods

@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class MsgToClient
+ * Class MsgToClient contains updates of the game state designated to game clients
  */
 public class MsgToClient implements Serializable {
 
@@ -26,7 +26,7 @@ public class MsgToClient implements Serializable {
     public SimpleBoard board;
 
     /**
-     * Instantiates a new Msg packet.
+     * Constructor MsgToClient creates a new MsgToClient instance.
      *
      * @param nick   the nick
      * @param msg    the msg

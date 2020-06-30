@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class MsgToServer.
+ * Class MsgToServer contains contains users' choices designated to game server
  */
 public class MsgToServer implements Serializable {
+
     /**
      * The Nickname.
      */
@@ -25,7 +26,7 @@ public class MsgToServer implements Serializable {
     targetY;
 
     /**
-     * Instantiates a new Msg to server.
+     * Constructor MsgToServer creates a new MsgToServer instance.
      *
      * @param nickname the nickname
      * @param x        the x

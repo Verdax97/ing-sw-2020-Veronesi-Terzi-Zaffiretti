@@ -1,17 +1,17 @@
 package it.polimi.ingsw.model;
 
 /**
- * Class ErrorHandler
+ * Class ErrorHandler provides the correct message of error for different error situations
  */
 public class ErrorHandler {
 
     private final String prefix = Messages.ERROR + " ";
 
     /**
-     * Get error setup string.
+     * Method getErrorSetup creates a string with the correct message of setup error.
      *
-     * @param value the value
-     * @return the string
+     * @param value of type int
+     * @return String
      */
     public String GetErrorSetup(int value) {
         return switch (value) {
@@ -24,10 +24,10 @@ public class ErrorHandler {
     }
 
     /**
-     * Get error move string.
+     * Method getErrorMove creates a string with the correct message of move error.
      *
-     * @param value the value
-     * @return the string
+     * @param value of type int
+     * @return String
      */
     public String GetErrorMove(int value) {
         return switch (value) {
@@ -46,10 +46,10 @@ public class ErrorHandler {
     }
 
     /**
-     * Get error build string.
+     * Method getErrorBuild creates a string with the correct message of build error.
      *
-     * @param value the value
-     * @return the string
+     * @param value of type int
+     * @return String
      */
     public String GetErrorBuild(int value) {
         return switch (value) {

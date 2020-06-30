@@ -12,28 +12,28 @@ public class Lobby
     private final ArrayList<String> players = new ArrayList<>();
 
     /**
-     * Gets player.
+     * Method getnPlayer returns the nPlayer of this Lobby object.
      *
-     * @return the player
+     * @return nPlayer of type int
      */
     public int getnPlayer() {
         return nPlayer;
     }
 
     /**
-     * Sets player.
+     * Method setnPlayer sets the nPlayer of this Lobby object.
      *
-     * @param nPlayer the n player
+     * @param nPlayer of type int
      */
     public void setnPlayer(int nPlayer) {
         this.nPlayer = nPlayer;
     }
 
     /**
-     * Add player boolean.
+     * Method addPlayer adds toAdd string to the arrayList players of this Lobby object then returns true.
      *
-     * @param toAdd the to add
-     * @return the boolean
+     * @param toAdd of type String
+     * @return boolean value
      */
     public boolean AddPlayer(String toAdd)
     {
@@ -42,9 +42,9 @@ public class Lobby
     }
 
     /**
-     * Gets players.
+     * Method getPlayers returns the array of string of players of this Lobby object.
      *
-     * @return the players
+     * @return players of type ArrayList<String>
      */
     public ArrayList<String> getPlayers() {
         return players;

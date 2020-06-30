@@ -3,36 +3,36 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * Class Board
+ * Class Board contains all the Cells of the game board
  */
 public class Board implements Serializable {
 
     private Cell[][] board = new Cell[5][5];
 
     /**
-     * Get board cell [ ] [ ].
+     * Method getBoard returns the Board of this Board object.
      *
-     * @return the cell [ ] [ ]
+     * @return board (type Board) of this Board object.
      */
     public Cell[][] getBoard() {
         return board;
     }
 
     /**
-     * Sets board.
+     * Method setBoard sets the Board of this Board object.
      *
-     * @param board the board
+     * @param board the Board of this Board object.
      */
     public void setBoard(Cell[][] board) {
         this.board = board;
     }
 
     /**
-     * Gets cell.
+     * Method getCell returns the Cell in coordinate x coordinate y of this Board object.
      *
-     * @param x the x
-     * @param y the y
-     * @return the cell
+     * @param x of type int
+     * @param y of type int
+     * @return board[x][y] of this Board object
      */
     public Cell getCell(int x, int y) {
         return board[x][y];
@@ -53,9 +53,8 @@ public class Board implements Serializable {
     }
 
     /**
-     * Copy values in new board board.
-     *
-     * @return the board
+     * Method copyValuesInNewBoard copies the Board on a new Board instance.
+     * @return result of type Board
      */
     public final Board CopyValuesInNewBoard() {
         final Board result = new Board();
@@ -66,9 +65,8 @@ public class Board implements Serializable {
     }
 
     /**
-     * Copy values in new simple board int [ ] [ ].
-     *
-     * @return the int [ ] [ ]
+     * Method copyValuesInNewSimpleBoard copies the Board on a new SimpleBoard instance.
+     * @return result of type SimpleBoard
      */
     public int[][] CopyValuesInNewSimpleBoard() {
         int[][] result = new int[5][5];
