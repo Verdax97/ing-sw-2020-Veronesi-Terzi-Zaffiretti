@@ -16,5 +16,5 @@ public enum State {
         MOVE,
         BUILD,
         ENDMATCH,
-        LOBBY
+        LOBBY,
 }

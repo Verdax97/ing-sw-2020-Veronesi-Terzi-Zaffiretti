@@ -76,10 +76,6 @@ public class Controller implements Observer {
         int ret;
         switch (state) {
 //
-            case LOBBY -> {
-                lobby = serverMultiplexer.getLobby();
-                createMatch(false);
-            }
             case START -> {
                 match.PickGod(msgPacket);
                 setState(State.SETUP);
@@ -108,8 +104,6 @@ public class Controller implements Observer {
                     setState(State.SELECTWORKER);
                 else if (ret == 1)
                     setState(State.ENDMATCH);
-                else if (ret == -1)
-                    setState(State.STARTTURN);
             }
             case SELECTWORKER -> {
                 match.SelectWorker(msgPacket);
@@ -163,7 +157,7 @@ public class Controller implements Observer {
      *
      * @param state the state of this Controller object.
      */
-    private void setState(State state) {
+    public void setState(State state) {
         this.state = state;
     }
 
