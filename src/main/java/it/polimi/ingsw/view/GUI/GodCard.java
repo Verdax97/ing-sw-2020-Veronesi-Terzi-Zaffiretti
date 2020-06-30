@@ -2,7 +2,7 @@ package it.polimi.ingsw.view.GUI;
 import javafx.scene.image.Image;
 
 /**
- * The type God card.
+ * Class GodCard contains information about a card
  */
 public class GodCard {
 
@@ -24,9 +24,9 @@ public class GodCard {
     public Image image;
 
     /**
-     * Instantiates a new God card.
+     * Constructor GodCard creates a new GodCard instance.
      *
-     * @param name the name
+     * @param name of type String
      */
     public GodCard(String name) {
         this.name = name;

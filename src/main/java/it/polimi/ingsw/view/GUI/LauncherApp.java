@@ -6,8 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * The type Launcher app.
- * @author Stefano
+ * Class LauncherApp stars the GUI process
  */
 public class LauncherApp extends Application{
 

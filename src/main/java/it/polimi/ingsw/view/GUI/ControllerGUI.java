@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * The type Controller gui.
- * @author Stefano
+ * Class ControllerGUI manage all the GUI windows and switches GUI from a window to another one.
  */
 public class ControllerGUI {
 
@@ -37,59 +36,57 @@ public class ControllerGUI {
     private ClientInputGUI clientInputGUI = null;
     private LobbyController lobbyController = null;
     private PickGodsController pickGodsController = null;
+    private SantoriniMatchController santoriniMatchController = null;
+
+    private Stage primaryStage = null;
 
     /**
-     * Gets santorini match controller.
+     * Method getSantoriniMatchController returns the santoriniMatchController of this ControllerGUI object.
      *
-     * @return the santorini match controller
+     * @return santoriniMatchController of type SantoriniMatchController
      */
     public SantoriniMatchController getSantoriniMatchController() {
         return santoriniMatchController;
     }
 
-    private SantoriniMatchController santoriniMatchController = null;
-
     /**
-     * Gets client main.
+     * Method getClientMain returns the clientMain of this ControllerGUI object.
      *
-     * @return the client main
+     * @return clientMain of type ClientMain
      */
     public ClientMain getClientMain() {
         return clientMain;
     }
 
     /**
-     * Sets client main.
+     * Method setClientMain sets the clientMain of this ControllerGUI object.
      *
-     * @param clientMain the client main
+     * @param clientMain of type ClientMain
      */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
     /**
-     * Sets client input gui.
+     * Method setClientInputGUI sets the clientInputGui of this ControllerGUI object.
      *
-     * @param clientInputGUI the client input gui
+     * @param clientInputGUI of type ClientInputGUI
      */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
 
     /**
-     * Sets primary stage.
+     * Method setPrimaryStage sets the primaryStage of this ControllerGUI object.
      *
-     * @param primaryStage the primary stage
+     * @param primaryStage of type Stage
      */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    private Stage primaryStage = null;
-
-
     /**
-     * Gets first window.
+     * Method getFirstWindow sets visible the first windows of the GUI, Launcher.
      *
-     * @throws IOException the io exception
+     * @throws IOException of type IOException
      */
     public void getFirstWindow() throws IOException {
         FXMLLoader loaderLauncher = new FXMLLoader(getClass().getClassLoader().getResource("FXML/Launcher.fxml"));
@@ -101,10 +98,10 @@ public class ControllerGUI {
     }
 
     /**
-     * Change to lobby.
+     * Method changeToLobby switches window in Lobby, master value changes elements shown.
      *
-     * @param master the master
-     * @throws IOException the io exception
+     * @param master of type boolean
+     * @throws IOException of type IOException
      */
     public void changeToLobby(boolean master) throws IOException {
         if (lobbyController == null){
@@ -124,14 +121,14 @@ public class ControllerGUI {
     }
 
     /**
-     * Resume.
+     * Method resume offers to master player the possibility to resume a match in Lobby window.
      */
     public void resume(){ lobbyController.showResume(); }
 
     /**
-     * Change to pick gods.
+     * Method changeToPickGods switches window in PickGods.
      *
-     * @throws IOException the io exception
+     * @throws IOException of type IOException
      */
     public void changeToPickGods() throws IOException {
         FXMLLoader loaderPickGod = new FXMLLoader(getClass().getClassLoader().getResource("FXML/PickGods.fxml"));
@@ -146,22 +143,22 @@ public class ControllerGUI {
     }
 
     /**
-     * Show gods.
+     * Method showGods shows players the pick able god cards, yourTurn value change elements shown
      *
-     * @param msg      the msg
-     * @param yourTurn the your turn
+     * @param msg      of type String
+     * @param yourTurn of type boolean
      */
     public void showGods(String msg, boolean yourTurn) {
         pickGodsController.getDescriptionGod(msg, yourTurn);
     }
 
     /**
-     * Change to santorini match.
+     * Method changeToSantoriniMatch switches window in SantoriniMatch, yourTurn value changes elements shown, resume value changes state of the window.
      *
-     * @param simpleBoard the simple board
-     * @param yourTurn    the your turn
-     * @param resume      the resume
-     * @throws IOException the io exception
+     * @param simpleBoard of type SimpleBoard
+     * @param yourTurn    of type boolean
+     * @param resume      of type boolean
+     * @throws IOException of type IOException
      */
     public void changeToSantoriniMatch(SimpleBoard simpleBoard, boolean yourTurn, boolean resume) throws IOException {
         if (santoriniMatchController == null) {
@@ -184,7 +181,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Wait your turn.
+     * Method waitYourTurn changes elements shown if it is not your turn in SantoriniMatch window.
      */
     public void waitYourTurn(){
         if (santoriniMatchController == null) {
@@ -193,12 +190,12 @@ public class ControllerGUI {
     }
 
     /**
-     * It is your turn.
+     * Method itIsYourTurn changes elements shown if it is not your turn in SantoriniMatch window.
      */
     public void itIsYourTurn() { santoriniMatchController.showConfirmButton(); }
 
     /**
-     * Select worker.
+     * Method selectWorker.
      *
      * @param msg the msg
      */
@@ -207,55 +204,56 @@ public class ControllerGUI {
     }
 
     /**
-     * Before move power.
+     * Method beforeMovePower.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void beforeMovePower(String msg){
         santoriniMatchController.beforeMovePower(msg);
     }
 
     /**
-     * Move again.
+     * Method moveAgain.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void moveAgain(String msg){
         santoriniMatchController.moveAgain(msg);
     }
 
     /**
-     * Move.
+     * Method move.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void move(String msg){
         santoriniMatchController.move(msg);
     }
 
     /**
-     * Build again.
+     * Method buildAgain.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void buildAgain(String msg){
         santoriniMatchController.buildAgain(msg);
     }
 
     /**
-     * Build.
+     * Method Build.
      *
-     * @param msg   the msg
-     * @param atlas the atlas
+     * @param msg   of type String
+     * @param atlas of type boolean
      */
     public void build(String msg, Boolean atlas){
         santoriniMatchController.build(msg, atlas);
     }
 
     /**
-     * Active player.
+     * Method activePlayer.
      *
-     * @param simpleBoard the board with all information
+     * @param simpleBoard of type SimpleBoard
+     * @param name of type String
      */
     public void activePlayer(SimpleBoard simpleBoard, String name) {
         if (simpleBoard == null)
@@ -274,7 +272,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Receive update.
+     * Method receiveUpdate.
      *
      * @param board the board
      */
@@ -285,10 +283,10 @@ public class ControllerGUI {
     }
 
     /**
-     * Method error popup an error window
+     * Method error popups an error window.
      *
-     * @param header  the header
-     * @param content the content
+     * @param header  of type String
+     * @param content of type String
      */
     public void error(String header, String content) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -298,7 +296,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Method endGame change to the endgame scene
+     * Method endGame changes window to the endgame scene.
      *
      * @param message of type String
      * @param won     of type boolean
@@ -322,7 +320,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Method closePopUp popups an info window
+     * Method closePopUp popups an info window.
      *
      * @param title   of type String
      * @param message of type String
@@ -343,7 +341,7 @@ public class ControllerGUI {
     }
 
     /**
-     * Method receiveChatMessage pass the message to the SantoriniMatchController
+     * Method receiveChatMessage passes the message to the SantoriniMatchController.
      *
      * @param msg of type String
      */

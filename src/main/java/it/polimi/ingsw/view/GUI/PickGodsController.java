@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * The type Pick gods controller.
+ * Class PickGodsController is the window which shows the phase of choose god card to users.
  */
 public class PickGodsController {
 
@@ -33,44 +33,35 @@ public class PickGodsController {
 
     private final ArrayList<GodCard> pickableGod = new ArrayList<>();
 
-    @FXML
-    private ChoiceBox listOfGod;
-
-    @FXML
-    private ImageView godImage;
-
-    @FXML
-    private Text godEffect;
-
-    @FXML
-    private Button confirmGod;
-
-    @FXML
-    private Text sceneTitle;
+    @FXML private ChoiceBox listOfGod;
+    @FXML private ImageView godImage;
+    @FXML private Text godEffect;
+    @FXML private Button confirmGod;
+    @FXML private Text sceneTitle;
 
     /**
-     * Sets client input gui.
+     * Method setClientInputGUI sets the clientInputGUI to this PickGodsController object.
      *
-     * @param clientInputGUI the client input gui
+     * @param clientInputGUI of type ClientInputGUI
      */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
 
     /**
-     * Sets client main.
+     * Method setClientMain sets the clientMain of this PickGodsController object.
      *
-     * @param clientMain the client main
+     * @param clientMain of type ClientMain
      */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
     /**
-     * assigns the gods and their description to godCards.
+     * Method getDescriptionGods assigns the gods and their description to godCards.
      *
-     * @param msg      the msg
-     * @param yourTurn the your turn
+     * @param msg      of type String
+     * @param yourTurn of type boolean
      */
     public void getDescriptionGod(String msg, boolean yourTurn) {
         confirmGod.setVisible(yourTurn);
@@ -102,7 +93,7 @@ public class PickGodsController {
     }
 
     /**
-     * Send reply.
+     * Method sendReply sends the reply to Server.
      */
     public void sendReply () {
         clientInputGUI.reply(reply[0], reply[1], reply[2], reply[3]);
@@ -112,7 +103,7 @@ public class PickGodsController {
     }
 
     /**
-     * Select god.
+     * Method selectGods gets the user choice and shows information about that selected godCard.
      */
     public void selectGod() {
         if (listOfGod.getValue() == null)
@@ -126,7 +117,7 @@ public class PickGodsController {
     }
 
     /**
-     * Method getGodCard get the card from the possibilities
+     * Method getGodCard get the card from the possibilities.
      *
      * @param name of type String
      * @return GodCard

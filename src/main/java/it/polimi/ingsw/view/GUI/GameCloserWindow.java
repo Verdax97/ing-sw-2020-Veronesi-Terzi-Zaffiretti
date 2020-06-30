@@ -7,13 +7,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 /**
- * The type Game closer window.
+ * Class GameCloserWindow is the window showed to user in a end of match status, if closed closes the process.
  */
 public class GameCloserWindow {
-    @FXML
-    private Label message;
-    @FXML
-    private MediaView videoPlayer;
+
+    @FXML private Label message;
+    @FXML private MediaView videoPlayer;
 
     /**
      * The Winning message.
@@ -33,9 +32,9 @@ public class GameCloserWindow {
     Media s;
 
     /**
-     * Sets winner.
+     * Method setWinner sets s of GameCloserWindow object.
      *
-     * @param won the won
+     * @param won of type boolean
      */
     public void setWinner(boolean won) {
         if (won)
@@ -45,10 +44,10 @@ public class GameCloserWindow {
     }
 
     /**
-     * Sets message.
+     * Method setMessage sets message of GameCloserWindow object.
      *
-     * @param message the message
-     * @param won     the won
+     * @param message of type String
+     * @param won     of type boolean
      */
     public void setMessage(String message, boolean won) {
         if (won) {
@@ -59,7 +58,7 @@ public class GameCloserWindow {
     }
 
     /**
-     * Show video.
+     * Method showVideo shows Media s to the user.
      */
     public void showVideo() {
         MediaPlayer mediaPlayer = new MediaPlayer(s);
@@ -69,7 +68,7 @@ public class GameCloserWindow {
     }
 
     /**
-     * Close all.
+     * Method closeAll ends the process.
      */
     public void closeAll() {
         System.exit(0);

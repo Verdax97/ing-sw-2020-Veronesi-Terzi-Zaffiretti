@@ -10,29 +10,25 @@ import java.util.regex.Pattern;
 
 
 /**
- * The type Launcher controller.
+ * Class LauncherController is the window users use to connect to the server
  */
 public class LauncherController {
 
     private ClientMain clientMain = null;
+    @FXML private TextField ip;
+    @FXML private TextField port;
 
     /**
-     * Sets client main.
+     * Method setClientMain sets the clientMain of this SantoriniMatchController object.
      *
-     * @param clientMain the client main
+     * @param clientMain of type ClientMain.
      */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
-    @FXML
-    private TextField ip;
-
-    @FXML
-    private TextField port;
-
     /**
-     * Connection.
+     * Method connection tries to establish a connection with Server using ip and port values inserted.
      */
     @FXML
     public void connection() {
@@ -53,7 +49,7 @@ public class LauncherController {
     }
 
     /**
-     * Method error popup an error with given header and message
+     * Method error popups an error with given header and message
      *
      * @param header  of type String
      * @param content of type String

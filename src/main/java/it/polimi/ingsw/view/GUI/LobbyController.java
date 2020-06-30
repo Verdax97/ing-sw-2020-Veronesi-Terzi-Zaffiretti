@@ -10,45 +10,40 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 /**
- * The type Lobby controller.
+ * Class LobbyController is the window which shows the lobby creation to users.
  */
 public class LobbyController{
-
-    /**
-     * Sets client input gui.
-     *
-     * @param clientInputGUI the client input gui
-     */
-    public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
-
-    /**
-     * Sets client main.
-     *
-     * @param clientMain the client main
-     */
-    public void setClientMain(ClientMain clientMain) {
-        this.clientMain = clientMain;
-    }
 
     private ClientMain clientMain = null;
     private ClientInputGUI clientInputGUI = null;
 
     @FXML private Text nicknameMessage;
-
     @FXML private TextField nickname;
-
     @FXML private Button lobby;
-
     @FXML private Button confirm;
-
     @FXML private ChoiceBox numberPlayer;
-
     @FXML private Text resumeText;
     @FXML private Button yes;
     @FXML private Button no;
 
     /**
-     * Show number players.
+     * Method setClientInputGUI sets the clientInputGUI of this SantoriniMatchController object.
+     *
+     * @param clientInputGUI of type ClientInputGUI
+     */
+    public void setClientInputGUI(ClientInputGUI clientInputGUI) { this.clientInputGUI = clientInputGUI; }
+
+    /**
+     * Method setClientMain sets the clientMain of this SantoriniMatchController object.
+     *
+     * @param clientMain of type ClientMain.
+     */
+    public void setClientMain(ClientMain clientMain) {
+        this.clientMain = clientMain;
+    }
+
+    /**
+     * Method showNumberPlayers asks the user to select number of players.
      */
     public void showNumberPlayers() {
         numberPlayer.setVisible(true);
@@ -56,7 +51,7 @@ public class LobbyController{
     }
 
     /**
-     * Show nicknames.
+     * Method showNicknames asks the user to set own nickname.
      */
     public void showNicknames() {
         numberPlayer.setVisible(false);
@@ -67,7 +62,7 @@ public class LobbyController{
     }
 
     /**
-     * Wait for start.
+     * Method waitForStar asks the user to wait.
      */
     public void waitForStart() {
         nicknameMessage.setText("Wait for other players to connect");
@@ -76,7 +71,7 @@ public class LobbyController{
     }
 
     /**
-     * Sets number player.
+     * Method setNumberPlayer asks the user to set the number of players.
      */
     public void setNumberPlayer() {
         int val;
@@ -99,9 +94,9 @@ public class LobbyController{
     }
 
     /**
-     * setNickname sends the nickname to the server if is not empty.
+     * Method setNickname sends the nickname to the server if is not empty.
      *
-     * @return the boolean
+     * @return boolean value
      */
     public boolean setNickname() {
         if (nickname != null) {
@@ -115,7 +110,7 @@ public class LobbyController{
     }
 
     /**
-     * Show resume option.
+     * Method showResume shows options to user.
      */
     public void showResume(){
         nicknameMessage.setVisible(false);
@@ -125,7 +120,7 @@ public class LobbyController{
     }
 
     /**
-     * Resume the game.
+     * Method resume the game sends message to the Server asking to resume.
      */
     @FXML
     public void resume(){
@@ -135,7 +130,7 @@ public class LobbyController{
     }
 
     /**
-     * Dont resume the game.
+     * Method dontResume the game sends message to the Server asking not to resume.
      */
     @FXML
     public void dontResume(){
@@ -146,7 +141,7 @@ public class LobbyController{
 
 
     /**
-     * Shows an error popup.
+     * Method error shows an error popup.
      *
      * @param header  the header
      * @param content the content

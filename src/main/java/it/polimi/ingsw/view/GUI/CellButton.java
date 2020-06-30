@@ -5,31 +5,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
- * The type Cell button.
- *
+ * Class Cell implements AnchorPane functionalities
  */
 public class CellButton extends AnchorPane {
 
     private final AnchorPane anchorPane;
-
-    /**
-     * Gets id from list.
-     *
-     * @return the id from list
-     */
-    public int getIdFromList() {
-        return idFromList;
-    }
-
-    /**
-     * Sets id from list.
-     *
-     * @param idFromList the id from list
-     */
-    public void setIdFromList(int idFromList) {
-        this.idFromList = idFromList;
-    }
-
     private int idFromList;
     /**
      * The X.
@@ -41,10 +21,28 @@ public class CellButton extends AnchorPane {
     public int y;
 
     /**
-     * Instantiates a new Cell button.
+     * Method getIdFromList returns the idFromList of this CellButton object.
      *
-     * @param x the x
-     * @param y the y
+     * @return idFromList of type int
+     */
+    public int getIdFromList() {
+        return idFromList;
+    }
+
+    /**
+     * Method setIdFromList sets the idFromList of this CellButton object.
+     *
+     * @param idFromList of type int
+     */
+    public void setIdFromList(int idFromList) {
+        this.idFromList = idFromList;
+    }
+
+    /**
+     * Constructor CellButton creates a new CellButton instance.
+     *
+     * @param x of type int
+     * @param y of type int
      */
     CellButton(int x, int y) {
         this.idFromList = -5;
@@ -81,9 +79,9 @@ public class CellButton extends AnchorPane {
 
 
     /**
-     * Refresh the cell
+     * Method refresh resets the default aspect of the CellButton object
      *
-     * @param value the value
+     * @param value of type int
      */
     public void refresh(int value) {
         synchronized (anchorPane) {
@@ -108,16 +106,16 @@ public class CellButton extends AnchorPane {
     }
 
     /**
-     * Sets dome.
+     * Method setDome sets the Dome of this CellButton object visible.
      */
     public void setDome() {
         getChildren().get(3).setVisible(true);
     }
 
     /**
-     * Lighten apply a border on the button giving back a feedback about being pressed
+     * Method lighten apply a border on the button giving back a feedback about being pressed
      *
-     * @param selectable the selectable
+     * @param selectable of boolean type
      */
     public void lighten(boolean selectable) {
         anchorPane.getStyleClass().clear();
@@ -130,7 +128,7 @@ public class CellButton extends AnchorPane {
     }
 
     /**
-     * Turn off resetS aspect of board to default
+     * Method turnOff resets aspect of board to default.
      */
     public void turnOff() {
         anchorPane.getStyleClass().clear();

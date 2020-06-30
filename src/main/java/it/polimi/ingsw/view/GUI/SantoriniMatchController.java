@@ -16,39 +16,26 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
- * The type Santorini match controller.
+ * Class SantoriniMatchController is the window which shows the Match to users.
  */
 public class SantoriniMatchController {
 
-    @FXML
-    private VBox playersInfo;
-    @FXML
-    private GridPane board;
-    @FXML
-    private AnchorPane thirdPlayerPane;
-    @FXML
-    private Button confirmButton;
-    @FXML
-    private Text whosTurn;
-    @FXML
-    private Button otherActionButton;
-    @FXML
-    private Label messageBox;
-    @FXML
-    private VBox chatVBox;
-    @FXML
-    private TextField chatInput;
-    @FXML
-    private ScrollPane chatPane;
-    @FXML
-    private Button chatButton;
-
+    @FXML private VBox playersInfo;
+    @FXML private GridPane board;
+    @FXML private AnchorPane thirdPlayerPane;
+    @FXML private Button confirmButton;
+    @FXML private Text whosTurn;
+    @FXML private Button otherActionButton;
+    @FXML private Label messageBox;
+    @FXML private VBox chatVBox;
+    @FXML private TextField chatInput;
+    @FXML private ScrollPane chatPane;
+    @FXML private Button chatButton;
 
     private ClientMain clientMain;
     private ClientInputGUI clientInputGUI;
@@ -68,36 +55,36 @@ public class SantoriniMatchController {
     private CellButton lastCell;
 
     /**
-     * Gets client main.
+     * Method getClientMain returns the clientMain of this SantoriniMatchController object.
      *
-     * @return the client main
+     * @return clientMain of type ClientMain
      */
     public ClientMain getClientMain() {
         return clientMain;
     }
 
     /**
-     * Sets client main.
+     * Method setClientMain sets the clientMain of this SantoriniMatchController object.
      *
-     * @param clientMain the client main
+     * @param clientMain of type ClientMain.
      */
     public void setClientMain(ClientMain clientMain) {
         this.clientMain = clientMain;
     }
 
     /**
-     * Sets client input gui.
+     * Method setClientInputGUI sets the clientInputGUI of this SantoriniMatchController object.
      *
-     * @param clientInputGUI the client input gui
+     * @param clientInputGUI of type ClientInputGUI
      */
     public void setClientInputGUI(ClientInputGUI clientInputGUI) {
         this.clientInputGUI = clientInputGUI;
     }
 
     /**
-     * Initialize all.
+     * Method initializeAll initialize the window with information of simpleBoard.
      *
-     * @param simpleBoard the simple board
+     * @param simpleBoard of type SimpleBoard
      */
     public void initializeAll(SimpleBoard simpleBoard) {
         //set all players color gods and descriptions
@@ -139,7 +126,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Hide confirm button.
+     * Method hideConfirmButton hides Button confirmButton.
      */
     public void hideConfirmButton() {
         whosTurn.setText("Please wait your turn");
@@ -153,7 +140,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Show confirm button.
+     * Method showConfirmButton shows Button confirmButton.
      */
     public void showConfirmButton() {
         whosTurn.setText("It is Your Turn");
@@ -162,9 +149,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Light up board.
+     * Method lightUpBoard enlighten all the possible actions.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void lightUpBoard(String msg){
         //reset to default
@@ -194,7 +181,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Place workers.
+     * Method placeWorkers manage the Place Workers Phase of the game.
      */
     public void placeWorkers(){
         Platform.runLater(() -> messageBox.setText("Select two different cells\nwhere you want to put your workers"));
@@ -203,9 +190,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Select worker.
+     * Method selectWorker shows selectable workers.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void selectWorker(String msg) {
         Platform.runLater(() -> messageBox.setText("Select worker you want to perform your turn"));
@@ -215,9 +202,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Before move power.
+     * Method beforeMovePower informs the user of the possibility to perform an action before move.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void beforeMovePower(String msg) {
         otherActionButton.setVisible(true);
@@ -230,9 +217,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Move again.
+     * Method moveAgain informs user of the possibility of move again.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void moveAgain(String msg) {
         otherActionButton.setVisible(true);
@@ -245,9 +232,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Build again.
+     * Method buildAgain informs user of the possibility of build again.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void buildAgain(String msg) {
         otherActionButton.setVisible(true);
@@ -260,9 +247,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Move.
+     * Method move asks user to perform move action.
      *
-     * @param msg the msg
+     * @param msg of type String
      */
     public void move(String msg) {
         Platform.runLater(() -> messageBox.setText("Select the cell you want to move to"));
@@ -272,10 +259,10 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Build.
+     * Method Build asks user to perform build action.
      *
-     * @param msg   the msg
-     * @param atlas the atlas
+     * @param msg   of type String
+     * @param atlas of type boolean
      */
     public void build(String msg, Boolean atlas) {
         if (atlas) {
@@ -292,7 +279,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Send reply.
+     * Method sendReply sends reply to the Server.
      */
     public void sendReply() {
         clientInputGUI.reply(reply[0], reply[1], reply[2], reply[3]);
@@ -300,7 +287,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Confirm action.
+     * Method confirmAction is performed when Button confirmButton is pressed.
      */
     public void confirmAction() {
         if (turn) {
@@ -417,7 +404,7 @@ public class SantoriniMatchController {
     /**
      * Enlighten player.
      *
-     * @param val the val
+     * @param val of type int.
      */
 //check usage
     public void enlightenPlayer(int val) {
@@ -433,9 +420,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Refresh players.
+     * Method refreshPlayers changes players shown in case someone has lost.
      *
-     * @param simpleBoard the simple board
+     * @param simpleBoard of type SimpleBoard
      */
 //simply refreshes players in case someone has lost
     public void refreshPlayers(SimpleBoard simpleBoard){
@@ -456,9 +443,9 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Update board.
+     * Method updateBoard updates elements shown in the board.
      *
-     * @param simpleBoard the simple board
+     * @param simpleBoard of type SimpleBoard
      */
     public void updateBoard(SimpleBoard simpleBoard) {
         //nothing to show
@@ -534,7 +521,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Resume game.
+     * Method resume resumes the game.
      *
      * @param yourTurn the your turn
      */
