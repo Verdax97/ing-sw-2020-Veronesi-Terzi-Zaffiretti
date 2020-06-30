@@ -28,7 +28,7 @@ public class GameCloserWindow {
      */
     Media loserVideo = new Media(getClass().getClassLoader().getResource("videos/lose.mp4").toExternalForm());
     /**
-     * The S.
+     * The media that will be showed
      */
     Media s;
 

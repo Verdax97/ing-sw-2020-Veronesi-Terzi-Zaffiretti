@@ -352,8 +352,9 @@ public class SantoriniMatchController {
         reply[1] = 0;
     }
 
+
     /**
-     * Other action.
+     * Method otherAction ask to make an alternative action (usually is a cancel action)
      */
     public void otherAction() {
         if (turn) {
@@ -404,7 +405,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Reset lighten.
+     * Reset lighten and ids to all CellButton.
      */
     public void resetLighten() {
         for (CellButton cellButton : cellButtonBoard) {
@@ -533,7 +534,7 @@ public class SantoriniMatchController {
     }
 
     /**
-     * Resume.
+     * Resume game.
      *
      * @param yourTurn the your turn
      */

@@ -7,7 +7,6 @@ import javafx.scene.shape.Rectangle;
 /**
  * The type Cell button.
  *
- * @author Stefano
  */
 public class CellButton extends AnchorPane {
 

@@ -67,7 +67,7 @@ public class PickGodsController {
     }
 
     /**
-     * Gets description god.
+     * assigns the gods and their description to godCards.
      *
      * @param msg      the msg
      * @param yourTurn the your turn

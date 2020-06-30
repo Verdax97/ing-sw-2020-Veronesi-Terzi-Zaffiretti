@@ -35,7 +35,7 @@
               strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname:" visible="false"/>
         <TextField fx:id="nickname" layoutX="245.0" layoutY="168.0" text="Insert Nickname" visible="false"
                    AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="81.0"/>
-        <Button fx:id="lobby" layoutX="171.0" layoutY="275.0" mnemonicParsing="false" onAction="#lobby"
+        <Button fx:id="lobby" layoutX="171.0" layoutY="275.0" mnemonicParsing="false" onAction="#setNickname"
                 prefHeight="58.0" prefWidth="134.0" text="Confirm Nickname" visible="false"
                 AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0"/>
         <Text fx:id="resumeText" layoutX="77.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0"

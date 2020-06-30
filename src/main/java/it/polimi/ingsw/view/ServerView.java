@@ -24,7 +24,7 @@ public class ServerView {
     }
 
     /**
-     * Method printBoard ...
+     * Method printBoard print the board
      *
      * @param board of type Board
      * @param match of type Match

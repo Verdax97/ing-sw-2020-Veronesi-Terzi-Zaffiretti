@@ -113,7 +113,6 @@ public class ControllerGUI {
             lobbyController = loaderLobby.getController();
             lobbyController.setClientMain(clientMain);
             lobbyController.setClientInputGUI(clientInputGUI);
-            ((ClientInputGUI) clientMain.getClientInput()).setLobbyController(lobbyController);
             lobbyScene = new Scene(rootLobby);
             primaryStage.setScene(lobbyScene);
             primaryStage.setTitle("Lobby");
@@ -140,7 +139,6 @@ public class ControllerGUI {
         pickGodsController = loaderPickGod.getController();
         pickGodsController.setClientMain(clientMain);
         pickGodsController.setClientInputGUI(clientInputGUI);
-        ((ClientInputGUI) clientMain.getClientInput()).setPickGodsController(pickGodsController);
         pickGodScene = new Scene(rootMatch);
         primaryStage.setScene(pickGodScene);
         primaryStage.setResizable(false);
@@ -172,7 +170,6 @@ public class ControllerGUI {
             santoriniMatchController = loaderSantoriniMatch.getController();
             santoriniMatchController.setClientMain(clientMain);
             santoriniMatchController.setClientInputGUI(clientInputGUI);
-            ((ClientInputGUI) clientMain.getClientInput()).setSantoriniMatchController(santoriniMatchController);
             santoriniMatchScene = new Scene(rootSantoriniMatch);
             primaryStage.setScene(santoriniMatchScene);
             primaryStage.setTitle("Santorini Board Game");
@@ -270,7 +267,7 @@ public class ControllerGUI {
                     try {
                         santoriniMatchController.enlightenPlayer(finalVal);
                     } catch (NullPointerException e) {
-                        System.out.println("ok");
+                        //should do nothing
                     }
                 });
             }
@@ -307,7 +304,6 @@ public class ControllerGUI {
      * @param won     of type boolean
      */
     public void endGame(String message, boolean won) {
-        System.out.println("We are in the endgame!");
         FXMLLoader loaderEndgame = new FXMLLoader(getClass().getClassLoader().getResource("FXML/GameClosing.fxml"));
         Parent rootEndGame;
         Stage secondStage = new Stage();
@@ -326,12 +322,12 @@ public class ControllerGUI {
     }
 
     /**
-     * Method infoPopUp popup an info window
+     * Method closePopUp popups an info window
      *
      * @param title   of type String
      * @param message of type String
      */
-    public void infoPopUp(String title, String message) {
+    public void closePopUp(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(message);
@@ -342,10 +338,15 @@ public class ControllerGUI {
             System.exit(0);
         } else {
             // ... user chose CANCEL or closed the dialog
-            infoPopUp("You will never get rid of me this way", "Bold of you to assume that i can so easily be bested!");
+            closePopUp("You will never get rid of me this way", "Bold of you to assume that i can so easily be bested!");
         }
     }
 
+    /**
+     * Method receiveChatMessage pass the message to the SantoriniMatchController
+     *
+     * @param msg of type String
+     */
     public void receiveChatMessage(String msg) {
         if (santoriniMatchController != null)
             santoriniMatchController.receiveChatMessage(msg);

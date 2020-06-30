@@ -5,9 +5,6 @@ import it.polimi.ingsw.model.MsgToClient;
 import it.polimi.ingsw.model.MsgToServer;
 import it.polimi.ingsw.model.SimpleBoard;
 import it.polimi.ingsw.view.GUI.ControllerGUI;
-import it.polimi.ingsw.view.GUI.LobbyController;
-import it.polimi.ingsw.view.GUI.PickGodsController;
-import it.polimi.ingsw.view.GUI.SantoriniMatchController;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -18,20 +15,6 @@ import java.io.IOException;
 public class ClientInputGUI extends ClientInput {
 
     private ControllerGUI controllerGui = null;
-    private LobbyController lobbyController = null;
-    private PickGodsController pickGodsController = null;
-
-
-    /**
-     * Method setSantoriniMatchController sets the santoriniMatchController of this ClientInputGUI object.
-     *
-     * @param santoriniMatchController the santoriniMatchController of this ClientInputGUI object.
-     */
-    public void setSantoriniMatchController(SantoriniMatchController santoriniMatchController) {
-        this.santoriniMatchController = santoriniMatchController;
-    }
-
-    private SantoriniMatchController santoriniMatchController = null;
 
     /**
      * Method setControllerGui sets the controllerGui of this ClientInputGUI object.
@@ -40,24 +23,6 @@ public class ClientInputGUI extends ClientInput {
      */
     public void setControllerGui(ControllerGUI controllerGui) {
         this.controllerGui = controllerGui;
-    }
-
-    /**
-     * Method setLobbyController sets the lobbyController of this ClientInputGUI object.
-     *
-     * @param lobbyController the lobbyController of this ClientInputGUI object.
-     */
-    public void setLobbyController(LobbyController lobbyController) {
-        this.lobbyController = lobbyController;
-    }
-
-    /**
-     * Method setPickGodsController sets the pickGodsController of this ClientInputGUI object.
-     *
-     * @param pickGodsController the pickGodsController of this ClientInputGUI object.
-     */
-    public void setPickGodsController(PickGodsController pickGodsController) {
-        this.pickGodsController = pickGodsController;
     }
 
     /**
@@ -142,7 +107,6 @@ public class ClientInputGUI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.START_TURN)) {
             controllerGui.itIsYourTurn();
-            //if (msgPacket.board.players.size() > 1)
             reply(-5, -5, -5, -5);
             return;
         }
@@ -276,10 +240,14 @@ public class ClientInputGUI extends ClientInput {
     public void closeGame() {
         if (clientMain.getReceivedMsg().msg.equals(Messages.END))
             return;
-        System.out.println("Closing the game.");
-        Platform.runLater(() -> controllerGui.infoPopUp("Game is closing", "Some player has disconnected, closing the game"));
+        Platform.runLater(() -> controllerGui.closePopUp("Game is closing", "Connection closed with the server, closing the game"));
     }
 
+    /**
+     * Method sendChatMsg sends the msg to the server
+     *
+     * @param msg of type String
+     */
     public void sendChatMsg(String msg) {
         if (clientMain.isEnding)
             return;
@@ -287,6 +255,11 @@ public class ClientInputGUI extends ClientInput {
         notifyObservers(new MsgToServer("Chat:" + clientMain.getNick() + ":" + msg, -5, -5, -5, -5));
     }
 
+    /**
+     * Method receiveChatMsg pass the chat message received to the controller gui
+     *
+     * @param msg of type String
+     */
     public void receiveChatMsg(String msg) {
         controllerGui.receiveChatMessage(msg);
     }
