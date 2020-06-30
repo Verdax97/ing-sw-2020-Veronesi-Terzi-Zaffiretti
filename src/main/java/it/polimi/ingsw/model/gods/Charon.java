@@ -2,14 +2,22 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
+import it.polimi.ingsw.model.God;
 
+/**
+ * Class Charon implements Charon functionalities
+ */
 public class Charon extends MoveEnemyGods {
 
+    /**
+     * Constructor Charon creates a new Charon instance.
+     */
     public Charon() {
         this.name = "Charon";
         this.description = "Before your worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if the space is unoccupied";
     }
 
+    /** @see it.polimi.ingsw.model.God#PlayerTurn(Board, Cell, int, int)*/
     @Override
     public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
         int ret = CheckPlayerTurn(board, selectedCell, x, y);
@@ -19,6 +27,7 @@ public class Charon extends MoveEnemyGods {
         return MoveEnemy(board.getCell(x, y).getWorker(), board, selectedCell, x, y);
     }
 
+    /** @see it.polimi.ingsw.model.God#CheckPlayerTurn(Board, Cell, int, int) */
     @Override
     public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y)
     {

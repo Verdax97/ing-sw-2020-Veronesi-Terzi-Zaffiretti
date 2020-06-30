@@ -17,7 +17,7 @@ public class Atlas extends God {
         this.description = "Your Build: your worker may build a dome at any level including the ground";
     }
 
-    /** @see God#Building(Board, Cell, int, int, int, int) */
+    /** @see it.polimi.ingsw.model.God#Building(Board, Cell, int, int, int, int) */
     @Override
     public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
         /* typeBuild 0 normale costruzione, typebuild 1 cupola */

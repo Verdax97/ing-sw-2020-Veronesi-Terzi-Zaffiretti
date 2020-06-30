@@ -4,6 +4,7 @@ package it.polimi.ingsw.model;
  * Class MultipleActionGod for the gods that can do more times the same action
  */
 public class MultipleActionGod extends God {
+
     protected int use = 0;
     protected int useLimit = 0;
 

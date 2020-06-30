@@ -6,8 +6,6 @@ import it.polimi.ingsw.model.Player;
 
 /**
  * Class DebuffGod can modify the debuff values of the player worker
- *
- * @author Davide
  * Created on 21/05/2020
  */
 public class DebuffGod extends God {

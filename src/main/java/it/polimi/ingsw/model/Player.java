@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * The type Player.
+ * Class Player
  */
 public class Player implements Serializable {
+
     private String nickname;
     private God godPower;
     private boolean Active;

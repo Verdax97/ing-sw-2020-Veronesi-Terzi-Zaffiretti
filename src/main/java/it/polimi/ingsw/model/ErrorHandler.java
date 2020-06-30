@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
 /**
- * The type Error handler.
+ * Class ErrorHandler
  */
 public class ErrorHandler {
+
     private final String prefix = Messages.ERROR + " ";
 
     /**

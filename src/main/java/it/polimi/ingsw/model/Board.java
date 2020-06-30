@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * The type Board.
+ * Class Board
  */
 public class Board implements Serializable {
+
     private Cell[][] board = new Cell[5][5];
 
     /**
@@ -38,7 +39,7 @@ public class Board implements Serializable {
     }
 
     /**
-     * Instantiates a new Board.
+     * Constructor Board creates a new Board instance.
      */
     public Board()
     {

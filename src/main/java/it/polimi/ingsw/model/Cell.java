@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 
 /**
- * The type Cell.
+ * Class Cell
  */
 public class Cell implements Serializable {
     private Worker worker;
