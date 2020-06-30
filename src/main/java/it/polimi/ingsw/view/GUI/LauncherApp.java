@@ -26,6 +26,12 @@ public class LauncherApp extends Application{
      */
     public static Stage primaryStage;
 
+    /**
+     * Method start used to start the gui
+     *
+     * @param stage of type Stage
+     * @throws Exception when
+     */
     @Override
     public void start(Stage stage) throws Exception {
         //set first window
@@ -37,6 +43,7 @@ public class LauncherApp extends Application{
         ((ClientInputGUI) clientMain.getClientInput()).setControllerGui(controllerGUI);
         controllerGUI.getFirstWindow();
         stage.setTitle("Santorini Game Launcher");
+        stage.setOnCloseRequest((e) -> System.exit(1));
         stage.show();
     }
 

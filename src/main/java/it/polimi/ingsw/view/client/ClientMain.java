@@ -127,7 +127,7 @@ public class ClientMain implements Runnable {
     }
 
     /**
-     * Method InitializeClient ...
+     * Method InitializeClient tries to connect to the server
      *
      * @param IP   of type String
      * @param port of type int
@@ -157,7 +157,7 @@ public class ClientMain implements Runnable {
     }
 
     /**
-     * Method clientLogic ...
+     * Method clientLogic does the client logic
      *
      * @return boolean
      */

@@ -14,7 +14,7 @@ public class App {
             new ClientStarter().startClient(true);
         else if (args.length == 1) {
             if (args[0].equals("-server"))
-                new ServerMain().run();
+                new ServerMain().startServer();
             else if (args[0].equals("-cli"))
                 new ClientStarter().startClient(false);
             else

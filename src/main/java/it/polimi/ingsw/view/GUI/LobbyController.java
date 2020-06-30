@@ -59,6 +59,8 @@ public class LobbyController{
      * Show nicknames.
      */
     public void showNicknames() {
+        numberPlayer.setVisible(false);
+        confirm.setVisible(false);
         nicknameMessage.setVisible(true);
         nickname.setVisible(true);
         lobby.setVisible(true);
@@ -97,24 +99,23 @@ public class LobbyController{
     }
 
     /**
-     * Lobby boolean.
+     * setNickname sends the nickname to the server if is not empty.
      *
      * @return the boolean
      */
-    public boolean lobby() {
+    public boolean setNickname() {
         if (nickname != null) {
             clientMain.setNick(nickname.getText());
             clientInputGUI.reply(-5, -5, -5, -5);
             return true;
-        }
-        else {
+        } else {
             error("Nickname not written", "Nickname must not be empty");
             return false;
         }
     }
 
     /**
-     * Show resume.
+     * Show resume option.
      */
     public void showResume(){
         nicknameMessage.setVisible(false);
@@ -124,7 +125,7 @@ public class LobbyController{
     }
 
     /**
-     * Resume.
+     * Resume the game.
      */
     @FXML
     public void resume(){
@@ -134,7 +135,7 @@ public class LobbyController{
     }
 
     /**
-     * Dont resume.
+     * Dont resume the game.
      */
     @FXML
     public void dontResume(){
@@ -145,7 +146,7 @@ public class LobbyController{
 
 
     /**
-     * Error.
+     * Shows an error popup.
      *
      * @param header  the header
      * @param content the content

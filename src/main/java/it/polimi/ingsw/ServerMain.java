@@ -10,14 +10,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Class ServerMain starts the server
- *
  */
-public class ServerMain implements Runnable {
+public class ServerMain {
     /**
-     * Method run
+     * Method startServer ask for the port and start the server
      */
-    @Override
-    public void run() {
+    public void startServer() {
         int port;
         AtomicReference<Scanner> scanner = new AtomicReference<>(new Scanner(System.in));
 

@@ -3,12 +3,15 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.model.GameSaver;
 import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.MsgToServer;
+import it.polimi.ingsw.view.server.ServerAuxiliaryThread;
 import it.polimi.ingsw.view.server.ServerMultiplexer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ControllerTest {
 
@@ -52,7 +55,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void updateAndRedirectMessageTest() throws IOException {
+    public void updateAndRedirectMessageTestGeneric_ReallyVeryBad() throws IOException {
         Controller controller = new Controller();
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, new Integer(4567));
         controller.setServerMultiplexer(serverMultiplexer);
@@ -111,4 +114,51 @@ public class ControllerTest {
         Assertions.assertTrue(true);
     }
 
+    @Test
+    public void DefaultTest() {
+        Controller controller = new Controller();
+        ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, 4567);
+        controller.setServerMultiplexer(serverMultiplexer);
+        serverMultiplexer.playersThread = new ArrayList<>();
+        MsgToServer msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
+        Lobby lobby = new Lobby();
+        lobby.AddPlayer("GinoTest1");
+        lobby.AddPlayer("PinoTest1");
+        controller.setLobby(lobby);
+        controller.createMatch(false);
+        controller.setState(State.LOBBY);
+        controller.redirectMessage(msg, serverMultiplexer);
+    }
+
+    @Test
+    public void redirectCoverageTest() throws IOException {
+        Controller controller = new Controller();
+        ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, 4567);
+        controller.setServerMultiplexer(serverMultiplexer);
+        serverMultiplexer.playersThread = new ArrayList<>();
+        MsgToServer msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
+        Lobby lobby = new Lobby();
+        lobby.AddPlayer("GinoTest1");
+        lobby.AddPlayer("PinoTest1");
+        controller.setLobby(lobby);
+        GameSaver.checkForGames(lobby);
+        controller.createMatch(true);
+        File saveFile = new File("savedGames/GinoTest1-PinoTest1.txt");
+        Scanner scanner = new Scanner(saveFile);
+        controller.setState(State.SELECTWORKER);
+        controller.redirectMessage(msg,serverMultiplexer);
+        msg = new MsgToServer("PinoTest1", 0,1, -5, -5);
+        controller.redirectMessage(msg,serverMultiplexer);
+        controller.setState(State.BUILD);
+        msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
+        controller.redirectMessage(msg,serverMultiplexer);
+        msg = new MsgToServer("GinoTest1", 0,-5, -5, -5);
+        controller.redirectMessage(msg,serverMultiplexer);
+        msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
+        controller.redirectMessage(msg,serverMultiplexer);
+        ServerAuxiliaryThread serverAuxiliaryThread = new ServerAuxiliaryThread();
+        serverMultiplexer.setServerAuxiliaryThread(serverAuxiliaryThread);
+        controller.redirectMessage(msg,serverMultiplexer);
+        scanner.close();
+    }
 }

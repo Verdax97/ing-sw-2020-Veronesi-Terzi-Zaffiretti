@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class ServerAuxiliaryThread extends Thread {
 
     private Match match;
-    private boolean close = false;
 
     /**
      * Method setMatch sets the match of this ServerAuxiliaryThread object.
@@ -23,15 +22,6 @@ public class ServerAuxiliaryThread extends Thread {
         this.match = match;
     }
 
-    /**
-     * Method setClose sets the close of this ServerAuxiliaryThread object.
-     *
-     * @param close the close of this ServerAuxiliaryThread object.
-     */
-    public void setClose(boolean close) {
-        this.close = close;
-    }
-
     ServerView serverView = new ServerView();
     Scanner scanner = new Scanner(System.in);
 
@@ -40,7 +30,7 @@ public class ServerAuxiliaryThread extends Thread {
      */
     @Override
     public void run() {
-        while (!close) {
+        while (true) {
             printInfo();
             String s = scanner.nextLine();
             if (s.equalsIgnoreCase("quit")) {

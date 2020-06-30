@@ -120,7 +120,7 @@ public class SetupMatch {
         for (God god : godList) {
             if (god instanceof Chrono) {
                 godList.remove(god);
-                return;
+                break;
             }
         }
     }
