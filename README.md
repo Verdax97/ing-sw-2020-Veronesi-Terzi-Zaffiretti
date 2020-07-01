@@ -5,9 +5,6 @@ Each turn consist in two steps, MOVE and BUILD, if none of your workers can do b
 
 Project work for "085923 - PROVA FINALE (INGEGNERIA DEL SOFTWARE)" - Politecnico di Milano.
 
-# Introduction
-TODO
-
 # Features
 - Complete Rules
 - CLI
@@ -22,7 +19,7 @@ To start the server use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -server```
 
 ### Installer
-Duble click Santorini-server.
+Double click Santorini-server.
 
 # Client
 ## CLI
@@ -31,7 +28,7 @@ To start the cli use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -cli```
 
 ### Installer
-Duble click Santorini-CLI.
+Double click Santorini-CLI.
 
 ### GUI
 ### Cmd line
@@ -39,7 +36,7 @@ To start the gui use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR```
 
 ### Installer
-Duble click Santorini-GUI.
+Double click Santorini-GUI.
 
 # Coverage
 | Package |Tested Class | Coverage(line) | Coverage (methods)|
