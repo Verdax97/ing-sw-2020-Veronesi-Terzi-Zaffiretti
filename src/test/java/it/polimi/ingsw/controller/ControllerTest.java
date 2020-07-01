@@ -163,6 +163,8 @@ public class ControllerTest {
     }
 
     public void createCustomSave() throws IOException {
+        File directory = new File("savedGames");
+        if (!directory.exists()) directory.mkdir();
         File fileName = new File("savedGames/GinoTest1-PinoTest1.txt");
         fileName.createNewFile();
         FileWriter fileWriter = new FileWriter(fileName);

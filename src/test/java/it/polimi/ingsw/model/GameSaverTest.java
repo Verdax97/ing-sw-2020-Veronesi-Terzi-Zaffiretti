@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -46,8 +45,6 @@ public class GameSaverTest {
 
     @Test
     public void checkForGamesAndDeleteGameDataTest() throws IOException {
-        File directory = new File("savedGames");
-        if (!directory.exists()) directory.mkdir();
         ArrayList<String> players = new ArrayList<>();
         players.add("GinoTest");
         players.add("PinoTest");
