@@ -17,10 +17,29 @@ TODO
 - AF 2: Persistence
 
 # Server
-TODO
+### Cmd line
+To start the server use the following command:
+```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -server```
+
+### Installer
+Duble click the correct .jar/.exe.
 
 # Client
-TODO
+## CLI
+### Cmd line
+To start the cli use the following command:
+```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -cli```
+
+### Installer
+Duble click the correct .jar/.exe.
+
+### GUI
+### Cmd line
+To start the gui use the following command:
+```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR```
+
+### Installer
+Duble click the correct .jar/.exe.
 
 # Coverage
 TODO
