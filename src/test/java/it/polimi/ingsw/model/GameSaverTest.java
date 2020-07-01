@@ -10,17 +10,6 @@ import java.util.ArrayList;
 public class GameSaverTest {
 
     @Test
-    public void checkForGames() throws IOException {
-        ArrayList<String> players = new ArrayList<>();
-        players.add("GinoTest");
-        players.add("PinoTest");
-        Lobby lobby = new Lobby();
-        lobby.AddPlayer(players.get(0));
-        lobby.AddPlayer(players.get(1));
-        Assertions.assertTrue(GameSaver.checkForGames(lobby));
-    }
-
-    @Test
     public void saveAndLoadGameTest() throws IOException {
         ArrayList<String> players = new ArrayList<>();
         players.add("GinoTest");
@@ -54,6 +43,16 @@ public class GameSaverTest {
         Assertions.assertEquals(0, match.getBoard().getCell(4,4).getWorker().getLastMovement());
     }
 
-
-
+    @Test
+    public void checkForGamesAndDeleteGameDataTest() throws IOException {
+        ArrayList<String> players = new ArrayList<>();
+        players.add("GinoTest");
+        players.add("PinoTest");
+        Lobby lobby = new Lobby();
+        lobby.AddPlayer(players.get(0));
+        lobby.AddPlayer(players.get(1));
+        GameSaver.checkForGames(lobby);
+        Assertions.assertTrue(GameSaver.checkForGames(lobby));
+        GameSaver.deleteGameData();
+    }
 }

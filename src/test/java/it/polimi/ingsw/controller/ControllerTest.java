@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -132,6 +133,7 @@ public class ControllerTest {
 
     @Test
     public void redirectCoverageTest() throws IOException {
+        createCustomSave();
         Controller controller = new Controller();
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, 4567);
         controller.setServerMultiplexer(serverMultiplexer);
@@ -144,7 +146,6 @@ public class ControllerTest {
         GameSaver.checkForGames(lobby);
         controller.createMatch(true);
         File saveFile = new File("savedGames/GinoTest1-PinoTest1.txt");
-        Scanner scanner = new Scanner(saveFile);
         controller.setState(State.SELECTWORKER);
         controller.redirectMessage(msg,serverMultiplexer);
         msg = new MsgToServer("PinoTest1", 0,1, -5, -5);
@@ -159,6 +160,22 @@ public class ControllerTest {
         ServerAuxiliaryThread serverAuxiliaryThread = new ServerAuxiliaryThread();
         serverMultiplexer.setServerAuxiliaryThread(serverAuxiliaryThread);
         controller.redirectMessage(msg,serverMultiplexer);
-        scanner.close();
+    }
+
+    public void createCustomSave() throws IOException {
+        File fileName = new File("savedGames/GinoTest1-PinoTest1.txt");
+        fileName.createNewFile();
+        FileWriter fileWriter = new FileWriter(fileName);
+        fileWriter.write("GinoTest1-PinoTest1\n" +
+                "PinoTest1\n" +
+                "Athena-Charon\n" +
+                "0 0 0 3 3 \n" +
+                "0 0 0 3 00 \n" +
+                "0 0 0D 3 0 \n" +
+                "0 0 0 01 3 \n" +
+                "0 0 00 3 21 \n" +
+                "5");
+        fileWriter.close();
+
     }
 }
