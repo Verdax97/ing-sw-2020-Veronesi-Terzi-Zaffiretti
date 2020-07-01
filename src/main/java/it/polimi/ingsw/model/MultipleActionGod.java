@@ -5,12 +5,19 @@ package it.polimi.ingsw.model;
  */
 public class MultipleActionGod extends God {
 
+    /**
+     * The Use.
+     */
     protected int use = 0;
+    /**
+     * The Use limit.
+     */
     protected int useLimit = 0;
 
     /**
      * Method CheckUse checks if is reached the useLimit
-     * @return int
+     *
+     * @return int int
      */
     public int CheckUse() {
         if (this.use == this.useLimit) {

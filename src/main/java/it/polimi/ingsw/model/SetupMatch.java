@@ -39,7 +39,7 @@ public class SetupMatch {
      * Method PickGod move the god from the one list to the other
      *
      * @param i of type int
-     * @return God
+     * @return God god
      */
     public God PickGod(int i) {
         God god = godPicked.get(i);
@@ -50,7 +50,7 @@ public class SetupMatch {
     /**
      * Method getGodPicked returns the godPicked of this SetupMatch object.
      *
-     * @return the godPicked (type ArrayList<God>) of this SetupMatch object.
+     * @return the godPicked (type ArrayList&lt;God&gt;) of this SetupMatch object.
      */
     public ArrayList<God> getGodPicked() {
         return godPicked;
@@ -59,7 +59,7 @@ public class SetupMatch {
     /**
      * Method getGodList returns the godList of this SetupMatch object.
      *
-     * @return the godList (type ArrayList<God>) of this SetupMatch object.
+     * @return the godList (type ArrayList&lt;God&gt;) of this SetupMatch object.
      */
     public ArrayList<God> getGodList() {
         return godList;
@@ -80,7 +80,7 @@ public class SetupMatch {
      *
      * @param god of type God
      */
-    //for the setup phase
+//for the setup phase
     public void AddGodPicked(God god) {
         this.godPicked.add(god);
         this.godList.remove(god);
@@ -89,7 +89,7 @@ public class SetupMatch {
     /**
      * Method getPlayers returns the players of this SetupMatch object.
      *
-     * @return the players (type ArrayList<Player>) of this SetupMatch object.
+     * @return the players (type ArrayList&lt;Player&gt;) of this SetupMatch object.
      */
     public ArrayList<Player> getPlayers() {
         return players;
@@ -98,7 +98,7 @@ public class SetupMatch {
     /**
      * Method SetPlayers set the player list
      *
-     * @param players of type ArrayList<Player>
+     * @param players of type ArrayList&lt;Player&gt;
      */
     public void SetPlayers(ArrayList<Player> players) {
         this.players = players;
@@ -107,7 +107,7 @@ public class SetupMatch {
     /**
      * Method CreatePlayersFromNickname creates Player objects from the nickname inserted
      *
-     * @param player of type ArrayList<String>
+     * @param player of type ArrayList&lt;String&gt;
      */
     public void CreatePlayersFromNickname(ArrayList<String> player) {
         for (String elem : player) {

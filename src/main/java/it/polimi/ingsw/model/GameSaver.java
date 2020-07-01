@@ -159,7 +159,7 @@ public class GameSaver {
     /**
      * Method PrintBoard print the board on the file
      *
-     * @param players of type ArrayList<Player>
+     * @param players of type ArrayList&lt;Player&gt;
      * @param board   of type Board
      * @return String
      */

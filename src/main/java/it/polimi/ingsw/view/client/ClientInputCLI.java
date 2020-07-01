@@ -24,7 +24,7 @@ public class ClientInputCLI extends ClientInput {
      * Instantiates a new Client input cli.
      *
      * @param clientMain the client main
-     * @see ClientInput#ClientInput(ClientMain) ClientInput#ClientInput(ClientMain)
+     * @see ClientInput#ClientInput(ClientMain) ClientInput#ClientInput(ClientMain)ClientInput#ClientInput(ClientMain)
      */
     public ClientInputCLI(ClientMain clientMain) {
         super(clientMain);

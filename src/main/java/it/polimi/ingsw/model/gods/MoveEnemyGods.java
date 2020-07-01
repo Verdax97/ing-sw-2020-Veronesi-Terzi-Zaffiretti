@@ -10,7 +10,13 @@ import it.polimi.ingsw.model.Worker;
  */
 public class MoveEnemyGods extends God {
 
+    /**
+     * The Target pos x.
+     */
     protected int targetPosX;
+    /**
+     * The Target pos y.
+     */
     protected int targetPosY;
 
     /**
@@ -21,7 +27,7 @@ public class MoveEnemyGods extends God {
      * @param selectedCell of type Cell
      * @param x            of type int
      * @param y            of type int
-     * @return int
+     * @return int int
      */
     public int MoveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y) {
         if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || (selectedCell == board.getCell(targetPosX, targetPosY))) {

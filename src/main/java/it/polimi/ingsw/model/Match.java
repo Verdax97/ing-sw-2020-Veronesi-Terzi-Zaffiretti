@@ -11,10 +11,9 @@ public class Match extends Observable {
     private final Turn turn;
     private final SetupMatch setup;
     private boolean firstTime = true;
+
     /**
      * Method getPlayerTurn returns the playerTurn of this Match object.
-     *
-     *
      *
      * @return the playerTurn (type Player) of this Match object.
      */
@@ -61,7 +60,7 @@ public class Match extends Observable {
     /**
      * Constructor Match creates a new Match instance.
      *
-     * @param nicks of type ArrayList<String>
+     * @param nicks of type ArrayList&lt;String&gt;
      */
     public Match(ArrayList<String> nicks) {
         this.board = new Board();
@@ -82,7 +81,7 @@ public class Match extends Observable {
     /**
      * Method PrintGods easily converts an arrayList of Gods into a String to be sent to players
      *
-     * @param gods of type ArrayList<God>
+     * @param gods of type ArrayList&lt;God&gt;
      * @return String
      */
     private String PrintGods(ArrayList<God> gods) {
@@ -98,8 +97,6 @@ public class Match extends Observable {
 
     /**
      * Method getLastAction returns the lastAction of this Match object.
-     *
-     *
      *
      * @return the lastAction (type int) of this Match object.
      */
@@ -277,7 +274,7 @@ public class Match extends Observable {
      *
      * @param msgPacket of type MsgToServer
      */
- /*
+/*
     -1 lost
     0 did nothing
     1 ok
@@ -498,7 +495,7 @@ public class Match extends Observable {
      * @param player of type Player
      * @param x      of type int
      * @param y      of type int
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean CheckSelectedCell(Player player, int x, int y) {
         if (board.getCell(x, y).getWorker() != null)
@@ -534,7 +531,7 @@ public class Match extends Observable {
      * Method CheckWinCondition checks the win condition for the player
      *
      * @param player of type Player
-     * @return Player
+     * @return Player player
      */
     public Player CheckWinCondition(Player player) {
         return turn.CheckWinCondition(board, player, FindWorkers(playerTurn.getNickname()));
@@ -544,7 +541,7 @@ public class Match extends Observable {
     /**
      * Method getPlayers returns the players of this Match object.
      *
-     * @return the players (type ArrayList<Player>) of this Match object.
+     * @return the players (type ArrayList&lt;Player&gt;) of this Match object.
      */
     public ArrayList<Player> getPlayers() {
         return setup.getPlayers();
@@ -573,7 +570,7 @@ public class Match extends Observable {
      *
      * @return the setup (type SetupMatch) of this Match object.
      */
-    //getter for view cause it needs to access god list and playerList
+//getter for view cause it needs to access god list and playerList
     public SetupMatch getSetup() {
         return setup;
     }
@@ -584,7 +581,7 @@ public class Match extends Observable {
      * @param player of type String
      * @param other  of type String
      */
-    //create and notify only with messages for players
+//create and notify only with messages for players
     public void CreateMsgPacket(String player, String other) {
         SendPacket(playerTurn.getNickname(), player, other, board);
     }
@@ -597,7 +594,7 @@ public class Match extends Observable {
      * @param alt      of type String
      * @param board    of type Board
      */
-    //notify with all thing
+//notify with all thing
     public void SendPacket(String nickname, String msg, String alt, Board board) {
         ArrayList<String> players = new ArrayList<>();
         ArrayList<SimpleGod> gods = new ArrayList<>();
@@ -625,7 +622,7 @@ public class Match extends Observable {
      * Method FindWorkers finds the player's workers
      *
      * @param player of type String
-     * @return ArrayList<int [ ]>
+     * @return ArrayList&lt;int [ ]&gt; array list
      */
     public ArrayList<int[]> FindWorkers(String player) {
         ArrayList<int[]> workers = new ArrayList<>();
@@ -643,7 +640,7 @@ public class Match extends Observable {
      *
      * @param cell   of type Cell
      * @param player of type String
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean PlayersWorker(Cell cell, String player) {
         if (cell.getWorker() != null) {
@@ -687,7 +684,7 @@ public class Match extends Observable {
      *
      * @param player of type Player
      */
-    //remove player from players list and worker from the board
+//remove player from players list and worker from the board
     public void killPlayer(Player player) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -702,8 +699,8 @@ public class Match extends Observable {
     /**
      * Method PrintPossibilities converts an arrayList of coordinates into a string
      *
-     * @param arrayList of type ArrayList<int[]>
-     * @return String
+     * @param arrayList of type ArrayList&lt;int[]&gt;
+     * @return String string
      */
     public String PrintPossibilities(ArrayList<int[]> arrayList) {
         StringBuilder s = new StringBuilder();

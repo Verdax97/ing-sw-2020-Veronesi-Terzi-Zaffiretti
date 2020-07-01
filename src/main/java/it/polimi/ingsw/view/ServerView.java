@@ -9,9 +9,21 @@ import java.io.PrintStream;
  * Class ServerView is used for printing the board information on the server console
  */
 public class ServerView {
+    /**
+     * The constant ANSI_RESET.
+     */
     public static final String ANSI_RESET = "\u001B[0m";
+    /**
+     * The constant ANSI_RED.
+     */
     public static final String ANSI_RED = "\u001B[31m";
+    /**
+     * The constant ANSI_GREEN.
+     */
     public static final String ANSI_GREEN = "\u001B[32m";
+    /**
+     * The constant ANSI_BLUE.
+     */
     public static final String ANSI_BLUE = "\u001B[34m";
     private final PrintStream outputStream;
 

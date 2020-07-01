@@ -22,7 +22,13 @@ public class ServerAuxiliaryThread extends Thread {
         this.match = match;
     }
 
+    /**
+     * The Server view.
+     */
     ServerView serverView = new ServerView();
+    /**
+     * The Scanner.
+     */
     Scanner scanner = new Scanner(System.in);
 
     /**

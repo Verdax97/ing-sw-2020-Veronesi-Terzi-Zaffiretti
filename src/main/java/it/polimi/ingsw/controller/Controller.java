@@ -12,7 +12,6 @@ import java.util.Observer;
 
 /**
  * Class Controller initialize the match and redirect the messages based on current state
- *
  */
 public class Controller implements Observer {
 
@@ -42,6 +41,8 @@ public class Controller implements Observer {
 
     /**
      * Method CreateMatch instantiate and initialize match and send first message to the players
+     *
+     * @param resume the resume
      */
     public void createMatch(boolean resume) {
         if (resume) {

@@ -12,11 +12,11 @@ public class ForceMovementGods extends MoveEnemyGods {
     /**
      * Method ForceMove combination of Move and MoveEnemy
      *
-     * @param board of type Board
+     * @param board        of type Board
      * @param selectedCell of type Cell
-     * @param x of type int
-     * @param y of type int
-     * @return int
+     * @param x            of type int
+     * @param y            of type int
+     * @return int int
      */
     public int ForceMove(Board board, Cell selectedCell, int x, int y) {
         int moved = CheckMove(board, selectedCell, x, y);

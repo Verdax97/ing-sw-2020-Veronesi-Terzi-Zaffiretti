@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class Lobby
@@ -44,7 +43,7 @@ public class Lobby
     /**
      * Method getPlayers returns the array of string of players of this Lobby object.
      *
-     * @return players of type ArrayList<String>
+     * @return players of type ArrayList&lt;String&gt;
      */
     public ArrayList<String> getPlayers() {
         return players;
