@@ -22,7 +22,7 @@ To start the server use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -server```
 
 ### Installer
-Duble click the correct .jar/.exe.
+Duble click Santorini-server.
 
 # Client
 ## CLI
@@ -31,7 +31,7 @@ To start the cli use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR -cli```
 
 ### Installer
-Duble click the correct .jar/.exe.
+Duble click Santorini-CLI.
 
 ### GUI
 ### Cmd line
@@ -39,10 +39,15 @@ To start the gui use the following command:
 ```java -jar GC07-1.0-SNAPSHOT-jar-with-dependencies.JAR```
 
 ### Installer
-Duble click the correct .jar/.exe.
+Duble click Santorini-GUI.
 
 # Coverage
-TODO
+| Package |Tested Class | Coverage(line) | Coverage (methods)|
+|:-----------------------|:------------------|:----------------|:--------------------:|
+| Controller | Controller | 76/82 (92%) | 100%
+| Model | Match | 295/344 (85%) | 100%
+| Model | GameSaver | 101/106 (95%) | 100%
+| Model | Global Package | 990/1044 (94%) | 100%
 
 # Miscellanea (other usefull info)
 TODO
