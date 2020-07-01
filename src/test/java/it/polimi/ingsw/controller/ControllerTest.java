@@ -35,17 +35,16 @@ public class ControllerTest {
 
     @Test
     public void createMatchTest() throws IOException {
+        createCustomSave();
         Controller controller = new Controller();
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, new Integer(4567));
         controller.setServerMultiplexer(serverMultiplexer);
         serverMultiplexer.playersThread = new ArrayList<>();
         Lobby lobby = new Lobby();
-        lobby.AddPlayer("GinoTest");
-        lobby.AddPlayer("PinoTest");
+        lobby.AddPlayer("GinoTest1");
+        lobby.AddPlayer("PinoTest1");
         GameSaver.checkForGames(lobby);
         controller.createMatch(true);
-
-
         Controller controller1 = new Controller();
         ServerMultiplexer serverMultiplexer1 = new ServerMultiplexer(controller1, 4567);
         controller1.setServerMultiplexer(serverMultiplexer1);
@@ -53,6 +52,7 @@ public class ControllerTest {
         serverMultiplexer1.playersThread = new ArrayList<>();
         controller1.createMatch(false);
         Assertions.assertTrue(true);
+        GameSaver.deleteGameData();
     }
 
     @Test
