@@ -52,7 +52,7 @@ public class Turn {
     /**
      * Method getWorkers returns the workers of this Turn object.
      *
-     * @return the workers (type List<Worker>) of this Turn object.
+     * @return the workers (type List&lt;Worker&gt;) of this Turn object.
      */
     public List<Worker> getWorkers() {
         return workers;

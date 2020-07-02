@@ -17,7 +17,13 @@ import java.util.Observable;
 public class ServerMultiplexer extends Observable implements Runnable {
     private final Controller controller;
     private ServerSocket serverSocket;
+    /**
+     * The Players thread.
+     */
     public ArrayList<ServerThread> playersThread;
+    /**
+     * The Server main.
+     */
     public ServerMain serverMain;
     private ServerAuxiliaryThread serverAuxiliaryThread = null;
 
@@ -61,10 +67,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
     /**
      * Method setEnding sets the ending of this ServerMultiplexer object.
      *
-     *
-     *
      * @param ending the ending of this ServerMultiplexer object.
-     *
      */
     public synchronized void setEnding(boolean ending) {
         this.ending = ending;
@@ -74,6 +77,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * Constructor ServerMultiplexer creates a new ServerMultiplexer instance.
      *
      * @param controller of type Controller
+     * @param port       the port
      */
     public ServerMultiplexer(Controller controller, Integer port) {
         this.controller = controller;
@@ -209,7 +213,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
      * Method SetNickname try to set the nickname in the lobby
      *
      * @param name of type String
-     * @return boolean
+     * @return boolean nickname in lobby
      */
     public synchronized boolean setNicknameInLobby(String name) {
         if (name.split(":")[0].equalsIgnoreCase("Chat"))

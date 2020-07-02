@@ -20,6 +20,9 @@ public class ServerThread extends Thread implements Observer {
 
     private final ServerMultiplexer server;
     private String nick;
+    /**
+     * The Socket.
+     */
     protected Socket socket;
     private ObjectInputStream socketIn;
     private ObjectOutputStream socketOut;
@@ -82,6 +85,8 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method Setup initializes lobby size and nickname
+     *
+     * @throws IOException when cannot connect to the client
      */
     private void setup() throws IOException {
         setupLobbySize();
@@ -98,6 +103,7 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method SetupLobbySize for setting the number of players
+     * @throws IOException when cannot connect to the client
      */
     private void setupLobbySize() throws IOException {
         if (pos == 0) {
@@ -124,6 +130,7 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method SetupNickname check if the nickname is available on the server
+     * @throws IOException when cannot connect to the client
      */
     private void setupNickname() throws IOException {
         int v = pos + 1;
@@ -149,6 +156,8 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method AskForResume ask the player who created the lobby if he wants to resume an old game
+     *
+     * @throws IOException the io exception
      */
     public void askForResume() throws IOException {
         String mess = Messages.RESUME;
@@ -161,6 +170,7 @@ public class ServerThread extends Thread implements Observer {
      * Method SendMsg for sending objects via socket
      *
      * @param msg of type MsgPacket
+     * @throws IOException the io exception
      */
     public void sendMsg(MsgToClient msg) throws IOException {
         try {
@@ -175,6 +185,7 @@ public class ServerThread extends Thread implements Observer {
 
     /**
      * Method ReceiveMsg for receiving objects via socket
+     * @throws IOException when cannot connect to the client
      *
      * @return MsgToServer
      */

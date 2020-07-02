@@ -11,6 +11,9 @@ import java.util.Observable;
  */
 public class ClientInput extends Observable {
 
+    /**
+     * The Client main.
+     */
     protected final ClientMain clientMain;
 
     /**
@@ -55,6 +58,8 @@ public class ClientInput extends Observable {
 
     /**
      * Method updateNotYourTurn show that is not your turn
+     *
+     * @param msgToClient the msg to client
      */
     public void updateNotYourTurn(MsgToClient msgToClient) {
 

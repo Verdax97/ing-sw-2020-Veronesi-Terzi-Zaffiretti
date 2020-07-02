@@ -11,7 +11,7 @@ public class ErrorHandler {
      * Method getErrorSetup creates a string with the correct message of setup error.
      *
      * @param value of type int
-     * @return String
+     * @return String string
      */
     public String GetErrorSetup(int value) {
         return switch (value) {
@@ -27,7 +27,7 @@ public class ErrorHandler {
      * Method getErrorMove creates a string with the correct message of move error.
      *
      * @param value of type int
-     * @return String
+     * @return String string
      */
     public String GetErrorMove(int value) {
         return switch (value) {
@@ -49,7 +49,7 @@ public class ErrorHandler {
      * Method getErrorBuild creates a string with the correct message of build error.
      *
      * @param value of type int
-     * @return String
+     * @return String string
      */
     public String GetErrorBuild(int value) {
         return switch (value) {

@@ -1,14 +1,18 @@
 package it.polimi.ingsw.model;
 
-import javafx.scene.image.Image;
-
 import java.io.Serializable;
 
 /**
  * Class SimpleGod the base class for all gods
  */
 public class SimpleGod implements Serializable {
+    /**
+     * The Name.
+     */
     protected String name;
+    /**
+     * The Description.
+     */
     protected String description;
 
     /**
