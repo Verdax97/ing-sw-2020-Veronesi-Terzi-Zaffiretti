@@ -47,8 +47,3 @@ Double click Santorini-GUI.
 | Model | Global Package | 990/1044 (94%) | 100%
 
 All the class which are not showed in the table have 100% coverage
-
-# Miscellanea (other usefull info)
-TODO
-
-
