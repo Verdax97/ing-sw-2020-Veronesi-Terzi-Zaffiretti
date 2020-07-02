@@ -112,6 +112,7 @@ public class ControllerGUI {
             lobbyController.setClientInputGUI(clientInputGUI);
             lobbyScene = new Scene(rootLobby);
             primaryStage.setScene(lobbyScene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle("Lobby");
         }
         if (master) {
