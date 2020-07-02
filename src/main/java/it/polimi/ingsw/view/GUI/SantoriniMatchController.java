@@ -537,7 +537,7 @@ public class SantoriniMatchController {
      */
     public void sendChatMessage() {
         if (chatInput.getText().length() > 0) {
-            clientInputGUI.sendChatMsg(chatInput.getText());
+            clientInputGUI.sendChatMsg(" " + chatInput.getText());
             chatInput.setText("");
         }
     }
