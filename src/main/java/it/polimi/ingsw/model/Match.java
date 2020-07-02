@@ -210,7 +210,7 @@ public class Match extends Observable {
             msgError = Messages.SELECT_WORKER;
         } else if (lastAction == 1)//you won
         {
-            msgError = "EndGame Winner winner chicken dinner!";
+            msgError = "End Game Winner winner chicken dinner!";
             PlayerWin(playerTurn.getNickname());
             return;
         } else if (lastAction == -1)//you lose
@@ -300,6 +300,11 @@ public class Match extends Observable {
         if (lastAction == 1)//the game must go on
         {
             ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
+            if (movePossibilities.size()==0)
+            {
+                PlayerLost("Error " + playerTurn.getNickname() + " lost because he can't move his workers", playerTurn.getNickname() + " lost because he can't move his workers");
+                return;
+            }
             msgError = Messages.MOVE;
             alt = PrintPossibilities(movePossibilities);
         } else if (lastAction < 0) {
@@ -320,6 +325,11 @@ public class Match extends Observable {
         ArrayList<int[]> movePossibilities = turn.CheckAround(board, turn.getSelectedCell().getPos()[0], turn.getSelectedCell().getPos()[1], playerTurn.getGodPower(), 1);
         if (msgPacket.y == 0)
             lastAction = 1;
+        else if (movePossibilities.size()==0)
+        {
+            PlayerLost("Error " + playerTurn.getNickname() + " lost because he can't move his worker", playerTurn.getNickname() + " lost because he can't move his worker");
+            return;
+        }
         else if (sel < 0 || sel >= movePossibilities.size()) {
             lastAction = -1;
             msgError = Messages.ERROR + " Value out of possibilities";
@@ -670,13 +680,13 @@ public class Match extends Observable {
     public void PlayerLost(String msg, String alt) {
         Player loser = playerTurn;
         msg += "\n";
-        CreateMsgPacket(msg, alt);//send packet to the player
+        //CreateMsgPacket(msg, alt);//send packet to the player
         killPlayer(loser);
         if (nPlayer > 0)
             nPlayer--;
         NextPlayer();
-        lastAction = -10;
         CreateMsgPacket(Messages.START_TURN, alt);
+        lastAction = -10;
     }
 
     /**

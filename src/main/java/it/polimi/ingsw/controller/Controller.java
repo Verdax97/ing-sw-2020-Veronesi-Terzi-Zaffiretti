@@ -119,6 +119,8 @@ public class Controller implements Observer {
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.MOVE);
+                if (ret == -10)
+                    setState(State.STARTTURN);
             }
             case MOVE -> {
                 match.Move(msgPacket);
