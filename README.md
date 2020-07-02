@@ -41,10 +41,12 @@ Double click Santorini-GUI.
 # Coverage
 | Package |Tested Class | Coverage(line) | Coverage (methods)|
 |:-----------------------|:------------------|:----------------|:--------------------:|
-| Controller | Controller | 76/82 (92%) | 100%
+| Controller | Controller | 77/84 (91%) | 100%
 | Model | Match | 295/344 (85%) | 100%
 | Model | GameSaver | 101/106 (95%) | 100%
 | Model | Global Package | 990/1044 (94%) | 100%
+
+All the class which are not showed in the table have 100% coverage
 
 # Miscellanea (other usefull info)
 TODO
