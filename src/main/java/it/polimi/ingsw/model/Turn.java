@@ -93,13 +93,13 @@ public class Turn {
      * @param workers the workers
      * @return the boolean
      */
-    public boolean CheckLostMove(Player player, Board board, ArrayList<int[]> workers) {
+    public boolean checkLostMove(Player player, Board board, ArrayList<int[]> workers) {
         boolean flag = false;
         for (int[] coords : workers) {
             int i = coords[0];
             int j = coords[1];
-            if (CheckAround(board, i, j, player.getGodPower(), 0).size() == 0) {
-                if (CheckAround(board, i, j, player.getGodPower(), 1).size() == 0)
+            if (checkAround(board, i, j, player.getGodPower(), 0).size() == 0) {
+                if (checkAround(board, i, j, player.getGodPower(), 1).size() == 0)
                     flag = true;
                 else
                     return false;
@@ -115,8 +115,8 @@ public class Turn {
      * @param board the board
      * @return the boolean
      */
-    public boolean CheckLostBuild(Board board) {
-        ArrayList<int[]> buildPossibilities = CheckAround(board, getSelectedCell().getPos()[0], getSelectedCell().getPos()[1], selectedCell.getWorker().getPlayer().getGodPower(), 2);
+    public boolean checkLostBuild(Board board) {
+        ArrayList<int[]> buildPossibilities = checkAround(board, getSelectedCell().getPos()[0], getSelectedCell().getPos()[1], selectedCell.getWorker().getPlayer().getGodPower(), 2);
         return buildPossibilities.size() <= 0;
     }
 
@@ -129,24 +129,24 @@ public class Turn {
      * @param workers       the workers
      * @return the int
      */
-    public int StartTurn(ArrayList<Player> ActivePlayers, Player player, Board board, ArrayList<int[]> workers)
+    public int startTurn(ArrayList<Player> ActivePlayers, Player player, Board board, ArrayList<int[]> workers)
     /*
     -1 Player lost
     0 Player neither lost nor won
     1 Player won
      */ {
         // if last, player won.
-        if (ActivePlayers.size() == 1 || CheckWinCondition(board, player, workers) == player) {
+        if (ActivePlayers.size() == 1 || checkWinCondition(board, player, workers) == player) {
             return 1;
         }
 
         for (Player p : ActivePlayers) {
             if (p != player) {
-                p.getGodPower().EnemyTurn(board, player, p);
+                p.getGodPower().enemyTurn(board, player, p);
             }
         }
         // Check if we have to kill him
-        if (CheckLostMove(player, board, workers)) { return -1;}
+        if (checkLostMove(player, board, workers)) { return -1;}
         return 0;
     }
 
@@ -162,10 +162,10 @@ public class Turn {
     1 all good needed for check cause 0 means useless
 
     */
-    public int BeforeMove(Board board, int x, int y) {
+    public int beforeMove(Board board, int x, int y) {
         if (x == -5 && y == -5)
             return 1;
-        return selectedCell.getWorker().getPlayer().getGodPower().PlayerTurn(board, selectedCell, x, y);
+        return selectedCell.getWorker().getPlayer().getGodPower().playerTurn(board, selectedCell, x, y);
     }
 
     /**
@@ -185,8 +185,8 @@ public class Turn {
     -6 (Artemis) Same cell as the first one
     -7 (ForcedMovementGod) no space to move enemy worker or (Zeus) dome under worker
     */
-    public int Move(Board board, int x, int y) {
-        int moved = selectedCell.getWorker().getPlayer().getGodPower().Move(board, selectedCell, x, y);
+    public int move(Board board, int x, int y) {
+        int moved = selectedCell.getWorker().getPlayer().getGodPower().move(board, selectedCell, x, y);
         if (moved > 0){selectedCell = board.getCell(x, y);}
         return moved;
     }
@@ -207,8 +207,8 @@ public class Turn {
     -8 (Demeter) same as last built
     -9 (Hestia) cell is a perimeter space
     */
-    public int Build(Board board, int x, int y, int typeBuild) {
-        return selectedCell.getWorker().getPlayer().getGodPower().Building(board, selectedCell, x, y, typeBuild, turnNumber);
+    public int build(Board board, int x, int y, int typeBuild) {
+        return selectedCell.getWorker().getPlayer().getGodPower().building(board, selectedCell, x, y, typeBuild, turnNumber);
 
     }
 
@@ -220,14 +220,14 @@ public class Turn {
      * @param workers the workers
      * @return the player
      */
-    public Player CheckWinCondition(Board board, Player player, ArrayList<int[]> workers) {
+    public Player checkWinCondition(Board board, Player player, ArrayList<int[]> workers) {
         for (int[] coords : workers) {
             int i = coords[0];
             int j = coords[1];
             if (board.getCell(i, j).getBuilding() == 3 && board.getCell(i, j).getWorker().getLastMovement() > 0)
                 return player;
         }
-        return player.getGodPower().WinCondition(board, player);
+        return player.getGodPower().winCondition(board, player);
     }
 
     /**
@@ -240,14 +240,14 @@ public class Turn {
      * @param phase the phase
      * @return the array list
      */
-    public ArrayList<int[]> CheckAround(Board board, int tempx, int tempy, God god, int phase) {
+    public ArrayList<int[]> checkAround(Board board, int tempx, int tempy, God god, int phase) {
         ArrayList<int[]> arr = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 int x = tempx + i;
                 int y = tempy + j;
                 if ((x >= 0) && (x < 5) && (y >= 0) && (y < 5)) {
-                    int ret = CheckPhase(board, tempx, tempy, god, x, y, phase);
+                    int ret = checkPhase(board, tempx, tempy, god, x, y, phase);
                     if (ret > 0) {
                         arr.add(new int[]{x, y});//add to the list of possible moves
                     }
@@ -269,14 +269,14 @@ public class Turn {
      * @param phase the phase
      * @return the int
      */
-    public int CheckPhase(Board board, int tempx, int tempy, God god, int x, int y, int phase) {
+    public int checkPhase(Board board, int tempx, int tempy, God god, int x, int y, int phase) {
         int ret = -1;
         if (phase == 0)//beforeMove
-            ret = god.CheckPlayerTurn(board, board.getCell(tempx, tempy), x, y);
+            ret = god.checkPlayerTurn(board, board.getCell(tempx, tempy), x, y);
         if (phase == 1)//move
-            ret = god.CheckMove(board, board.getCell(tempx, tempy), x, y);
+            ret = god.checkMove(board, board.getCell(tempx, tempy), x, y);
         if (phase == 2)//build
-            ret = god.CheckBuild(board, board.getCell(tempx, tempy), x, y);
+            ret = god.checkBuild(board, board.getCell(tempx, tempy), x, y);
         return ret;//add to the list of possible moves
     }
 }

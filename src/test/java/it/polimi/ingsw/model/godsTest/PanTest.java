@@ -18,8 +18,8 @@ public class PanTest {
         worker.setPlayer(player);
         board.getCell(3, 3).setWorker(worker);
         worker.setLastMovement(-2);
-        Assertions.assertEquals(player.getGodPower().WinCondition(board, player), player);
+        Assertions.assertEquals(player.getGodPower().winCondition(board, player), player);
         worker.setLastMovement(0);
-        Assertions.assertNull(player.getGodPower().WinCondition(board, player));
+        Assertions.assertNull(player.getGodPower().winCondition(board, player));
     }
 }

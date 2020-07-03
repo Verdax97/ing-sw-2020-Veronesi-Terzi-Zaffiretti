@@ -13,7 +13,7 @@ public class ErrorHandler {
      * @param value of type int
      * @return String string
      */
-    public String GetErrorSetup(int value) {
+    public String getErrorSetup(int value) {
         return switch (value) {
             case -1 -> "You Lost";
             case 1 -> "You Won!!";
@@ -29,7 +29,7 @@ public class ErrorHandler {
      * @param value of type int
      * @return String string
      */
-    public String GetErrorMove(int value) {
+    public String getErrorMove(int value) {
         return switch (value) {
             case -1 -> prefix + "Target cell out of board";
             case -2 -> prefix + "Target cell is too far";
@@ -51,7 +51,7 @@ public class ErrorHandler {
      * @param value of type int
      * @return String string
      */
-    public String GetErrorBuild(int value) {
+    public String getErrorBuild(int value) {
         return switch (value) {
             case -1 -> prefix + "Target cell out of board";
             case -2 -> prefix + "Target cell is too far";

@@ -35,10 +35,10 @@ public class ClientInputGUI extends ClientInput {
     }
 
     /**
-     * @see ClientInput#ParseMsg(MsgToClient)
+     * @see ClientInput#parseMsg(MsgToClient)
      */
     @Override
-    public void ParseMsg(MsgToClient msgToClient) {
+    public void parseMsg(MsgToClient msgToClient) {
 
         String msg = msgToClient.msg;
         if (msg.split(" ")[0].equalsIgnoreCase(Messages.ERROR)) {

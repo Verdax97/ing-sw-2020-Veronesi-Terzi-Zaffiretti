@@ -39,17 +39,17 @@ public class MinotaurTest {
         Minotaur minotaur = new Minotaur();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(1, 3);
-        Assertions.assertEquals(-7, minotaur.Move(board, selectedCell, 0, 4));
+        Assertions.assertEquals(-7, minotaur.move(board, selectedCell, 0, 4));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(0, 4);
-        Assertions.assertEquals(1, minotaur.Move(board, selectedCell, 1, 3));
+        Assertions.assertEquals(1, minotaur.move(board, selectedCell, 1, 3));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(1, 3);
-        Assertions.assertEquals(-5, minotaur.Move(board, selectedCell, 2, 2));
+        Assertions.assertEquals(-5, minotaur.move(board, selectedCell, 2, 2));
         serverView.printBoard(board, match);
         board.getCell(0, 4).setDome(true);
         selectedCell = board.getCell(2, 2);
-        Assertions.assertEquals(-5, minotaur.Move(board, selectedCell, 1, 3));
+        Assertions.assertEquals(-5, minotaur.move(board, selectedCell, 1, 3));
         serverView.printBoard(board, match);
     }
 }

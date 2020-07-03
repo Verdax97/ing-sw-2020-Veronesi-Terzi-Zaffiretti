@@ -33,21 +33,21 @@ public class AtlasTest {
         Atlas atlas = new Atlas();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 4);
-        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 1, 4, 0, 0));
+        Assertions.assertEquals(1, atlas.building(board, selectedCell, 1, 4, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        Assertions.assertEquals(1, atlas.building(board, selectedCell, 0, 3, 1, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(-4, atlas.Building(board, selectedCell, 0, 3, 1, 0));
+        Assertions.assertEquals(-4, atlas.building(board, selectedCell, 0, 3, 1, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 1, 4, 1, 0));
+        Assertions.assertEquals(1, atlas.building(board, selectedCell, 1, 4, 1, 0));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(0, 0);
         board.getCell(0, 1).setBuilding(3);
-        Assertions.assertEquals(1, atlas.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, atlas.building(board, selectedCell, 0, 1, 0, 0));
         selectedCell = board.getCell(4, 0);
-        Assertions.assertEquals(-3, atlas.Building(board, selectedCell, 3, 1, 0, 0));
-        Assertions.assertEquals(-2, atlas.Building(board, selectedCell, 0, 1, 0, 0));
-        Assertions.assertEquals(-1, atlas.Building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-3, atlas.building(board, selectedCell, 3, 1, 0, 0));
+        Assertions.assertEquals(-2, atlas.building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(-1, atlas.building(board, selectedCell, 5, 5, 0, 0));
 
     }
 }

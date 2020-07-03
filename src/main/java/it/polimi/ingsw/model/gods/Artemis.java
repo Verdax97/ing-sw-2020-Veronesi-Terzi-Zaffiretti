@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
-import javafx.scene.image.Image;
 
 /**
  * Class Artemis implements Artemis functionalities
@@ -22,11 +21,11 @@ public class Artemis extends MultipleActionGod {
     }
 
     /**
-     * @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int)
+     * @see it.polimi.ingsw.model.God#move(Board, Cell, int, int)
      */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y) {
-        int moved = CheckMove(board, selectedCell, x, y);
+    public int move(Board board, Cell selectedCell, int x, int y) {
+        int moved = checkMove(board, selectedCell, x, y);
         if (moved > 0) {
             if (use == 0) {
                 lastX = selectedCell.getPos()[0];
@@ -36,26 +35,26 @@ public class Artemis extends MultipleActionGod {
             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
             selectedCell.setWorker(null);
             use++;
-            return CheckUse();
+            return checkUse();
         }
         return moved;
     }
 
 
     /**
-     * @see it.polimi.ingsw.model.God#CheckMove(Board, Cell, int, int)
+     * @see it.polimi.ingsw.model.God#checkMove(Board, Cell, int, int)
      */
     @Override
-    public int CheckMove(Board board, Cell selectedCell, int x, int y) {
-        int ret = super.CheckMove(board, selectedCell, x, y);
+    public int checkMove(Board board, Cell selectedCell, int x, int y) {
+        int ret = super.checkMove(board, selectedCell, x, y);
         if (ret < 0)
             return ret;
 
         if (use == 0)
-            return CheckUse();
+            return checkUse();
 
         if (x != lastX || y != lastY) {
-            return CheckUse();
+            return checkUse();
         } else return -6; // Same cell as the first one
     }
 }

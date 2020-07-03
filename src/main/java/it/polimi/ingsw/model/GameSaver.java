@@ -55,12 +55,12 @@ public class GameSaver {
      * @param match of type Match
      */
     public static void saveGame(Match match) {
-        try {
+        try (FileWriter fileWriter = new FileWriter(saveFile);){
             if (!saveFile.exists()) {
                 if (!saveFile.createNewFile())
                     throw new IOException();
             }
-            FileWriter fileWriter = new FileWriter(saveFile);
+            //FileWriter fileWriter = new FileWriter(saveFile);
             ArrayList<Player> players = match.getSetup().getPlayers();
             //prints the players in turn order
             for (int i = 0; i < players.size(); i++) {
@@ -81,7 +81,7 @@ public class GameSaver {
                     fileWriter.write("-");
             }
 
-            fileWriter.write(PrintBoard(players, match.getBoard()));
+            fileWriter.write(printBoard(players, match.getBoard()));
 
             fileWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -98,62 +98,63 @@ public class GameSaver {
      * @throws FileNotFoundException when
      */
     public static Match loadGame() throws FileNotFoundException {
-        Scanner scanner = new Scanner(saveFile);
-        String s = scanner.nextLine();
-        ArrayList<String> players = new ArrayList<>();
-        for (String name :
-                s.split("-")) {
-            players.add(name);
-        }
-
-        Match match = new Match(players);
-
-        String playerTurnName = scanner.nextLine();
-        Player playerTurn = null;
-        int nPlayer = 0;
-        for (int e = 0; e < match.getPlayers().size(); e++ ){
-            if (playerTurnName.equals(match.getPlayers().get(e).getNickname())){
-                nPlayer = e;
-                playerTurn = match.getPlayers().get(e);
+        try (Scanner scanner = new Scanner(saveFile)){
+            String s = scanner.nextLine();
+            ArrayList<String> players = new ArrayList<>();
+            for (String name :
+                    s.split("-")) {
+                players.add(name);
             }
-        }
 
-        s = scanner.nextLine();
-        int playerN = 0;
-        for (String name : s.split("-")){
-            match.getPlayers().get(playerN).setGodPower(godFromName(name, match));
-            playerN++;
-        }
+            Match match = new Match(players);
 
-
-        Worker worker;
-        for (int x = 0; x < 5; x++){
-            s = scanner.nextLine();
-            for (int y = 0; y < 5; y++){
-                String cell = s.split(" ")[y];
-                match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
-                if (cell.length() == 2){
-                    if (cell.charAt(1) != 'D') {
-                        int i = Integer.parseInt(cell) % 10;
-                        worker = new Worker();
-                        worker.setPlayer(match.getPlayers().get(i));
-                        match.getBoard().getCell(x, y).setWorker(worker);
-                    } else match.getBoard().getCell(x, y).setDome(true);
+            String playerTurnName = scanner.nextLine();
+            Player playerTurn = null;
+            int nPlayer = 0;
+            for (int e = 0; e < match.getPlayers().size(); e++ ){
+                if (playerTurnName.equals(match.getPlayers().get(e).getNickname())){
+                    nPlayer = e;
+                    playerTurn = match.getPlayers().get(e);
                 }
             }
+
+            s = scanner.nextLine();
+            int playerN = 0;
+            for (String name : s.split("-")){
+                match.getPlayers().get(playerN).setGodPower(godFromName(name, match));
+                playerN++;
+            }
+
+
+            Worker worker;
+            for (int x = 0; x < 5; x++){
+                s = scanner.nextLine();
+                for (int y = 0; y < 5; y++){
+                    String cell = s.split(" ")[y];
+                    match.getBoard().getCell(x,y).setBuilding(cell.charAt(0)-48);
+                    if (cell.length() == 2){
+                        if (cell.charAt(1) != 'D') {
+                            int i = Integer.parseInt(cell) % 10;
+                            worker = new Worker();
+                            worker.setPlayer(match.getPlayers().get(i));
+                            match.getBoard().getCell(x, y).setWorker(worker);
+                        } else match.getBoard().getCell(x, y).setDome(true);
+                    }
+                }
+            }
+
+            s = scanner.nextLine();
+            if (s.length() == 2){
+                int pos = Integer.parseInt(s);
+                match.getBoard().getCell(pos/10, pos%10).getWorker().setLastMovement(1);
+            }
+
+            match.setPlayerTurn(playerTurn);
+            match.setnPlayer(nPlayer);
+
+            scanner.close();
+            return match;
         }
-
-        s = scanner.nextLine();
-        if (s.length() == 2){
-            int pos = Integer.parseInt(s);
-            match.getBoard().getCell(pos/10, pos%10).getWorker().setLastMovement(1);
-        }
-
-        match.setPlayerTurn(playerTurn);
-        match.setnPlayer(nPlayer);
-
-        scanner.close();
-        return match;
     }
 
     /**
@@ -163,7 +164,7 @@ public class GameSaver {
      * @param board   of type Board
      * @return String
      */
-    private static String PrintBoard(ArrayList<Player> players, Board board) {
+    private static String printBoard(ArrayList<Player> players, Board board) {
         StringBuilder s = new StringBuilder();
         //prints the debuffs
         String debuffed = "5";

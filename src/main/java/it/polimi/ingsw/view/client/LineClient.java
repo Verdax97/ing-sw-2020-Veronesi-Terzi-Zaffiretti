@@ -52,7 +52,7 @@ public class LineClient extends Thread implements Observer {
      */
     public void run() {
         while (true) {
-            MsgToClient msg = ReceiveMsg();
+            MsgToClient msg = receiveMsg();
 
             //pass the message to the main client
             if (msg != null) {
@@ -75,7 +75,7 @@ public class LineClient extends Thread implements Observer {
      *
      * @param msg of type MsgToServer
      */
-    private void SendMsg(MsgToServer msg) {
+    private void sendMsg(MsgToServer msg) {
         try {
             //socketOut.reset();
             socketOut.writeObject(msg);
@@ -91,7 +91,7 @@ public class LineClient extends Thread implements Observer {
      *
      * @return MsgPacket
      */
-    private MsgToClient ReceiveMsg() {
+    private MsgToClient receiveMsg() {
         try {
             return (MsgToClient) socketIn.readObject();
         } catch (ClassNotFoundException | IOException e) {
@@ -117,7 +117,7 @@ public class LineClient extends Thread implements Observer {
                 System.out.println("Socket already closed");
             }
         }
-        clientMain.EndAll();
+        clientMain.endAll();
     }
 
     /**
@@ -131,6 +131,6 @@ public class LineClient extends Thread implements Observer {
         if (!(o instanceof ClientInput) || !(arg instanceof MsgToServer)) {
             throw new IllegalArgumentException();
         }
-        SendMsg((MsgToServer) arg);
+        sendMsg((MsgToServer) arg);
     }
 }

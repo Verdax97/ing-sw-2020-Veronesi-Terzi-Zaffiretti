@@ -24,9 +24,9 @@ public class ChronoTest {
         board.getCell(0,2).setDome(true);
         board.getCell(0,3).setBuilding(3);
         board.getCell(0, 3).setDome(true);
-        Assertions.assertNull(player.getGodPower().WinCondition(board, player));
+        Assertions.assertNull(player.getGodPower().winCondition(board, player));
         board.getCell(0, 4).setBuilding(3);
         board.getCell(0, 4).setDome(true);
-        Assertions.assertEquals(player.getGodPower().WinCondition(board, player), player);
+        Assertions.assertEquals(player.getGodPower().winCondition(board, player), player);
     }
 }

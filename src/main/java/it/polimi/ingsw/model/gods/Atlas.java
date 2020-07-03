@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.God;
-import javafx.scene.image.Image;
 
 /**
  * Class Atlas implements Atlas functionalities
@@ -17,11 +16,11 @@ public class Atlas extends God {
         this.description = "Your Build: your worker may build a dome at any level including the ground";
     }
 
-    /** @see it.polimi.ingsw.model.God#Building(Board, Cell, int, int, int, int) */
+    /** @see it.polimi.ingsw.model.God#building(Board, Cell, int, int, int, int) */
     @Override
-    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
+    public int building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
         /* typeBuild 0 normale costruzione, typebuild 1 cupola */
-        int built = CheckBuild(board, selectedCell, x, y);
+        int built = checkBuild(board, selectedCell, x, y);
         if (built > 0) {
             int building = board.getCell(x, y).getBuilding();
             if (typeBuild == 1) {

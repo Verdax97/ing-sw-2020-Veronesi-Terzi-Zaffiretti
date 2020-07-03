@@ -40,7 +40,7 @@ public class LauncherController {
             error("Input is wrong", "Please insert a valid Port Number");
         } else {
             int portNumber = Integer.parseInt(portTry);
-            if (!clientMain.InitializeClient(ipTry, portNumber)) {
+            if (!clientMain.initializeClient(ipTry, portNumber)) {
                 error("Connection Failed", "Not able to reach the Server");
             }
         }

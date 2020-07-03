@@ -19,7 +19,7 @@ public class MultipleActionGod extends God {
      *
      * @return int int
      */
-    public int CheckUse() {
+    public int checkUse() {
         if (this.use == this.useLimit) {
             this.use = 0;
             return 1;
@@ -27,9 +27,9 @@ public class MultipleActionGod extends God {
         return 2;
     }
 
-    /** @see God#ResetGod() */
+    /** @see God#resetGod() */
     @Override
-    public void ResetGod() {
+    public void resetGod() {
         use = 0;
     }
 }

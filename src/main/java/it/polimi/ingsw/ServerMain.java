@@ -12,6 +12,9 @@ import java.util.concurrent.atomic.AtomicReference;
  * Class ServerMain starts the server
  */
 public class ServerMain {
+
+    boolean go = true;
+
     /**
      * Method startServer ask for the port and start the server
      */
@@ -31,7 +34,7 @@ public class ServerMain {
         }
         ServerAuxiliaryThread serverAuxiliaryThread = new ServerAuxiliaryThread();
         serverAuxiliaryThread.start();
-        while (true)
+        while (go)
             newGame(port, serverAuxiliaryThread);
     }
 

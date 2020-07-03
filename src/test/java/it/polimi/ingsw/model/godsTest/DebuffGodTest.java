@@ -26,7 +26,7 @@ public class DebuffGodTest {
         board.getCell(0,0).setWorker(testWorker00);
         DebuffGod gianni = new DebuffGod();
         gianni.setDebuff(true);
-        gianni.DebuffWorker(board, testWorker00.getPlayer());
+        gianni.debuffWorker(board, testWorker00.getPlayer());
         Assertions.assertTrue(testWorker00.isDebuff());
     }
 }

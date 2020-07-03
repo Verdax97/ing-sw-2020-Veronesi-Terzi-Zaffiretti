@@ -224,7 +224,7 @@ public class ServerMultiplexer extends Observable implements Runnable {
                 return false;
             }
         }
-        return lobby.AddPlayer(name);
+        return lobby.addPlayer(name);
     }
 
     /**

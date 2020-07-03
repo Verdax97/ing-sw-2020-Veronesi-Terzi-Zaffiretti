@@ -23,11 +23,11 @@ public class Hephaestus extends MultipleActionGod {
     }
 
     /**
-     * @see it.polimi.ingsw.model.God#Building(Board, Cell, int, int, int, int)
+     * @see it.polimi.ingsw.model.God#building(Board, Cell, int, int, int, int)
      */
     @Override
-    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
-        int built = CheckBuild(board, selectedCell, x, y);
+    public int building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
+        int built = checkBuild(board, selectedCell, x, y);
         if (built < 0)
             return built;
 
@@ -45,15 +45,15 @@ public class Hephaestus extends MultipleActionGod {
         use++;
         if (board.getCell(x, y).getBuilding() == 3)
             return 1;
-        return CheckUse();
+        return checkUse();
     }
 
     /**
-     * @see it.polimi.ingsw.model.God#CheckBuild(Board, Cell, int, int)
+     * @see it.polimi.ingsw.model.God#checkBuild(Board, Cell, int, int)
      */
     @Override
-    public int CheckBuild(Board board, Cell selectedCell, int x, int y) {
-        int ret = super.CheckBuild(board, selectedCell, x, y);
+    public int checkBuild(Board board, Cell selectedCell, int x, int y) {
+        int ret = super.checkBuild(board, selectedCell, x, y);
         if (ret < 0)
             return ret;
         if (use == 0)
@@ -63,7 +63,7 @@ public class Hephaestus extends MultipleActionGod {
             if (!(board.getCell(x, y).getBuilding() < 3))
                 return -6;//Building is > 2
             else
-                return CheckUse();
+                return checkUse();
         }
         return -1;
     }

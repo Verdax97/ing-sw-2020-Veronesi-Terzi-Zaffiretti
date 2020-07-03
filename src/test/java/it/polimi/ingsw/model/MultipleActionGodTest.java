@@ -11,9 +11,9 @@ public class MultipleActionGodTest {
         MultipleActionGod gianni = new MultipleActionGod();
         gianni.use = 0;
         gianni.useLimit = 2;
-        Assertions.assertEquals(2, gianni.CheckUse());
+        Assertions.assertEquals(2, gianni.checkUse());
         gianni.use = 2;
-        Assertions.assertEquals(1, gianni.CheckUse());
-        gianni.ResetGod();
+        Assertions.assertEquals(1, gianni.checkUse());
+        gianni.resetGod();
     }
 }

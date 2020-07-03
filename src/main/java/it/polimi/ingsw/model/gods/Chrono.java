@@ -17,9 +17,9 @@ public class Chrono extends God{
         this.description = "Win Condition: you also win where there are al least five Complete Towers on the board";
     }
 
-    /** @see it.polimi.ingsw.model.God#WinCondition(Board, Player) */
+    /** @see it.polimi.ingsw.model.God#winCondition(Board, Player) */
     @Override
-    public Player WinCondition(Board board, Player player){
+    public Player winCondition(Board board, Player player){
         int fullTowers = 0;
         for (int i=0; i<5; i++){
             for (int j=0; j<5; j++){

@@ -44,20 +44,20 @@ public class PrometheusTest {
         serverView.printBoard(board, match);
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 4));
-        Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(1, prometheus.playerTurn(board, turn.getSelectedCell(), 0, 3));
         serverView.printBoard(board, match);
         Assertions.assertTrue(testWorker00.isDebuff());
         serverView.printBoard(board, match);
         turn.setSelectedCell(board.getCell(1, 3));
         Assertions.assertFalse(testWorker10.isDebuff());
-        prometheus.PlayerTurn(board, turn.getSelectedCell(), 1, 2);
+        prometheus.playerTurn(board, turn.getSelectedCell(), 1, 2);
         Assertions.assertTrue(testWorker10.isDebuff());
-        Assertions.assertEquals(-1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 5, 5));
-        Assertions.assertEquals(-2, prometheus.PlayerTurn(board, turn.getSelectedCell(), 4, 4));
-        Assertions.assertEquals(-3, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 4));
+        Assertions.assertEquals(-1, prometheus.playerTurn(board, turn.getSelectedCell(), 5, 5));
+        Assertions.assertEquals(-2, prometheus.playerTurn(board, turn.getSelectedCell(), 4, 4));
+        Assertions.assertEquals(-3, prometheus.playerTurn(board, turn.getSelectedCell(), 0, 4));
         board.getCell(0, 3).setBuilding(1);
-        Assertions.assertEquals(1, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
-        Assertions.assertEquals(-4, prometheus.PlayerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(1, prometheus.playerTurn(board, turn.getSelectedCell(), 0, 3));
+        Assertions.assertEquals(-4, prometheus.playerTurn(board, turn.getSelectedCell(), 0, 3));
         serverView.printBoard(board, match);
 
     }

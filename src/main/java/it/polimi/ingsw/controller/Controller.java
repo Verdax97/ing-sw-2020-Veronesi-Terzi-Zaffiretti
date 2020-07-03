@@ -54,13 +54,13 @@ public class Controller implements Observer {
                 System.exit(-1);
             }
             setState(State.SELECTWORKER);
-            match.StartTurn();
+            match.startTurn();
             return;
         }
         this.match = new Match(lobby.getPlayers());
         serverMultiplexer.connectObservers(match);
         setState(State.START);
-        this.match.StartGame();
+        this.match.startGame();
     }
 
     /**
@@ -78,28 +78,28 @@ public class Controller implements Observer {
         switch (state) {
 //
             case START -> {
-                match.PickGod(msgPacket);
+                match.pickGod(msgPacket);
                 setState(State.SETUP);
             }
             case SETUP -> {
-                match.PickGod(msgPacket);
+                match.pickGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == lobby.getnPlayer())
                     setState(State.SELECT);
             }
             case SELECT -> {
                 //select player god
-                match.SelectPlayerGod(msgPacket);
+                match.selectPlayerGod(msgPacket);
                 if (match.getSetup().getGodPicked().size() == 0)
                     setState(State.PLACEWORKERS);
             }
             case PLACEWORKERS -> {
-                match.PlaceWorker(msgPacket);
+                match.placeWorker(msgPacket);
                 if (match.getLastAction() == 2)
                     setState(State.STARTTURN);
             }
             case STARTTURN -> {
                 //check startTurn options
-                match.StartTurn();
+                match.startTurn();
                 ret = match.getLastAction();
                 if (ret == 0)
                     setState(State.SELECTWORKER);
@@ -107,7 +107,7 @@ public class Controller implements Observer {
                     setState(State.ENDMATCH);
             }
             case SELECTWORKER -> {
-                match.SelectWorker(msgPacket);
+                match.selectWorker(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.BEFOREMOVE);
@@ -115,7 +115,7 @@ public class Controller implements Observer {
                     setState(State.MOVE);
             }
             case BEFOREMOVE -> {
-                match.BeforeMove(msgPacket);
+                match.beforeMove(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.MOVE);
@@ -123,7 +123,7 @@ public class Controller implements Observer {
                     setState(State.STARTTURN);
             }
             case MOVE -> {
-                match.Move(msgPacket);
+                match.move(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1)
                     setState(State.BUILD);
@@ -133,7 +133,7 @@ public class Controller implements Observer {
                     setState(State.STARTTURN);
             }
             case BUILD -> {
-                match.Build(msgPacket);
+                match.build(msgPacket);
                 ret = match.getLastAction();
                 if (ret == 1 || ret == -10)
                     setState(State.STARTTURN);
@@ -150,7 +150,7 @@ public class Controller implements Observer {
             }
             default -> {
                 System.out.println("Error of received message");
-                match.CreateMsgPacket(match.getMsgError(), "Wait");
+                match.createMsgPacket(match.getMsgError(), "Wait");
             }
         }
     }

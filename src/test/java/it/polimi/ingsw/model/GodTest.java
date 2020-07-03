@@ -26,8 +26,8 @@ public class GodTest {
         God god = new God();
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 0));
-        god.ResetGod();
-        Assertions.assertEquals(1, god.PlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        god.resetGod();
+        Assertions.assertEquals(1, god.playerTurn(board, turn.getSelectedCell(), 1, 1));
     }
 
     @Test
@@ -36,8 +36,8 @@ public class GodTest {
         God god = new God();
         Turn turn = new Turn();
         turn.setSelectedCell(board.getCell(0, 0));
-        god.ResetGod();
-        Assertions.assertEquals(0, god.CheckPlayerTurn(board, turn.getSelectedCell(), 1, 1));
+        god.resetGod();
+        Assertions.assertEquals(0, god.checkPlayerTurn(board, turn.getSelectedCell(), 1, 1));
     }
 
 }

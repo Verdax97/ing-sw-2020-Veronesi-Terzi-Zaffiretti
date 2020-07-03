@@ -34,7 +34,7 @@ public class Lobby
      * @param toAdd of type String
      * @return boolean value
      */
-    public boolean AddPlayer(String toAdd)
+    public boolean addPlayer(String toAdd)
     {
         this.players.add(toAdd);
         return true;

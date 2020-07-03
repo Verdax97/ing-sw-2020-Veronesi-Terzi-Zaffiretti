@@ -18,7 +18,7 @@ public class ForceMovementGodsTest {
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
         Cell selectedCell = board.getCell(0, 1);
-        Assertions.assertEquals(-1, forceMovementGod.ForceMove(board, selectedCell, 0, 9));
+        Assertions.assertEquals(-1, forceMovementGod.forceMove(board, selectedCell, 0, 9));
 
     }
 
@@ -33,7 +33,7 @@ public class ForceMovementGodsTest {
         Board board = match.getBoard();
         ForceMovementGods forceMovementGod = new ForceMovementGods();
         Cell selectedCell = board.getCell(0, 1);
-        Assertions.assertEquals(-2, forceMovementGod.ForceMove(board, selectedCell, 0, 4));
+        Assertions.assertEquals(-2, forceMovementGod.forceMove(board, selectedCell, 0, 4));
 
     }
 
@@ -51,7 +51,7 @@ public class ForceMovementGodsTest {
         board.getCell(0,2).setBuilding(2);
         Worker worker = new Worker();
         selectedCell.setWorker(worker);
-        Assertions.assertEquals(-3, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(-3, forceMovementGod.forceMove(board, selectedCell, 0, 2));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ForceMovementGodsTest {
         Cell selectedCell = board.getCell(0, 1);
         Worker worker = new Worker();
         selectedCell.setWorker(worker);
-        Assertions.assertEquals(1, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(1, forceMovementGod.forceMove(board, selectedCell, 0, 2));
     }
 
     @Test
@@ -85,6 +85,6 @@ public class ForceMovementGodsTest {
         worker.setPlayer(player);
         selectedCell.setWorker(worker);
         board.getCell(0, 2).setWorker(worker);
-        Assertions.assertEquals(-4, forceMovementGod.ForceMove(board, selectedCell, 0, 2));
+        Assertions.assertEquals(-4, forceMovementGod.forceMove(board, selectedCell, 0, 2));
     }
 }

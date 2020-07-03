@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ControllerTest {
 
@@ -41,8 +40,8 @@ public class ControllerTest {
         controller.setServerMultiplexer(serverMultiplexer);
         serverMultiplexer.playersThread = new ArrayList<>();
         Lobby lobby = new Lobby();
-        lobby.AddPlayer("GinoTest1");
-        lobby.AddPlayer("PinoTest1");
+        lobby.addPlayer("GinoTest1");
+        lobby.addPlayer("PinoTest1");
         GameSaver.checkForGames(lobby);
         controller.createMatch(true);
         Controller controller1 = new Controller();
@@ -61,8 +60,8 @@ public class ControllerTest {
         ServerMultiplexer serverMultiplexer = new ServerMultiplexer(controller, new Integer(4567));
         controller.setServerMultiplexer(serverMultiplexer);
         Lobby lobby = new Lobby();
-        lobby.AddPlayer("GinoTest1");
-        lobby.AddPlayer("PinoTest");
+        lobby.addPlayer("GinoTest1");
+        lobby.addPlayer("PinoTest");
         lobby.setnPlayer(2);
         GameSaver.checkForGames(lobby);
         serverMultiplexer.playersThread = new ArrayList<>();
@@ -123,8 +122,8 @@ public class ControllerTest {
         serverMultiplexer.playersThread = new ArrayList<>();
         MsgToServer msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
         Lobby lobby = new Lobby();
-        lobby.AddPlayer("GinoTest1");
-        lobby.AddPlayer("PinoTest1");
+        lobby.addPlayer("GinoTest1");
+        lobby.addPlayer("PinoTest1");
         controller.setLobby(lobby);
         controller.createMatch(false);
         controller.setState(State.LOBBY);
@@ -140,8 +139,8 @@ public class ControllerTest {
         serverMultiplexer.playersThread = new ArrayList<>();
         MsgToServer msg = new MsgToServer("PinoTest1", 0,-5, -5, -5);
         Lobby lobby = new Lobby();
-        lobby.AddPlayer("GinoTest1");
-        lobby.AddPlayer("PinoTest1");
+        lobby.addPlayer("GinoTest1");
+        lobby.addPlayer("PinoTest1");
         controller.setLobby(lobby);
         GameSaver.checkForGames(lobby);
         controller.createMatch(true);

@@ -20,7 +20,7 @@ public class DebuffGod extends God {
      * @param board  of type Board
      * @param player of type Player
      */
-    public void DebuffWorker(Board board, Player player) {
+    public void debuffWorker(Board board, Player player) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board.getCell(i, j).getWorker() != null)

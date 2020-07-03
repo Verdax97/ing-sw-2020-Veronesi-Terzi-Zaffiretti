@@ -35,29 +35,29 @@ public class ArtemisTest
         Artemis artemis = new Artemis();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        Assertions.assertEquals(2, artemis.Move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(2, artemis.move(board, selectedCell, 1, 1));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(1, 1);
-        Assertions.assertEquals(-6, artemis.Move(board, selectedCell, 0, 0));
+        Assertions.assertEquals(-6, artemis.move(board, selectedCell, 0, 0));
         serverView.printBoard(board, match);
-        artemis.ResetGod();
-        artemis.Move(board, selectedCell, 0, 0);
-        artemis.ResetGod();
+        artemis.resetGod();
+        artemis.move(board, selectedCell, 0, 0);
+        artemis.resetGod();
         selectedCell = board.getCell(0, 0);
-        Assertions.assertEquals(-1, artemis.Move(board, selectedCell, 5, 5));
-        Assertions.assertEquals(-2, artemis.Move(board, selectedCell, 4, 4));
+        Assertions.assertEquals(-1, artemis.move(board, selectedCell, 5, 5));
+        Assertions.assertEquals(-2, artemis.move(board, selectedCell, 4, 4));
         board.getCell(1, 0).setBuilding(2);
-        Assertions.assertEquals(-3, artemis.Move(board, selectedCell, 1, 0));
+        Assertions.assertEquals(-3, artemis.move(board, selectedCell, 1, 0));
         board.getCell(1, 1).setDome(true);
-        Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(-4, artemis.move(board, selectedCell, 1, 1));
         board.getCell(1, 1).setDome(false);
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 1).setWorker(testWorker00);
-        Assertions.assertEquals(-4, artemis.Move(board, selectedCell, 1, 1));
-        Assertions.assertEquals(2, artemis.Move(board, selectedCell, 0, 1));
+        Assertions.assertEquals(-4, artemis.move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(2, artemis.move(board, selectedCell, 0, 1));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(0, 1);
-        Assertions.assertEquals(1, artemis.Move(board, selectedCell, 0,2));
+        Assertions.assertEquals(1, artemis.move(board, selectedCell, 0,2));
 
     }
 }

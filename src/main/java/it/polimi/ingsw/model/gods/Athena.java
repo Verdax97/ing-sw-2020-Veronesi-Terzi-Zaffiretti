@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.gods;
 
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Player;
-import javafx.scene.image.Image;
 
 /**
  * Class Athena implements Athena functionalities
@@ -16,9 +15,9 @@ public class Athena extends DebuffGod {
         this.description = "Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.";
     }
 
-    /** @see it.polimi.ingsw.model.God#EnemyTurn(Board, Player, Player) */
+    /** @see it.polimi.ingsw.model.God#enemyTurn(Board, Player, Player) */
     @Override
-    public int EnemyTurn(Board board, Player turnPlayer, Player player) {
+    public int enemyTurn(Board board, Player turnPlayer, Player player) {
         debuff = false;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -28,7 +27,7 @@ public class Athena extends DebuffGod {
                     }
             }
         }
-        DebuffWorker(board, turnPlayer);
+        debuffWorker(board, turnPlayer);
         return (debuff) ? 1: 0;
     }
 }

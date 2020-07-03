@@ -29,7 +29,7 @@ public class MoveEnemyGods extends God {
      * @param y            of type int
      * @return int int
      */
-    public int MoveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y) {
+    public int moveEnemy(Worker worker, Board board, Cell selectedCell, int x, int y) {
         if ((board.getCell(targetPosX, targetPosY).getWorker() == null && !board.getCell(targetPosX, targetPosY).getDome()) || (selectedCell == board.getCell(targetPosX, targetPosY))) {
             worker.setLastMovement(0);
             board.getCell(targetPosX, targetPosY).setWorker(worker);

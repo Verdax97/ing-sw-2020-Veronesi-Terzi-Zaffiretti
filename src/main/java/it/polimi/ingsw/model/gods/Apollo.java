@@ -16,12 +16,12 @@ public class Apollo extends ForceMovementGods {
     }
 
     /**
-     * @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int)
+     * @see it.polimi.ingsw.model.God#move(Board, Cell, int, int)
      */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y) {
+    public int move(Board board, Cell selectedCell, int x, int y) {
         computeTargetPos(selectedCell, x, y);
-        return ForceMove(board, selectedCell, x, y);
+        return forceMove(board, selectedCell, x, y);
     }
 
     /**

@@ -182,7 +182,7 @@ public class Cell implements Serializable {
      * @param y     of type int
      * @return boolean value
      */
-    public boolean IsNotHigh(Board board, int x, int y)
+    public boolean isNotHigh(Board board, int x, int y)
     {
         return (((this.getBuilding() == board.getCell(x,y).getBuilding()-1) && !this.getWorker().isDebuff()) || (this.getBuilding() >= board.getCell(x, y).getBuilding()));
     }
@@ -195,7 +195,7 @@ public class Cell implements Serializable {
      * @param y     the y
      * @return boolean value
      */
-    public boolean IsFreeDome(Board board, int x, int y)
+    public boolean isFreeDome(Board board, int x, int y)
     {
         return !board.getCell(x, y).getDome();
     }
@@ -208,7 +208,7 @@ public class Cell implements Serializable {
      * @param y     of type int
      * @return boolean value
      */
-    public boolean IsFreeWorker(Board board, int x, int y)
+    public boolean isFreeWorker(Board board, int x, int y)
     {
         return board.getCell(x, y).getWorker() == null;
     }

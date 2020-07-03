@@ -56,7 +56,7 @@ public class Board implements Serializable {
      * Method copyValuesInNewBoard copies the Board on a new Board instance.
      * @return result of type Board
      */
-    public final Board CopyValuesInNewBoard() {
+    public final Board copyValuesInNewBoard() {
         final Board result = new Board();
         for (int i = 0; i < 5; i++) {
             result.board[i] = board[i].clone();
@@ -68,7 +68,7 @@ public class Board implements Serializable {
      * Method copyValuesInNewSimpleBoard copies the Board on a new SimpleBoard instance.
      * @return result of type SimpleBoard
      */
-    public int[][] CopyValuesInNewSimpleBoard() {
+    public int[][] copyValuesInNewSimpleBoard() {
         int[][] result = new int[5][5];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

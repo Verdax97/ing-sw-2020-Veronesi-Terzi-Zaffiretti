@@ -17,11 +17,11 @@ public class Minotaur extends ForceMovementGods
         this.description = "Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.";
     }
 
-    /** @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int)  */
+    /** @see it.polimi.ingsw.model.God#move(Board, Cell, int, int)  */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y) {
+    public int move(Board board, Cell selectedCell, int x, int y) {
         computeTargetPos(selectedCell, x, y);
-        return ForceMove(board, selectedCell, x, y);
+        return forceMove(board, selectedCell, x, y);
     }
 
     /** @see it.polimi.ingsw.model.gods.MoveEnemyGods#computeTargetPos(Cell, int, int)  */

@@ -39,24 +39,24 @@ public class TritonTest {
         Triton triton = new Triton();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(3, 1);
-        Assertions.assertEquals(2, triton.Move(board, selectedCell, 3, 0));
+        Assertions.assertEquals(2, triton.move(board, selectedCell, 3, 0));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(3, 0);
-        Assertions.assertEquals(2, triton.Move(board, selectedCell, 2, 0));
+        Assertions.assertEquals(2, triton.move(board, selectedCell, 2, 0));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(2, 0);
-        Assertions.assertEquals(2, triton.Move(board, selectedCell, 1, 0));
+        Assertions.assertEquals(2, triton.move(board, selectedCell, 1, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(-1, triton.Move(board, selectedCell, 5, 5));
-        Assertions.assertEquals(-2, triton.Move(board, selectedCell, 4, 4));
+        Assertions.assertEquals(-1, triton.move(board, selectedCell, 5, 5));
+        Assertions.assertEquals(-2, triton.move(board, selectedCell, 4, 4));
         board.getCell(1, 1).setBuilding(2);
         selectedCell = board.getCell(1, 0);
-        Assertions.assertEquals(-3, triton.Move(board, selectedCell, 1, 1));
-        Assertions.assertEquals(-4, triton.Move(board, selectedCell, 0, 0));
+        Assertions.assertEquals(-3, triton.move(board, selectedCell, 1, 1));
+        Assertions.assertEquals(-4, triton.move(board, selectedCell, 0, 0));
         board.getCell(2, 0).setDome(true);
-        Assertions.assertEquals(-4, triton.Move(board, selectedCell, 2, 0));
+        Assertions.assertEquals(-4, triton.move(board, selectedCell, 2, 0));
         serverView.printBoard(board, match);
         selectedCell = board.getCell(1, 3);
-        Assertions.assertEquals(1, triton.Move(board, selectedCell, 2, 3));
+        Assertions.assertEquals(1, triton.move(board, selectedCell, 2, 3));
     }
 }

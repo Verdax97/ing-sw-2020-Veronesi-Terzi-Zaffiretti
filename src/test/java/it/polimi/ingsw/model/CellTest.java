@@ -3,7 +3,6 @@ package it.polimi.ingsw.model;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assertions;
 
 public class CellTest {
 
@@ -78,12 +77,12 @@ public class CellTest {
         board.getCell(0, 0).setWorker(worker);
         board.getCell(0, 1).setBuilding(2);
         Cell cell = board.getCell(0, 0);
-        Assertions.assertFalse(cell.IsNotHigh(board, 0, 1));
-        Assertions.assertTrue(cell.IsNotHigh(board, 1, 1));
+        Assertions.assertFalse(cell.isNotHigh(board, 0, 1));
+        Assertions.assertTrue(cell.isNotHigh(board, 1, 1));
         board.getCell(0, 1).setBuilding(-1);
-        Assertions.assertTrue(cell.IsNotHigh(board, 0, 1));
+        Assertions.assertTrue(cell.isNotHigh(board, 0, 1));
         worker.setDebuff(true);
-        Assertions.assertFalse(cell.IsNotHigh(board, 0, 1));
+        Assertions.assertFalse(cell.isNotHigh(board, 0, 1));
     }
 
     @Test
@@ -91,9 +90,9 @@ public class CellTest {
         Board board = new Board();
         Cell cell = board.getCell(0, 0);
         cell.setDome(true);
-        Assertions.assertFalse(cell.IsFreeDome(board, 0, 0));
+        Assertions.assertFalse(cell.isFreeDome(board, 0, 0));
         cell.setDome(false);
-        Assertions.assertTrue(cell.IsFreeDome(board, 0, 0));
+        Assertions.assertTrue(cell.isFreeDome(board, 0, 0));
     }
 
     @Test
@@ -102,8 +101,8 @@ public class CellTest {
         Worker worker = new Worker();
         Cell cell = board.getCell(0, 0);
         cell.setWorker(worker);
-        Assertions.assertFalse(cell.IsFreeWorker(board, 0, 0));
-        Assertions.assertTrue(cell.IsFreeWorker(board, 0, 1));
+        Assertions.assertFalse(cell.isFreeWorker(board, 0, 0));
+        Assertions.assertTrue(cell.isFreeWorker(board, 0, 1));
     }
 }
 

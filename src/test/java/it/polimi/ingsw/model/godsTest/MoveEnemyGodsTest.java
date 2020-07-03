@@ -40,6 +40,6 @@ public class MoveEnemyGodsTest {
         board.getCell(2, 2).setWorker(testWorker01);
         board.getCell(1, 1).setWorker(testWorker21);
         MoveEnemyGods moveEnemyGods = new MoveEnemyGods();
-        Assertions.assertEquals(-5, moveEnemyGods.MoveEnemy(board.getCell(2, 2).getWorker(), board, board.getCell(1, 1), 2, 2));
+        Assertions.assertEquals(-5, moveEnemyGods.moveEnemy(board.getCell(2, 2).getWorker(), board, board.getCell(1, 1), 2, 2));
     }
 }

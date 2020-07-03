@@ -18,13 +18,13 @@ public class ForceMovementGods extends MoveEnemyGods {
      * @param y            of type int
      * @return int int
      */
-    public int ForceMove(Board board, Cell selectedCell, int x, int y) {
-        int moved = CheckMove(board, selectedCell, x, y);
+    public int forceMove(Board board, Cell selectedCell, int x, int y) {
+        int moved = checkMove(board, selectedCell, x, y);
         if (moved > 0) {
             Worker playerWorker = selectedCell.getWorker();
             Worker targetedWorker = board.getCell(x, y).getWorker();
             if (targetedWorker != null) {
-                int val = MoveEnemy(targetedWorker, board, selectedCell, x, y);
+                int val = moveEnemy(targetedWorker, board, selectedCell, x, y);
             }
             board.getCell(x, y).setWorker(playerWorker);
             playerWorker.setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
@@ -42,12 +42,12 @@ public class ForceMovementGods extends MoveEnemyGods {
      * @param x of type int
      * @param y of type int
      * @return int
-     * @see it.polimi.ingsw.model.God#CheckMove(Board, Cell, int, int)
+     * @see it.polimi.ingsw.model.God#checkMove(Board, Cell, int, int)
      */
     @Override
-    public int CheckMove(Board board, Cell selectedCell, int x, int y) {
+    public int checkMove(Board board, Cell selectedCell, int x, int y) {
         computeTargetPos(selectedCell, x, y);
-        int moved = super.CheckMove(board, selectedCell, x, y);
+        int moved = super.checkMove(board, selectedCell, x, y);
         if (moved > 0 || (moved == -4 && !board.getCell(x, y).getDome())) {
             Worker worker = board.getCell(x, y).getWorker();
             if (worker != null) {

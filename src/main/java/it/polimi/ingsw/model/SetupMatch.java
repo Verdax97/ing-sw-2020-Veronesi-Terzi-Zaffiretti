@@ -18,20 +18,20 @@ public class SetupMatch {
      */
     public SetupMatch() {
         godList = new ArrayList<>();
-        this.AddGod(new Apollo());
-        this.AddGod(new Artemis());
-        this.AddGod(new Athena());
-        this.AddGod(new Atlas());
-        this.AddGod(new Charon());
-        this.AddGod(new Chrono());
-        this.AddGod(new Demeter());
-        this.AddGod(new Hephaestus());
-        this.AddGod(new Hestia());
-        this.AddGod(new Minotaur());
-        this.AddGod(new Pan());
-        this.AddGod(new Prometheus());
-        this.AddGod(new Triton());
-        this.AddGod(new Zeus());
+        this.addGod(new Apollo());
+        this.addGod(new Artemis());
+        this.addGod(new Athena());
+        this.addGod(new Atlas());
+        this.addGod(new Charon());
+        this.addGod(new Chrono());
+        this.addGod(new Demeter());
+        this.addGod(new Hephaestus());
+        this.addGod(new Hestia());
+        this.addGod(new Minotaur());
+        this.addGod(new Pan());
+        this.addGod(new Prometheus());
+        this.addGod(new Triton());
+        this.addGod(new Zeus());
     }
 
 
@@ -41,7 +41,7 @@ public class SetupMatch {
      * @param i of type int
      * @return God god
      */
-    public God PickGod(int i) {
+    public God pickGod(int i) {
         God god = godPicked.get(i);
         godPicked.remove(god);
         return god;
@@ -71,7 +71,7 @@ public class SetupMatch {
      * @param god of type God
      */
     //for the initialization
-    private void AddGod(God god) {
+    private void addGod(God god) {
         this.godList.add(god);
     }
 
@@ -81,7 +81,7 @@ public class SetupMatch {
      * @param god of type God
      */
 //for the setup phase
-    public void AddGodPicked(God god) {
+    public void addGodPicked(God god) {
         this.godPicked.add(god);
         this.godList.remove(god);
     }
@@ -100,7 +100,7 @@ public class SetupMatch {
      *
      * @param players of type ArrayList&lt;Player&gt;
      */
-    public void SetPlayers(ArrayList<Player> players) {
+    public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
@@ -109,7 +109,7 @@ public class SetupMatch {
      *
      * @param player of type ArrayList&lt;String&gt;
      */
-    public void CreatePlayersFromNickname(ArrayList<String> player) {
+    public void createPlayersFromNickname(ArrayList<String> player) {
         for (String elem : player) {
             players.add(new Player(elem));
         }

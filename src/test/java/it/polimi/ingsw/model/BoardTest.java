@@ -27,7 +27,7 @@ public class BoardTest {
     @Test
     public void cloneTest(){
         Board boardTest = new Board();
-        boardTest.CopyValuesInNewBoard();
+        boardTest.copyValuesInNewBoard();
         Assertions.assertTrue(true, "Cell is wrong");
     }
 

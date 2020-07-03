@@ -123,7 +123,7 @@ public class ClientMain implements Runnable {
             }
             end = clientLogic();
         }
-        EndAll();
+        endAll();
     }
 
     /**
@@ -133,7 +133,7 @@ public class ClientMain implements Runnable {
      * @param port of type int
      * @return boolean boolean
      */
-    public boolean InitializeClient(String IP, int port) {
+    public boolean initializeClient(String IP, int port) {
         LineClient client = new LineClient(IP, port, this);
         if (CLI)
             clientInput = new ClientInputCLI(this);
@@ -176,7 +176,7 @@ public class ClientMain implements Runnable {
 
         if (receivedMsg.nickname.equals(nick)) {
             //start a new thread for the input receiver
-            Runnable runnable = () -> clientInput.ParseMsg(receivedMsg);
+            Runnable runnable = () -> clientInput.parseMsg(receivedMsg);
             threadInput = new Thread(runnable);
             threadInput.start();
         } else {
@@ -189,7 +189,7 @@ public class ClientMain implements Runnable {
     /**
      * Method EndAll close all thread
      */
-    public synchronized void EndAll() {
+    public synchronized void endAll() {
         end = true;
         if (isEnding)
             return;

@@ -41,7 +41,7 @@ public class ClientStarter {
                         scanner = new Scanner(System.in);
                     }
                 }
-            } while (!clientMain.InitializeClient(IP, port));
+            } while (!clientMain.initializeClient(IP, port));
             clientMain.run();
         }
     }

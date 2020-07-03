@@ -31,10 +31,10 @@ public class ClientInputCLI extends ClientInput {
     }
 
     /**
-     * @see ClientInput#ParseMsg(MsgToClient)
+     * @see ClientInput#parseMsg(MsgToClient)
      */
     @Override
-    public void ParseMsg(MsgToClient msgToClient) {
+    public void parseMsg(MsgToClient msgToClient) {
         String msg = msgToClient.msg;
         int[] arr = {-5, -5, -5, -5};
         scanner = new Scanner(System.in);
@@ -50,12 +50,12 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.LOBBY)) {
             System.out.println("Select number of players (2/3)");
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
         }
 
         if (msg.equalsIgnoreCase(Messages.INSERT_NICKNAME)) {
             System.out.println("Insert your nickname");
-            clientMain.setNick(ReadStringInput());
+            clientMain.setNick(readStringInput());
         }
 
         if (msg.equalsIgnoreCase(Messages.START)) {
@@ -64,7 +64,7 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.RESUME)) {
             System.out.println("A game with the same players already exists");
-            if (Confirm("Do you want to continue?(y/n)"))
+            if (confirm("Do you want to continue?(y/n)"))
                 arr[0] = 1;
             else arr[0] = 0;
         }
@@ -72,14 +72,14 @@ public class ClientInputCLI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.CHOSE_GODS)) {
             System.out.println("Chose gods for all players by inserting corresponding value (one at the time)");
             System.out.println(msgToClient.altMsg);
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose gods for all players by inserting corresponding value (one at the time)");
         }
 
         if (msg.equalsIgnoreCase(Messages.CHOSE_YOUR_GOD)) {
             System.out.println("Chose your god by inserting corresponding value");
             System.out.println(msgToClient.altMsg);
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
             //arr[0] = SelectGod(msgPacket, "Chose your god by inserting corresponding value");
         }
 
@@ -88,7 +88,7 @@ public class ClientInputCLI extends ClientInput {
             for (int i = 0; i < 2; i++) {
                 System.out.println("Place worker " + i + ":");
                 while (true) {
-                    int[] worker = SelectCell();
+                    int[] worker = selectCell();
                     if (worker[0] >= 0 && worker[0] < 5 && worker[1] >= 0 && worker[1] < 5) {
                         arr[2 * i] = worker[0];
                         arr[2 * i + 1] = worker[1];
@@ -107,16 +107,16 @@ public class ClientInputCLI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.SELECT_WORKER)) {
             System.out.println("Select your worker by inserting corresponding value");
             System.out.println(msgToClient.altMsg);
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
         }
 
         if (msg.equalsIgnoreCase(Messages.BEFORE_MOVE)) {
             System.out.println("You have the possibility to make an action before the move phase.\nAll the possible actions:");
             System.out.println(msgToClient.altMsg);
-            if (Confirm("Do you want to do it? (y/n)")) {
+            if (confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
                 System.out.println("Insert value");
-                arr[0] = ReadIntInput();
+                arr[0] = readIntInput();
             } else {
                 arr[1] = 0;
             }
@@ -124,7 +124,7 @@ public class ClientInputCLI extends ClientInput {
 
         if (msg.equalsIgnoreCase(Messages.MOVE_AGAIN)) {
             System.out.println("You have the possibility to make another move phase.");
-            if (Confirm("Do you want to do it? (y/n)")) {
+            if (confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
                 msg = Messages.MOVE;//to make another move action
             } else {
@@ -135,12 +135,12 @@ public class ClientInputCLI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.MOVE)) {
             System.out.println("You must move.\nAll the possible moves your worker can do");
             System.out.println(msgToClient.altMsg);
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
         }
 
         if (msg.equalsIgnoreCase(Messages.BUILD_AGAIN)) {
             System.out.println("You have the possibility to make another build phase.");
-            if (Confirm("Do you want to do it? (y/n)")) {
+            if (confirm("Do you want to do it? (y/n)")) {
                 arr[1] = 1;
                 msg = Messages.BUILD;//to make another move action
             } else {
@@ -151,7 +151,7 @@ public class ClientInputCLI extends ClientInput {
         if (msg.equalsIgnoreCase(Messages.BUILD)) {
             System.out.println("You must build.\nAll the possible build your worker can do");
             System.out.println(msgToClient.altMsg);
-            arr[0] = ReadIntInput();
+            arr[0] = readIntInput();
 
             int i;
             for (i = 0; i < msgToClient.board.players.size(); i++) {
@@ -160,7 +160,7 @@ public class ClientInputCLI extends ClientInput {
             }
             if (msgToClient.board.gods.get(i).getName().equalsIgnoreCase("Atlas")) {
                 System.out.println("You have the power to build a dome here");
-                if (Confirm("Do you want to do it? (y/n)")) {
+                if (confirm("Do you want to do it? (y/n)")) {
                     arr[2] = 1;
                 }
             }
@@ -180,7 +180,7 @@ public class ClientInputCLI extends ClientInput {
      *
      * @return String string
      */
-    public String ReadStringInput() {
+    public String readStringInput() {
         scanner = new Scanner(System.in);
         System.out.print(">");
         return scanner.nextLine();
@@ -191,7 +191,7 @@ public class ClientInputCLI extends ClientInput {
      *
      * @return int int
      */
-    public int ReadIntInput() {
+    public int readIntInput() {
         int a;
         while (true) {
             try {
@@ -212,16 +212,16 @@ public class ClientInputCLI extends ClientInput {
      *
      * @return int[]
      */
-    private int[] SelectCell() {
+    private int[] selectCell() {
         while (true) {
             int x, y;
             System.out.print("Insert x coordinate (0/4): ");
-            x = ReadIntInput();
+            x = readIntInput();
             System.out.print("Insert y coordinate (0/4): ");
-            y = ReadIntInput();
+            y = readIntInput();
             if (y < 5 && y >= 0 && x < 5 && x >= 0) {
                 System.out.println("You selected the cell (" + x + "," + y + ")");
-                if (Confirm("Are you sure?(y/n)")) {
+                if (confirm("Are you sure?(y/n)")) {
                     int[] arr = new int[2];
                     arr[0] = x;
                     arr[1] = y;
@@ -239,10 +239,10 @@ public class ClientInputCLI extends ClientInput {
      * @param message of type String
      * @return boolean
      */
-    private boolean Confirm(String message) {
+    private boolean confirm(String message) {
         System.out.println(message);
         while (true) {
-            String s = ReadStringInput();
+            String s = readStringInput();
             if (s.equalsIgnoreCase("y")) {
                 return true;
             } else if (s.equalsIgnoreCase("n")) {

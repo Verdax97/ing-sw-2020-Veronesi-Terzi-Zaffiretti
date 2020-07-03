@@ -13,7 +13,7 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @return int int
      */
-    public int PlayerTurn(Board board, Cell selectedCell, int x, int y) {
+    public int playerTurn(Board board, Cell selectedCell, int x, int y) {
         return 1;
     }
 
@@ -26,7 +26,7 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @return int int
      */
-    public int CheckPlayerTurn(Board board, Cell selectedCell, int x, int y) {
+    public int checkPlayerTurn(Board board, Cell selectedCell, int x, int y) {
         return 0;
     }
 
@@ -39,8 +39,8 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @return int int
      */
-    public int Move(Board board, Cell selectedCell, int x, int y) {
-        int moved = CheckMove(board, selectedCell, x, y);
+    public int move(Board board, Cell selectedCell, int x, int y) {
+        int moved = checkMove(board, selectedCell, x, y);
         if (moved > 0) {
             board.getCell(x, y).setWorker(selectedCell.getWorker());
             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
@@ -60,8 +60,8 @@ public class God extends SimpleGod {
      * @param turnNumber   of type int
      * @return int int
      */
-    public int Building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
-        int built = CheckBuild(board, selectedCell, x, y);
+    public int building(Board board, Cell selectedCell, int x, int y, int typeBuild, int turnNumber) {
+        int built = checkBuild(board, selectedCell, x, y);
         if (built > 0) {
             int building = board.getCell(x, y).getBuilding();
             if (building < 3)
@@ -82,7 +82,7 @@ public class God extends SimpleGod {
      * @param player     of type Player
      * @return int int
      */
-    public int EnemyTurn(Board board, Player turnPlayer, Player player) {
+    public int enemyTurn(Board board, Player turnPlayer, Player player) {
         return 0;
     }
 
@@ -94,14 +94,14 @@ public class God extends SimpleGod {
      * @param player of type Player
      * @return Player player
      */
-    public Player WinCondition(Board board, Player player) {
+    public Player winCondition(Board board, Player player) {
         return null;
     }
 
     /**
      * Method ResetGod reset god's values (only used in some gods)
      */
-    public void ResetGod() {
+    public void resetGod() {
         //no need to reset for all gods just need to implement in force move, multiple action, and debuff
     }
 
@@ -114,12 +114,12 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @return int int
      */
-    public int CheckMove(Board board, Cell selectedCell, int x, int y) {
+    public int checkMove(Board board, Cell selectedCell, int x, int y) {
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
-                if (selectedCell.IsNotHigh(board, x, y)) {
-                    if (selectedCell.IsFreeDome(board, x, y)) {
-                        if (!selectedCell.IsFreeWorker(board, x, y)) return -4;//cell is occupied
+                if (selectedCell.isNotHigh(board, x, y)) {
+                    if (selectedCell.isFreeDome(board, x, y)) {
+                        if (!selectedCell.isFreeWorker(board, x, y)) return -4;//cell is occupied
                     } else return -4;//cell is occupied
                 } else return -3;//cell is too high
             } else return -2;//cell is too far
@@ -136,7 +136,7 @@ public class God extends SimpleGod {
      * @param y            of type int
      * @return int int
      */
-    public int CheckBuild(Board board, Cell selectedCell, int x, int y) {
+    public int checkBuild(Board board, Cell selectedCell, int x, int y) {
         if ((x < 5 && x >= 0) && (y < 5 && y >= 0)) {
             if (selectedCell.isAdjacent(x, y)) {
                 if (board.getCell(x, y).getWorker() == null) {

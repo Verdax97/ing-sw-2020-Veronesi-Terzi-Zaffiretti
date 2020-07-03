@@ -58,18 +58,18 @@ public class TurnTest
         board.getCell(0, 0).setWorker(worker);
         turn.setSelectedCell(board.getCell(0, 0));
         board.getCell(0, 1).setDome(true);
-        Assertions.assertEquals(turn.Build(board, -1, -1, 0), -1);
-        Assertions.assertEquals(turn.Build(board, 1, 1, 0), 1);
-        Assertions.assertEquals(turn.Build(board, 4, 4, 0), -2);
-        Assertions.assertEquals(turn.Build(board, 1, 0, 0), -3);
-        Assertions.assertEquals(turn.Build(board, 0, 1, 0), -4);
+        Assertions.assertEquals(turn.build(board, -1, -1, 0), -1);
+        Assertions.assertEquals(turn.build(board, 1, 1, 0), 1);
+        Assertions.assertEquals(turn.build(board, 4, 4, 0), -2);
+        Assertions.assertEquals(turn.build(board, 1, 0, 0), -3);
+        Assertions.assertEquals(turn.build(board, 0, 1, 0), -4);
         Demeter demeter = new Demeter();
         player.setGodPower(demeter);
-        Assertions.assertEquals(turn.Build(board, 1, 1, 0), 2);
-        demeter.ResetGod();
+        Assertions.assertEquals(turn.build(board, 1, 1, 0), 2);
+        demeter.resetGod();
         board.getCell(1, 1).setBuilding(1);
         player.setGodPower(god);
-        Assertions.assertEquals(turn.Build(board, 1, 1, 0), 1);
+        Assertions.assertEquals(turn.build(board, 1, 1, 0), 1);
 
     }
 
@@ -100,18 +100,18 @@ public class TurnTest
         God god = new God();
         testWorker3.getPlayer().setGodPower(god);
         turn.setSelectedCell(board.getCell(0, 0));
-        Assertions.assertEquals(turn.Move(board, -1, -1), -1);
-        Assertions.assertEquals(turn.Move(board, 1, 1), 1);
+        Assertions.assertEquals(turn.move(board, -1, -1), -1);
+        Assertions.assertEquals(turn.move(board, 1, 1), 1);
         turn.setSelectedCell(board.getCell(1, 1));
         board.getCell(1, 2).setBuilding(3);
-        Assertions.assertEquals(turn.Move(board, 1, 2), -3);
-        Assertions.assertEquals(turn.Move(board, 4, 3), -2);
-        Assertions.assertEquals(turn.Move(board, 2, 2), -4);
+        Assertions.assertEquals(turn.move(board, 1, 2), -3);
+        Assertions.assertEquals(turn.move(board, 4, 3), -2);
+        Assertions.assertEquals(turn.move(board, 2, 2), -4);
         board.getCell(2, 1).setDome(true);
-        Assertions.assertEquals(turn.Move(board, 2, 1), -4);
+        Assertions.assertEquals(turn.move(board, 2, 1), -4);
         Triton triton = new Triton();
         testWorker3.getPlayer().setGodPower(triton);
-        Assertions.assertEquals(turn.Move(board, 0, 0), 2);
+        Assertions.assertEquals(turn.move(board, 0, 0), 2);
 
 
     }
@@ -147,7 +147,7 @@ public class TurnTest
     public void BeforeMoveTest(){
         Board board = new Board();
         Turn turn = new Turn();
-        Assertions.assertEquals(1, turn.BeforeMove(board, -5, -5));
+        Assertions.assertEquals(1, turn.beforeMove(board, -5, -5));
         turn.setSelectedCell(board.getCell(0,0));
         Worker worker = new Worker();
         Player player = new Player("Pino");
@@ -155,6 +155,6 @@ public class TurnTest
         player.setGodPower(god);
         worker.setPlayer(player);
         turn.getSelectedCell().setWorker(worker);
-        Assertions.assertEquals(1, turn.BeforeMove(board, 1, 1));
+        Assertions.assertEquals(1, turn.beforeMove(board, 1, 1));
     }
 }

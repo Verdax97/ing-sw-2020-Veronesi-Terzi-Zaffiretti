@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.God;
 import it.polimi.ingsw.model.Player;
-import javafx.scene.image.Image;
 
 /**
  * Class Pan implements Pan functionalities
@@ -18,9 +17,9 @@ public class Pan extends God {
         this.description = "Win Condition: you also win if your worker moves down two or more levels";
     }
 
-    /** @see it.polimi.ingsw.model.God#WinCondition(Board, Player)  */
+    /** @see it.polimi.ingsw.model.God#winCondition(Board, Player)  */
     @Override
-    public Player WinCondition(Board board, Player player) {
+    public Player winCondition(Board board, Player player) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (board.getCell(i, j).getWorker() != null) {

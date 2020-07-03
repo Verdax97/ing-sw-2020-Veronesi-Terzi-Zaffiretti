@@ -39,26 +39,26 @@ public class ZeusTest {
         Zeus zeus = new Zeus();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        Assertions.assertEquals(1, zeus.Building(board, selectedCell, 0, 0, 0, 0));
+        Assertions.assertEquals(1, zeus.building(board, selectedCell, 0, 0, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, zeus.Building(board, selectedCell, 0, 0, 0, 0));
+        Assertions.assertEquals(1, zeus.building(board, selectedCell, 0, 0, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, zeus.Building(board, selectedCell, 0, 0, 0, 0));
+        Assertions.assertEquals(1, zeus.building(board, selectedCell, 0, 0, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(-7, zeus.Building(board, selectedCell, 0, 0, 0, 0));
+        Assertions.assertEquals(-7, zeus.building(board, selectedCell, 0, 0, 0, 0));
         serverView.printBoard(board, match);
-        zeus.ResetGod();
-        Assertions.assertEquals(-1, zeus.Building(board, selectedCell, 5, 5, 0, 0));
-        Assertions.assertEquals(-2, zeus.Building(board, selectedCell, 4, 4, 0, 0));
+        zeus.resetGod();
+        Assertions.assertEquals(-1, zeus.building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-2, zeus.building(board, selectedCell, 4, 4, 0, 0));
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker11);
         board.getCell(0, 1).setBuilding(3);
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, zeus.Building(board, selectedCell, 0, 1, 0, 0));
-        zeus.ResetGod();
-        Assertions.assertEquals(-4, zeus.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, zeus.building(board, selectedCell, 0, 1, 0, 0));
+        zeus.resetGod();
+        Assertions.assertEquals(-4, zeus.building(board, selectedCell, 0, 1, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(-3, zeus.Building(board, selectedCell, 1, 0, 0, 0));
+        Assertions.assertEquals(-3, zeus.building(board, selectedCell, 1, 0, 0, 0));
         
     }
 }

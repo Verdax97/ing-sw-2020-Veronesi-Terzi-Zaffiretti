@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.gods;
 import it.polimi.ingsw.model.Board;
 import it.polimi.ingsw.model.Cell;
 import it.polimi.ingsw.model.MultipleActionGod;
-import javafx.scene.image.Image;
 
 /**
  * Class Triton implements Triton functionalities
@@ -18,10 +17,10 @@ public class Triton extends MultipleActionGod {
         this.useLimit = 1;
     }
 
-    /** @see it.polimi.ingsw.model.God#Move(Board, Cell, int, int) */
+    /** @see it.polimi.ingsw.model.God#move(Board, Cell, int, int) */
     @Override
-    public int Move(Board board, Cell selectedCell, int x, int y) {
-        int moved = CheckMove(board, selectedCell, x, y);
+    public int move(Board board, Cell selectedCell, int x, int y) {
+        int moved = checkMove(board, selectedCell, x, y);
         if (moved > 0) {
             board.getCell(x, y).setWorker(selectedCell.getWorker());
             selectedCell.getWorker().setLastMovement(board.getCell(x, y).getBuilding() - selectedCell.getBuilding());
@@ -30,7 +29,7 @@ public class Triton extends MultipleActionGod {
             if (x == 4 || x == 0 || y == 4 || y == 0)
                 use = 0;
             else use = 1;
-            return CheckUse();
+            return checkUse();
         }
         return moved;
     }

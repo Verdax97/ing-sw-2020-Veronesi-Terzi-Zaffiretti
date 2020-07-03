@@ -27,11 +27,11 @@ public class AthenaTest
         board.getCell(0, 4).setWorker(testWorker0);
         board.getCell(0, 3).setBuilding(1);
         Athena athena = new Athena();
-        Assertions.assertEquals(athena.EnemyTurn(board, testWorker0.getPlayer(), testWorker2.getPlayer()), 0);
+        Assertions.assertEquals(athena.enemyTurn(board, testWorker0.getPlayer(), testWorker2.getPlayer()), 0);
         Assertions.assertFalse(testWorker0.isDebuff());
         board.getCell(0, 0).setWorker(testWorker2);
         testWorker2.setLastMovement(1);
-        Assertions.assertEquals(athena.EnemyTurn(board, testWorker0.getPlayer(), testWorker2.getPlayer()), 1);
+        Assertions.assertEquals(athena.enemyTurn(board, testWorker0.getPlayer(), testWorker2.getPlayer()), 1);
         Assertions.assertTrue(testWorker0.isDebuff());
     }
 }

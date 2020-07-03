@@ -41,7 +41,7 @@ public class ApolloTest
         Apollo apollo = new Apollo();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 4);
-        Assertions.assertEquals(1, apollo.Move(board, selectedCell, 1, 3));
+        Assertions.assertEquals(1, apollo.move(board, selectedCell, 1, 3));
         serverView.printBoard(board, match);
     }
 }

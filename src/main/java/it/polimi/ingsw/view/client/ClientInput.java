@@ -30,7 +30,7 @@ public class ClientInput extends Observable {
      *
      * @param msgToClient of type MsgPacket
      */
-    public void ParseMsg(MsgToClient msgToClient) {
+    public void parseMsg(MsgToClient msgToClient) {
     }
 
     /**

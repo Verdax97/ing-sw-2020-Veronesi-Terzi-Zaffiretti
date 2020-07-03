@@ -34,22 +34,22 @@ public class DemeterTest{
         Demeter demeter = new Demeter();
         serverView.printBoard(board, match);
         Cell selectedCell = board.getCell(0, 0);
-        Assertions.assertEquals(2, demeter.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(2, demeter.building(board, selectedCell, 1, 1, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(-8, demeter.Building(board, selectedCell, 1, 1, 0, 0));
+        Assertions.assertEquals(-8, demeter.building(board, selectedCell, 1, 1, 0, 0));
         serverView.printBoard(board, match);
-        Assertions.assertEquals(1, demeter.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(1, demeter.building(board, selectedCell, 0, 1, 0, 0));
         serverView.printBoard(board, match);
-        demeter.ResetGod();
-        Assertions.assertEquals(-1, demeter.Building(board, selectedCell, 5, 5, 0, 0));
-        Assertions.assertEquals(-2, demeter.Building(board, selectedCell, 4, 4, 0, 0));
+        demeter.resetGod();
+        Assertions.assertEquals(-1, demeter.building(board, selectedCell, 5, 5, 0, 0));
+        Assertions.assertEquals(-2, demeter.building(board, selectedCell, 4, 4, 0, 0));
         board.getCell(4, 0).setWorker(null);
         board.getCell(1, 0).setWorker(testWorker);
-        Assertions.assertEquals(-3, demeter.Building(board, selectedCell, 1, 0, 0, 0));
+        Assertions.assertEquals(-3, demeter.building(board, selectedCell, 1, 0, 0, 0));
         board.getCell(0, 1).setBuilding(2);
-        Assertions.assertEquals(2, demeter.Building(board, selectedCell, 0, 1, 0, 0));
-        demeter.ResetGod();
-        Assertions.assertEquals(-4, demeter.Building(board, selectedCell, 0, 1, 0, 0));
+        Assertions.assertEquals(2, demeter.building(board, selectedCell, 0, 1, 0, 0));
+        demeter.resetGod();
+        Assertions.assertEquals(-4, demeter.building(board, selectedCell, 0, 1, 0, 0));
 
     }
 }

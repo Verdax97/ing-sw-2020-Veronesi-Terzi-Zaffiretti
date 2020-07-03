@@ -35,7 +35,7 @@ public class SimpleBoard implements Serializable {
      */
     public SimpleBoard(Board board, ArrayList<SimpleGod> gods, ArrayList<String> players, ArrayList<int[]> workers) {
         if (board != null)
-            this.board = board.CopyValuesInNewSimpleBoard();
+            this.board = board.copyValuesInNewSimpleBoard();
         else
             this.board = null;
         this.gods = gods;

@@ -29,7 +29,7 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
 
-        match.StartGame();
+        match.startGame();
         Assertions.assertEquals(players.get(1), match.getPlayerTurn().getNickname());
     }
 
@@ -60,17 +60,17 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        match.StartGame();
+        match.startGame();
         MsgToServer msg50 = new MsgToServer("Pino", 50, 0, 0, 0);
-        match.PickGod(msg50);
+        match.pickGod(msg50);
         Assertions.assertEquals(-1, match.getLastAction());
-        match.PickGod(msg50);
+        match.pickGod(msg50);
         Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg1 = new MsgToServer("Pino", 1, 0, 0, 0);
-        match.PickGod(msg1);
+        match.pickGod(msg1);
         Assertions.assertEquals(1, match.getLastAction());
         MsgToServer msg2 = new MsgToServer("Pino", 2, 0, 0, 0);
-        match.PickGod(msg2);
+        match.pickGod(msg2);
         Assertions.assertEquals(1, match.getLastAction());
     }
 
@@ -81,22 +81,22 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
 
-        match.StartGame();
+        match.startGame();
         God god1 = new God();
         God god2 = new God();
         match.getPlayers().get(0).setGodPower(god1);
         match.getPlayers().get(1).setGodPower(god2);
         MsgToServer msg0511 = new MsgToServer("Pino", 0, 5, 1, 1);
-        match.PlaceWorker(msg0511);
+        match.placeWorker(msg0511);
         Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg0000 = new MsgToServer("Pino", 0, 0, 0, 0);
-        match.PlaceWorker(msg0000);
+        match.placeWorker(msg0000);
         Assertions.assertEquals(-1, match.getLastAction());
         MsgToServer msg0011 = new MsgToServer("Pino", 0, 0, 1, 1);
-        match.PlaceWorker(msg0011);
+        match.placeWorker(msg0011);
         Assertions.assertEquals(1, match.getLastAction());
         MsgToServer msg4433 = new MsgToServer("Pino", 4, 4, 3, 3);
-        match.PlaceWorker(msg4433);
+        match.placeWorker(msg4433);
         Assertions.assertEquals(2, match.getLastAction());
     }
 
@@ -107,17 +107,17 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
 
-        match.StartGame();
+        match.startGame();
         MsgToServer msg = new MsgToServer("Gino", 1, 0, 0, 0);
-        match.PickGod(msg);
-        match.PickGod(msg);
+        match.pickGod(msg);
+        match.pickGod(msg);
         MsgToServer msg1 = new MsgToServer("Gino", -1, 0, 0, 0);
-        match.SelectPlayerGod(msg1);
+        match.selectPlayerGod(msg1);
         Assertions.assertEquals(-1, match.getLastAction());
         msg = new MsgToServer("Gino", 0, 0, 0, 0);
-        match.SelectPlayerGod(msg);
+        match.selectPlayerGod(msg);
         Assertions.assertEquals(1, match.getLastAction());
-        match.SelectPlayerGod(msg);
+        match.selectPlayerGod(msg);
         Assertions.assertEquals(1, match.getLastAction());
     }
 
@@ -127,31 +127,31 @@ public class MatchTest {
         Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
-        lobby.AddPlayer(players.get(0));
-        lobby.AddPlayer(players.get(1));
+        lobby.addPlayer(players.get(0));
+        lobby.addPlayer(players.get(1));
         Match match = new Match(players);
-        match.StartGame();
+        match.startGame();
         God god = new Hestia();
         God god1 = new Hestia();
         match.getPlayers().get(0).setGodPower(god);
         match.getPlayers().get(1).setGodPower(god1);
         MsgToServer msg = new MsgToServer("Pino", 0, 0, 2, 2);
-        match.PlaceWorker(msg);
+        match.placeWorker(msg);
         msg = new MsgToServer("Pino", 4, 4, 3, 3);
-        match.PlaceWorker(msg);
+        match.placeWorker(msg);
         GameSaver.checkForGames(lobby);
-        match.StartTurn();
+        match.startTurn();
         Assertions.assertEquals(0, match.getLastAction());
         match.getBoard().getCell(1, 0).setBuilding(3);
         match.getBoard().getCell(1,1).setBuilding(3);
         match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(2, 2).setWorker(null);
-        match.StartTurn();
+        match.startTurn();
         Assertions.assertEquals(-10, match.getLastAction());
         match.getBoard().getCell(0, 0).setWorker(match.getBoard().getCell(4, 4).getWorker());
         match.getBoard().getCell(4,4).setWorker(null);
         match.getBoard().getCell(0,0).getWorker().setPlayer(match.getPlayerTurn());
-        match.StartTurn();
+        match.startTurn();
         Assertions.assertEquals(1, match.getLastAction());
     }
 
@@ -161,10 +161,10 @@ public class MatchTest {
         Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
-        lobby.AddPlayer(players.get(0));
-        lobby.AddPlayer(players.get(1));
+        lobby.addPlayer(players.get(0));
+        lobby.addPlayer(players.get(1));
         Match match = new Match(players);
-        match.StartGame();
+        match.startGame();
         MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
@@ -177,22 +177,22 @@ public class MatchTest {
         match.getPlayers().get(0).setGodPower(hephaestus);
         match.getBoard().getCell(3, 3).setWorker(worker1);
         GameSaver.checkForGames(lobby);
-        match.StartTurn();
-        match.SelectWorker(msgPacket);
+        match.startTurn();
+        match.selectWorker(msgPacket);
         msgPacket = new MsgToServer("Pino", 4, -5, 1, 1);
-        match.Move(msgPacket);
+        match.move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
         msgPacket = new MsgToServer("Pino", 0, -5, 1, 1);
-        match.Move(msgPacket);
+        match.move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
         msgPacket = new MsgToServer("Pino", 2, -5, 1, 1);
-        match.Move(msgPacket);
+        match.move(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
-        triton.ResetGod();
+        triton.resetGod();
         match.getBoard().getCell(0,1).setBuilding(3);
         match.getBoard().getCell(1,0).setBuilding(2);
         msgPacket = new MsgToServer("Pino", 1,-5,-5,-5);
-        match.Move(msgPacket);
+        match.move(msgPacket);
         Assertions.assertEquals(10, match.getLastAction());
     }
 
@@ -202,10 +202,10 @@ public class MatchTest {
         Lobby lobby = new Lobby();
         players.add("Gino");
         players.add("Pino");
-        lobby.AddPlayer(players.get(0));
-        lobby.AddPlayer(players.get(1));
+        lobby.addPlayer(players.get(0));
+        lobby.addPlayer(players.get(1));
         Match match = new Match(players);
-        match.StartGame();
+        match.startGame();
         MsgToServer msgPacket = new MsgToServer("Pino", 0, -5, -5, -5);
         Worker worker = new Worker();
         worker.setPlayer(match.getPlayerTurn());
@@ -218,29 +218,29 @@ public class MatchTest {
         match.getPlayers().get(0).setGodPower(god);
         match.getBoard().getCell(3,3).setWorker(worker1);
         GameSaver.checkForGames(lobby);
-        match.StartTurn();
-        match.SelectWorker(msgPacket);
-        match.Build(msgPacket);
+        match.startTurn();
+        match.selectWorker(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(2, match.getLastAction());
         msgPacket = new MsgToServer("Pino", 0,1,-5,-5);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
-        match.NextPlayer();
+        match.nextPlayer();
         msgPacket = new MsgToServer("Pino", 0,0,-5,-5);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(1, match.getLastAction());
-        match.NextPlayer();
-        hephaestus.ResetGod();
+        match.nextPlayer();
+        hephaestus.resetGod();
         msgPacket = new MsgToServer("Pino", -1,1,-5,-5);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(-1, match.getLastAction());
         msgPacket = new MsgToServer("Pino", -1,-5,-5,-5);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(-1, match.getLastAction());
         msgPacket = new MsgToServer("Pino", 0,-5,-5,-5);
         worker.setLastMovement(1);
         match.getBoard().getCell(1,1).setBuilding(3);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(10, match.getLastAction());
         match.getBoard().getCell(3, 3).setWorker(null);
         match.getBoard().getCell(0,0).setBuilding(-1);
@@ -254,7 +254,7 @@ public class MatchTest {
         match.getBoard().getCell(1,2).setDome(true);
         match.getBoard().getCell(0,2).setDome(true);
         match.getBoard().getCell(2,0).setDome(true);
-        match.Build(msgPacket);
+        match.build(msgPacket);
         Assertions.assertEquals(-10, match.getLastAction());
     }
 
@@ -266,8 +266,8 @@ public class MatchTest {
         Match match = new Match(players);
         match.getBoard().getCell(0, 0).setDome(true);
 
-        match.SendPacket("Gino", "Test", "TestAlt", null);
-        match.SendPacket("Gino", "Test", "TestAlt", match.getBoard());
+        match.sendPacket("Gino", "Test", "TestAlt", null);
+        match.sendPacket("Gino", "Test", "TestAlt", match.getBoard());
     }
 
     @Test
@@ -288,20 +288,20 @@ public class MatchTest {
         players.add("Pino");
         Match match = new Match(players);
         MsgToServer msg = new MsgToServer("Pino", 0, 0, 0, 0);
-        match.StartGame();
-        match.PlaceWorker(msg);
+        match.startGame();
+        match.placeWorker(msg);
         match.getPlayers().get(0).setGodPower(new God());
         match.getPlayers().get(1).setGodPower(new God());
         Assertions.assertEquals(-1, match.getLastAction(), "PlaceWorker error");
         msg = new MsgToServer("Pino", 0, 0, 1, 1);
-        match.PlaceWorker(msg);
+        match.placeWorker(msg);
         Assertions.assertEquals(1, match.getLastAction(), "PlaceWorker error");
-        match.NextPlayer();
+        match.nextPlayer();
         msg = new MsgToServer("Pino", 2, -5, -5, -5);
-        match.SelectWorker(msg);
+        match.selectWorker(msg);
         Assertions.assertEquals(-1, match.getLastAction(), "SelectWorker error");
         msg = new MsgToServer("Pino", 1, -5, -5, -5);
-        match.SelectWorker(msg);
+        match.selectWorker(msg);
         Assertions.assertEquals(2, match.getLastAction(), "SelectWorker error");
     }
 
@@ -320,20 +320,20 @@ public class MatchTest {
         players.add("Gino");
         players.add("Pino");
         Match match = new Match(players);
-        match.StartGame();
+        match.startGame();
         MsgToServer msg = new MsgToServer("Pino", 0,0,1,1);
         match.getPlayerTurn().setGodPower(new God());
-        match.PlaceWorker(msg);
+        match.placeWorker(msg);
         msg = new MsgToServer("Gino", 4,4,3,3);
         match.getPlayerTurn().setGodPower(new God());
-        match.PlaceWorker(msg);
+        match.placeWorker(msg);
         msg = new MsgToServer("Pino", 0,0,-5,-5);
-        match.SelectWorker(msg);
-        match.BeforeMove(msg);
+        match.selectWorker(msg);
+        match.beforeMove(msg);
         Assertions.assertEquals(1, match.getLastAction());
         msg = new MsgToServer("Pino", 0,1,-5,-5);
         match.getPlayerTurn().setGodPower(new Prometheus());
-        match.BeforeMove(msg);
+        match.beforeMove(msg);
         Assertions.assertEquals(1, match.getLastAction());
 
     }
